@@ -1,6 +1,5 @@
 package pt.criticalsoftware.domain.entities;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 
 import javax.persistence.Column;
@@ -11,10 +10,9 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-@Entity(name="entrevista")
+@Entity
 @Table(name="entrevistas")
-public class InterviewEntity implements Serializable {
-	private static final long serialVersionUID = 1L;
+public class InterviewEntity {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -26,7 +24,7 @@ public class InterviewEntity implements Serializable {
 	@Column(name="feedback")
 	private String feedback;
 	
-	@ManyToOne(targetEntity=UserEntity.class)
+	@ManyToOne
 	private UserEntity interviewer;
 
 }

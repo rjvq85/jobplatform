@@ -1,6 +1,5 @@
 package pt.criticalsoftware.domain.entities;
 
-import java.io.Serializable;
 import java.util.Collection;
 
 import javax.persistence.CollectionTable;
@@ -19,11 +18,9 @@ import javax.persistence.UniqueConstraint;
 
 import pt.criticalsoftware.domain.entities.roles.Roles;
 
-@Entity(name="utilizador")
+@Entity
 @Table(name="utilizadores")
-public class UserEntity implements Serializable {
-	
-	private static final long serialVersionUID = 1L;
+public class UserEntity {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -50,7 +47,7 @@ public class UserEntity implements Serializable {
 	@Column(name="cargo")
 	private Collection<Roles> roles;
 	
-	@OneToMany(mappedBy="interviewer",targetEntity=InterviewEntity.class)
+	@OneToMany(mappedBy="interviewer")
 	private Collection<InterviewEntity> interviews;
 	
 	

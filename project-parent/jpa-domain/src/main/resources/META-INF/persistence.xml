@@ -5,6 +5,8 @@
 	<persistence-unit name="Jobs" transaction-type="JTA">
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 		<jta-data-source>java:jboss/datasources/jobs</jta-data-source>
+		<class>pt.criticalsoftware.domain.entities.UserEntity</class>
+		<class>pt.criticalsoftware.domain.entities.InterviewEntity</class>
 		<properties>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />
 			<property name="hibernate.hbm2ddl.auto" value="create-drop" />

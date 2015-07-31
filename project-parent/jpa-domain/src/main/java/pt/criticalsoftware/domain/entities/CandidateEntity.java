@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 
@@ -45,5 +46,7 @@ public class CandidateEntity {
 	@Column(name="cv")
 	private String cv;
 	
+	@OneToMany(mappedBy="candidate")
+	private Collection<CandidacyEntity> candidacies;
 
 }

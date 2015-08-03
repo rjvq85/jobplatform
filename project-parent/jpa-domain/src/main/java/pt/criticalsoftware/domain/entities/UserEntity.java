@@ -52,6 +52,9 @@ public class UserEntity {
 	
 	@OneToMany(mappedBy="responsable")
 	private Collection<PositionEntity> positions;
+	
+	@OneToMany(mappedBy="receptor")
+	private Collection<NotificationEntity> notifications;
 
 	public String getUsername() {
 		return username;

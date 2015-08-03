@@ -63,5 +63,11 @@ public class PositionEntity {
 	
 	@Column(name="canais_publicacao",nullable=false)
 	private Collection<String> adChannels;
+	
+	@OneToMany(mappedBy="position")
+	private Collection<InterviewEntity> interviews;
+	
+	@OneToMany(mappedBy="positionCandidacy")
+	private Collection<CandidacyEntity> candidacy;
 
 }

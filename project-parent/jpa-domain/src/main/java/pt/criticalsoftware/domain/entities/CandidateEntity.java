@@ -31,7 +31,7 @@ public class CandidateEntity {
 	@Column(name="telefone")
 	private Integer phone;
 	
-	@Column(name="telemovel",nullable=false)
+	@Column(name="telemovel",nullable=false, length=9)
 	private Integer mobilePhone;
 	
 	@Column(name="curso")
@@ -48,5 +48,94 @@ public class CandidateEntity {
 	
 	@OneToMany(mappedBy="candidate")
 	private Collection<CandidacyEntity> candidacies;
+	
+	public CandidateEntity() {
+		
+	}
 
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getTown() {
+		return town;
+	}
+
+	public void setTown(String town) {
+		this.town = town;
+	}
+
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
+	public Integer getPhone() {
+		return phone;
+	}
+
+	public void setPhone(Integer phone) {
+		this.phone = phone;
+	}
+
+	public Integer getMobilePhone() {
+		return mobilePhone;
+	}
+
+	public void setMobilePhone(Integer mobilePhone) {
+		this.mobilePhone = mobilePhone;
+	}
+
+	public Collection<String> getCourse() {
+		return course;
+	}
+
+	public void setCourse(Collection<String> course) {
+		this.course = course;
+	}
+
+	public Collection<String> getDegree() {
+		return degree;
+	}
+
+	public void setDegree(Collection<String> degree) {
+		this.degree = degree;
+	}
+
+	public Collection<String> getUniversity() {
+		return university;
+	}
+
+	public void setUniversity(Collection<String> university) {
+		this.university = university;
+	}
+
+	public String getCv() {
+		return cv;
+	}
+
+	public void setCv(String cv) {
+		this.cv = cv;
+	}
+
+	public Collection<CandidacyEntity> getCandidacies() {
+		return candidacies;
+	}
+
+	public void setCandidacies(Collection<CandidacyEntity> candidacies) {
+		this.candidacies = candidacies;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	
 }

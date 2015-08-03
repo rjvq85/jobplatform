@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<meta charset="utf-8" />
+	<title>Plataforma de Emprego</title>
+</h:head>
+<h:body>
+	<h:form>
+		<h:panelGroup id="login">
+			<h3>Login</h3>
+			<br />
+					Username: <span class="reqfield">*</span>
+			<h:inputText id="username" value="#{login.username}"/>
+					Password: <span class="reqfield">*</span>
+			<h:inputSecret id="password" value="#{login.password}" />
+			<h:commandButton action="#{login.login}" value="Entrar" />
+		</h:panelGroup>
+	</h:form>
+</h:body>
+</html>

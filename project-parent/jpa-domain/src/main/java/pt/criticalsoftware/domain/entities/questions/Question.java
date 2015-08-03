@@ -1,7 +1,13 @@
 package pt.criticalsoftware.domain.entities.questions;
 
-public class Question {
+import java.io.Serializable;
 
+public class Question implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String question;
 	private Integer position;
 	private AnswerType answer;

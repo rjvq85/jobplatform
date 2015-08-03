@@ -1,5 +1,6 @@
 package pt.criticalsoftware.domain.entities;
 
+import java.io.Serializable;
 import java.util.Collection;
 
 import javax.persistence.CollectionTable;
@@ -12,16 +13,27 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
-import pt.criticalsoftware.domain.entities.roles.Roles;
+import pt.criticalsoftware.service.persistence.roles.Role;
 
 @Entity
 @Table(name="utilizadores")
-public class UserEntity {
+@NamedQueries({
+	@NamedQuery(name = "User.findIdByUsername",query="SELECT u.id FROM UserEntity u WHERE u.username = :username"),
+	@NamedQuery(name = "User.getRoles",query="SELECT r FROM UserEntity u join u.roles r WHERE u.id = :id")
+})
+public class UserEntity implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
@@ -45,7 +57,7 @@ public class UserEntity {
 	@CollectionTable(name="cargos",joinColumns=@JoinColumn(name="nome_utilizador",referencedColumnName="nome_utilizador"),uniqueConstraints=@UniqueConstraint(columnNames={"cargo","nome_utilizador"}))
 	@Enumerated(EnumType.STRING)
 	@Column(name="cargo")
-	private Collection<Roles> roles;
+	private Collection<Role> roles;
 	
 	@OneToMany(mappedBy="interviewer")
 	private Collection<InterviewEntity> interviews;
@@ -96,13 +108,42 @@ public class UserEntity {
 		this.lastName = lastName;
 	}
 
-	public Collection<Roles> getRoles() {
+	public Collection<Role> getRoles() {
 		return roles;
 	}
 
-	public void setRoles(Collection<Roles> roles) {
+	public void setRoles(Collection<Role> roles) {
 		this.roles = roles;
 	}
+
+	public Collection<InterviewEntity> getInterviews() {
+		return interviews;
+	}
+
+	public void setInterviews(Collection<InterviewEntity> interviews) {
+		this.interviews = interviews;
+	}
+
+	public Collection<PositionEntity> getPositions() {
+		return positions;
+	}
+
+	public void setPositions(Collection<PositionEntity> positions) {
+		this.positions = positions;
+	}
+
+	public Collection<NotificationEntity> getNotifications() {
+		return notifications;
+	}
+
+	public void setNotifications(Collection<NotificationEntity> notifications) {
+		this.notifications = notifications;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+	
 
 	@Override
 	public int hashCode() {

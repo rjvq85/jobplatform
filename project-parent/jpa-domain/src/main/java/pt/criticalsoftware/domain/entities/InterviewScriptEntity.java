@@ -3,6 +3,7 @@ package pt.criticalsoftware.domain.entities;
 import java.util.Collection;
 
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -27,6 +28,7 @@ public class InterviewScriptEntity {
 	@Column(name="referencia",nullable=false)
 	private String reference;
 	
+	@ElementCollection
 	@Column(name="questoes")
 	private Collection<Question> questions;
 	

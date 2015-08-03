@@ -71,10 +71,12 @@
 						<webModule>
 							<groupId>pt.criticalsoftware.jobs.platform</groupId>
 							<artifactId>web-platform</artifactId>
+							<contextRoot>/private</contextRoot>
 						</webModule>
 						<webModule>
 							<groupId>pt.criticalsoftware.jobs.platform</groupId>
 							<artifactId>web-public</artifactId>
+							<contextRoot>/public</contextRoot>
 						</webModule>
 						<webModule>
 							<groupId>pt.criticalsoftware.jobs.platform</groupId>

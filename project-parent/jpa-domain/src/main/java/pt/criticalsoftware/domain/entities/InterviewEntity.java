@@ -38,8 +38,8 @@ public class InterviewEntity {
 	@JoinColumn(name = "posicao da entrevista")
 	private PositionEntity position;
 	
-	@Column(name="candidato")
 	@OneToOne
+	@JoinColumn(name="candidato")
 	private CandidacyEntity candidacy;
 
 	public InterviewEntity() {

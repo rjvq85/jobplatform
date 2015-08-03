@@ -3,6 +3,7 @@ package pt.criticalsoftware.domain.entities;
 import java.util.Collection;
 
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -34,12 +35,15 @@ public class CandidateEntity {
 	@Column(name="telemovel",nullable=false, length=9)
 	private Integer mobilePhone;
 	
+	@ElementCollection
 	@Column(name="curso")
 	private Collection<String> course;
 	
+	@ElementCollection
 	@Column(name="grau")
 	private Collection<String> degree;
 	
+	@ElementCollection
 	@Column(name="universidade")
 	private Collection<String> university;
 	

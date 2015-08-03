@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.Collection;
 
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -14,7 +15,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import pt.criticalsoftware.domain.entities.states.PositionState;
+import pt.criticalsoftware.service.persistence.states.PositionState;
 
 @Entity
 @Table(name="posicoes")
@@ -55,13 +56,13 @@ public class PositionEntity {
 	@Column(name="vagas",nullable=false)
 	private Integer vacancies;
 	
-	@Column(name="responsavel",nullable=false)
 	@OneToOne
 	private UserEntity responsable;
 	
 	@Column(name="descricao",nullable=false)
 	private String description;
 	
+	@ElementCollection
 	@Column(name="canais_publicacao",nullable=false)
 	private Collection<String> adChannels;
 	

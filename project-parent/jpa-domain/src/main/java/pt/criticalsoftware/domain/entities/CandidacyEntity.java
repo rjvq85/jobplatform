@@ -13,7 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import pt.criticalsoftware.domain.entities.states.CandidacyState;
+import pt.criticalsoftware.service.persistence.states.CandidacyState;
 
 @Entity
 @Table(name="candidaturas")
@@ -41,8 +41,8 @@ public class CandidacyEntity {
 	@JoinColumn(name = "posicao")
 	private PositionEntity positionCandidacy;
 	
-	@Column(name="entrevista")
 	@OneToOne
+	@JoinColumn(name="entrevista")
 	private InterviewEntity interview;
 
 	public CandidacyEntity() {

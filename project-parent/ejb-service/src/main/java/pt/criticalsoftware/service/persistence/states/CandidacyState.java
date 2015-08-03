@@ -1,4 +1,4 @@
-package pt.criticalsoftware.domain.entities.states;
+package pt.criticalsoftware.service.persistence.states;
 
 public enum CandidacyState {
 

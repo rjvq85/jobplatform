@@ -104,7 +104,7 @@ public class Login {
 	}
 	
 	
-	// Apenas para testes (com botão no xhtml que chama este método)
+	// Apenas para testes com botão no xhtml que chama este método
 	public void create() {
 		String username = "aaa";
 		String password = "1234";

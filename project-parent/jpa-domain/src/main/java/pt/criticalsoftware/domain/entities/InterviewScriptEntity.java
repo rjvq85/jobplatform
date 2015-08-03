@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -15,6 +17,14 @@ import pt.criticalsoftware.domain.entities.questions.Question;
 
 @Entity
 @Table(name="guioes")
+
+@NamedQueries({
+@NamedQuery(name="InterviewScript.findAll", query="select p from InterviewScriptEntity p "),
+@NamedQuery(name="InterviewScript.findByReference", query="select p from InterviewScriptEntity p where p.reference = :reference "),
+@NamedQuery(name="InterviewScript.findByTitle", query="select p from InterviewScriptEntity p where p.title = :title ")
+}
+)
+
 public class InterviewScriptEntity {
 	
 	@Id

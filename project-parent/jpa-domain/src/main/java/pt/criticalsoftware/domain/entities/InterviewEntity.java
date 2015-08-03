@@ -9,11 +9,20 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="entrevistas")
+
+@NamedQueries({
+@NamedQuery(name="Interview.findAll", query="select p from InterviewEntity p "),
+@NamedQuery(name="Interview.findByDate", query="select p from InterviewEntity p where p.date = :date "),
+@NamedQuery(name="Interview.findById", query="select p from InterviewEntity p where p.id = :interviewId ")
+}
+)
 public class InterviewEntity {
 	
 	@Id

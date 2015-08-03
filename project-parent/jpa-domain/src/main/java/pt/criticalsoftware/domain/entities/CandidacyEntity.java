@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -17,8 +19,13 @@ import pt.criticalsoftware.domain.entities.states.CandidacyState;
 
 @Entity
 @Table(name="candidaturas")
+
+@NamedQueries({
+@NamedQuery(name="Candidacy.findAll", query="select p from CandidacyEntity p ")
+}
+)
+
 public class CandidacyEntity {
-	
 	
 
 	@Id

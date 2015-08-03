@@ -7,18 +7,45 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 
 @Entity
 @Table(name="candidatos")
+
+@NamedQueries({
+@NamedQuery(name="Candidate.findAll", query="select p from CandidateEntity p"),
+@NamedQuery(name="Candidate.findByFirstName", query="select p from CandidateEntity p where p.firstName = :firstName"),
+@NamedQuery(name="Candidate.findByLastName", query="select p from CandidateEntity p where p.lastName = :lastName"),
+@NamedQuery(name="Candidate.findByTown", query="select p from CandidateEntity p where p.town = :town"),
+@NamedQuery(name="Candidate.findByCountry", query="select p from CandidateEntity p where p.country = :country"),
+@NamedQuery(name="Candidate.findById", query="select p from CandidateEntity p where p.id = :candidateId ")
+}
+)
 public class CandidateEntity {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	
+	@Column(name="nome_utilizador", nullable=false)
+	private String username;
+	
+	@Column(name="palavra_passe",nullable=false)
+	private String password;
+	
+	@Column(name="endereco_email",nullable=false)
+	private String email;
+	
+	@Column(name="primeiro_nome",nullable=false)
+	private String firstName;
+	
+	@Column(name="sobrenome",nullable=false)
+	private String lastName;
+		
 	@Column(name="morada",nullable=false)
 	private String address;
 	
@@ -53,6 +80,45 @@ public class CandidateEntity {
 		
 	}
 
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
 	public String getAddress() {
 		return address;
 	}

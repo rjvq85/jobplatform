@@ -14,7 +14,7 @@ import pt.criticalsoftware.domain.entities.questions.Question;
 
 
 @Entity
-@Table(name="guiões")
+@Table(name="guioes")
 public class InterviewScriptEntity {
 	
 	@Id

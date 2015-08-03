@@ -38,7 +38,7 @@ public class CandidacyEntity {
 	private CandidateEntity candidate;
 	
 	@ManyToOne
-	@JoinColumn(name = "posição")
+	@JoinColumn(name = "posicao")
 	private PositionEntity positionCandidacy;
 	
 	@Column(name="entrevista")

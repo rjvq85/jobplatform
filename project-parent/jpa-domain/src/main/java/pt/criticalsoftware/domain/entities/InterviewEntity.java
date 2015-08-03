@@ -31,11 +31,11 @@ public class InterviewEntity {
 	private UserEntity interviewer;
 	
 	@ManyToOne
-	@JoinColumn(name = "guião")
+	@JoinColumn(name = "guiao")
 	private InterviewScriptEntity script;
 	
 	@ManyToOne
-	@JoinColumn(name = "posiçao da entrevista")
+	@JoinColumn(name = "posicao da entrevista")
 	private PositionEntity position;
 	
 	@Column(name="candidato")

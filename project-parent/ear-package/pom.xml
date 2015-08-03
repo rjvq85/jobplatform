@@ -9,7 +9,7 @@
 
 	<artifactId>ear-package</artifactId>
 	<packaging>ear</packaging>
-	
+
 	<properties>
 		<app.filename>JobsPlatform</app.filename>
 	</properties>
@@ -18,9 +18,15 @@
 	<dependencies>
 		<dependency>
 			<groupId>pt.criticalsoftware.jobs.platform</groupId>
+			<artifactId>ejb-service</artifactId>
+			<version>${project.version}</version>
+			<type>ejb</type>
+		</dependency>
+		<dependency>
+			<groupId>pt.criticalsoftware.jobs.platform</groupId>
 			<artifactId>jpa-domain</artifactId>
 			<version>${project.version}</version>
-			<type>jar</type>
+			<type>ejb</type>
 		</dependency>
 		<dependency>
 			<groupId>pt.criticalsoftware.jobs.platform</groupId>
@@ -54,6 +60,14 @@
 					<defaultJavaBundleDir>lib/</defaultJavaBundleDir>
 					<skinnyWars>true</skinnyWars>
 					<modules>
+						<ejbModule>
+							<groupId>pt.criticalsoftware.jobs.platform</groupId>
+							<artifactId>ejb-service</artifactId>
+						</ejbModule>
+						<ejbModule>
+							<groupId>pt.criticalsoftware.jobs.platform</groupId>
+							<artifactId>jpa-domain</artifactId>
+						</ejbModule>
 						<webModule>
 							<groupId>pt.criticalsoftware.jobs.platform</groupId>
 							<artifactId>web-platform</artifactId>

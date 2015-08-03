@@ -10,7 +10,6 @@
 		<class>pt.criticalsoftware.domain.entities.PositionEntity</class>
 		<class>pt.criticalsoftware.domain.entities.CandidacyEntity</class>
 		<class>pt.criticalsoftware.domain.entities.CandidateEntity</class>
-		<class>pt.criticalsoftware.domain.entities.GuideEntity</class>
 		<properties>
 			<property name="hibernate.connection.url" value="jdbc:postgresql:Jobs;DB_CLOSE_ON_EXIT=TRUE" />
 			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />

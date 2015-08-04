@@ -5,10 +5,7 @@ import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.inject.Inject;
-
 import pt.criticalsoftware.service.model.IUser;
-import pt.criticalsoftware.service.model.IUserBuilder;
 import pt.criticalsoftware.service.persistence.IUserPersistenceService;
 import pt.criticalsoftware.service.persistence.roles.Role;
 
@@ -17,8 +14,6 @@ public class UserBusinessService implements IUserBusinessService {
 	
 	@EJB
 	private IUserPersistenceService userpersistence;
-	@Inject
-	private IUserBuilder userbuilder;
 	
 	@Override
 	public Integer getUserId(String username) {
@@ -33,17 +28,8 @@ public class UserBusinessService implements IUserBusinessService {
 	}
 
 	@Override
-	public void createUser(String username, String password, String email, String fn, String ln, Role role) {
-		IUser user = userbuilder
-				.username(username)
-				.password(password)
-				.email(email)
-				.firstName(fn)
-				.lastName(ln)
-				.role(role)
-				.build();
-		userpersistence.create(user);
-		
+	public void createUser(IUser user) {
+		userpersistence.create(user);		
 	}
 
 }

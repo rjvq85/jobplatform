@@ -2,6 +2,7 @@ package pt.criticalsoftware.service.business;
 
 import java.util.List;
 
+import pt.criticalsoftware.service.model.IUser;
 import pt.criticalsoftware.service.persistence.roles.Role;
 
 public interface IUserBusinessService {
@@ -10,6 +11,6 @@ public interface IUserBusinessService {
 
 	List<Role> getRoles(Integer id);
 
-	void createUser(String username, String password, String email, String fn, String ln, Role role);
+	void createUser(IUser user);
 
 }

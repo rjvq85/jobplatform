@@ -3,22 +3,54 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
 
 <h:head>
 	<meta charset="utf-8" />
+	<h:outputScript library="js" name="jquery-2.1.4.min.js" />
+	<h:outputScript library="js" name="bootstrap.js" />
+	<h:outputStylesheet library="css" name="login.css" />
+	<h:outputStylesheet library="css" name="bootstrap.css" />
 	<title>Plataforma de Emprego</title>
 </h:head>
 <h:body>
-	<h:form>
-		<h:panelGroup id="login">
-			<h3>Login</h3>
-			<br />
-					Username: <span class="reqfield">*</span>
-			<h:inputText id="username" value="#{login.username}"/>
-					Password: <span class="reqfield">*</span>
-			<h:inputSecret id="password" value="#{login.password}" />
-			<h:commandButton action="#{login.login}" value="Entrar" />
+	<h:form id="form" prependId="false">
+		<h:panelGroup layout="block" class="jumbotron">
+			<h:panelGroup layout="block" id="container" styleClass="container">
+				<h:panelGroup id="login">
+					<h:graphicImage value="/resources/imgs/logocritical.png" />
+					<h2>Login</h2>
+					<h:inputText id="username" a:placeholder="username"
+						value="#{login.username}" required="true"
+						requiredMessage="Username: campo obrigatório"
+						styleClass="form-control inputbutton">
+						<f:validator validatorId="pt.criticalsoftware.platform.validators.UsernameValidator" />
+					</h:inputText>
+					<h:inputSecret id="password" a:placeholder="password"
+						value="#{login.password}" required="true"
+						requiredMessage="Password: campo obrigatório"
+						styleClass="form-control inputbutton" a:minlength="6">
+						<f:validator validatorId="pt.criticalsoftware.platform.validators.PasswordValidator" />
+					</h:inputSecret>
+					<h:commandButton id="submitdata"
+						styleClass="btn btn-default full-width submitbutton"
+						action="#{login.login}" value="Entrar">
+						<f:ajax render="messages" execute="username password"/>
+					</h:commandButton>
+				</h:panelGroup>
+				<h:panelGroup layout="block" id="messages">
+					<h:panelGroup layout="block" class="messagebox">
+						<h:message styleClass="alert alert-danger" for="username" />
+					</h:panelGroup>
+					<h:panelGroup layout="block" class="messagebox">
+						<h:message styleClass="alert alert-danger" for="password" />
+					</h:panelGroup>
+					<h:panelGroup layout="block" class="messagebox">
+						<h:message styleClass="alert alert-danger"/>
+					</h:panelGroup>
+				</h:panelGroup>
+			</h:panelGroup>
 		</h:panelGroup>
 	</h:form>
 </h:body>

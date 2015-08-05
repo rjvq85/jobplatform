@@ -17,6 +17,7 @@ public class UserBusinessService implements IUserBusinessService {
 
 	@EJB
 	private IUserPersistenceService userpersistence;
+
 	@Inject
 	private IUserBuilder userbuilder;
 
@@ -33,6 +34,7 @@ public class UserBusinessService implements IUserBusinessService {
 	}
 
 	@Override
+
 	public boolean createUser(String username, String password, String email, String fn, String ln, Role role) {
 		System.out.println("Entrou");
 		if (!verifyEmail(email)){
@@ -56,6 +58,7 @@ public class UserBusinessService implements IUserBusinessService {
 	@Override
 	public boolean verifyEmail(String email) {
 		userpersistence.verifyEmail(email);
+		//falta o true
 		return false;
 	}
 

@@ -102,17 +102,5 @@ public class Login {
 		HttpSession session = request.getSession();
 		session.setAttribute("userID", id);
 	}
-	
-	
-	// Apenas para testes com botão no xhtml que chama este método
-	public void create() {
-		String username = "aaa1234";
-		String password = "1234";
-		String email = "aaa1";
-		String fn = "aaa";
-		String ln = "aaa";
-		Role role = Role.ADMIN;
-		userservice.createUser(username, password, email, fn, ln, role);
-	}
 
 }

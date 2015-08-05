@@ -106,9 +106,9 @@ public class Login {
 	
 	// Apenas para testes com botão no xhtml que chama este método
 	public void create() {
-		String username = "aaa";
+		String username = "aaa1234";
 		String password = "1234";
-		String email = "aaa";
+		String email = "aaa1";
 		String fn = "aaa";
 		String ln = "aaa";
 		Role role = Role.ADMIN;

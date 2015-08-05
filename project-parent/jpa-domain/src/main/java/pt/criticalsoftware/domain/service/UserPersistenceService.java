@@ -1,11 +1,13 @@
 package pt.criticalsoftware.domain.service;
 
-import java.util.ArrayList;
+
 import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.resource.spi.IllegalStateException;
 
@@ -59,4 +61,21 @@ public class UserPersistenceService implements IUserPersistenceService {
 		throw new IllegalStateException();
 	}
 
+	@Override
+	public boolean verifyEmail(String email) {
+		Query q = em
+				.createQuery("select u.email from UserEntity u where u.email= :email");
+		q.setParameter("email", email);
+		try {
+			String emailTemp = (String) q.getSingleResult();
+			//log.error("O mail existe");
+			return true;
+		} catch (NoResultException e) {
+			//log.info("O mail não existe");
+			return false;
+		}
+	}
+
+	
+	
 }

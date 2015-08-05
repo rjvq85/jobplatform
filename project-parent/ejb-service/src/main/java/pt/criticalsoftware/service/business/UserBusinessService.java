@@ -14,12 +14,12 @@ import pt.criticalsoftware.service.persistence.roles.Role;
 
 @Stateless
 public class UserBusinessService implements IUserBusinessService {
-	
+
 	@EJB
 	private IUserPersistenceService userpersistence;
 	@Inject
 	private IUserBuilder userbuilder;
-	
+
 	@Override
 	public Integer getUserId(String username) {
 		return userpersistence.getUserId(username);
@@ -33,17 +33,30 @@ public class UserBusinessService implements IUserBusinessService {
 	}
 
 	@Override
-	public void createUser(String username, String password, String email, String fn, String ln, Role role) {
-		IUser user = userbuilder
-				.username(username)
-				.password(password)
-				.email(email)
-				.firstName(fn)
-				.lastName(ln)
-				.role(role)
-				.build();
-		userpersistence.create(user);
-		
+	public boolean createUser(String username, String password, String email, String fn, String ln, Role role) {
+		System.out.println("Entrou");
+		if (!verifyEmail(email)){
+			//build new user
+			IUser user = userbuilder
+					.username(username)
+					.password(password)
+					.email(email)
+					.firstName(fn)
+					.lastName(ln)
+					.role(role)
+					.build();
+			userpersistence.create(user);
+			return true;
+		}
+		else
+			return false;
+
+	}
+
+	@Override
+	public boolean verifyEmail(String email) {
+		userpersistence.verifyEmail(email);
+		return false;
 	}
 
 }

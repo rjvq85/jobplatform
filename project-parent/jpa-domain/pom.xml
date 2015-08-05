@@ -27,6 +27,18 @@
 			<version>${project.version}</version>
 			<scope>provided</scope>
 		</dependency>
+		<!-- dependencia da encriptacao da password -->
+		<dependency>
+			<groupId>com.alexkasko.springjdbc</groupId>
+			<artifactId>query-string-builder</artifactId>
+			<version>1.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.servicemix.bundles</groupId>
+			<artifactId>org.apache.servicemix.bundles.rome</artifactId>
+			<version>1.0_3</version>
+		</dependency>
+		<!-- dependencia da encriptacao da password -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>

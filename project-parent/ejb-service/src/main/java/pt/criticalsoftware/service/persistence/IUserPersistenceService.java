@@ -8,6 +8,8 @@ import pt.criticalsoftware.service.persistence.roles.Role;
 public interface IUserPersistenceService {
 
 	Integer getUserId(String username);
+	
+	boolean verifyEmail(String email);
 
 	List<Role> getRoles(Integer id);
 

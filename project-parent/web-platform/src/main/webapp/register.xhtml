@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<meta charset="utf-8" />
+</h:head>
+
+<h:body>
+	<div id="newUser">
+		<h1>Registar</h1>
+		<h:form>
+			<h:panelGrid columns="2" cellpadding="5" styleClass="grid-login">
+
+				<h:outputLabel for="firstName" value="Primeiro Nome:" />
+				<p:inputText id="firstName" required="true" label="nome" size="30"
+					value="#{register.firstName}" />
+
+				<h:outputLabel for="lastName" value="Sobrenome:" />
+				<p:inputText id="lastName" required="true" label="nome" size="30"
+					value="#{register.lastName}" />
+
+				<h:outputLabel for="email" value="E-mail:" />
+				<p:inputText id="email" required="true" label="email" size="30"
+					value="#{register.email}" />
+
+				<h:outputLabel for="role" value="Cargo:" />
+				<p:selectOneMenu id="role" value="#{register.role}"
+					style="width:125px">
+					<f:selectItem itemLabel="Seleccionar Cargo" itemValue="" />
+					<f:selectItem itemLabel="Administrador" itemValue="Admin" />
+					<f:selectItem itemLabel="Entrevistador" itemValue="Entrevistador" />
+					<f:selectItem itemLabel="Gestor" itemValue="Gestor" />
+				</p:selectOneMenu>
+				
+				<h:outputLabel for="username" value="Username:" />
+				<p:inputText id="username" required="true" label="nome" size="30"
+					value="#{register.username}" />
+
+				<h:outputLabel for="pwd1" value="Password:" />
+				<p:password id="pwd1" value="#{register.password}" match="pwd2"
+					label="Password 1" required="true" />
+
+				<h:outputLabel for="pwd2" value="Confirm:" />
+				<p:password id="pwd2" label="Password 2" required="true" />
+
+				<f:facet name="footer">
+					<p:commandButton value="Register" type="submit"
+						action="#{register.doRegister()}" update="@form" />
+				</f:facet>
+			</h:panelGrid>
+		</h:form>
+	</div>
+</h:body>
+</html>

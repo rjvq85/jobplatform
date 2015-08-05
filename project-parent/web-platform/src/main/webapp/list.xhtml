@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+
+<h:head>
+	<meta charset="utf-8" />
+	<h:outputScript library="js" name="jquery-2.1.4.min.js" />
+	<h:outputScript library="js" name="bootstrap.js" />
+	<h:outputStylesheet library="css" name="login.css" />
+	<h:outputStylesheet library="css" name="bootstrap.css" />
+	<title>Plataforma de Emprego</title>
+</h:head>
+<h:body>
+<h3>Lista</h3>
+<h:form>
+      <h:dataTable value="#{listUsers.users}" var="user">
+         <h:column>    				
+            <f:facet name="header">Nome</f:facet>    				
+            <h:inputText value="#{user.firstName}"
+               size="10" rendered="#{user.editable}" />
+            <h:outputText value="#{user.firstName}"
+               rendered="#{not user.editable}" />
+         </h:column>
+         <h:column>
+            <f:facet name="header">Username</f:facet>
+           <h:inputText value="#{user.username}"
+               size="10" rendered="#{user.editable}" />
+            <h:outputText value="#{user.username}"
+               rendered="#{not user.editable}" />
+         </h:column>
+         <h:column>
+            <f:facet name="header">Edit</f:facet>
+               <h:commandButton value="Edit" 
+                  action="#{listUsers.edit(user)}" 
+                  rendered="#{not user.editable}"/>
+         </h:column>
+      </h:dataTable>  
+	  <br/>
+	<h:commandButton value="Guardar"
+          action="#{listUsers.save()}" />	  
+   </h:form>
+</h:body>
+</html>

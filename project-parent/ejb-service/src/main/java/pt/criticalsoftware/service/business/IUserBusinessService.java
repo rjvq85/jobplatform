@@ -1,5 +1,6 @@
 package pt.criticalsoftware.service.business;
 
+import java.util.Collection;
 import java.util.List;
 
 import pt.criticalsoftware.service.model.IUser;
@@ -14,6 +15,10 @@ public interface IUserBusinessService {
 	boolean verifyEmail(String email);
 
 	boolean createUser(String username, String password, String email, String fn, String ln, Role role);
+
+	Collection<IUser> getAllUsers();
+
+	void saveUsers(Collection<IUser> users);
 
 
 }

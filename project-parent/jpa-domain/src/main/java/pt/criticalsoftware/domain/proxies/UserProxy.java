@@ -79,8 +79,8 @@ public class UserProxy implements IEntityAware<UserEntity>,IUser {
 	}
 
 	@Override
-	public Collection<Role> getRoles() {
-		return user.getRoles();
+	public List<Role> getRoles() {
+		return (List<Role>) user.getRoles();
 	}
 
 	@Override
@@ -115,6 +115,21 @@ public class UserProxy implements IEntityAware<UserEntity>,IUser {
 	@Override
 	public Integer getId() {
 		return user.getId();
+	}
+	
+	@Override
+	public boolean isEditable() {
+		return user.isEditable();
+	}
+
+	@Override
+	public void setEditable(boolean editable) {
+		user.setEditable(editable);
+	}
+	
+	@Override
+	public String toString() {
+		return user.getFirstName() + " " + user.getLastName() + " ("+user.getUsername()+" - " + getRoles().get(0).getRole() + ")";
 	}
 
 }

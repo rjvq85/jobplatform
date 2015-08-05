@@ -1,8 +1,10 @@
 package pt.criticalsoftware.service.persistence;
 
+import java.util.Collection;
 import java.util.List;
 
 import pt.criticalsoftware.service.model.IUser;
+import pt.criticalsoftware.service.model.dtos.NotificationDTO;
 import pt.criticalsoftware.service.model.dtos.UserDTO;
 import pt.criticalsoftware.service.persistence.roles.Role;
 
@@ -15,5 +17,9 @@ public interface IUserPersistenceService {
 	List<Role> getRoles(Integer id);
 
 	IUser create(IUser user);
+
+	Collection<IUser> getAllUsers();
+
+	void saveUsers(Collection<IUser> users);
 
 }

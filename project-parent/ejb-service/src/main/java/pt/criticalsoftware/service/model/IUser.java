@@ -32,4 +32,8 @@ public interface IUser {
 
 	String getUsername();
 
+	boolean isEditable();
+
+	void setEditable(boolean editable);
+
 }

@@ -1,6 +1,7 @@
 package pt.criticalsoftware.service.business;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -61,5 +62,16 @@ public class UserBusinessService implements IUserBusinessService {
 		//falta o true
 		return false;
 	}
+	
+	@Override
+	public Collection<IUser> getAllUsers() {
+		return userpersistence.getAllUsers();
+	}
+
+	@Override
+	public void saveUsers(Collection<IUser> users) {
+		userpersistence.saveUsers(users);
+	}
+	
 
 }

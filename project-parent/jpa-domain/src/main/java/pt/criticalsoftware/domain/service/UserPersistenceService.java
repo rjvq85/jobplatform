@@ -1,6 +1,8 @@
 package pt.criticalsoftware.domain.service;
 
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -11,10 +13,14 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.resource.spi.IllegalStateException;
 
+import pt.criticalsoftware.domain.entities.NotificationEntity;
 import pt.criticalsoftware.domain.entities.UserEntity;
 import pt.criticalsoftware.domain.proxies.IEntityAware;
 import pt.criticalsoftware.domain.proxies.UserProxy;
 import pt.criticalsoftware.service.model.IUser;
+import pt.criticalsoftware.service.model.dtos.DozerMapperSingl;
+import pt.criticalsoftware.service.model.dtos.NotificationDTO;
+import pt.criticalsoftware.service.model.dtos.UserDTO;
 import pt.criticalsoftware.service.persistence.IUserPersistenceService;
 import pt.criticalsoftware.service.persistence.roles.Role;
 
@@ -53,6 +59,20 @@ public class UserPersistenceService implements IUserPersistenceService {
 		
 	}
 	
+	@Override
+	public Collection<IUser> getAllUsers() {
+		TypedQuery<UserEntity> query = em.createNamedQuery("User.getAll", UserEntity.class);
+		Collection<UserEntity> entities = query.getResultList();
+		Collection<IUser> proxies = new ArrayList<>();
+		for (UserEntity ue : entities) {
+			UserDTO u = DozerMapperSingl.dozerMapper.map(ue, UserDTO.class);
+			UserProxy up = new UserProxy(ue);
+			up.setRoles(u.getRoles());
+			proxies.add(new UserProxy(ue));
+		}
+		return proxies;
+	}
+	
 	@SuppressWarnings("unchecked")
 	public UserEntity getEntity(IUser user) throws IllegalStateException {
 		if (user instanceof IEntityAware<?>) {
@@ -73,6 +93,20 @@ public class UserPersistenceService implements IUserPersistenceService {
 		} catch (NoResultException e) {
 			//log.info("O mail não existe");
 			return false;
+		}
+	}
+
+	@Override
+	public void saveUsers(Collection<IUser> users) {
+		UserEntity entity;
+		for (IUser user : users) {
+			try {
+				entity = getEntity(user);
+				em.merge(entity);
+			} catch (IllegalStateException e) {
+				System.out.println("Falhou ao fazer update");
+				e.printStackTrace();
+			}
 		}
 	}
 

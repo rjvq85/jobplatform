@@ -19,7 +19,7 @@ public class UserDTO {
 	private String lastName;
 	
 	private Collection<Role> roles;
-
+	
 	public Integer getId() {
 		return id;
 	}

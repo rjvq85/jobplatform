@@ -4,4 +4,6 @@ public interface IModelFactory {
 
 	IUser user();
 
+	INotification notification();
+
 }

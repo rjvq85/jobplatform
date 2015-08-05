@@ -32,4 +32,24 @@
 			<b>roles</b>
 		</field>
 	</mapping>
+	<mapping>
+		<class-a>pt.criticalsoftware.domain.entities.NotificationEntity</class-a>
+		<class-b>pt.criticalsoftware.service.model.dtos.NotificationDTO</class-b>
+		<field>
+			<a>id</a>
+			<b>id</b>
+		</field>
+		<field>
+			<a>date</a>
+			<b>date</b>
+		</field>
+		<field>
+			<a>situation</a>
+			<b>situation</b>
+		</field>
+		<field>
+			<a>text</a>
+			<b>text</b>
+		</field>
+	</mapping>
 </mappings> 

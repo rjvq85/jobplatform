@@ -19,10 +19,12 @@ import org.dozer.Mapper;
 public class DozerMapperSingl {
 	
 	private static List<String> dozermapping = new ArrayList<>();
+	public static Mapper dozerMapper;
 	
 	@PostConstruct
 	void mapping() {
 		dozermapping.add("META-INF/dtomapping.xml");
+		dozerMapper = DozerMapperSingl.getInstance();
 	}
 	
 	public static DozerBeanMapper getInstance(){

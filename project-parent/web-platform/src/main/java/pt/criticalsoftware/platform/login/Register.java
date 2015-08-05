@@ -8,6 +8,7 @@ import javax.inject.Named;
 import pt.criticalsoftware.service.business.IUserBusinessService;
 import pt.criticalsoftware.service.persistence.roles.Role;
 
+
 @Named
 @RequestScoped
 public class Register {
@@ -75,15 +76,14 @@ public class Register {
 				
 		boolean success=userservice.createUser(this.username, this.password, this.email, this.firstName, this.lastName, this.roleUser);
 		
-//				if(success){
-//					FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
-//							"User registered successfully.", "");
-//					FacesContext.getCurrentInstance().addMessage(null, message);
-//				} else {
-//					FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-//							"E-mail already registered", "");
-//					FacesContext.getCurrentInstance().addMessage(null, message);
-//				}
+				if(success){
+					FacesContext.getCurrentInstance().addMessage(null,
+			                new FacesMessage("O Utilizador " + this.firstName + " " + this.lastName+ " foi criado com sucesso"));
+				} else {
+					FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+							"E-mail already registered", "");
+					FacesContext.getCurrentInstance().addMessage(null, message);
+				}
 	}
 
 }

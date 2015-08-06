@@ -41,7 +41,7 @@ public class Login {
 	}
 
 	public String login() {
-		FacesContext context = FacesContext.getCurrentInstance();
+		FacesContext context = currentFacesContext();
 		HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
 		try {
 			request.login(username, password);
@@ -55,7 +55,7 @@ public class Login {
 	}
 
 	public String logout() {
-		FacesContext context = FacesContext.getCurrentInstance();
+		FacesContext context = currentFacesContext();
 		HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
 		HttpSession session = request.getSession();
 		try {
@@ -97,10 +97,14 @@ public class Login {
 	}
 
 	public void setUserLogged(Integer id) {
-		FacesContext context = FacesContext.getCurrentInstance();
+		FacesContext context = currentFacesContext();
 		HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
 		HttpSession session = request.getSession();
 		session.setAttribute("userID", id);
+	}
+	
+	private FacesContext currentFacesContext() {
+		return FacesContext.getCurrentInstance();
 	}
 
 }

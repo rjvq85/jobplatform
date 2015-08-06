@@ -8,8 +8,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import pt.criticalsoftware.service.model.INotification;
-import pt.criticalsoftware.service.model.INotificationBuilder;
 import pt.criticalsoftware.service.model.IUser;
+import pt.criticalsoftware.service.model.builders.INotificationBuilder;
 
 public class NotificationBuilder implements INotificationBuilder {
 	

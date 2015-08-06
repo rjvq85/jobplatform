@@ -1,6 +1,9 @@
-package pt.criticalsoftware.service.model;
+package pt.criticalsoftware.service.model.builders;
 
 import java.time.LocalDate;
+
+import pt.criticalsoftware.service.model.INotification;
+import pt.criticalsoftware.service.model.IUser;
 
 public interface INotificationBuilder {
 

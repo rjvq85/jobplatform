@@ -9,7 +9,7 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 import pt.criticalsoftware.service.model.IUser;
-import pt.criticalsoftware.service.model.IUserBuilder;
+import pt.criticalsoftware.service.model.builders.IUserBuilder;
 import pt.criticalsoftware.service.persistence.IUserPersistenceService;
 import pt.criticalsoftware.service.persistence.roles.Role;
 

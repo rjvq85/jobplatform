@@ -1,5 +1,6 @@
-package pt.criticalsoftware.service.model;
+package pt.criticalsoftware.service.model.builders;
 
+import pt.criticalsoftware.service.model.IUser;
 import pt.criticalsoftware.service.persistence.roles.Role;
 public interface IUserBuilder {
 

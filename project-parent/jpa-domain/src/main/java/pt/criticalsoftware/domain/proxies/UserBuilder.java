@@ -11,7 +11,7 @@ import javax.enterprise.context.RequestScoped;
 import com.sun.syndication.io.impl.Base64;
 
 import pt.criticalsoftware.service.model.IUser;
-import pt.criticalsoftware.service.model.IUserBuilder;
+import pt.criticalsoftware.service.model.builders.IUserBuilder;
 import pt.criticalsoftware.service.persistence.roles.Role;
 
 @RequestScoped

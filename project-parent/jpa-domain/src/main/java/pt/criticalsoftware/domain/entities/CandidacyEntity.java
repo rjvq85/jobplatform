@@ -1,5 +1,6 @@
 package pt.criticalsoftware.domain.entities;
 
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,50 +13,46 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import pt.criticalsoftware.service.persistence.states.CandidacyState;
 
 @Entity
-@Table(name="candidaturas")
+@Table(name = "candidaturas")
 
-@NamedQueries({
-@NamedQuery(name="Candidacy.findAll", query="select p from CandidacyEntity p ")
-}
-)
+@NamedQueries({ @NamedQuery(name = "Candidacy.findAll", query = "select p from CandidacyEntity p ") })
 
 public class CandidacyEntity {
-	
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
-	
-	@Column(name="carta_motivacao",nullable=false)
+
+	@Column(name = "carta_motivacao", nullable = false)
 	private String motivationLetter;
-	
-	@Column(name="fonte",nullable=false)
+
+	@Column(name = "fonte", nullable = false)
 	private String source;
-	
+
 	@Enumerated(EnumType.STRING)
-	@Column(name="estado_candidatura",nullable=false)
+	@Column(name = "estado_candidatura", nullable = false)
 	private CandidacyState state;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "candidato")
 	private CandidateEntity candidate;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "posicao")
 	private PositionEntity positionCandidacy;
-	
-	@OneToOne
-	@JoinColumn(name="entrevista")
-	private InterviewEntity interview;
+
+	@OneToMany(mappedBy = "candidacy")
+	@JoinColumn(name = "entrevistas")
+	private List<InterviewEntity> interviews;
 
 	public CandidacyEntity() {
-		
+
 	}
 
 	public String getMotivationLetter() {
@@ -102,18 +99,14 @@ public class CandidacyEntity {
 		this.positionCandidacy = positionCandidacy;
 	}
 
-	public InterviewEntity getInterview() {
-		return interview;
+	public List<InterviewEntity> getInterviews() {
+		return interviews;
 	}
 
-	public void setInterview(InterviewEntity interview) {
-		this.interview = interview;
+	public void setInterviews(List<InterviewEntity> interviews) {
+		this.interviews = interviews;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
-	} 
-	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -138,5 +131,4 @@ public class CandidacyEntity {
 			return false;
 		return true;
 	}
-
 }

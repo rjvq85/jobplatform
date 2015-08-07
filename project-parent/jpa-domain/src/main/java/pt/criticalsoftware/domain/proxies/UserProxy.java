@@ -1,8 +1,6 @@
 package pt.criticalsoftware.domain.proxies;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 import pt.criticalsoftware.domain.entities.InterviewEntity;
 import pt.criticalsoftware.domain.entities.NotificationEntity;

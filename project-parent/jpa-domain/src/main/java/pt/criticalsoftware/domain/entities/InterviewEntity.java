@@ -11,7 +11,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -47,7 +46,7 @@ public class InterviewEntity {
 	@JoinColumn(name = "posicao da entrevista")
 	private PositionEntity position;
 	
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name="candidato")
 	private CandidacyEntity candidacy;
 

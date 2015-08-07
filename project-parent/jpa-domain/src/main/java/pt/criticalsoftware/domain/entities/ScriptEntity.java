@@ -26,7 +26,7 @@ import pt.criticalsoftware.domain.entities.questions.Question;
 }
 )
 
-public class InterviewScriptEntity {
+public class ScriptEntity {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -47,7 +47,7 @@ public class InterviewScriptEntity {
 	
 	
 
-	public InterviewScriptEntity() {
+	public ScriptEntity() {
 		
 	}
 
@@ -103,7 +103,7 @@ public class InterviewScriptEntity {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		InterviewScriptEntity other = (InterviewScriptEntity) obj;
+		ScriptEntity other = (ScriptEntity) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

@@ -40,7 +40,7 @@ public class InterviewEntity {
 	
 	@ManyToOne
 	@JoinColumn(name = "guiao")
-	private InterviewScriptEntity script;
+	private ScriptEntity script;
 	
 	@ManyToOne
 	@JoinColumn(name = "posicao da entrevista")
@@ -78,11 +78,11 @@ public class InterviewEntity {
 		this.interviewer = interviewer;
 	}
 
-	public InterviewScriptEntity getScript() {
+	public ScriptEntity getScript() {
 		return script;
 	}
 
-	public void setScript(InterviewScriptEntity script) {
+	public void setScript(ScriptEntity script) {
 		this.script = script;
 	}
 

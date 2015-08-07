@@ -1,5 +1,6 @@
 package pt.criticalsoftware.domain.proxies;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -10,15 +11,13 @@ import pt.criticalsoftware.domain.entities.InterviewEntity;
 import pt.criticalsoftware.domain.entities.PositionEntity;
 import pt.criticalsoftware.service.model.ICandidacy;
 import pt.criticalsoftware.service.model.ICandidate;
-import pt.criticalsoftware.service.model.IModelFactory;
+import pt.criticalsoftware.service.model.IInterview;
+import pt.criticalsoftware.service.model.IPosition;
 import pt.criticalsoftware.service.persistence.states.CandidacyState;
 
 public class CandidacyProxy implements ICandidacy, IEntityAware<CandidacyEntity> {
 	
 	private CandidacyEntity candidacy;
-	
-	@Inject
-	private IModelFactory modelfactory;
 	
 	@Override
 	public CandidacyEntity getEntity() {
@@ -83,23 +82,36 @@ public class CandidacyProxy implements ICandidacy, IEntityAware<CandidacyEntity>
 	}
 
 	@Override
-	public PositionEntity getPositionCandidacy() {
-		return candidacy.getPositionCandidacy();
+	public IPosition getPositionCandidacy() {
+		return new PositionProxy(candidacy.getPositionCandidacy());
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public void setPositionCandidacy(IPosition position) {
+		if (position instanceof IEntityAware<?>) {
+			candidacy.setPositionCandidacy(((IEntityAware<PositionEntity>) position).getEntity());
+		}
 	}
 
 	@Override
-	public void setPositionCandidacy(PositionEntity positionCandidacy) {
-		candidacy.setPositionCandidacy(positionCandidacy);
-	}
-
-	@Override
-	public List<InterviewEntity> getInterviews() {
-		return candidacy.getInterviews();
+	public List<IInterview> getInterviews() {
+		List<IInterview> interviews = new ArrayList<>();
+		for (InterviewEntity interview:candidacy.getInterviews()) {
+			interviews.add(new InterviewProxy(interview));
+		}
+		return interviews;
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
-	public void setInterviews(List<InterviewEntity> interviews) {
-		candidacy.setInterviews(interviews);
+	public void setInterviews(List<IInterview> interviews) {
+		List<InterviewEntity> interviewsEnt = new ArrayList<>();
+		for (IInterview interview : interviews) {
+			if (interview instanceof IEntityAware<?>) {
+				interviewsEnt.add(((IEntityAware<InterviewEntity>) interview).getEntity());
+			}
+		}
 	}
 	
 	

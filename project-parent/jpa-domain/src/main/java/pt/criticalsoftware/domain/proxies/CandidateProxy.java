@@ -19,11 +19,6 @@ public class CandidateProxy implements ICandidate, IEntityAware<CandidateEntity>
 	public CandidateProxy(CandidateEntity entity) {
 		candidate = entity != null ? entity : new CandidateEntity();
 	}
-
-	@Override
-	public void setEntity(CandidateEntity t) {
-		candidate = t;
-	}
 	
 	
 

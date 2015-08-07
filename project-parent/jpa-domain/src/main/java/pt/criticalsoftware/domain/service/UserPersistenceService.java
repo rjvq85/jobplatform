@@ -7,19 +7,25 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.resource.spi.IllegalStateException;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.criticalsoftware.domain.entities.UserEntity;
 import pt.criticalsoftware.domain.proxies.IEntityAware;
 import pt.criticalsoftware.domain.proxies.UserProxy;
+import pt.criticalsoftware.service.exceptions.DuplicateEmailException;
+import pt.criticalsoftware.service.exceptions.DuplicateUsernameException;
 import pt.criticalsoftware.service.model.IUser;
 import pt.criticalsoftware.service.persistence.IUserPersistenceService;
 import pt.criticalsoftware.service.persistence.roles.Role;
 
 @Stateless
 public class UserPersistenceService implements IUserPersistenceService {
+	
+	private final Logger logger = LoggerFactory.getLogger(UserPersistenceService.class);
 	
 	@PersistenceContext(unitName = "Jobs")
 	private EntityManager em;
@@ -62,17 +68,27 @@ public class UserPersistenceService implements IUserPersistenceService {
 	}
 
 	@Override
-	public boolean verifyEmail(String email) {
-		Query q = em
-				.createQuery("select u.email from UserEntity u where u.email= :email");
-		q.setParameter("email", email);
+	public void verifyEmail(String email) throws DuplicateEmailException {
+		TypedQuery<UserEntity> q = em
+				.createNamedQuery("User.verifyEmail",UserEntity.class)
+				.setParameter("email", email);
 		try {
-			String emailTemp = (String) q.getSingleResult();
-			//log.error("O mail existe");
-			return true;
-		} catch (NoResultException e) {
-			//log.info("O mail não existe");
-			return false;
+			q.getSingleResult().getEmail();
+			throw new DuplicateEmailException("O endereço de e-mail "+email+" não está disponível");
+		} catch (NoResultException nre) {
+			logger.info("O e-mail "+email+" está disponível para registo");
+		}
+	}
+
+	@Override
+	public void verifyUsername(String username) throws DuplicateUsernameException {
+		TypedQuery<UserEntity> q = em.createNamedQuery("User.verifyUsername",UserEntity.class)
+				.setParameter("username", username);
+		try {
+			q.getSingleResult();
+			throw new DuplicateUsernameException("O username "+username+" não está disponível");
+		} catch (NoResultException nre) {
+			logger.info("O username "+username+" está disponível para registo");
 		}
 	}
 

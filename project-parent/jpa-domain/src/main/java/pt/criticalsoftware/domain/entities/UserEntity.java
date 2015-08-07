@@ -25,7 +25,8 @@ import pt.criticalsoftware.service.persistence.roles.Role;
 @Table(name="utilizadores")
 @NamedQueries({
 	@NamedQuery(name = "User.findIdByUsername",query="SELECT u.id FROM UserEntity u WHERE u.username = :username"),
-	@NamedQuery(name = "User.getRoles",query="SELECT r FROM UserEntity u join u.roles r WHERE u.id = :id")
+	@NamedQuery(name = "User.verifyEmail", query = "SELECT u FROM UserEntity u WHERE u.email = :email"),
+	@NamedQuery(name = "User.verifyUsername", query = "SELECT u FROM UserEntity u WHERE u.username = :username"),
 })
 public class UserEntity implements Serializable {
 	
@@ -38,13 +39,13 @@ public class UserEntity implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	
-	@Column(name="nome_utilizador", nullable=false)
+	@Column(name="nome_utilizador", nullable=false, unique = true)
 	private String username;
 	
 	@Column(name="palavra_passe",nullable=false)
 	private String password;
 	
-	@Column(name="endereco_email",nullable=false)
+	@Column(name="endereco_email",nullable=false, unique = true)
 	private String email;
 	
 	@Column(name="primeiro_nome",nullable=false)

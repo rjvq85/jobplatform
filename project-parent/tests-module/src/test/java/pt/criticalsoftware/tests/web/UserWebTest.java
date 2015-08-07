@@ -35,6 +35,8 @@ import java.io.File;
 import pt.criticalsoftware.platform.login.Login;
 import pt.criticalsoftware.platform.login.Register;
 import pt.criticalsoftware.service.business.IUserBusinessService;
+import pt.criticalsoftware.service.exceptions.DuplicateEmailException;
+import pt.criticalsoftware.service.exceptions.DuplicateUsernameException;
 import pt.criticalsoftware.service.persistence.roles.Role;
 import pt.criticalsoftware.tests.web.utils.ContextMocker;
 
@@ -84,11 +86,32 @@ public class UserWebTest {
 		assertEquals("loginerror",landingpage);
 	}
 	
-	@Ignore
-	public void registerTest() {
-		boolean success = userservice.createUser("abc", "1234", "abc@email.com", "A", "BC", Role.GESTOR);
+	@Test
+	public void registerEmailFailTest() {
+		boolean exceptionThrown = false;
+		try {
+			userservice.createUser("username", "1234", "abc@email.com", "A", "BC", Role.GESTOR);
+		} catch (DuplicateEmailException e) {
+			exceptionThrown = true;
+		} catch (DuplicateUsernameException e) {
+			exceptionThrown = false;
+		}
 		
-		assertFalse(success);
+		assertTrue(exceptionThrown);
+	}
+	
+	@Test
+	public void registerUsernameFailTest() {
+		boolean exceptionThrown = false;
+		try {
+			userservice.createUser("abc", "1234", "email", "A", "BC", Role.GESTOR);
+		} catch (DuplicateEmailException e) {
+			exceptionThrown = false;
+		} catch (DuplicateUsernameException e) {
+			exceptionThrown = true;
+		}
+		
+		assertTrue(exceptionThrown);
 	}
 
 }

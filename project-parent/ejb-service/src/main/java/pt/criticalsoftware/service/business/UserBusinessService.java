@@ -7,6 +7,11 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import pt.criticalsoftware.service.exceptions.DuplicateEmailException;
+import pt.criticalsoftware.service.exceptions.DuplicateUsernameException;
 import pt.criticalsoftware.service.model.IUser;
 import pt.criticalsoftware.service.model.IUserBuilder;
 import pt.criticalsoftware.service.persistence.IUserPersistenceService;
@@ -14,6 +19,8 @@ import pt.criticalsoftware.service.persistence.roles.Role;
 
 @Stateless
 public class UserBusinessService implements IUserBusinessService {
+
+	private final Logger logger = LoggerFactory.getLogger(UserBusinessService.class);
 
 	@EJB
 	private IUserPersistenceService userpersistence;
@@ -35,31 +42,22 @@ public class UserBusinessService implements IUserBusinessService {
 
 	@Override
 
-	public boolean createUser(String username, String password, String email, String fn, String ln, Role role) {
-		System.out.println("Entrou");
-		if (!verifyEmail(email)){
-			//build new user
-			IUser user = userbuilder
-					.username(username)
-					.password(password)
-					.email(email)
-					.firstName(fn)
-					.lastName(ln)
-					.role(role)
-					.build();
-			userpersistence.create(user);
-			return true;
-		}
-		else
-			return false;
-
+	public void createUser(String username, String password, String email, String fn, String ln, Role role) throws DuplicateEmailException, DuplicateUsernameException {
+		verifyEmail(email);
+		verifyUsername(username);
+		IUser user = userbuilder.username(username).password(password).email(email).firstName(fn).lastName(ln)
+				.role(role).build();
+		userpersistence.create(user);
 	}
 
 	@Override
-	public boolean verifyEmail(String email) {
+	public void verifyEmail(String email) throws DuplicateEmailException {
 		userpersistence.verifyEmail(email);
-		//falta o true
-		return false;
+	}
+
+	@Override
+	public void verifyUsername(String username) throws DuplicateUsernameException {
+		userpersistence.verifyUsername(username);
 	}
 
 }

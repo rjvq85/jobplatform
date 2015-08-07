@@ -50,7 +50,7 @@ public class UserBusinessService implements IUserBusinessService {
 		userpersistence.create(user);
 	}
 
-	@Override
+
 	public void verifyEmail(String email) throws DuplicateEmailException {
 		userpersistence.verifyEmail(email);
 	}
@@ -58,6 +58,7 @@ public class UserBusinessService implements IUserBusinessService {
 	@Override
 	public void verifyUsername(String username) throws DuplicateUsernameException {
 		userpersistence.verifyUsername(username);
+
 	}
 
 }

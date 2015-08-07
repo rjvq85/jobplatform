@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<meta charset="utf-8" />
+	<h:outputStylesheet library="css" name="positionListAdmin.css" />
+</h:head>
+<h:body>
+	<h2>Posições</h2>
+	<p:separator />
+	<h:form id="positionForm">
+		<!-- toolbar with buttons add, edit, and delete-->
+		<p:toolbar id="toolbarPosition">
+			<p:toolbarGroup align="right">
+			
+				<!-- botao nova playlist -->
+				<p:commandButton type="button" icon="ui-icon-document"
+					onclick="PF('dialogNewPosition').show(); return false;">
+					<p:resetInput target=":formNewPosition: dialogNewPosition"></p:resetInput>
+				</p:commandButton>
+
+				<!-- Edit position dialog -->
+				<p:commandButton type="button" icon="ui-icon-pencil"
+					disabled="#{positionListView.selectedPosition==null}"
+					onclick="PF('dialogEditPosition').show(); return false;"
+					update=":formEditPosition:dialogEditPosition">
+				</p:commandButton>
+
+				<!-- Seleccionar eliminar playlist -->
+				<p:commandButton type="button" icon="ui-icon-trash"
+					disabled="#{positionListView.selectedPosition==null}"
+					onclick="PF('deleteDialog').show(); return false;">
+				</p:commandButton>
+
+				<p:confirmDialog header="Confirmação de eliminação"
+					message="Pretende eliminar esta playlist?"
+					widgetVar="deleteDialog" showEffect="explode"
+					hideEffect="explode">
+					<p:commandButton value="Yes" action="#{positionListView.deletePosition}"
+						oncomplete="PF('deleteDialog').hide()"
+						update="gridplaylists toolbar :right-bar :right-panel"></p:commandButton>
+					<p:button value="Cancel"
+						onclick="PF('deleteDialog').hide(); return false;" />
+				</p:confirmDialog>
+				<span class="ui-separator"><span
+					class="ui-icon ui-icon-grip-dotted-vertical" /> </span>
+				<!-- depois deste separador vem a pesquisa de posições -->
+				
+			</p:toolbarGroup>
+		</p:toolbar>
+
+		<!-- Positions list -->
+		<p:dataList value="#{positionListView.positions}" var="position"
+			type="unordered" itemType="none" paginator="true" rows="10"
+			styleClass="paginated">
+			<f:facet name="header">
+           			 Posições
+       			    </f:facet>
+
+			<p:commandLink update=":form:positionDetail"
+				oncomplete="PF('positionDialog').show()" title="Posição"
+				styleClass="ui-icon ui-icon-search"
+				style="float:left;margin-right:10px">
+				<f:setPropertyActionListener value="#{position}"
+					target="#{positionListView.selectedPosition}" />
+				<h:outputText
+					value="#{position.openDate}, #{position.closeDate},#{position.reference},
+						#{position.title}, #{position.locale}, #{position.state},#{position.company}, 
+						#{position.technicalArea} " />
+			</p:commandLink>
+			<h:outputText
+				value="#{position.openDate}, #{position.closeDate},#{position.reference},
+						#{position.title}, #{position.locale}, #{position.state},#{position.company}, 
+						#{position.technicalArea} "
+				style="display:inline-block" />
+		</p:dataList>
+	</h:form>
+
+
+	<!-- Edit Position -->
+	<h:form  id="formEditPosition">
+		<p:dialog id="dialogEditPosition" header="Editar Posição" widgetVar="dialogEditPosition"
+			modal="true" showEffect="blind" hideEffect="explode"
+			resizable="false">
+			<p:outputPanel id="positionDetail" style="text-align:center;">
+				<p:panelGrid columns="2"
+					rendered="#{not empty positionListView.selectedPosition}"
+					columnClasses="label,value">
+
+					<h:outputText value="Código:" />
+					<h:outputText
+						value="#{positionListView.selectedPosition.reference}" />
+
+					<h:outputText value="Título" />
+					<h:outputText value="#{positionListView.selectedPosition.title}" />
+
+					<h:outputText value="Localização" />
+					<h:outputText value="#{positionListView.selectedPosition.locale}" />
+
+					<h:outputText value="Estado" />
+					<h:outputText value="#{positionListView.selectedPosition.state}" />
+					<!-- fiquei aqui :) -->
+					<h:outputText value="Número de vagas" />
+					<h:outputText
+						value="#{positionListView.selectedPosition.vacancies}" />
+
+					<h:outputText value="Responsável Técnico" />
+					<h:outputText
+						value="#{positionListView.selectedPosition.responsable}" />
+
+					<h:outputText value="Empresa" />
+					<h:outputText value="#{positionListView.selectedPosition.company}" />
+
+					<h:outputText value="Descrição" />
+					<h:outputText
+						value="#{positionListView.selectedPosition.description}" />
+
+					<h:outputText value="Guião(Entrevista)" />
+					<h:outputText value="#{positionListView.selectedPosition.company}" />
+
+					<h:outputText value="Canais de Publicação" />
+					<h:outputText
+						value="#{positionListView.selectedPosition.description}" />
+
+				</p:panelGrid>
+			</p:outputPanel>
+
+			<p:button value="Cancel" type="button"
+				style="width:100px; margin-right:10px; margin-top:15px;"
+				onclick="PF('dialogEditPosition').hide(); return false;"
+				icon="ui-icon-cancel"></p:button>
+
+			<p:commandButton value="Ok"
+				style="width:100px;margin-left:10px;margin-top:15px;"
+				action="#{positionListView.updatePosition}"
+				oncomplete="if (!args.validationFailed)PF('dialogEditPosition').hide()"
+				update="positionDiv: positionForm" icon="ui-icon-check"></p:commandButton>
+		</p:dialog>
+	</h:form>
+	<!-- End Edit Position -->
+	
+	<!-- Add Position -->
+	<h:form  id="formNewPosition">
+		<p:dialog id="dialogNewPosition" header="Adicionar Posição" widgetVar="dialogNewPosition"
+			modal="true" showEffect="blind" hideEffect="explode"
+			resizable="false">
+			<p:outputPanel id="newPositionDetail" style="text-align:center;">
+				<p:panelGrid columns="2"
+					rendered="#{not empty positionListView.selectedPosition}"
+					columnClasses="label,value">
+
+					<h:outputText value="Código:" />
+					<h:outputText
+						value="#{positionListView.selectedPosition.reference}" />
+
+					<h:outputText value="Título" />
+					<h:outputText value="#{positionListView.selectedPosition.title}" />
+
+					<h:outputText value="Localização" />
+					<h:outputText value="#{positionListView.selectedPosition.locale}" />
+
+					<h:outputText value="Estado" />
+					<h:outputText value="#{positionListView.selectedPosition.state}" />
+					<!-- fiquei aqui :) -->
+					<h:outputText value="Número de vagas" />
+					<h:outputText
+						value="#{positionListView.selectedPosition.vacancies}" />
+
+					<h:outputText value="Responsável Técnico" />
+					<h:outputText
+						value="#{positionListView.selectedPosition.responsable}" />
+
+					<h:outputText value="Empresa" />
+					<h:outputText value="#{positionListView.selectedPosition.company}" />
+
+					<h:outputText value="Descrição" />
+					<h:outputText
+						value="#{positionListView.selectedPosition.description}" />
+
+					<h:outputText value="Guião(Entrevista)" />
+					<h:outputText value="#{positionListView.selectedPosition.company}" />
+
+					<h:outputText value="Canais de Publicação" />
+					<h:outputText
+						value="#{positionListView.selectedPosition.description}" />
+
+				</p:panelGrid>
+			</p:outputPanel>
+
+			<p:button value="Cancel" type="button"
+				style="width:100px; margin-right:10px; margin-top:15px;"
+				onclick="PF('dialogNewPosition').hide(); return false;"
+				icon="ui-icon-cancel"></p:button>
+
+			<p:commandButton value="Ok"
+				style="width:100px;margin-left:10px;margin-top:15px;"
+				action="#{positionListView.newPosition}"
+				oncomplete="if (!args.validationFailed)PF('dialogNewPosition').hide()"
+				update="positionDiv: positionForm" icon="ui-icon-check"></p:commandButton>
+		</p:dialog>
+	</h:form>
+	<!-- End Add Position -->
+	
+	
+</h:body>
+</html>

@@ -57,9 +57,7 @@ public class UserBusinessService implements IUserBusinessService {
 
 	@Override
 	public boolean verifyEmail(String email) {
-		userpersistence.verifyEmail(email);
-		//falta o true
-		return false;
+		return userpersistence.verifyEmail(email);
 	}
 
 }

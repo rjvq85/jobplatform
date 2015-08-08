@@ -52,4 +52,57 @@
 			<b>state</b>
 		</field>
 	</mapping>
+	<mapping>
+		<class-a>pt.criticalsoftware.domain.entities.PositionEntity</class-a>
+		<class-b>pt.criticalsoftware.service.model.dtos.PositionDTO</class-b>
+		<field>
+			<a>id</a>
+			<b>id</b>
+		</field>
+		<field>
+			<a>openDate</a>
+			<b>openDate</b>
+		</field>
+		<field>
+			<a>closeDate</a>
+			<b>closeDate</b>
+		</field>
+		<field>
+			<a>reference</a>
+			<b>reference</b>
+		</field>
+		<field>
+			<a>title</a>
+			<b>title</b>
+		</field>
+		<field>
+			<a>locale</a>
+			<b>locale</b>
+		</field>
+		<field>
+			<a>state</a>
+			<b>state</b>
+		</field>
+		<field>
+			<a>company</a>
+			<b>company</b>
+		</field>
+		<field>
+			<a>technicalArea</a>
+			<b>technicalArea</b>
+		</field>
+		<field>
+			<a>sla</a>
+			<b>sla</b>
+		</field>
+		<field>
+			<a>vacancies</a>
+			<b>vacancies</b>
+		</field>
+		<field>
+			<a>description</a>
+			<b>description</b>
+		</field>
+	</mapping>
+	
 </mappings> 

@@ -160,5 +160,11 @@ public class PositionProxy implements IEntityAware<PositionEntity>, IPosition {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	@Override
+	public String toString() {
+		if (null == position.getId()) return "Espontânea";
+		return position.getId().toString();
+	}
 
 }

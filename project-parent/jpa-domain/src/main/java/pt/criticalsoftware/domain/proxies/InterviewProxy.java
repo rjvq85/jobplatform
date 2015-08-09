@@ -6,6 +6,7 @@ import pt.criticalsoftware.domain.entities.InterviewEntity;
 import pt.criticalsoftware.domain.entities.ScriptEntity;
 import pt.criticalsoftware.domain.entities.UserEntity;
 import pt.criticalsoftware.service.model.IInterview;
+import pt.criticalsoftware.service.model.IScript;
 import pt.criticalsoftware.service.model.IUser;
 
 public class InterviewProxy implements IEntityAware<InterviewEntity>, IInterview {
@@ -58,13 +59,18 @@ public class InterviewProxy implements IEntityAware<InterviewEntity>, IInterview
 		}
 	}
 
-//	public InterviewScriptEntity getScript() {
-//		return script;
-//	}
-//
-//	public void setScript(InterviewScriptEntity script) {
-//		this.script = script;
-//	}
+	@Override
+	public IScript getScript() {
+		return new ScriptProxy(interview.getScript());
+	}
+
+	@Override
+	@SuppressWarnings("unchecked")
+	public void setScript(IScript script) {
+		if (script instanceof IEntityAware<?>) {
+			interview.setScript(((IEntityAware<ScriptEntity>) script).getEntity());
+		}
+	}
 
 	@Override
 	public Integer getId() {

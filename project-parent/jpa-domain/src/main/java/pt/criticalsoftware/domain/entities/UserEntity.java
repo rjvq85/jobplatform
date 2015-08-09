@@ -25,6 +25,7 @@ import pt.criticalsoftware.service.persistence.roles.Role;
 @Table(name="utilizadores")
 @NamedQueries({
 	@NamedQuery(name = "User.findIdByUsername",query="SELECT u.id FROM UserEntity u WHERE u.username = :username"),
+	@NamedQuery(name = "User.getRoles",query="SELECT r FROM UserEntity u join u.roles r WHERE u.id = :id"),
 	@NamedQuery(name = "User.verifyEmail", query = "SELECT u FROM UserEntity u WHERE u.email = :email"),
 	@NamedQuery(name = "User.verifyUsername", query = "SELECT u FROM UserEntity u WHERE u.username = :username"),
 })
@@ -153,6 +154,8 @@ public class UserEntity implements Serializable {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
+	
+	
 
 	@Override
 	public boolean equals(Object obj) {

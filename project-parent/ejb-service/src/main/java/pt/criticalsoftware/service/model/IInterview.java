@@ -2,6 +2,7 @@ package pt.criticalsoftware.service.model;
 
 import java.time.LocalDate;
 
+
 public interface IInterview {
 
 	LocalDate getDate();
@@ -17,5 +18,9 @@ public interface IInterview {
 	void setInterviewer(IUser interviewer);
 
 	Integer getId();
+
+	IScript getScript();
+
+	void setScript(IScript script);
 
 }

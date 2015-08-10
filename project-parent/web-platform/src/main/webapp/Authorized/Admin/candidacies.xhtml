@@ -17,78 +17,93 @@
 <h:body>
 	<ui:composition template="../Admin/Layout/layout.xhtml">
 		<ui:define name="content">
-			<div class="container" id="container">
-				<div class="title" id="title">
-					<div class="page-header">
-						<div class="row" id="titlerow">
-							<div class="col-md-8">
-								<h1>Candidaturas</h1>
+			<h:form id="candForm" prependId="false">
+				<div class="container" id="container">
+			<h:panelGroup id="candList" layout="block">
+					<div class="title" id="title">
+						<div class="page-header">
+							<div class="row" id="titlerow">
+								<div class="col-md-8">
+									<h1>Candidaturas</h1>
+								</div>
+								<div class="col-md-offset-2 col-md-2">
+									<div class="media">
+										<h:graphicImage styleClass="media-object" library="imgs"
+											name="logocritical.png"
+											style="min-height: 50px; height: 50px;" />
+									</div>
+								</div>
 							</div>
-							<div class="col-md-offset-2 col-md-2">
-								<div class="media">
-									<h:graphicImage styleClass="media-object" library="imgs"
-										name="logocritical.png"
-										style="min-height: 50px; height: 50px;" />
+						</div>
+						<div class="row">
+							<div class="col-md-3">
+								<div class="input-group">
+									<input type="text" class="form-control"
+										placeholder="Pesquisa de candidaturas" /><span
+										class="input-group-btn">
+										<button class="btn btn-default" type="button">Ir!</button>
+									</span>
+								</div>
+							</div>
+							<div class="col-md-offset-6 col-md-3">
+								<h5 class="bg-danger text-center">
+									<h:message id="mensagens" styleClass="bg-info" />
+								</h5>
+							</div>
+						</div>
+						<div class="row spacer"></div>
+						<h:panelGroup layout="block" styleClass="row"
+							rendered="#{empty candidacyListView.candidacies}">
+							<div class="col-md-4">
+								<h3>Sem resultados...</h3>
+							</div>
+						</h:panelGroup>
+						<h:panelGroup layout="block" styleClass="row"
+							rendered="#{not empty candidacyListView.candidacies}">
+							<div class="col-md-12">
+								<table class="table">
+									<thead>
+										<tr>
+											<th>Referência</th>
+											<th>Candidato</th>
+											<th>Posição</th>
+											<th>Entrevista</th>
+										</tr>
+									</thead>
+									<tbody id="myTable">
+										<ui:repeat var="c" value="#{candidacyListView.candidacies}">
+											<tr>
+												<td>C#{c.id}</td>
+												<td>#{c.candidate}</td>
+												<td>#{c.positionCandidacy}</td>
+												<td>Ver Entrevistas</td>
+											</tr>
+										</ui:repeat>
+									</tbody>
+								</table>
+							</div>
+						</h:panelGroup>
+						<h:panelGroup layout="block" styleClass="col-md-12 text-center"
+							rendered="#{not empty candidacyListView.candidacies}">
+							<ul class="pagination" id="myPagination"></ul>
+						</h:panelGroup>
+						<div class="page-header">
+							<div class="row">
+								<div class="col-md-5">
+									<a href="#" data-toggle="modal" data-target="#myModal"> <span
+										class="glyphicon glyphicon-plus-sign"></span>
+									</a>Adicionar Candidatura
 								</div>
 							</div>
 						</div>
 					</div>
-					<div class="row">
-						<div class="col-md-3">
-							<div class="input-group">
-								<input type="text" class="form-control"
-									placeholder="Pesquisa de candidaturas" /><span
-									class="input-group-btn">
-									<button class="btn btn-default" type="button">Ir!</button>
-								</span>
-							</div>
-						</div>
-					</div>
-					<div class="row spacer"></div>
-					<div class="row">
-						<div class="col-md-12">
-							<table class="table">
-								<thead>
-									<tr>
-										<th>Referência</th>
-										<th>Candidato</th>
-										<th>Posição</th>
-										<th>Entrevista</th>
-									</tr>
-								</thead>
-								<tbody id="myTable">
-									<ui:repeat var="c" value="#{candidacyListView.candidacies}">
-										<tr>
-											<td>C#{c.id}</td>
-											<td>#{c.candidate}</td>
-											<td>#{c.positionCandidacy}</td>
-											<td>Ver Entrevistas</td>
-										</tr>
-									</ui:repeat>
-								</tbody>
-							</table>
-						</div>
-					</div>
-					<div class="col-md-12 text-center">
-						<ul class="pagination" id="myPagination"></ul>
-					</div>
-					<div class="page-header">
-						<div class="row">
-							<div class="col-md-5">
-								<a href="#" data-toggle="modal" data-target="#myModal"> <span
-									class="glyphicon glyphicon-plus-sign"></span>
-								</a>Adicionar Candidatura
-							</div>
-						</div>
-					</div>
-				</div>
-				<!-- Modal -->
-				<div id="myModal" class="modal fade" role="dialog">
-					<div class="modal-dialog">
+					</h:panelGroup>
+					<!-- Modal -->
+					<div id="myModal" class="modal fade" role="dialog">
+						<div class="modal-dialog">
 
-						<!-- Modal content-->
-						<div class="modal-content">
-							<h:form prependId="false" id="form2">
+							<!-- Modal content-->
+							<div class="modal-content">
 								<div class="modal-header">
 									<button type="button" class="close" data-dismiss="modal"></button>
 									<h4 class="modal-title">Inserir Nova Candidatura</h4>
@@ -187,18 +202,18 @@
 								<div class="modal-footer ">
 									<h:commandButton action="#{newCandidacy.create()}"
 										value="Submeter" styleClass="btn btn-success ">
-										<f:ajax render="@all"
-											execute="firstname lastname email password username address city country course degree school mobile phone cv" />
 										<f:passThroughAttribute name="data-toggle" value="modal" />
 										<f:passThroughAttribute name="data-target" value="#myModal" />
+										<f:ajax  render="@form candList" execute="firstname lastname email password username
+										mobile phone address city country course degree school cv"/>
 									</h:commandButton>
 									<button type="reset" class="btn btn-danger ">Limpar</button>
 								</div>
-							</h:form>
+							</div>
 						</div>
 					</div>
 				</div>
-			</div>
+			</h:form>
 		</ui:define>
 	</ui:composition>
 </h:body>

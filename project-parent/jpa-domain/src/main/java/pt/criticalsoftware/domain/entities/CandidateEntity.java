@@ -12,76 +12,75 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
+import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name="candidatos")
+@Table(name = "candidatos")
 
-@NamedQueries({
-@NamedQuery(name="Candidate.findAll", query="select p from CandidateEntity p"),
-@NamedQuery(name="Candidate.findByFirstName", query="select p from CandidateEntity p where p.firstName = :firstName"),
-@NamedQuery(name="Candidate.findByLastName", query="select p from CandidateEntity p where p.lastName = :lastName"),
-@NamedQuery(name="Candidate.findByTown", query="select p from CandidateEntity p where p.town = :town"),
-@NamedQuery(name="Candidate.findByCountry", query="select p from CandidateEntity p where p.country = :country"),
-@NamedQuery(name="Candidate.findById", query="select p from CandidateEntity p where p.id = :candidateId ")
-}
-)
+@NamedQueries({ @NamedQuery(name = "Candidate.findAll", query = "select p from CandidateEntity p"),
+		@NamedQuery(name = "Candidate.findByFirstName", query = "select p from CandidateEntity p where p.firstName = :firstName"),
+		@NamedQuery(name = "Candidate.findByLastName", query = "select p from CandidateEntity p where p.lastName = :lastName"),
+		@NamedQuery(name = "Candidate.findByTown", query = "select p from CandidateEntity p where p.town = :town"),
+		@NamedQuery(name = "Candidate.findByCountry", query = "select p from CandidateEntity p where p.country = :country"),
+		@NamedQuery(name = "Candidate.findById", query = "select p from CandidateEntity p where p.id = :candidateId "),
+		@NamedQuery(name = "Candidate.findDuplicateByUsername", query = "SELECT COUNT(p) FROM CandidateEntity p where UPPER(p.username) LIKE :param"),
+		@NamedQuery(name = "Candidate.findDuplicateByEmail", query = "SELECT COUNT(p) FROM CandidateEntity p where UPPER(p.email) LIKE :param") })
 public class CandidateEntity {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
-	
-	@Column(name="nome_utilizador", nullable=false)
+
+	@Column(name = "nome_utilizador", nullable = false, unique = true)
 	private String username;
-	
-	@Column(name="palavra_passe",nullable=false)
+
+	@Column(name = "palavra_passe", nullable = false)
 	private String password;
-	
-	@Column(name="endereco_email",nullable=false)
+
+	@Column(name = "endereco_email", nullable = false, unique = true)
 	private String email;
-	
-	@Column(name="primeiro_nome",nullable=false)
+
+	@Column(name = "primeiro_nome", nullable = false)
 	private String firstName;
-	
-	@Column(name="sobrenome",nullable=false)
+
+	@Column(name = "sobrenome", nullable = false)
 	private String lastName;
-		
-	@Column(name="morada",nullable=false)
+
+	@Column(name = "morada", nullable = false)
 	private String address;
-	
-	@Column(name="cidade",nullable=false)
+
+	@Column(name = "cidade", nullable = false)
 	private String town;
-	
-	@Column(name="pais",nullable=false)
+
+	@Column(name = "pais", nullable = false)
 	private String country;
-	
-	@Column(name="telefone")
+
+	@Column(name = "telefone")
 	private Integer phone;
-	
-	@Column(name="telemovel",nullable=false, length=9)
+
+	@Column(name = "telemovel", nullable = false, length = 9)
 	private Integer mobilePhone;
-	
+
 	@ElementCollection
-	@Column(name="curso")
+	@Column(name = "curso")
 	private Collection<String> course;
-	
+
 	@ElementCollection
-	@Column(name="grau")
+	@Column(name = "grau")
 	private Collection<String> degree;
-	
+
 	@ElementCollection
-	@Column(name="universidade")
+	@Column(name = "universidade")
 	private Collection<String> university;
-	
-	@Column(name="cv")
+
+	@Column(name = "cv", unique = true)
 	private String cv;
-	
-	@OneToMany(mappedBy="candidate")
+
+	@OneToMany(mappedBy = "candidate")
 	private Collection<CandidacyEntity> candidacies;
-	
+
 	public CandidateEntity() {
-		
+
 	}
 
 	public String getUsername() {
@@ -123,6 +122,7 @@ public class CandidateEntity {
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
+
 	public String getAddress() {
 		return address;
 	}
@@ -232,5 +232,4 @@ public class CandidateEntity {
 		return true;
 	}
 
-	
 }

@@ -1,5 +1,8 @@
 package pt.criticalsoftware.platform.candidacy;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -15,14 +18,41 @@ public class CandidacyListView {
 
 	@EJB
 	private ICandidacyBusinessService business;
-	
+
 	private ICandidacy candidacy;
-	
+
 	private List<ICandidacy> candidacies;
-	
+
 	private ICandidacy newCandidacy;
-	
+
+	private String searchText;
+
 	public CandidacyListView() {
+	}
+
+	public void doSearch() {
+		if (null != searchText || !searchText.equals("")) {
+			Collection<ICandidacy> searchedCandidacies = new HashSet<ICandidacy>();
+			String[] params = searchText.split(" ");
+			for (String s : params) {
+				List<ICandidacy> cand = business.getSearchedCandidaciesAdmin(s.toUpperCase());
+				if (null != cand) {
+					for (ICandidacy ic : cand) {
+						searchedCandidacies.add(ic);
+						System.out.println("Entrou e adicionou: " + ic.getCandidate().getFirstName() + " "
+								+ ic.getCandidate().getLastName());
+					}
+				}
+			}
+			if (searchedCandidacies.size() != 0) {
+				List<ICandidacy> finalList = new ArrayList<>(searchedCandidacies);
+				candidacies = finalList;
+			} else candidacies = new ArrayList<>();
+		} else candidacies = new ArrayList<>();
+	}
+
+	public void clearSearch() {
+		candidacies = null;
 	}
 
 	public ICandidacy getCandidacy() {
@@ -51,7 +81,13 @@ public class CandidacyListView {
 	public void setNewCandidacy(ICandidacy newCandidacy) {
 		this.newCandidacy = newCandidacy;
 	}
-	
-	
+
+	public String getSearchText() {
+		return searchText;
+	}
+
+	public void setSearchText(String searchText) {
+		this.searchText = searchText;
+	}
 
 }

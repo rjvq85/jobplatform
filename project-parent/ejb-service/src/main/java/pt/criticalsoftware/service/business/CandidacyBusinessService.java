@@ -6,6 +6,7 @@ import javax.ejb.EJB;
 import javax.ejb.Stateful;
 import javax.persistence.NoResultException;
 
+import pt.criticalsoftware.service.exceptions.DuplicateCandidateException;
 import pt.criticalsoftware.service.model.ICandidacy;
 import pt.criticalsoftware.service.persistence.ICandidacyPersistenceService;
 
@@ -23,9 +24,18 @@ public class CandidacyBusinessService implements ICandidacyBusinessService {
 			return null;
 		}
 	}
+	
+	@Override
+	public List<ICandidacy> getSearchedCandidaciesAdmin(String param) {
+		try {
+			return persistence.searchAdminCandidacies(param);
+		} catch (NoResultException nre) {
+			return null;
+		}
+	}
 
 	@Override
-	public void createCandidacy(ICandidacy icandidacy) {
+	public void createCandidacy(ICandidacy icandidacy) throws DuplicateCandidateException {
 		persistence.newCandidacy(icandidacy);
 	}
 

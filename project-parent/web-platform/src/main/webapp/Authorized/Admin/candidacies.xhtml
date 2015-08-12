@@ -17,50 +17,62 @@
 <h:body>
 	<ui:composition template="../Admin/Layout/layout.xhtml">
 		<ui:define name="content">
-			<h:form id="candForm" prependId="false">
-				<div class="container" id="container">
-			<h:panelGroup id="candList" layout="block">
-					<div class="title" id="title">
-						<div class="page-header">
-							<div class="row" id="titlerow">
-								<div class="col-md-8">
+			<h:panelGroup layout="block" class="container" id="container">
+				<h:panelGroup id="candList" layout="block">
+					<h:panelGroup layout="block" class="title" id="title">
+						<h:panelGroup layout="block" class="page-header">
+							<h:panelGroup layout="block" class="row" id="titlerow">
+								<h:panelGroup layout="block" class="col-md-8">
 									<h1>Candidaturas</h1>
-								</div>
-								<div class="col-md-offset-2 col-md-2">
-									<div class="media">
+								</h:panelGroup>
+								<h:panelGroup layout="block" class="col-md-offset-2 col-md-2">
+									<h:panelGroup layout="block" class="media">
 										<h:graphicImage styleClass="media-object" library="imgs"
 											name="logocritical.png"
 											style="min-height: 50px; height: 50px;" />
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-md-3">
-								<div class="input-group">
-									<input type="text" class="form-control"
-										placeholder="Pesquisa de candidaturas" /><span
-										class="input-group-btn">
-										<button class="btn btn-default" type="button">Ir!</button>
-									</span>
-								</div>
-							</div>
-							<div class="col-md-offset-6 col-md-3">
+									</h:panelGroup>
+								</h:panelGroup>
+							</h:panelGroup>
+						</h:panelGroup>
+						<h:panelGroup layout="block" class="row">
+							<h:panelGroup layout="block" class="col-md-4">
+								<h:form prependId="false" id="form">
+									<h:panelGroup layout="block" class="input-group">
+										<h:panelGroup styleClass="input-group-btn">
+											<h:commandButton action="#{candidacyListView.clearSearch()}"
+												value="x" styleClass="btn btn-default">
+												<f:ajax render="lista" />
+											</h:commandButton>
+										</h:panelGroup>
+										<h:inputText id="campopesquisa"
+											value="#{candidacyListView.searchText}"
+											styleClass="form-control"
+											a:placeholder="Pesquisa de candidaturas" />
+										<h:panelGroup styleClass="input-group-btn">
+											<h:commandButton action="#{candidacyListView.doSearch()}"
+												value="Pesquisar" styleClass="btn btn-default">
+												<f:ajax execute="campopesquisa" render="lista" />
+											</h:commandButton>
+										</h:panelGroup>
+									</h:panelGroup>
+								</h:form>
+							</h:panelGroup>
+							<h:panelGroup layout="block" class="col-md-offset-6 col-md-3">
 								<h5 class="bg-danger text-center">
 									<h:message id="mensagens" styleClass="bg-info" />
 								</h5>
-							</div>
-						</div>
-						<div class="row spacer"></div>
+							</h:panelGroup>
+						</h:panelGroup>
+						<h:panelGroup layout="block" class="row spacer"></h:panelGroup>
 						<h:panelGroup layout="block" styleClass="row"
 							rendered="#{empty candidacyListView.candidacies}">
-							<div class="col-md-4">
+							<h:panelGroup layout="block" class="col-md-4">
 								<h3>Sem resultados...</h3>
-							</div>
+							</h:panelGroup>
 						</h:panelGroup>
-						<h:panelGroup layout="block" styleClass="row"
+						<h:panelGroup id="lista" layout="block" styleClass="row"
 							rendered="#{not empty candidacyListView.candidacies}">
-							<div class="col-md-12">
+							<h:panelGroup layout="block" class="col-md-12">
 								<table class="table">
 									<thead>
 										<tr>
@@ -81,139 +93,27 @@
 										</ui:repeat>
 									</tbody>
 								</table>
-							</div>
+							</h:panelGroup>
 						</h:panelGroup>
 						<h:panelGroup layout="block" styleClass="col-md-12 text-center"
 							rendered="#{not empty candidacyListView.candidacies}">
 							<ul class="pagination" id="myPagination"></ul>
 						</h:panelGroup>
-						<div class="page-header">
-							<div class="row">
-								<div class="col-md-5">
-									<a href="#" data-toggle="modal" data-target="#myModal"> <span
-										class="glyphicon glyphicon-plus-sign"></span>
-									</a>Adicionar Candidatura
-								</div>
-							</div>
-						</div>
-					</div>
+						<h:panelGroup layout="block" class="page-header">
+							<h:panelGroup layout="block" class="row">
+								<h:panelGroup layout="block" class="col-md-5">
+									<h:form prependId="false" id="addform">
+										<h:commandLink action="newcandidacy?faces-redirect=true"
+											styleClass="btn btn-primary">
+											<span class="glyphicon glyphicon-plus-sign"></span> Adicionar candidatura
+										</h:commandLink>
+									</h:form>
+								</h:panelGroup>
+							</h:panelGroup>
+						</h:panelGroup>
 					</h:panelGroup>
-					<!-- Modal -->
-					<div id="myModal" class="modal fade" role="dialog">
-						<div class="modal-dialog">
-
-							<!-- Modal content-->
-							<div class="modal-content">
-								<div class="modal-header">
-									<button type="button" class="close" data-dismiss="modal"></button>
-									<h4 class="modal-title">Inserir Nova Candidatura</h4>
-								</div>
-								<div id="mbody" class="modal-body">
-									<div class="row">
-										<div class="col-md-6">
-											<h:inputText id="firstname" value="#{newCandidacy.firstName}"
-												a:placeholder="Primeiro Nome" required="true"
-												styleClass="form-control" />
-										</div>
-										<div class="col-md-6">
-											<h:inputText id="lastname" value="#{newCandidacy.lastName}"
-												a:placeholder="Segundo Nome" required="true"
-												styleClass="form-control" />
-										</div>
-									</div>
-									<br />
-									<div class="row">
-										<div class="col-md-4">
-											<h:inputText id="email" value="#{newCandidacy.email}"
-												a:placeholder="E-mail" required="true"
-												styleClass="form-control" />
-										</div>
-										<div class="col-md-4">
-											<h:inputText id="username" value="#{newCandidacy.username}"
-												a:placeholder="Username" required="true"
-												styleClass="form-control" />
-										</div>
-										<div class="col-md-4">
-											<h:inputSecret id="password" value="#{newCandidacy.password}"
-												a:placeholder="Password" required="true"
-												styleClass="form-control" />
-										</div>
-									</div>
-									<br />
-									<div class="row">
-										<div class="col-md-12">
-											<h:inputText id="address" value="#{newCandidacy.address}"
-												a:placeholder="Morada" required="true"
-												styleClass="form-control" />
-										</div>
-									</div>
-									<br />
-									<div class="row">
-										<div class="col-md-4">
-											<h:inputText id="city" value="#{newCandidacy.city}"
-												a:placeholder="Cidade" required="true"
-												styleClass="form-control" />
-										</div>
-										<div class="col-md-4">
-											<h:inputText id="country" value="#{newCandidacy.country}"
-												a:placeholder="País" required="true"
-												styleClass="form-control" />
-										</div>
-									</div>
-									<br />
-									<div class="row">
-										<div class="col-md-6">
-											<h:inputText id="mobile" value="#{newCandidacy.mobile}"
-												a:placeholder="Telemóvel" required="true"
-												styleClass="form-control" />
-										</div>
-										<div class="col-md-6">
-											<h:inputText id="phone" value="#{newCandidacy.phone}"
-												a:placeholder="Telefone" required="true"
-												styleClass="form-control" />
-										</div>
-									</div>
-									<br />
-									<div class="row">
-										<div class="col-md-4">
-											<h:inputText id="course" value="#{newCandidacy.course}"
-												a:placeholder="Curso" required="true"
-												styleClass="form-control" />
-										</div>
-										<div class="col-md-4">
-											<h:inputText id="degree" value="#{newCandidacy.degree}"
-												a:placeholder="Graduação" required="true"
-												styleClass="form-control" />
-										</div>
-										<div class="col-md-4">
-											<h:inputText id="school" value="#{newCandidacy.school}"
-												a:placeholder="Escola" required="true"
-												styleClass="form-control" />
-										</div>
-									</div>
-									<br />
-									<div class="row">
-										<div class="col-md-12">
-											<h:inputText id="cv" value="#{newCandidacy.cv}"
-												a:placeholder="CV" required="true" styleClass="form-control" />
-										</div>
-									</div>
-								</div>
-								<div class="modal-footer ">
-									<h:commandButton action="#{newCandidacy.create()}"
-										value="Submeter" styleClass="btn btn-success ">
-										<f:passThroughAttribute name="data-toggle" value="modal" />
-										<f:passThroughAttribute name="data-target" value="#myModal" />
-										<f:ajax  render="@form candList" execute="firstname lastname email password username
-										mobile phone address city country course degree school cv"/>
-									</h:commandButton>
-									<button type="reset" class="btn btn-danger ">Limpar</button>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</h:form>
+				</h:panelGroup>
+			</h:panelGroup>
 		</ui:define>
 	</ui:composition>
 </h:body>

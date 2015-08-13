@@ -35,19 +35,15 @@ public class InterviewEntity {
 	private String feedback;
 	
 	@ManyToOne
-	@JoinColumn(name = "entrevistador")
 	private UserEntity interviewer;
 	
 	@ManyToOne
-	@JoinColumn(name = "guiao")
 	private ScriptEntity script;
 	
 	@ManyToOne
-	@JoinColumn(name = "posicao da entrevista")
 	private PositionEntity position;
 	
 	@ManyToOne
-	//@JoinColumn(name="candidato")
 	private CandidacyEntity candidacy;
 
 	public InterviewEntity() {

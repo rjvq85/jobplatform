@@ -1,5 +1,6 @@
 package pt.criticalsoftware.service.persistence;
 
+import java.util.Collection;
 import java.util.List;
 
 import pt.criticalsoftware.service.exceptions.DuplicateEmailException;
@@ -18,5 +19,8 @@ public interface IUserPersistenceService {
 	IUser create(IUser user);
 
 	void verifyUsername(String username) throws DuplicateUsernameException;
+	
+	List<IUser> getAllUsersByRole(Role role);
+		
 
 }

@@ -11,14 +11,21 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import pt.criticalsoftware.service.persistence.positions.TechnicalAreaType;
 import pt.criticalsoftware.service.persistence.states.PositionState;
 
 @Entity
 @Table(name="posicoes")
+@NamedQueries({
+	@NamedQuery(name = "Position.getAll",query = "SELECT u from PositionEntity u"),
+	@NamedQuery(name = "Position.verifyReference", query = "SELECT u FROM PositionEntity u WHERE u.reference = :reference"),
+})
 public class PositionEntity {
 	
 	@Id
@@ -48,7 +55,8 @@ public class PositionEntity {
 	private String company;
 	
 	@Column(name="area_tecnica",nullable=false)
-	private String technicalArea;
+	@Enumerated(EnumType.STRING)
+	private TechnicalAreaType technicalArea;
 	
 	@Column(name="sla",nullable=false)
 	private String sla;
@@ -63,7 +71,7 @@ public class PositionEntity {
 	private String description;
 	
 	@ElementCollection
-	@Column(name="canais_publicacao",nullable=false)
+	@Column(name="canais_publicacao")
 	private Collection<String> adChannels;
 	
 	@OneToMany(mappedBy="position")
@@ -131,11 +139,11 @@ public class PositionEntity {
 		this.company = company;
 	}
 
-	public String getTechnicalArea() {
+	public TechnicalAreaType getTechnicalArea() {
 		return technicalArea;
 	}
 
-	public void setTechnicalArea(String technicalArea) {
+	public void setTechnicalArea(TechnicalAreaType technicalArea) {
 		this.technicalArea = technicalArea;
 	}
 

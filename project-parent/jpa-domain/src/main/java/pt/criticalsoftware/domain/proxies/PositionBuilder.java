@@ -1,89 +1,113 @@
 package pt.criticalsoftware.domain.proxies;
+import javax.enterprise.context.RequestScoped;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.time.LocalDate;
+import java.util.Collection;
 
+import pt.criticalsoftware.domain.service.UserPersistenceService;
+import pt.criticalsoftware.service.model.ICandidacy;
+import pt.criticalsoftware.service.model.IInterview;
 import pt.criticalsoftware.service.model.IPosition;
 import pt.criticalsoftware.service.model.IPositionBuilder;
+import pt.criticalsoftware.service.model.IUser;
+import pt.criticalsoftware.service.persistence.positions.TechnicalAreaType;
 import pt.criticalsoftware.service.persistence.states.PositionState;
 
+@RequestScoped
 public class PositionBuilder implements IPositionBuilder {
 
-	@Override
-	public IPositionBuilder id(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+	private final Logger logger = LoggerFactory.getLogger(UserPersistenceService.class);
+	private PositionProxy position;
+		
+	public PositionBuilder() {
+		this.position = new PositionProxy();
 	}
 
 	@Override
 	public IPositionBuilder openDate(LocalDate openDate) {
-		// TODO Auto-generated method stub
-		return null;
+		position.setOpenDate(openDate);
+		return this;
 	}
 
 	@Override
 	public IPositionBuilder closeDate(LocalDate closeDate) {
-		// TODO Auto-generated method stub
-		return null;
+		position.setCloseDate(closeDate);
+		return this;
 	}
 
 	@Override
 	public IPositionBuilder reference(String reference) {
-		// TODO Auto-generated method stub
-		return null;
+		position.setReference(reference);
+		return this;
 	}
 
 	@Override
 	public IPositionBuilder title(String title) {
-		// TODO Auto-generated method stub
-		return null;
+		position.setTitle(title);
+		return this;
 	}
 
 	@Override
 	public IPositionBuilder locale(String locale) {
-		// TODO Auto-generated method stub
-		return null;
+		position.setLocale(locale);
+		return this;
 	}
 
 	@Override
 	public IPositionBuilder state(PositionState state) {
-		// TODO Auto-generated method stub
-		return null;
+		position.setState(state);
+		return this;
 	}
 
 	@Override
 	public IPositionBuilder company(String company) {
-		// TODO Auto-generated method stub
-		return null;
+		position.setCompany(company);
+		return this;
 	}
 
 	@Override
-	public IPositionBuilder technicalArea(String technicalArea) {
-		// TODO Auto-generated method stub
-		return null;
+	public IPositionBuilder technicalArea(TechnicalAreaType technicalArea) {
+		position.setTechnicalArea(technicalArea);
+		return this;
 	}
 
 	@Override
 	public IPositionBuilder sla(String sla) {
-		// TODO Auto-generated method stub
-		return null;
+		position.setSla(sla);		
+		return this;
 	}
 
 	@Override
 	public IPositionBuilder vacancies(Integer vacancies) {
-		// TODO Auto-generated method stub
-		return null;
+		position.setVacancies(vacancies);
+		return this;
 	}
 
 	@Override
 	public IPositionBuilder description(String description) {
-		// TODO Auto-generated method stub
-		return null;
+		position.setDescription(description);	
+		return this;
 	}
 
 	@Override
-	public IPosition build() {
-		// TODO Auto-generated method stub
-		return null;
+	public IPositionBuilder adChannels(Collection<String> adChannels) {
+		position.setAdChannels(adChannels);
+		return this;
 	}
+
+	@Override
+	public IPositionBuilder responsable(IUser responsable) {
+		position.setResponsable(responsable);
+		return this;
+	}
+	
+	@Override
+	public IPosition build() {
+		return position;
+	}
+
 
 }

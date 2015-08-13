@@ -1,6 +1,7 @@
 package pt.criticalsoftware.service.business;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -59,6 +60,12 @@ public class UserBusinessService implements IUserBusinessService {
 	public void verifyUsername(String username) throws DuplicateUsernameException {
 		userpersistence.verifyUsername(username);
 
+	}
+
+	@Override
+	public List<IUser> getAllUsersByRole(Role role) {
+		return userpersistence.getAllUsersByRole(role);
+		
 	}
 
 }

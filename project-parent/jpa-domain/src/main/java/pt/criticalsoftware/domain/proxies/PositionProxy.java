@@ -1,9 +1,13 @@
 package pt.criticalsoftware.domain.proxies;
 
 import java.time.LocalDate;
+import java.util.Collection;
 
 import pt.criticalsoftware.domain.entities.PositionEntity;
+import pt.criticalsoftware.domain.entities.UserEntity;
 import pt.criticalsoftware.service.model.IPosition;
+import pt.criticalsoftware.service.model.IUser;
+import pt.criticalsoftware.service.persistence.positions.TechnicalAreaType;
 import pt.criticalsoftware.service.persistence.states.PositionState;
 
 public class PositionProxy implements IEntityAware<PositionEntity>, IPosition {
@@ -15,7 +19,7 @@ public class PositionProxy implements IEntityAware<PositionEntity>, IPosition {
 	}
 	
 	public PositionProxy(PositionEntity entity) {
-		position = entity != null ? entity : new PositionEntity();
+		this.position = entity != null ? entity : new PositionEntity();
 	}
 	
 	@Override
@@ -25,139 +29,144 @@ public class PositionProxy implements IEntityAware<PositionEntity>, IPosition {
 
 	@Override
 	public Integer getId() {
-		// TODO Auto-generated method stub
-		return null;
+		return position.getId();
 	}
 
 	@Override
 	public void setOpenDate(LocalDate openDate) {
-		// TODO Auto-generated method stub
+		position.setOpenDate(openDate);
 		
 	}
 
 	@Override
 	public LocalDate getOpenDate() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void setCloseDate(LocalDate closeDate) {
-		// TODO Auto-generated method stub
+		return position.getOpenDate();
 		
 	}
 
 	@Override
-	public LocalDate getCloseOpen() {
-		// TODO Auto-generated method stub
-		return null;
+	public void setCloseDate(LocalDate closeDate) {
+		position.setCloseDate(closeDate);
+		
+	}
+
+	@Override
+	public LocalDate getCloseDate() {
+		return position.getCloseDate();
+		
 	}
 
 	@Override
 	public String getReference() {
-		// TODO Auto-generated method stub
-		return null;
+		return position.getReference() ;
 	}
 
 	@Override
 	public void setReference(String reference) {
-		// TODO Auto-generated method stub
+		position.setReference(reference);
 		
 	}
 
 	@Override
 	public String getTitle() {
-		// TODO Auto-generated method stub
-		return null;
+		return position.getTitle();
 	}
 
 	@Override
 	public void setTitle(String title) {
-		// TODO Auto-generated method stub
+		position.setTitle(title);
 		
 	}
 
 	@Override
 	public String getLocale() {
-		// TODO Auto-generated method stub
-		return null;
+		return position.getLocale();
 	}
 
 	@Override
 	public void setLocale(String locale) {
-		// TODO Auto-generated method stub
-		
+		position.setLocale(locale);
 	}
 
 	@Override
 	public String getCompany() {
-		// TODO Auto-generated method stub
-		return null;
+		return position.getCompany();
 	}
 
 	@Override
 	public void setCompany(String company) {
-		// TODO Auto-generated method stub
-		
+		position.setCompany(company);
 	}
 
 	@Override
-	public String getTechnicalArea() {
-		// TODO Auto-generated method stub
-		return null;
+	public TechnicalAreaType getTechnicalArea() {
+		return position.getTechnicalArea();
 	}
 
 	@Override
-	public void setTechnicalArea(String technicalArea) {
-		// TODO Auto-generated method stub
-		
+	public void setTechnicalArea(TechnicalAreaType technicalArea) {
+		position.setTechnicalArea(technicalArea);
 	}
 
 	@Override
 	public String getSla() {
-		// TODO Auto-generated method stub
-		return null;
+		return position.getSla();
 	}
 
 	@Override
 	public void setSla(String sla) {
-		// TODO Auto-generated method stub
-		
+		position.setSla(sla);
 	}
 
 	@Override
 	public String getDescription() {
-		// TODO Auto-generated method stub
-		return null;
+		return position.getDescription();
 	}
 
 	@Override
 	public void setDescription(String description) {
-		// TODO Auto-generated method stub
-		
+		position.setDescription(description);
 	}
 
 	@Override
 	public PositionState getState() {
-		// TODO Auto-generated method stub
-		return null;
+		return position.getState();
 	}
 
 	@Override
 	public void setState(PositionState state) {
-		// TODO Auto-generated method stub
-		
+		position.setState(state);
 	}
 
 	@Override
 	public Integer getVacancies() {
-		// TODO Auto-generated method stub
-		return null;
+		return position.getVacancies();
 	}
 
 	@Override
 	public void setVacancies(Integer vacancies) {
-		// TODO Auto-generated method stub
+		position.setVacancies(vacancies);
+	}
+
+	@Override
+	public Collection<String> getAdChannels() {
+		return position.getAdChannels();
+	}
+
+	@Override
+	public void setAdChannels(Collection<String> adChannels) {
+		position.setAdChannels(adChannels);
+		
+	}
+
+	@Override
+	public IUser getResponsable() {
+		return (IUser) position.getResponsable();
+	}
+
+	@Override
+	public void setResponsable(IUser responsable) {
+		position.setResponsable((UserEntity) responsable);
 		
 	}
 

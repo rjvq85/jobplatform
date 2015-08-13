@@ -48,7 +48,7 @@ public class CandidacyEntity {
 	private PositionEntity positionCandidacy;
 
 	@OneToMany(mappedBy = "candidacy")
-	@JoinColumn(name = "entrevistas")
+	//@JoinColumn(name = "entrevistas")
 	private List<InterviewEntity> interviews;
 
 	public CandidacyEntity() {

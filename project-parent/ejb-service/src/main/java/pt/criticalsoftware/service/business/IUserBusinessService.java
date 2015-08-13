@@ -1,9 +1,11 @@
 package pt.criticalsoftware.service.business;
 
+import java.util.Collection;
 import java.util.List;
 
 import pt.criticalsoftware.service.exceptions.DuplicateEmailException;
 import pt.criticalsoftware.service.exceptions.DuplicateUsernameException;
+import pt.criticalsoftware.service.model.IUser;
 import pt.criticalsoftware.service.persistence.roles.Role;
  
 public interface IUserBusinessService {
@@ -17,6 +19,8 @@ public interface IUserBusinessService {
 	void verifyEmail(String email) throws DuplicateEmailException;
 
 	void verifyUsername(String username) throws DuplicateUsernameException;
+	
+	List<IUser> getAllUsersByRole(Role role);
 
 
 }

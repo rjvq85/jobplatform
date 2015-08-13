@@ -2,44 +2,66 @@ package pt.criticalsoftware.platform.position;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.EJB;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
+
+import org.primefaces.context.RequestContext;
+import org.primefaces.event.SelectEvent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import pt.criticalsoftware.service.business.IPositionBusinessService;
+import pt.criticalsoftware.service.model.IPosition;
 
 
 @Named
-@ViewScoped
+@SessionScoped
 public class PositionListView implements Serializable{
 
 	private static final long serialVersionUID = -4007871036363495663L;
+	
+	private final Logger logger = LoggerFactory.getLogger(PositionListView.class);
 
 	@EJB
-	private IPositionBusinessService positionservice;
-
-//	private Collection<IPosition> position;
-//
-//	private IPosition selectedPositionr;
+	private IPositionBusinessService positionService;
+	
+	private List<IPosition> positions;
+	private IPosition selectedPosition;
 
 
 	
-
 	public PositionListView() {
 	}
+	
 
-
-	//Fazer
-	public void updatePosition(){
-
+	public List<IPosition> showPositions() {
+		return positionService.getAllPositions();
 	}
 
-	public void deletePosition(){
 
+	public List<IPosition> getPositions() {
+		this.positions=showPositions();
+		return this.positions;
 	}
 
-	public void newPosition(){
-
+	public IPosition getSelectedPosition() {
+		
+		return this.selectedPosition;
+		
 	}
+
+	public void setSelectedPosition(IPosition selectedPosition) {
+		this.selectedPosition = selectedPosition;
+	
+	}
+
+
+
 }

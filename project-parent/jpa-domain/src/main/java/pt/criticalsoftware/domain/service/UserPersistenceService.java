@@ -1,6 +1,8 @@
 package pt.criticalsoftware.domain.service;
 
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -13,29 +15,32 @@ import javax.resource.spi.IllegalStateException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import pt.criticalsoftware.domain.entities.PositionEntity;
 import pt.criticalsoftware.domain.entities.UserEntity;
 import pt.criticalsoftware.domain.proxies.IEntityAware;
+import pt.criticalsoftware.domain.proxies.PositionProxy;
 import pt.criticalsoftware.domain.proxies.UserProxy;
 import pt.criticalsoftware.service.exceptions.DuplicateEmailException;
 import pt.criticalsoftware.service.exceptions.DuplicateUsernameException;
+import pt.criticalsoftware.service.model.IPosition;
 import pt.criticalsoftware.service.model.IUser;
 import pt.criticalsoftware.service.persistence.IUserPersistenceService;
 import pt.criticalsoftware.service.persistence.roles.Role;
 
 @Stateless
 public class UserPersistenceService implements IUserPersistenceService {
-	
+
 	private final Logger logger = LoggerFactory.getLogger(UserPersistenceService.class);
-	
+
 	@PersistenceContext(unitName = "Jobs")
 	private EntityManager em;
-	
+
 	@Override
 	public Integer getUserId(String username) {
 		TypedQuery<Integer> query = em.createNamedQuery("User.findIdByUsername",Integer.class)
 				.setParameter("username", username);
 		return query.getSingleResult();
-		
+
 	}
 
 	@Override
@@ -44,7 +49,22 @@ public class UserPersistenceService implements IUserPersistenceService {
 				.setParameter("id", id);
 		return query.getResultList();
 	}
-	
+
+	@Override
+	public List<IUser> getAllUsersByRole(Role role) {
+		TypedQuery<UserEntity> query = em.createNamedQuery("User.findByRole", UserEntity.class);
+		List<UserEntity> entities=query.getResultList();
+		List<IUser> proxies=new ArrayList<>();
+
+		for(UserEntity pe:entities){
+			if (pe.getRoles().contains(role)){
+				UserProxy userProxy= new UserProxy(pe);
+				proxies.add(userProxy);
+			}
+		}
+		return proxies;
+	}
+
 	@Override
 	public IUser create(IUser user) {
 		UserEntity entity;
@@ -56,9 +76,9 @@ public class UserPersistenceService implements IUserPersistenceService {
 			e.printStackTrace();
 			return null;
 		}
-		
+
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public UserEntity getEntity(IUser user) throws IllegalStateException {
 		if (user instanceof IEntityAware<?>) {
@@ -92,6 +112,5 @@ public class UserPersistenceService implements IUserPersistenceService {
 		}
 	}
 
-	
-	
+
 }

@@ -28,6 +28,8 @@ import pt.criticalsoftware.service.persistence.roles.Role;
 	@NamedQuery(name = "User.getRoles",query="SELECT r FROM UserEntity u join u.roles r WHERE u.id = :id"),
 	@NamedQuery(name = "User.verifyEmail", query = "SELECT u FROM UserEntity u WHERE u.email = :email"),
 	@NamedQuery(name = "User.verifyUsername", query = "SELECT u FROM UserEntity u WHERE u.username = :username"),
+	@NamedQuery(name = "User.findByRole", query = "SELECT u FROM UserEntity u")
+
 })
 public class UserEntity implements Serializable {
 	

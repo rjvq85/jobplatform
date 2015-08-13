@@ -8,12 +8,12 @@ import javax.ejb.EJB;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.inject.Inject;
-
+import javax.ejb.LocalBean;
 import org.dozer.DozerBeanMapper;
-
 import pt.criticalsoftware.service.business.ICandidacyBusinessService;
 import pt.criticalsoftware.service.model.ICandidacyBuilder;
 import pt.criticalsoftware.service.model.ICandidateBuilder;
+import org.dozer.Mapper;
 import pt.criticalsoftware.service.model.IUser;
 import pt.criticalsoftware.service.model.IUserBuilder;
 import pt.criticalsoftware.service.persistence.IUserPersistenceService;
@@ -27,7 +27,7 @@ import pt.criticalsoftware.service.persistence.roles.Role;
 public class DozerMapperSingl {
 
 	private static List<String> dozermapping = new ArrayList<>();
-
+	public static Mapper dozerMapper;
 	@EJB
 	private IUserPersistenceService persistence;
 	@Inject

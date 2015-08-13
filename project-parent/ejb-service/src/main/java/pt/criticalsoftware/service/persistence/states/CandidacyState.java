@@ -2,11 +2,11 @@ package pt.criticalsoftware.service.persistence.states;
 
 public enum CandidacyState {
 
-	SUBMTIDA("Submtida"),
+	SUBMETIDA("Submetida"),
 	EM_ENTREVISTA("Em entrevista"),
 	EM_NEGOCIACAO("Em Negociacao"),
 	REJEITADA("Rejeitada"),
-	FECHADA("fechada");
+	FECHADA("Fechada");
 	
 	private String name;
 	

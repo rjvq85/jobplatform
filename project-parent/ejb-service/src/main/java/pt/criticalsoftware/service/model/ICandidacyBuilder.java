@@ -12,4 +12,6 @@ public interface ICandidacyBuilder {
 
 	ICandidacy build();
 
+	ICandidacyBuilder candidate(ICandidate candidate);
+
 }

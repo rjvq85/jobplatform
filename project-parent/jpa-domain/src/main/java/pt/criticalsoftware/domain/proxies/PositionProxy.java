@@ -169,5 +169,11 @@ public class PositionProxy implements IEntityAware<PositionEntity>, IPosition {
 		position.setResponsable((UserEntity) responsable);
 		
 	}
+	
+	@Override
+	public String toString() {
+		if (null == position.getId()) return "Espontânea";
+		return position.getId().toString();
+	}
 
 }

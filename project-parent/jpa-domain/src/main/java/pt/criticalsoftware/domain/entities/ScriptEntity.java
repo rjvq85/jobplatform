@@ -20,9 +20,9 @@ import pt.criticalsoftware.domain.entities.questions.Question;
 @Table(name="guioes")
 
 @NamedQueries({
-@NamedQuery(name="InterviewScript.findAll", query="select p from ScriptEntity p "),
-@NamedQuery(name="InterviewScript.findByReference", query="select p from ScriptEntity p where p.reference = :reference "),
-@NamedQuery(name="InterviewScript.findByTitle", query="select p from ScriptEntity p where p.title = :title ")
+@NamedQuery(name="ScriptEntity.findAll", query="select p from ScriptEntity p "),
+@NamedQuery(name="ScriptEntity.findByReference", query="select p from ScriptEntity p where p.reference = :reference "),
+@NamedQuery(name="ScriptEntity.findByTitle", query="select p from ScriptEntity p where p.title = :title ")
 }
 )
 

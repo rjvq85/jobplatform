@@ -2,6 +2,7 @@ package pt.criticalsoftware.domain.entities;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -21,7 +22,10 @@ import pt.criticalsoftware.service.persistence.states.CandidacyState;
 @Entity
 @Table(name = "candidaturas")
 
-@NamedQueries({ @NamedQuery(name = "Candidacy.findAll", query = "select p from CandidacyEntity p ") })
+@NamedQueries({ 
+	@NamedQuery(name = "Candidacy.findAll", query = "SELECT c FROM CandidacyEntity c "), 
+	@NamedQuery(name = "Candidacy.search", query = "SELECT c FROM CandidacyEntity c WHERE c.candidate LIKE :param OR c.positionCandidacy LIKE :param")
+})
 
 public class CandidacyEntity {
 
@@ -29,17 +33,17 @@ public class CandidacyEntity {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 
-	@Column(name = "carta_motivacao", nullable = false)
+	@Column(name = "carta_motivacao")
 	private String motivationLetter;
 
-	@Column(name = "fonte", nullable = false)
+	@Column(name = "fonte")
 	private String source;
 
 	@Enumerated(EnumType.STRING)
 	@Column(name = "estado_candidatura", nullable = false)
 	private CandidacyState state;
 
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name = "candidato")
 	private CandidateEntity candidate;
 
@@ -48,7 +52,7 @@ public class CandidacyEntity {
 	private PositionEntity positionCandidacy;
 
 	@OneToMany(mappedBy = "candidacy")
-	//@JoinColumn(name = "entrevistas")
+	@JoinColumn(name = "entrevistas")
 	private List<InterviewEntity> interviews;
 
 	public CandidacyEntity() {

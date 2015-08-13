@@ -1,0 +1,20 @@
+@font-face {
+  font-family: 'Glyphicons Halflings';
+  src: url("#{resource['fonts:glyphicons-halflings-regular.woff']}");
+}
+
+.spacer {
+    margin-top: 40px; /* define margin as you see fit */
+}
+
+@media (min-width: 768px ) {
+  .row {
+      position: relative;
+  }
+
+  .bottom-align-text {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+  }
+}

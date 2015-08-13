@@ -114,5 +114,10 @@ public class UserProxy implements IEntityAware<UserEntity>,IUser {
 	public Integer getId() {
 		return user.getId();
 	}
+	
+	@Override
+	public String toString() {
+		return user.getFirstName() + " " + user.getLastName();
+	}
 
 }

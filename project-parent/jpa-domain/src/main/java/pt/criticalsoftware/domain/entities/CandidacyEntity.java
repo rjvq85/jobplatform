@@ -24,7 +24,7 @@ import pt.criticalsoftware.service.persistence.states.CandidacyState;
 
 @NamedQueries({ 
 	@NamedQuery(name = "Candidacy.findAll", query = "SELECT c FROM CandidacyEntity c "), 
-	@NamedQuery(name = "Candidacy.search", query = "SELECT c FROM CandidacyEntity c WHERE c.candidate LIKE :param OR c.positionCandidacy LIKE :param")
+	@NamedQuery(name = "Candidacy.search", query = "SELECT c FROM CandidacyEntity as c INNER JOIN c.candidate as a WHERE UPPER(a.firstName) LIKE :param OR UPPER(a.lastName) LIKE :param")
 })
 
 public class CandidacyEntity {
@@ -53,6 +53,13 @@ public class CandidacyEntity {
 
 	@OneToMany(mappedBy = "candidacy")
 //	@JoinColumn(name = "entrevistas")
+
+	private CandidateEntity candidate;
+
+	@ManyToOne
+	private PositionEntity positionCandidacy;
+
+	@OneToMany(mappedBy = "candidacy")
 	private List<InterviewEntity> interviews;
 
 	public CandidacyEntity() {

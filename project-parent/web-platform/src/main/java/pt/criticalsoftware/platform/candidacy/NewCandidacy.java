@@ -7,17 +7,22 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import pt.criticalsoftware.service.business.ICandidacyBusinessService;
+import pt.criticalsoftware.service.exceptions.DuplicateCandidateException;
 import pt.criticalsoftware.service.model.ICandidacy;
 import pt.criticalsoftware.service.model.ICandidacyBuilder;
 import pt.criticalsoftware.service.model.ICandidate;
 import pt.criticalsoftware.service.model.ICandidateBuilder;
-import pt.criticalsoftware.service.persistence.ICandidacyPersistenceService;
 import pt.criticalsoftware.service.persistence.states.CandidacyState;
 
 @Named
 @RequestScoped
 public class NewCandidacy {
+	
+	private static final Logger logger = LoggerFactory.getLogger(NewCandidacy.class);
 
 	private String firstName;
 	private String lastName;
@@ -50,9 +55,33 @@ public class NewCandidacy {
 				.firstName(firstName).lastName(lastName).mobile(mobile).password(password).phone(phone).school(school)
 				.town(city).username(username).build();
 		ICandidacy icandidacy = candidacy.state(CandidacyState.SUBMETIDA).candidate(icandidate).build();
-		business.createCandidacy(icandidacy);
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(
-				"Candidatura submetida com sucesso"));
+		try {
+			business.createCandidacy(icandidacy);
+			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Candidatura submetida com sucesso!", "");
+			FacesContext.getCurrentInstance().addMessage(null, message);
+		} catch (DuplicateCandidateException e) {
+			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), "");
+			FacesContext.getCurrentInstance().addMessage(null, message);
+			logger.error(e.getMessage());
+		}
+	}
+
+	public void reset() {
+		firstName = null;
+		lastName = null;
+		email = null;
+		password = null;
+		username = null;
+		address = null;
+		city = null;
+		country = null;
+		phone = null;
+		mobile = null;
+		course = null;
+		degree = null;
+		school = null;
+		cv = null;
+		state = null;
 	}
 
 	public String getFirstName() {
@@ -77,14 +106,6 @@ public class NewCandidacy {
 
 	public void setEmail(String email) {
 		this.email = email;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
 	}
 
 	public String getUsername() {
@@ -175,30 +196,12 @@ public class NewCandidacy {
 		this.state = state;
 	}
 
-	public ICandidateBuilder getCandidate() {
-		return candidate;
+	public String getPassword() {
+		return password;
 	}
 
-	public void setCandidate(ICandidateBuilder candidate) {
-		this.candidate = candidate;
+	public void setPassword(String password) {
+		this.password = password;
 	}
-
-	public ICandidacyBuilder getCandidacy() {
-		return candidacy;
-	}
-
-	public void setCandidacy(ICandidacyBuilder candidacy) {
-		this.candidacy = candidacy;
-	}
-
-	public ICandidacyBusinessService getBusiness() {
-		return business;
-	}
-
-	public void setBusiness(ICandidacyBusinessService business) {
-		this.business = business;
-	}
-	
-	
 
 }

@@ -32,6 +32,7 @@ public class DozerMapperSingl {
 	private IUserPersistenceService persistence;
 	@Inject
 	private IUserBuilder builder;
+
 	@Inject
 	private ICandidateBuilder candidate;
 	@Inject
@@ -68,6 +69,7 @@ public class DozerMapperSingl {
 
 	public static DozerBeanMapper getInstance() {
 		return MapperHolder.instance;
+
 	}
 
 	private static class MapperHolder {

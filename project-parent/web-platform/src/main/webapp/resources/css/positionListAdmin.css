@@ -24,7 +24,7 @@ body {
 
 #outBox {
 	display: inline-block;
-	width: 1500px;
+	width: 1550px;
 	margin-left: auto;
 	margin-right: auto;
 	margin-top: 60px;
@@ -50,6 +50,7 @@ body {
 .ui-selectonemenu{
 	width:240px!important;
 }
+
 .ui-spinner{
 	width:240px;
 }

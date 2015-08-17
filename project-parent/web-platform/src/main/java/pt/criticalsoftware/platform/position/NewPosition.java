@@ -214,6 +214,7 @@ public class NewPosition{
 	public void createPosition() {
 		try {
 			setOpenDate();
+			logger.info("Id"+this.responsable.getId());
 			positionService.createPosition(this.openDate, this.closeDt, this.reference, 
 					this.title, this.locale, this.state, this.company, this.technicalArea, 
 					this.sla, this.vacancies, this.responsable, this.description, this.adChannels);

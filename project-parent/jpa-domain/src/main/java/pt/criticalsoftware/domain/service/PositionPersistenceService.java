@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NamedQuery;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -23,6 +24,7 @@ import pt.criticalsoftware.service.exceptions.DuplicateReferenceException;
 import pt.criticalsoftware.service.model.IPosition;
 import pt.criticalsoftware.service.model.IUser;
 import pt.criticalsoftware.service.persistence.IPositionPersistenceService;
+import pt.criticalsoftware.service.persistence.positions.TechnicalAreaType;
 
 @Stateless
 public class PositionPersistenceService implements IPositionPersistenceService {
@@ -31,7 +33,7 @@ public class PositionPersistenceService implements IPositionPersistenceService {
 
 	@PersistenceContext(unitName = "Jobs")
 	private EntityManager em;
-	
+
 	@Override
 	public IPosition find(Object id) {
 		return new PositionProxy(em.find(PositionEntity.class, id));
@@ -113,19 +115,45 @@ public class PositionPersistenceService implements IPositionPersistenceService {
 	}
 
 	@Override
-	public List<IPosition> searchAvailable(String username) {
-		List<IPosition> ipositions = new ArrayList<>();
-		TypedQuery<PositionEntity> query = em.createNamedQuery("Position.excludingCandidacy", PositionEntity.class)
-				.setParameter("param", username);
-		List<PositionEntity> pe = query.getResultList();
-		if (null != pe) {
-			for (PositionEntity p : pe) {
-				PositionProxy pp = new PositionProxy(p);
-				ipositions.add(pp);
-			}
-			return ipositions;
-		}
-		return null;
-	}
+	public List<IPosition> getPositionsByWord(String positionWord, String searchCode) {
 
+		TypedQuery<PositionEntity> query = null;
+
+		if (positionWord.equals("Código"))
+			query = em.createNamedQuery("Position.getPositionsByReference", PositionEntity.class)
+					.setParameter("reference", searchCode);
+		else if (positionWord.equals("Título"))
+			query = em.createNamedQuery("Position.getPositionsByTitle", PositionEntity.class).setParameter("title",
+					searchCode);
+		else if (positionWord.equals("Estado"))
+			query = em.createNamedQuery("Position.getPositionsByState", PositionEntity.class).setParameter("state",
+					searchCode);
+		else if (positionWord.equals("Empresa"))
+			query = em.createNamedQuery("Position.getPositionsByCompany", PositionEntity.class).setParameter("company",
+					searchCode);
+		else if (positionWord.equals("Área Técnica")) {
+			TechnicalAreaType area = null;
+			if (positionWord.equals("SSPA"))
+				area = TechnicalAreaType.SSPA;
+			else if (positionWord.equalsIgnoreCase(".Net Development"))
+				area = TechnicalAreaType.NET_DEVELOPMENT;
+			else if (positionWord.equalsIgnoreCase("Java Development"))
+				area = TechnicalAreaType.JAVA_DEVELOPMENT;
+			else if (positionWord.equalsIgnoreCase("Safety Critical"))
+				area = TechnicalAreaType.SAFETY_CRITICAL;
+			else if (positionWord.equalsIgnoreCase("Project Management"))
+				area = TechnicalAreaType.PROJECT_MANAGEMENT;
+			else if (positionWord.equalsIgnoreCase("Integration"))
+				area = TechnicalAreaType.INETGRATION;
+			query = em.createNamedQuery("Position.getPositionsByTechnicalArea", PositionEntity.class)
+					.setParameter("technicalArea", area);
+		}
+		List<PositionEntity> entities = query.getResultList();
+		List<IPosition> proxies = new ArrayList<>();
+		for (PositionEntity pe : entities) {
+			PositionProxy positionProxy = new PositionProxy(pe);
+			proxies.add(positionProxy);
+		}
+		return proxies;
+	}
 }

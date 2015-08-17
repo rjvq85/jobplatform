@@ -12,6 +12,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -28,6 +29,11 @@ import pt.criticalsoftware.service.persistence.utils.LocalDatePersistenceConvert
 @Table(name="posicoes")
 @NamedQueries({
 	@NamedQuery(name = "Position.getAll",query = "SELECT u from PositionEntity u"),
+	@NamedQuery(name = "Position.getPositionsByReference",query = "SELECT u from PositionEntity u WHERE u.reference = :reference"),
+	@NamedQuery(name = "Position.getPositionsByTitle",query = "SELECT u from PositionEntity u WHERE u.title = :title"),
+	@NamedQuery(name = "Position.getPositionsByState",query = "SELECT u from PositionEntity u WHERE u.state = :state"),
+	@NamedQuery(name = "Position.getPositionsByCompany",query = "SELECT u from PositionEntity u WHERE u.company = :company"),
+	@NamedQuery(name = "Position.getPositionsByTechnicalArea", query = "SELECT u FROM PositionEntity u WHERE u.technicalArea = :technicalArea"),
 	@NamedQuery(name = "Position.verifyReference", query = "SELECT u FROM PositionEntity u WHERE u.reference = :reference"),
 	@NamedQuery(name = "Position.excludingCandidacy", query = "SELECT p FROM PositionEntity p JOIN p.candidacy c WHERE c.candidate.username NOT like :param")
 })
@@ -71,7 +77,7 @@ public class PositionEntity {
 	@Column(name="vagas",nullable=false)
 	private Integer vacancies;
 	
-	@OneToOne
+	@ManyToOne
 	private UserEntity responsable;
 	
 	@Column(name="descricao",nullable=false)

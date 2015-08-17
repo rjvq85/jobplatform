@@ -85,4 +85,11 @@ public class PositionBusinessService implements IPositionBusinessService{
 		return positionPersistence.searchAvailable(username);
 	}
 
+	@Override
+	public List<IPosition> getPositionsByWord(String positionWord,
+			String searchCode) {
+		return positionPersistence.getPositionsByWord(positionWord, searchCode);
+		
+	}
+
 }

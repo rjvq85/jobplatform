@@ -79,11 +79,6 @@ public class PositionBusinessService implements IPositionBusinessService{
 		positionPersistence.delete(position);
 		
 	}
-	
-	@Override
-	public List<IPosition> availablePositions(String username) {
-		return positionPersistence.searchAvailable(username);
-	}
 
 	@Override
 	public List<IPosition> getPositionsByWord(String positionWord,

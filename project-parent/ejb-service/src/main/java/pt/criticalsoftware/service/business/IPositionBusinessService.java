@@ -30,8 +30,5 @@ public interface IPositionBusinessService {
 	void delete(IPosition position);
 	
 	void verifyReference(String reference) throws DuplicateReferenceException;
-	
-
-	List<IPosition> availablePositions(String username);
 
 }

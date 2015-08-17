@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
@@ -6,258 +5,42 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui">
 
-<h:head>
-	<meta charset="utf-8" />
-	<h:outputStylesheet library="css" name="positionListAdmin.css" />
-</h:head>
-<h:body>
-	<div id="outBox">
-		<h2>Posições</h2>
-		<p></p>
-		<p:separator />
-		<h:form id="positionForm">
-			<p:messages id="msgs" />
-			<!-- toolbar with buttons add, edit, and delete-->
-			<p:toolbar id="toolbarPosition">
-				<p:toolbarGroup align="left">
+<ui:composition>
+	<!-- Positions list -->
+	<p:dataTable id="gridPositions" var="position"
+		value="#{positionListView.positions}" selectionMode="single"
+		selection="#{editPosition.editPosition}" rowKey="#{position.id}"
+		paginator="true" paginatorPosition="bottom" rows="15"
+		styleClass="paginated">
 
-					<!-- New Position button -->
-					<p:commandButton type="button" icon="ui-icon-document"
-						onclick="PF('dialogNewPosition').show(); return false;">
-						<p:resetInput target="formNewPosition"></p:resetInput>
-					</p:commandButton>
+		<p:ajax event="rowSelect" listener="#{editPosition.onRowSelect}"
+			update=":formEditPosition:dialog-EditPosition :toolbarForm:toolbarPosition" />
+		<p:ajax event="rowUnselect" update=":toolbarForm:toolbarPosition" />
 
-					<!-- Edit position dialog -->
-					<p:commandButton type="button" icon="ui-icon-pencil"
-						disabled="#{editPosition.editPosition==null}"
-						onclick="PF('dialogEditPosition').show()"
-						update=":formEditPosition:dialog-EditPosition">
-						<f:setPropertyActionListener value="#{editPosition.editPosition}"
-							target="#{editPosition.editPosition}" />
-					</p:commandButton>
-
-
-
-					<!-- Seleccionar eliminar playlist -->
-					<p:commandButton type="button" icon="ui-icon-trash"
-						disabled="#{editPosition.editPosition==null}"
-						onclick="PF('deletePositionDialog').show(); return false;">
-					</p:commandButton>
-
-					<p:confirmDialog header="Confirmação de eliminação"
-						message="Pretende eliminar esta posição?"
-						widgetVar="deletePositionDialog">
-						<p:commandButton value="Sim" type="submit"
-							action="#{editPosition.deletePosition}"
-							oncomplete="PF('deletePositionDialog').hide()"
-							update="positionForm:toolbarPosition :positionForm:gridPositions" />
-						<p:button value="Cancel"
-							onclick="PF('deletePositionDialog').hide(); return false;" />
-					</p:confirmDialog>
-					<span class="ui-separator"><span
-						class="ui-icon ui-icon-grip-dotted-vertical" /> </span>
-					<!-- depois deste separador vem a pesquisa de posições -->
-					<span class="ui-separator"><span
-						class="ui-icon ui-icon-grip-dotted-vertical" /> </span>
-					<!-- depois deste separador vem a pesquisa de posições -->
-
-				</p:toolbarGroup>
-			</p:toolbar>
-			<p></p>
-			<!-- Positions list -->
-			<p:dataTable id="gridPositions" var="position"
-				value="#{positionListView.positions}" selectionMode="single"
-				selection="#{editPosition.editPosition}" rowKey="#{position.id}"
-				paginator="true" paginatorPosition="bottom" rows="15"
-				styleClass="paginated">
-
-				<p:ajax event="rowSelect" listener="#{editPosition.onRowSelect}"
-					update=":formEditPosition:dialog-EditPosition :positionForm:toolbarPosition" />
-
-				<p:ajax event="rowUnselect" update=":positionForm:toolbarPosition" />
-
-				<p:column headerText="Data Abertura">
-					<p:outputLabel value="#{position.openDate}"></p:outputLabel>
-				</p:column>
-				<p:column headerText="Data Fecho">
-					<p:outputLabel value="#{position.closeDate}"></p:outputLabel>
-				</p:column>
-				<p:column headerText="Código">
-					<p:outputLabel value="#{position.reference}"></p:outputLabel>
-				</p:column>
-				<p:column headerText="Título">
-					<p:outputLabel value="#{position.title}"></p:outputLabel>
-				</p:column>
-				<p:column headerText="Localização">
-					<p:outputLabel value="#{position.locale}"></p:outputLabel>
-				</p:column>
-				<p:column headerText="Estado">
-					<p:outputLabel value="#{position.state}"></p:outputLabel>
-				</p:column>
-				<p:column headerText="Empresa">
-					<p:outputLabel value="#{position.company}"></p:outputLabel>
-				</p:column>
-				<p:column headerText="Área Técnica">
-					<p:outputLabel value="#{position.technicalArea}"></p:outputLabel>
-				</p:column>
-			</p:dataTable>
-
-		</h:form>
-	</div>
-	<!-- Add Position -->
-	<h:form id="formNewPosition">
-
-		<p:dialog id="dialog-NewPosition" header="Adicionar Posição"
-			widgetVar="dialogNewPosition" modal="true" showEffect="blind"
-			resizable="false">
-			<h:panelGrid columns="2">
-				
-				<p:outputLabel value="Código" for="positionReference" />
-				<p:inputText id="positionReference" required="true"
-					requiredMessage="referência" size="30"
-					value="#{newPosition.reference}" />
-
-				<p:outputLabel value="Título" for="positionTitle" />
-				<p:inputText id="positionTitle" required="true"
-					requiredMessage="título" size="30" value="#{newPosition.title}" />
-
-				<p:outputLabel value="Localização" for="positionLocale" />
-				<p:inputText id="positionLocale" required="true"
-					requiredMessage="localização" size="30"
-					value="#{newPosition.locale}" />
-
-				<p:outputLabel value="Estado" for="positionState" />
-				<p:selectOneMenu id="positionState" value="#{newPosition.stateStr}"
-					filter="true" filterMatchMode="startsWith" width="30">
-					<f:selectItem itemLabel="Aberta" itemValue="Aberta" />
-					<f:selectItem itemLabel="Fechada" itemValue="Fechada" />
-					<f:selectItem itemLabel="Em Espera" itemValue="Em Espera" />
-				</p:selectOneMenu>
-
-				<p:outputLabel value="Área Técnica" for="positionTechnicalArea" />
-				<p:selectOneMenu id="positionTechnicalArea"
-					value="#{newPosition.technicalAreaStr}" filter="true"
-					width="1000px" filterMatchMode="startsWith">
-					<f:selectItem itemLabel="SSPA" itemValue="SSPA" />
-					<f:selectItem itemLabel=".Net Development"
-						itemValue=".Net Development" />
-					<f:selectItem itemLabel="Java Development"
-						itemValue="Java Development" />
-					<f:selectItem itemLabel="Safety Critical"
-						itemValue="Safety Critical" />
-					<f:selectItem itemLabel="Project Management"
-						itemValue="Project Management" />
-					<f:selectItem itemLabel="Integration" itemValue="Integration" />
-				</p:selectOneMenu>
-
-				<p:outputLabel value="SLA" for="positionSla" />
-				<p:inputText id="positionSla" required="true" requiredMessage="SLA"
-					size="30" value="#{newPosition.sla}" />
-
-				<p:outputLabel value="Número de vagas" for="positionVacancies" />
-				<p:spinner id="positionVacancies" value="#{newPosition.vacancies}"
-					required="true" min="1" max="100" />
-
-
-				<p:outputLabel value="Empresa" for="positionCompany" />
-				<p:inputText id="positionCompany" required="true"
-					requiredMessage="empresa" size="30" value="#{newPosition.company}" />
-
-
-				<p:outputLabel value="Responsável" for="positionResponsable" />
-				<p:selectOneMenu id="positionResponsable"
-					value="#{newPosition.responsableName}" filter="true"
-					filterMatchMode="startsWith" width="30">
-					<f:selectItems value="#{newPosition.allResponsables}" />
-				</p:selectOneMenu>
-
-				<p:outputLabel value="Descrição" for="positionDescription" />
-				<p:inputText id="positionDescription" required="true"
-					requiredMessage="descrição" size="30"
-					value="#{newPosition.description}" />
-
-				<p:outputLabel value="Data Fecho" />
-				<p:calendar pattern="dd/MM/yyyy" mask="99.99.9999" navigator="true"
-					id="positionCloseDate" required="true" mindate="1/1/50" size="30"
-					value="#{newPosition.closeDate}" />
-
-				<p:outputLabel value="Canais Divulgação" for="positionAdChannels" />
-				<p:selectManyCheckbox id="positionAdChannels" width="30"
-					value="#{newPosition.selectedChannels}" layout="grid" columns="1">
-					<f:selectItems value="#{newPosition.channels}" var="channel"
-						itemLabel="#{channel}" itemValue="#{channel}" />
-				</p:selectManyCheckbox>
-			</h:panelGrid>
-			<p:button value="Cancel" type="button"
-				style="width:100px; margin-left:90px; margin-top:15px;"
-				onclick="PF('dialogNewPosition').hide(); return false;"
-				icon="ui-icon-cancel"></p:button>
-
-			<p:commandButton value="Criar" type="submit"
-				style="width:100px; margin-right:auto; margin-left:10px; margin-top:15px;"
-				action="#{newPosition.createPosition()}"
-				oncomplete="if (!args.validationFailed)PF('dialogNewPosition').hide()"
-				update=":positionForm:gridPositions :formNewPosition:dialog-NewPosition"
-				icon="ui-icon-check"></p:commandButton>
-
-		</p:dialog>
-	</h:form>
-	<!-- End Add Position -->
-
-	<!-- Edit Position -->
-	<h:form id="formEditPosition">
-
-		<p:dialog id="dialog-EditPosition" header="Editar Posição"
-			widgetVar="dialogEditPosition" modal="true" resizable="false">
-			<h:panelGrid columns="2">
-			
-				<p:outputLabel value="Código" for="positionReference" />
-				<p:inputText id="positionReference" requiredMessage="referência"
-					size="30" value="#{editPosition.reference}" />
-
-				<p:outputLabel value="Título" for="positionTitle" />
-				<p:inputText id="positionTitle" requiredMessage="título" size="30"
-					value="#{editPosition.title}" />
-
-				<p:outputLabel value="Localização" for="positionLocale" />
-				<p:inputText id="positionLocale" requiredMessage="localização"
-					size="30" value="#{editPosition.locale}" />
-
-				<p:outputLabel value="Estado" for="positionState" />
-				<p:selectOneMenu id="positionState" value="#{editPosition.stateStr}"
-					filter="true" filterMatchMode="startsWith" width="30">
-					<f:selectItem itemLabel="Aberta" itemValue="Aberta" />
-					<f:selectItem itemLabel="Fechada" itemValue="Fechada" />
-					<f:selectItem itemLabel="Em Espera" itemValue="Em Espera" />
-				</p:selectOneMenu>
-
-				<p:outputLabel value="Número de vagas" for="positionVacancies" />
-				<p:spinner id="positionVacancies" value="#{editPosition.vacancies}"
-					min="1" max="100" />
-
-				<p:outputLabel value="Empresa" for="positionCompany" />
-				<p:inputText id="positionCompany" requiredMessage="empresa"
-					size="30" value="#{editPosition.company}" />
-
-				<p:outputLabel value="Descrição" for="positionDescription" />
-				<p:inputText id="positionDescription" requiredMessage="descrição"
-					size="30" value="#{editPosition.description}" />
-			</h:panelGrid>
-			<p:button value="Cancel" type="button"
-				style="width:100px; margin-right:10px; margin-top:15px;"
-				onclick="PF('dialogEditPosition').hide(); return false;"
-				icon="ui-icon-cancel"></p:button>
-
-			<p:commandButton value="Editar" type="submit"
-				style="width:100px; margin-right:auto; margin-left:10px; margin-top:15px;"
-				action="#{editPosition.updatePosition()}"
-				onclick="if (!args.validationFailed)PF('dialogEditPosition').hide()"
-				update="positionForm:gridPositions :formEditPosition:dialog-EditPosition"
-				icon="ui-icon-check"></p:commandButton>
-		</p:dialog>
-	</h:form>
-	<!-- End Edit Position -->
-
-
-</h:body>
+		<p:column headerText="Data Abertura">
+			<p:outputLabel value="#{position.openDate}"></p:outputLabel>
+		</p:column>
+		<p:column headerText="Data Fecho">
+			<p:outputLabel value="#{position.closeDate}"></p:outputLabel>
+		</p:column>
+		<p:column headerText="Código">
+			<p:outputLabel value="#{position.reference}"></p:outputLabel>
+		</p:column>
+		<p:column headerText="Título">
+			<p:outputLabel value="#{position.title}"></p:outputLabel>
+		</p:column>
+		<p:column headerText="Localização">
+			<p:outputLabel value="#{position.locale}"></p:outputLabel>
+		</p:column>
+		<p:column headerText="Estado">
+			<p:outputLabel value="#{position.state}"></p:outputLabel>
+		</p:column>
+		<p:column headerText="Empresa">
+			<p:outputLabel value="#{position.company}"></p:outputLabel>
+		</p:column>
+		<p:column headerText="Área Técnica">
+			<p:outputLabel value="#{position.technicalArea}"></p:outputLabel>
+		</p:column>
+	</p:dataTable>
+</ui:composition>
 </html>

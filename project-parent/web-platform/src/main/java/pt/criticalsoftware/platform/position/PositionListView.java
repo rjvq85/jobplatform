@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.ejb.EJB;
+import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -22,46 +23,59 @@ import pt.criticalsoftware.service.model.IPosition;
 
 
 @Named
-@SessionScoped
+@RequestScoped
 public class PositionListView implements Serializable{
 
 	private static final long serialVersionUID = -4007871036363495663L;
-	
+
 	private final Logger logger = LoggerFactory.getLogger(PositionListView.class);
 
 	@EJB
 	private IPositionBusinessService positionService;
-	
+
 	private List<IPosition> positions;
-	private IPosition selectedPosition;
+	private String searchCode;
+	private String positionWord;
+	private boolean searchBoolean=false;
 
-
-	
 	public PositionListView() {
 	}
-	
+
+
 
 	public List<IPosition> showPositions() {
 		return positionService.getAllPositions();
 	}
-
-
+	public void searchAll(){
+		this.positions=getPositions();
+	}
 	public List<IPosition> getPositions() {
-		this.positions=showPositions();
+		if (!this.searchBoolean)
+			this.positions=showPositions();
 		return this.positions;
 	}
 
-	public IPosition getSelectedPosition() {
-		
-		return this.selectedPosition;
-		
+	public String getPositionWord() {
+		return positionWord;
 	}
 
-	public void setSelectedPosition(IPosition selectedPosition) {
-		this.selectedPosition = selectedPosition;
-	
+	public void setPositionWord(String positionWord) {
+		this.positionWord = positionWord;
 	}
 
+	public String getSearchCode() {
+		return searchCode;
+	}
 
+	public void setSearchCode(String searchCode) {
+		this.searchCode = searchCode;
+	}
+	public void search(){
+		logger.info(this.positionWord);
+		logger.info(this.searchCode);
+		this.positions= positionService.getPositionsByWord(this.positionWord,this.searchCode);
+		logger.info("tamanho"+this.positions.size());
+		this.searchBoolean=true;
+	}
 
 }

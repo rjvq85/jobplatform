@@ -19,6 +19,8 @@ public interface IPositionBusinessService {
 	
 	List<IPosition> getAllPositions();
 	
+	List<IPosition> getPositionsByWord(String positionWord,String searchCode);
+	
 	void createPosition(LocalDate openDate, LocalDate closeDate,String reference,String title,String locale,
 	PositionState state,String company, TechnicalAreaType technicalArea,String sla, Integer vacancies,IUser responsable,
 	String description, Collection<String> adChannels) throws DuplicateReferenceException;
@@ -28,5 +30,6 @@ public interface IPositionBusinessService {
 	void delete(IPosition position);
 	
 	void verifyReference(String reference) throws DuplicateReferenceException;
+	
 
 }

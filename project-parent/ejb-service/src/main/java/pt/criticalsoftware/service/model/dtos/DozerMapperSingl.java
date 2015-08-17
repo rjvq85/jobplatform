@@ -30,21 +30,7 @@ public class DozerMapperSingl {
 	private IUserPersistenceService persistence;
 	@Inject
 	private IUserBuilder builder;
-	
-	@PostConstruct
-	void mapping() {
-		IUser admin = builder
-				.email("admin@email.com")
-				.firstName("Administrador")
-				.lastName("do Sistema")
-				.password("123456")
-				.role(Role.ADMIN)
-				.username("ricardo")
-				.build();
-		persistence.create(admin);
-		dozermapping.add("META-INF/dtomapping.xml");
-	}
-	
+		
 	public static DozerBeanMapper getInstance(){
 	    return MapperHolder.instance;
 	}

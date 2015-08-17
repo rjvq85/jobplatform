@@ -11,6 +11,8 @@ public interface IPositionPersistenceService {
 
 	List<IPosition> getAllPositions();
 	
+	List<IPosition>  getPositionsByWord(String positionWord,String searchCode);
+	
 	void verifyReference(String reference) throws DuplicateReferenceException;
 	
 	IPosition create(IPosition position);

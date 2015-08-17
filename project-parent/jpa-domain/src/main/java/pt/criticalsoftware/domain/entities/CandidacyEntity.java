@@ -44,15 +44,15 @@ public class CandidacyEntity {
 	private CandidacyState state;
 
 	@ManyToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name = "candidato")
+//	@JoinColumn(name = "candidato")
 	private CandidateEntity candidate;
 
 	@ManyToOne
-	@JoinColumn(name = "posicao")
+//	@JoinColumn(name = "posicao")
 	private PositionEntity positionCandidacy;
 
 	@OneToMany(mappedBy = "candidacy")
-	@JoinColumn(name = "entrevistas")
+//	@JoinColumn(name = "entrevistas")
 	private List<InterviewEntity> interviews;
 
 	public CandidacyEntity() {

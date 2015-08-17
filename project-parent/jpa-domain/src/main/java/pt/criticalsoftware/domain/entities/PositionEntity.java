@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.Collection;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -16,15 +17,19 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import pt.criticalsoftware.service.persistence.positions.TechnicalAreaType;
 import pt.criticalsoftware.service.persistence.states.PositionState;
+import pt.criticalsoftware.service.persistence.utils.LocalDatePersistenceConverter;
 
 @Entity
 @Table(name="posicoes")
 @NamedQueries({
 	@NamedQuery(name = "Position.getAll",query = "SELECT u from PositionEntity u"),
 	@NamedQuery(name = "Position.verifyReference", query = "SELECT u FROM PositionEntity u WHERE u.reference = :reference"),
+	@NamedQuery(name = "Position.excludingCandidacy", query = "SELECT p FROM PositionEntity p JOIN p.candidacy c WHERE c.candidate.username NOT like :param")
 })
 public class PositionEntity {
 	
@@ -32,9 +37,11 @@ public class PositionEntity {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	
+	@Convert(converter = LocalDatePersistenceConverter.class)
 	@Column(name="data_abertura",nullable=false)
 	private LocalDate openDate;
 	
+	@Convert(converter = LocalDatePersistenceConverter.class)
 	@Column(name="data_fecho",nullable=false)
 	private LocalDate closeDate;
 	

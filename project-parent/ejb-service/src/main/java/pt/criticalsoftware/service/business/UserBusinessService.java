@@ -1,7 +1,6 @@
 package pt.criticalsoftware.service.business;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -42,7 +41,6 @@ public class UserBusinessService implements IUserBusinessService {
 	}
 
 	@Override
-
 	public void createUser(String username, String password, String email, String fn, String ln, Role role) throws DuplicateEmailException, DuplicateUsernameException {
 		verifyEmail(email);
 		verifyUsername(username);
@@ -52,12 +50,11 @@ public class UserBusinessService implements IUserBusinessService {
 	}
 
 
-	public void verifyEmail(String email) throws DuplicateEmailException {
+	private void verifyEmail(String email) throws DuplicateEmailException {
 		userpersistence.verifyEmail(email);
 	}
 
-	@Override
-	public void verifyUsername(String username) throws DuplicateUsernameException {
+	private void verifyUsername(String username) throws DuplicateUsernameException {
 		userpersistence.verifyUsername(username);
 
 	}

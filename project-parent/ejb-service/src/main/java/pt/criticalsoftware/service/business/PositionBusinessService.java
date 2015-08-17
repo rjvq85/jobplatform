@@ -35,7 +35,6 @@ public class PositionBusinessService implements IPositionBusinessService{
 
 	@Override
 	public List<IPosition> getAllPositions() {
-
 		return positionPersistence.getAllPositions();
 	}
 
@@ -79,6 +78,11 @@ public class PositionBusinessService implements IPositionBusinessService{
 	public void delete(IPosition position) {
 		positionPersistence.delete(position);
 		
+	}
+	
+	@Override
+	public List<IPosition> availablePositions(String username) {
+		return positionPersistence.searchAvailable(username);
 	}
 
 }

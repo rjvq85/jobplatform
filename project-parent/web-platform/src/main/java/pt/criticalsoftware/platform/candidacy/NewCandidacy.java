@@ -1,9 +1,16 @@
 package pt.criticalsoftware.platform.candidacy;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -11,24 +18,26 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import pt.criticalsoftware.service.business.ICandidacyBusinessService;
+import pt.criticalsoftware.service.business.IPositionBusinessService;
 import pt.criticalsoftware.service.exceptions.DuplicateCandidateException;
 import pt.criticalsoftware.service.model.ICandidacy;
 import pt.criticalsoftware.service.model.ICandidacyBuilder;
 import pt.criticalsoftware.service.model.ICandidate;
 import pt.criticalsoftware.service.model.ICandidateBuilder;
+import pt.criticalsoftware.service.model.IPosition;
 import pt.criticalsoftware.service.persistence.states.CandidacyState;
 
 @Named
 @RequestScoped
 public class NewCandidacy {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(NewCandidacy.class);
 
 	private String firstName;
 	private String lastName;
 	private String email;
 	private String password;
-	private String username;
+	private String username = "";
 	private String address;
 	private String city;
 	private String country;
@@ -38,7 +47,11 @@ public class NewCandidacy {
 	private String degree;
 	private String school;
 	private String cv;
+	private IPosition position;
 	private CandidacyState state;
+
+	private List<IPosition> availablePositions;
+	private String selectedPosition;
 
 	public NewCandidacy() {
 	}
@@ -49,16 +62,21 @@ public class NewCandidacy {
 	private ICandidacyBuilder candidacy;
 	@EJB
 	private ICandidacyBusinessService business;
+	@EJB
+	private IPositionBusinessService positionBusiness;
 
 	public void create() {
 		ICandidate icandidate = candidate.address(address).country(country).course(course).degree(degree).email(email)
 				.firstName(firstName).lastName(lastName).mobile(mobile).password(password).phone(phone).school(school)
 				.town(city).username(username).build();
-		ICandidacy icandidacy = candidacy.state(CandidacyState.SUBMETIDA).candidate(icandidate).build();
+		ICandidacy icandidacy = candidacy.state(CandidacyState.SUBMETIDA).candidate(icandidate).position(position)
+				.build();
 		try {
 			business.createCandidacy(icandidacy);
-			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Candidatura submetida com sucesso!", "");
+			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Candidatura submetida com sucesso!",
+					"");
 			FacesContext.getCurrentInstance().addMessage(null, message);
+			reset();
 		} catch (DuplicateCandidateException e) {
 			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), "");
 			FacesContext.getCurrentInstance().addMessage(null, message);
@@ -82,6 +100,8 @@ public class NewCandidacy {
 		school = null;
 		cv = null;
 		state = null;
+		position = null;
+		selectedPosition = null;
 	}
 
 	public String getFirstName() {
@@ -202,6 +222,43 @@ public class NewCandidacy {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public IPosition getPosition() {
+		return position;
+	}
+
+	public void setPosition(String position) {
+		if (position.equals("none"))
+			this.position = null;
+		else {
+			for (IPosition p : availablePositions) {
+				if (Integer.valueOf(position) == p.getId()) {
+					this.position = p;
+				}
+			}
+		}
+	}
+
+	public List<IPosition> getAvailablePositions() {
+		if (null == availablePositions) {
+			availablePositions = positionBusiness.getAllPositions();
+			return availablePositions;
+		}
+		return null;
+	}
+
+	public void setAvailablePositions(List<IPosition> availablePositions) {
+		this.availablePositions = availablePositions;
+	}
+
+	public String getSelectedPosition() {
+		return selectedPosition;
+	}
+
+	public void setSelectedPosition(String selectedPosition) {
+		this.selectedPosition = selectedPosition;
+		setPosition(selectedPosition);
 	}
 
 }

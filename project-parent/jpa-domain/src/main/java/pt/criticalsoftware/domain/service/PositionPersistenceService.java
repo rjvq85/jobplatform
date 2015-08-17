@@ -25,38 +25,43 @@ import pt.criticalsoftware.service.model.IUser;
 import pt.criticalsoftware.service.persistence.IPositionPersistenceService;
 
 @Stateless
-public class PositionPersistenceService implements IPositionPersistenceService{
+public class PositionPersistenceService implements IPositionPersistenceService {
 
 	private final Logger logger = LoggerFactory.getLogger(PositionPersistenceService.class);
-	
+
 	@PersistenceContext(unitName = "Jobs")
 	private EntityManager em;
 	
 	@Override
+	public IPosition find(Object id) {
+		return new PositionProxy(em.find(PositionEntity.class, id));
+	}
+
+	@Override
 	public List<IPosition> getAllPositions() {
-		TypedQuery<PositionEntity> query=em.createNamedQuery("Position.getAll", PositionEntity.class);
-		List<PositionEntity> entities=query.getResultList();
-		List<IPosition> proxies=new ArrayList<>();
-		for(PositionEntity pe:entities){
-			PositionProxy positionProxy= new PositionProxy(pe);
+		TypedQuery<PositionEntity> query = em.createNamedQuery("Position.getAll", PositionEntity.class);
+		List<PositionEntity> entities = query.getResultList();
+		List<IPosition> proxies = new ArrayList<>();
+		for (PositionEntity pe : entities) {
+			PositionProxy positionProxy = new PositionProxy(pe);
 			proxies.add(positionProxy);
 		}
 		return proxies;
 	}
-	
+
 	@Override
 	public void verifyReference(String reference) throws DuplicateReferenceException {
-		
-		TypedQuery<PositionEntity> q = em.createNamedQuery("Position.verifyReference",PositionEntity.class)
+
+		TypedQuery<PositionEntity> q = em.createNamedQuery("Position.verifyReference", PositionEntity.class)
 				.setParameter("reference", reference);
 		try {
 			q.getSingleResult().getReference();
-			throw new DuplicateReferenceException("A referência "+reference+" já existe!");
+			throw new DuplicateReferenceException("A referência " + reference + " já existe!");
 		} catch (NoResultException nre) {
-			logger.info("A referência "+reference+" está disponível!");
+			logger.info("A referência " + reference + " está disponível!");
 		}
 	}
-	
+
 	@Override
 	public IPosition create(IPosition position) {
 		PositionEntity entity;
@@ -90,20 +95,37 @@ public class PositionPersistenceService implements IPositionPersistenceService{
 			return null;
 		}
 	}
-	
+
 	@Override
 	public IPosition delete(IPosition position) {
 		PositionEntity entity;
 		try {
 			entity = getEntity(position);
 			PositionEntity pos = em.find(PositionEntity.class, entity.getId());
-	        if (pos != null) {
-	            em.remove(pos);
-	        }
+			if (pos != null) {
+				em.remove(pos);
+			}
 			return null;
 		} catch (IllegalStateException e) {
 			e.printStackTrace();
 			return null;
 		}
 	}
+
+	@Override
+	public List<IPosition> searchAvailable(String username) {
+		List<IPosition> ipositions = new ArrayList<>();
+		TypedQuery<PositionEntity> query = em.createNamedQuery("Position.excludingCandidacy", PositionEntity.class)
+				.setParameter("param", username);
+		List<PositionEntity> pe = query.getResultList();
+		if (null != pe) {
+			for (PositionEntity p : pe) {
+				PositionProxy pp = new PositionProxy(p);
+				ipositions.add(pp);
+			}
+			return ipositions;
+		}
+		return null;
+	}
+
 }

@@ -16,10 +16,6 @@ public interface IUserBusinessService {
 	
 	void createUser(String username, String password, String email, String fn, String ln, Role role) throws DuplicateEmailException, DuplicateUsernameException;
 
-	void verifyEmail(String email) throws DuplicateEmailException;
-
-	void verifyUsername(String username) throws DuplicateUsernameException;
-	
 	List<IUser> getAllUsersByRole(Role role);
 
 

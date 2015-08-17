@@ -1,12 +1,15 @@
 package pt.criticalsoftware.domain.entities;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -16,8 +19,11 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import pt.criticalsoftware.service.persistence.states.CandidacyState;
+import pt.criticalsoftware.service.persistence.utils.LocalDatePersistenceConverter;
 
 @Entity
 @Table(name = "candidaturas")
@@ -38,6 +44,10 @@ public class CandidacyEntity {
 
 	@Column(name = "fonte")
 	private String source;
+	
+	@Convert(converter = LocalDatePersistenceConverter.class)
+	@Column(name="data_candidatura")
+	private LocalDate date;
 
 	@Enumerated(EnumType.STRING)
 	@Column(name = "estado_candidatura", nullable = false)
@@ -49,7 +59,7 @@ public class CandidacyEntity {
 	@ManyToOne
 	private PositionEntity positionCandidacy;
 
-	@OneToMany(mappedBy = "candidacy")
+	@OneToMany(mappedBy = "candidacy",fetch=FetchType.EAGER)
 	private List<InterviewEntity> interviews;
 
 	public CandidacyEntity() {
@@ -131,5 +141,13 @@ public class CandidacyEntity {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+
+	public LocalDate getDate() {
+		return date;
+	}
+
+	public void setDate(LocalDate date) {
+		this.date = date;
 	}
 }

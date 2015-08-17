@@ -19,4 +19,8 @@ public interface IPositionPersistenceService {
 	
 	IPosition delete(IPosition position);
 
+	List<IPosition> searchAvailable(String username);
+
+	IPosition find(Object id);
+
 }

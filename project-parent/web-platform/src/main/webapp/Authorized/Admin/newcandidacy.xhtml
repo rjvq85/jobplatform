@@ -17,21 +17,24 @@
 <h:body>
 	<ui:composition template="../Admin/Layout/layout.xhtml">
 		<ui:define name="content">
-			<h:panelGroup layout="block" class="container" id="container">
-				<h:panelGroup layout="block" styleClass="alert col-md-offset-4 col-md-4 text-center">
+			<h:panelGroup layout="block" styleClass="container" id="container">
+				<h:panelGroup layout="block"
+					styleClass="alert col-md-offset-4 col-md-4 text-center">
 					<h:messages id="messages" styleClass="list-group" globalOnly="true"
-						infoClass="alert alert-success"
-						errorClass="alert alert-danger" style="list-style-type: none;"/>
+						infostyleClass="alert alert-success"
+						errorstyleClass="alert alert-danger"
+						style="list-style-type: none;" />
 				</h:panelGroup>
-				<h:panelGroup layout="block" class="row spacer"></h:panelGroup>
-				<h:panelGroup layout="block" class="panel panel-default">
-					<h:panelGroup layout="block" class="panel-heading">
-						<h:panelGroup layout="block" class="row" id="titlerow">
-							<h:panelGroup layout="block" class="col-md-8">
+				<h:panelGroup layout="block" styleClass="row spacer"></h:panelGroup>
+				<h:panelGroup layout="block" styleClass="panel panel-default">
+					<h:panelGroup layout="block" styleClass="panel-heading">
+						<h:panelGroup layout="block" styleClass="row" id="titlerow">
+							<h:panelGroup layout="block" styleClass="col-md-8">
 								<h1>Nova Candidatura</h1>
 							</h:panelGroup>
-							<h:panelGroup layout="block" class="col-md-offset-2 col-md-2">
-								<h:panelGroup layout="block" class="media">
+							<h:panelGroup layout="block"
+								styleClass="col-md-offset-2 col-md-2">
+								<h:panelGroup layout="block" styleClass="media">
 									<h:graphicImage styleClass="media-object" library="imgs"
 										name="logocritical.png"
 										style="min-height: 50px; height: 50px;" />
@@ -39,118 +42,163 @@
 							</h:panelGroup>
 						</h:panelGroup>
 					</h:panelGroup>
-					<h:panelGroup layout="block" class="panel-body">
+					<h:panelGroup layout="block" styleClass="panel-body">
 						<h:form id="inputform" prependId="false">
-							<h:panelGroup layout="block" class="row">
-								<h:panelGroup layout="block" class="col-md-6">
-									<h:message for="firstname" styleClass="glyphicon glyphicon-exclamation-sign"/><h:inputText id="firstname" value="#{newCandidacy.firstName}"
+							<h:panelGroup layout="block" styleClass="row">
+								<h:panelGroup layout="block" styleClass="col-md-6">
+									<h:message for="firstname"
+										styleClass="glyphicon glyphicon-exclamation-sign" />
+									<h:inputText id="firstname" value="#{newCandidacy.firstName}"
 										a:placeholder="Primeiro Nome" required="true"
-										styleClass="form-control" requiredMessage=""/>
+										styleClass="form-control" requiredMessage="" />
 								</h:panelGroup>
-								<h:panelGroup layout="block" class="col-md-6">
-									<h:message for="lastname" styleClass="glyphicon glyphicon-exclamation-sign"/><h:inputText id="lastname" value="#{newCandidacy.lastName}"
+								<h:panelGroup layout="block" styleClass="col-md-6">
+									<h:message for="lastname"
+										styleClass="glyphicon glyphicon-exclamation-sign" />
+									<h:inputText id="lastname" value="#{newCandidacy.lastName}"
 										a:placeholder="Segundo Nome" required="true"
 										styleClass="form-control" requiredMessage="" />
 								</h:panelGroup>
 							</h:panelGroup>
 							<br />
-							<h:panelGroup layout="block" class="row">
-								<h:panelGroup layout="block" class="col-md-4">
-									<h:message for="email" styleClass="glyphicon glyphicon-exclamation-sign"/><h:inputText id="email" value="#{newCandidacy.email}"
+							<h:panelGroup layout="block" styleClass="row">
+								<h:panelGroup layout="block" styleClass="col-md-4">
+									<h:message for="email"
+										styleClass="glyphicon glyphicon-exclamation-sign" />
+									<h:inputText id="email" value="#{newCandidacy.email}"
 										a:placeholder="E-mail" required="true"
 										styleClass="form-control" requiredMessage="" />
 								</h:panelGroup>
-								<h:panelGroup layout="block" class="col-md-4">
-									<h:message for="username" styleClass="glyphicon glyphicon-exclamation-sign"/><h:inputText id="username" value="#{newCandidacy.username}"
+								<h:panelGroup layout="block" styleClass="col-md-4">
+									<h:message for="username"
+										styleClass="glyphicon glyphicon-exclamation-sign" />
+									<h:inputText id="username" value="#{newCandidacy.username}"
 										a:placeholder="Username" required="true"
 										styleClass="form-control" requiredMessage="" />
 								</h:panelGroup>
-								<h:panelGroup layout="block" class="col-md-4">
-									<h:message for="password" styleClass="glyphicon glyphicon-exclamation-sign"/><h:inputSecret id="password" value="#{newCandidacy.password}"
+								<h:panelGroup layout="block" styleClass="col-md-4">
+									<h:message for="password"
+										styleClass="glyphicon glyphicon-exclamation-sign" />
+									<h:inputSecret id="password" value="#{newCandidacy.password}"
 										a:placeholder="Password" required="true"
 										styleClass="form-control" requiredMessage="" />
 								</h:panelGroup>
 							</h:panelGroup>
 							<br />
-							<h:panelGroup layout="block" class="row">
-								<h:panelGroup layout="block" class="col-md-12">
-									<h:message for="address" styleClass="glyphicon glyphicon-exclamation-sign"/><h:inputText id="address" value="#{newCandidacy.address}"
+							<h:panelGroup layout="block" styleClass="row">
+								<h:panelGroup layout="block" styleClass="col-md-12">
+									<h:message for="address"
+										styleClass="glyphicon glyphicon-exclamation-sign" />
+									<h:inputText id="address" value="#{newCandidacy.address}"
 										a:placeholder="Morada" required="true"
 										styleClass="form-control" requiredMessage="" />
 								</h:panelGroup>
 							</h:panelGroup>
 							<br />
-							<h:panelGroup layout="block" class="row">
-								<h:panelGroup layout="block" class="col-md-4">
-									<h:message for="city" styleClass="glyphicon glyphicon-exclamation-sign"/><h:inputText id="city" value="#{newCandidacy.city}"
+							<h:panelGroup layout="block" styleClass="row">
+								<h:panelGroup layout="block" styleClass="col-md-3">
+									<h:message for="city"
+										styleClass="glyphicon glyphicon-exclamation-sign" />
+									<h:inputText id="city" value="#{newCandidacy.city}"
 										a:placeholder="Cidade" required="true"
 										styleClass="form-control" requiredMessage="" />
 								</h:panelGroup>
-								<h:panelGroup layout="block" class="col-md-4">
-									<h:message for="country" styleClass="glyphicon glyphicon-exclamation-sign"/><h:inputText id="country" value="#{newCandidacy.country}"
-										a:placeholder="País" required="true" styleClass="form-control" requiredMessage="" />
+								<h:panelGroup layout="block" styleClass="col-md-3">
+									<h:message for="country"
+										styleClass="glyphicon glyphicon-exclamation-sign" />
+									<h:inputText id="country" value="#{newCandidacy.country}"
+										a:placeholder="País" required="true" styleClass="form-control"
+										requiredMessage="" />
 								</h:panelGroup>
-							</h:panelGroup>
-							<br />
-							<h:panelGroup layout="block" class="row">
-								<h:panelGroup layout="block" class="col-md-6">
-									<h:message for="mobile" styleClass="glyphicon glyphicon-exclamation-sign"/><h:inputText id="mobile" value="#{newCandidacy.mobile}"
+								<h:panelGroup layout="block" styleClass="col-md-3">
+									<h:message for="mobile"
+										styleClass="glyphicon glyphicon-exclamation-sign" />
+									<h:inputText id="mobile" value="#{newCandidacy.mobile}"
 										a:placeholder="Telemóvel" required="true"
 										styleClass="form-control" requiredMessage="" />
 								</h:panelGroup>
-								<h:panelGroup layout="block" class="col-md-6">
-									<h:message for="phone" styleClass="glyphicon glyphicon-exclamation-sign"/><h:inputText id="phone" value="#{newCandidacy.phone}"
+								<h:panelGroup layout="block" styleClass="col-md-3">
+									<h:message for="phone"
+										styleClass="glyphicon glyphicon-exclamation-sign" />
+									<h:inputText id="phone" value="#{newCandidacy.phone}"
 										a:placeholder="Telefone" required="true"
 										styleClass="form-control" requiredMessage="" />
 								</h:panelGroup>
 							</h:panelGroup>
 							<br />
-							<h:panelGroup layout="block" class="row">
-								<h:panelGroup layout="block" class="col-md-4">
-									<h:message for="course" styleClass="glyphicon glyphicon-exclamation-sign"/><h:inputText id="course" value="#{newCandidacy.course}"
+							<h:panelGroup layout="block" styleClass="row">
+								<h:panelGroup layout="block" styleClass="col-md-4">
+									<h:message for="course"
+										styleClass="glyphicon glyphicon-exclamation-sign" />
+									<h:inputText id="course" value="#{newCandidacy.course}"
 										a:placeholder="Curso" required="true"
 										styleClass="form-control" requiredMessage="" />
 								</h:panelGroup>
-								<h:panelGroup layout="block" class="col-md-4">
-									<h:message for="degree" styleClass="glyphicon glyphicon-exclamation-sign"/><h:inputText id="degree" value="#{newCandidacy.degree}"
+								<h:panelGroup layout="block" styleClass="col-md-4">
+									<h:message for="degree"
+										styleClass="glyphicon glyphicon-exclamation-sign" />
+									<h:inputText id="degree" value="#{newCandidacy.degree}"
 										a:placeholder="Graduação" required="true"
 										styleClass="form-control" requiredMessage="" />
 								</h:panelGroup>
-								<h:panelGroup layout="block" class="col-md-4">
-									<h:message for="school" styleClass="glyphicon glyphicon-exclamation-sign"/><h:inputText id="school" value="#{newCandidacy.school}"
+								<h:panelGroup layout="block" styleClass="col-md-4">
+									<h:message for="school"
+										styleClass="glyphicon glyphicon-exclamation-sign" />
+									<h:inputText id="school" value="#{newCandidacy.school}"
 										a:placeholder="Escola" required="true"
 										styleClass="form-control" requiredMessage="" />
 								</h:panelGroup>
 							</h:panelGroup>
 							<br />
-							<h:panelGroup layout="block" class="row">
-								<h:panelGroup layout="block" class="col-md-12">
-									<h:message for="cv" styleClass="glyphicon glyphicon-exclamation-sign"/><h:inputText id="cv" value="#{newCandidacy.cv}"
-										a:placeholder="CV" required="true" styleClass="form-control" requiredMessage="" />
+							<h:panelGroup layout="block" styleClass="row">
+								<h:panelGroup layout="block" styleClass="col-md-3">
+									<h:message for="posicoes"
+										styleClass="glyphicon glyphicon-exclamation-sign" />
+									<h:panelGroup layout="block" styleClass="form-group">
+										<h:selectOneMenu styleClass="form-control btn-info" id="posicoes"
+											value="#{newCandidacy.selectedPosition}" required="true"
+											requiredMessage="" style="height:34px;">
+											<f:selectItem itemLabel="Seleccione uma posição" itemValue=""
+												noSelectionOption="true" />
+												
+											<f:selectItem itemLabel="Espontânea" itemValue="none"/>
+											<f:selectItems value="#{newCandidacy.availablePositions}"
+												var="pos" itemValue="#{pos.id}"
+												itemLabel="P#{pos.id} - #{pos.title}" />
+										</h:selectOneMenu>
+									</h:panelGroup>
+								</h:panelGroup>
+								<h:panelGroup layout="block" styleClass="col-md-9">
+									<h:message for="cv"
+										styleClass="glyphicon glyphicon-exclamation-sign" />
+									<h:inputText id="cv" value="#{newCandidacy.cv}"
+										a:placeholder="CV" required="true" styleClass="form-control"
+										requiredMessage="" />
 								</h:panelGroup>
 							</h:panelGroup>
 							<br />
-							<h:panelGroup layout="block" class="row">
+							<h:panelGroup layout="block" styleClass="row">
 								<h:panelGroup layout="block"
-									class="col-md-offset-8 col-md-4 text-right">
-									<p:commandButton id="submitbutton"
-										action="#{newCandidacy.create()}" value="Submeter"
-										styleClass="btn btn-success" oncomplete="fadeoutfunction()" update=":container :messages"/>
+									styleClass="col-md-offset-8 col-md-4 text-right">
+									<h:commandButton action="#{newCandidacy.create()}"
+										value="Submeter" styleClass="btn btn-success">
+										<f:ajax execute="inputform" render=":container" />
+									</h:commandButton>
 								</h:panelGroup>
 							</h:panelGroup>
 						</h:form>
 					</h:panelGroup>
-					<h:panelGroup layout="block" class="panel-footer">
+					<h:panelGroup layout="block" styleClass="panel-footer">
 						<h:form id="bottomform" prependId="false">
-							<h:panelGroup layout="block" class="row">
-								<h:panelGroup layout="block" class="col-md-4">
+							<h:panelGroup layout="block" styleClass="row">
+								<h:panelGroup layout="block" styleClass="col-md-4">
 									<h:commandLink action="candidacies?faces-redirect=true"
 										styleClass="btn btn-info">
 										<span class="glyphicon glyphicon-chevron-left"></span> Voltar
 									</h:commandLink>
 								</h:panelGroup>
 								<h:panelGroup layout="block"
-									class="col-md-offset-4 col-md-4 text-right">
+									styleClass="col-md-offset-4 col-md-4 text-right">
 									<h:commandButton action="#{newCandidacy.reset()}"
 										value="Limpar" styleClass="btn btn-default">
 										<f:ajax render=":container" />

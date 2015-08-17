@@ -11,6 +11,7 @@ import javax.inject.Named;
 
 import pt.criticalsoftware.service.business.ICandidacyBusinessService;
 import pt.criticalsoftware.service.model.ICandidacy;
+import pt.criticalsoftware.service.model.ICandidate;
 
 @Named
 @RequestScoped
@@ -24,6 +25,8 @@ public class CandidacyListView {
 	private List<ICandidacy> candidacies;
 
 	private ICandidacy newCandidacy;
+	
+	private ICandidate candidate;
 
 	private String searchText;
 
@@ -88,6 +91,19 @@ public class CandidacyListView {
 
 	public void setSearchText(String searchText) {
 		this.searchText = searchText;
+	}
+
+	public ICandidate getCandidate() {
+		return candidate;
+	}
+
+	public void setCandidate(ICandidate candidate) {
+		this.candidate = candidate;
+	}
+	
+	public String goToInterviews() {
+		if (candidacy.getInterviews().size() < 2) return "candinterview?faces-redirect=true";
+		else return "candinterviews?faces-redirect=true";
 	}
 
 }

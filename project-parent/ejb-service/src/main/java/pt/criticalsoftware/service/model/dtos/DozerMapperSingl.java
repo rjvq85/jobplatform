@@ -44,6 +44,9 @@ public class DozerMapperSingl {
 		IUser admin = builder.email("admin@email.com").firstName("Administrador").lastName("do Sistema")
 				.password("123456").role(Role.ADMIN).username("ricardo").build();
 		persistence.create(admin);
+		IUser gestor = builder.email("gestor@email.com").firstName("Gestor").lastName("de Candidaturas")
+				.password("123456").role(Role.GESTOR).username("quirino").build();
+		persistence.create(gestor);
 //		ICandidate icandidate1 = candidate.address("Porto").country("Portugal").course("Engenharia")
 //				.degree("Licenciatura").email("ricardo@email.com").firstName("Ricardo").lastName("Quirino")
 //				.mobile(919191919).password("123456").phone(222222222).school("FEUP").town("Porto").username("ricardo")

@@ -64,41 +64,35 @@
 							</h:panelGroup>
 						</h:panelGroup>
 						<h:panelGroup layout="block" class="row spacer"></h:panelGroup>
-						<h:panelGroup layout="block" styleClass="row"
-							rendered="#{empty candidacyListView.candidacies}">
-							<h:panelGroup layout="block" class="col-md-4">
-								<h3>Sem resultados...</h3>
+						<h:form prependId="false" id="listform">
+							<h:panelGroup layout="block" styleClass="table-responsive">
+								<p:dataTable id="lista" tableStyleClass="table"
+									var="cand" value="#{candidacyListView.candidacies}"
+									emptyMessage="Sem resultados...">
+									<p:column headerText="Referência" sortBy="#{cand.id}">
+										<h:outputText value="C#{cand.id}" />
+									</p:column>
+									<p:column headerText="Candidato"
+										sortBy="#{cand.candidate.firstName}">
+										<h:outputText value="#{cand.candidate}" />
+									</p:column>
+									<p:column headerText="Data da Candidatura"
+										sortBy="#{cand.date}">
+										<h:outputText value="#{cand.date}" />
+									</p:column>
+									<p:column headerText="Posição">
+										<h:outputText value="#{cand.positionCandidacy}" />
+									</p:column>
+									<p:column headerText="Entrevistas">
+										<h:commandLink action="#{candidacyListView.goToInterviews()}"
+											value="Ver Entrevistas">
+											<f:setPropertyActionListener value="#{cand}"
+												target="#{candidacyListView.candidacy}" />
+										</h:commandLink>
+									</p:column>
+								</p:dataTable>
 							</h:panelGroup>
-						</h:panelGroup>
-						<h:panelGroup id="lista" layout="block" styleClass="row"
-							rendered="#{not empty candidacyListView.candidacies}">
-							<h:panelGroup layout="block" class="col-md-12">
-								<table class="table">
-									<thead>
-										<tr>
-											<th>Referência</th>
-											<th>Candidato</th>
-											<th>Posição</th>
-											<th>Entrevista</th>
-										</tr>
-									</thead>
-									<tbody id="myTable">
-										<ui:repeat var="c" value="#{candidacyListView.candidacies}">
-											<tr>
-												<td>C#{c.id}</td>
-												<td>#{c.candidate}</td>
-												<td>#{c.positionCandidacy}</td>
-												<td>Ver Entrevistas</td>
-											</tr>
-										</ui:repeat>
-									</tbody>
-								</table>
-							</h:panelGroup>
-						</h:panelGroup>
-						<h:panelGroup layout="block" styleClass="col-md-12 text-center"
-							rendered="#{not empty candidacyListView.candidacies}">
-							<ul class="pagination" id="myPagination"></ul>
-						</h:panelGroup>
+						</h:form>
 						<h:panelGroup layout="block" class="page-header">
 							<h:panelGroup layout="block" class="row">
 								<h:panelGroup layout="block" class="col-md-5">

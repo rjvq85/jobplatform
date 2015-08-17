@@ -38,5 +38,5 @@ public class CandidacyBusinessService implements ICandidacyBusinessService {
 	public void createCandidacy(ICandidacy icandidacy) throws DuplicateCandidateException {
 		persistence.newCandidacy(icandidacy);
 	}
-
+	
 }

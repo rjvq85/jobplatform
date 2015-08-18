@@ -5,10 +5,10 @@
 	<!-- Parent POM -->
 	<modelVersion>4.0.0</modelVersion>
 
-		<groupId>pt.criticalsoftware.jobs.platform</groupId>
-		<artifactId>project-parent</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
-		<packaging>pom</packaging>
+	<groupId>pt.criticalsoftware.jobs.platform</groupId>
+	<artifactId>project-parent</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
 
 	<!-- Child Modules -->
 	<modules>
@@ -57,6 +57,16 @@
 		<!-- Arquillian -->
 		<version.org.wildfly.arquillian>1.0.0.Alpha5</version.org.wildfly.arquillian>
 	</properties>
+
+	<!-- Repositories -->
+	<repositories>
+		<repository>
+			<id>prime-repo</id>
+			<name>PrimeFaces Maven Repository</name>
+			<url>http://repository.primefaces.org</url>
+			<layout>default</layout>
+		</repository>
+	</repositories>
 
 
 

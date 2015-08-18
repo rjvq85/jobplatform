@@ -13,25 +13,24 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.UniqueConstraint;
 
 import pt.criticalsoftware.service.persistence.states.CandidacyState;
 import pt.criticalsoftware.service.persistence.utils.LocalDatePersistenceConverter;
 
 @Entity
-@Table(name = "candidaturas")
+@Table(name = "candidaturas", uniqueConstraints = {
+		@UniqueConstraint(columnNames = { "candidate_id", "positioncandidacy_id" }) })
 
-@NamedQueries({ 
-	@NamedQuery(name = "Candidacy.findAll", query = "SELECT c FROM CandidacyEntity c "), 
-	@NamedQuery(name = "Candidacy.search", query = "SELECT c FROM CandidacyEntity as c INNER JOIN c.candidate as a WHERE UPPER(a.firstName) LIKE :param OR UPPER(a.lastName) LIKE :param")
-})
+@NamedQueries({ @NamedQuery(name = "Candidacy.findAll", query = "SELECT c FROM CandidacyEntity c "),
+		@NamedQuery(name = "Candidacy.search", query = "SELECT c FROM CandidacyEntity as c INNER JOIN c.candidate as a WHERE UPPER(a.firstName) LIKE :param OR UPPER(a.lastName) LIKE :param"),
+		@NamedQuery(name = "Candidacy.uniqueConstraintViolation", query = "SELECT COUNT(c) FROM CandidacyEntity c WHERE c.candidate.id = :candidateId AND c.positionCandidacy.id = :positionId"),
+		@NamedQuery(name = "Candidacy.searchDate", query = "SELECT c FROM CandidacyEntity c WHERE c.date = :param")})
 
 public class CandidacyEntity {
 
@@ -44,22 +43,22 @@ public class CandidacyEntity {
 
 	@Column(name = "fonte")
 	private String source;
-	
+
 	@Convert(converter = LocalDatePersistenceConverter.class)
-	@Column(name="data_candidatura")
+	@Column(name = "data_candidatura")
 	private LocalDate date;
 
 	@Enumerated(EnumType.STRING)
 	@Column(name = "estado_candidatura", nullable = false)
 	private CandidacyState state;
 
-	@ManyToOne(cascade=CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.ALL)
 	private CandidateEntity candidate;
 
 	@ManyToOne
 	private PositionEntity positionCandidacy;
 
-	@OneToMany(mappedBy = "candidacy",fetch=FetchType.EAGER)
+	@OneToMany(mappedBy = "candidacy", fetch = FetchType.EAGER)
 	private List<InterviewEntity> interviews;
 
 	public CandidacyEntity() {

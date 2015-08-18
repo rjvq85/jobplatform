@@ -23,6 +23,11 @@ public class CandidateProxy implements ICandidate, IEntityAware<CandidateEntity>
 	}
 	
 	@Override
+	public Integer getId() {
+		return candidate.getId();
+	}
+	
+	@Override
 	public String getUsername() {
 		return candidate.getUsername();
 	}

@@ -48,10 +48,9 @@
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.primefaces.extensions</groupId>
+			<groupId>org.primefaces.themes</groupId>
 			<artifactId>all-themes</artifactId>
-			<version>1.0.8</version>
-			<type>pom</type>
+			<version>1.0.10</version>
 		</dependency>
 
 		<!-- Logging -->

@@ -47,7 +47,7 @@
 										<h:inputText id="campopesquisa"
 											value="#{candidacyListView.searchText}"
 											styleClass="form-control"
-											a:placeholder="Pesquisa de candidaturas" />
+											a:placeholder="Pesquisa de candidaturas (por data: dd-MM-aaaa ou dd/MM/aaaa)" />
 										<h:panelGroup styleClass="input-group-btn">
 											<h:commandButton action="#{candidacyListView.doSearch()}"
 												value="Pesquisar" styleClass="btn btn-default">
@@ -66,9 +66,9 @@
 						<h:panelGroup layout="block" class="row spacer"></h:panelGroup>
 						<h:form prependId="false" id="listform">
 							<h:panelGroup layout="block" styleClass="table-responsive">
-								<p:dataTable id="lista" tableStyleClass="table"
-									var="cand" value="#{candidacyListView.candidacies}"
-									emptyMessage="Sem resultados...">
+								<p:dataTable id="lista" tableStyleClass="table" var="cand"
+									value="#{candidacyListView.candidacies}"
+									emptyMessage="Sem resultados..." styleClass="text-center">
 									<p:column headerText="Referência" sortBy="#{cand.id}">
 										<h:outputText value="C#{cand.id}" />
 									</p:column>
@@ -78,10 +78,15 @@
 									</p:column>
 									<p:column headerText="Data da Candidatura"
 										sortBy="#{cand.date}">
-										<h:outputText value="#{cand.date}" />
+										<h:outputText value="#{candidacyListView.getCandidacyDate(cand)}"/>
 									</p:column>
 									<p:column headerText="Posição">
-										<h:outputText value="#{cand.positionCandidacy}" />
+										<h:outputText value="#{cand.positionCandidacy}"
+											rendered="#{cand.positionCandidacy != 'Espontânea'}" />
+										<h:commandLink
+											action="#{assignCandidacy.newAssignment(cand.candidate.username)}"
+											value="Espontânea"
+											rendered="#{cand.positionCandidacy == 'Espontânea'}" />
 									</p:column>
 									<p:column headerText="Entrevistas">
 										<h:commandLink action="#{candidacyListView.goToInterviews()}"

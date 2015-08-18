@@ -23,6 +23,7 @@ import javax.persistence.UniqueConstraint;
 		@NamedQuery(name = "Candidate.findByTown", query = "select p from CandidateEntity p where p.town = :town"),
 		@NamedQuery(name = "Candidate.findByCountry", query = "select p from CandidateEntity p where p.country = :country"),
 		@NamedQuery(name = "Candidate.findById", query = "select p from CandidateEntity p where p.id = :candidateId "),
+		@NamedQuery(name = "Candidate.findByUsername", query = "SELECT c FROM CandidateEntity c WHERE c.username LIKE :param"),
 		@NamedQuery(name = "Candidate.findDuplicateByUsername", query = "SELECT COUNT(p) FROM CandidateEntity p where UPPER(p.username) LIKE :param"),
 		@NamedQuery(name = "Candidate.findDuplicateByEmail", query = "SELECT COUNT(p) FROM CandidateEntity p where UPPER(p.email) LIKE :param") })
 public class CandidateEntity {

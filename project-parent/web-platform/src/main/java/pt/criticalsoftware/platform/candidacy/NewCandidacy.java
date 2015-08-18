@@ -1,22 +1,20 @@
 package pt.criticalsoftware.platform.candidacy;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.Part;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import pt.criticalsoftware.platform.candidacy.utils.FileUpload;
 import pt.criticalsoftware.service.business.ICandidacyBusinessService;
 import pt.criticalsoftware.service.business.IPositionBusinessService;
 import pt.criticalsoftware.service.exceptions.DuplicateCandidateException;
@@ -49,10 +47,9 @@ public class NewCandidacy {
 	private String cv;
 	private IPosition position;
 	private CandidacyState state;
-
 	private List<IPosition> availablePositions;
 	private String selectedPosition;
-
+	private Part file;
 	public NewCandidacy() {
 	}
 
@@ -64,14 +61,19 @@ public class NewCandidacy {
 	private ICandidacyBusinessService business;
 	@EJB
 	private IPositionBusinessService positionBusiness;
+	@Inject
+	private FileUpload upload;
 
 	public void create() {
-		ICandidate icandidate = candidate.address(address).country(country).course(course).degree(degree).email(email)
-				.firstName(firstName).lastName(lastName).mobile(mobile).password(password).phone(phone).school(school)
-				.town(city).username(username).build();
-		ICandidacy icandidacy = candidacy.state(CandidacyState.SUBMETIDA).candidate(icandidate).position(position)
-				.build();
+		
 		try {
+			upload.setFile(file);
+			String filePath = upload.fileUpload();
+			ICandidate icandidate = candidate.address(address).country(country).course(course).degree(degree).email(email)
+					.firstName(firstName).lastName(lastName).mobile(mobile).password(password).phone(phone).school(school)
+					.town(city).username(username).cv(filePath).build();
+			ICandidacy icandidacy = candidacy.state(CandidacyState.SUBMETIDA).candidate(icandidate).position(position)
+					.build();
 			business.createCandidacy(icandidacy);
 			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Candidatura submetida com sucesso!",
 					"");
@@ -81,6 +83,9 @@ public class NewCandidacy {
 			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), "");
 			FacesContext.getCurrentInstance().addMessage(null, message);
 			logger.error(e.getMessage());
+		} catch (IOException e) {
+			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao fazer o envio do ficheiro", "");
+			FacesContext.getCurrentInstance().addMessage(null, message);
 		}
 	}
 
@@ -259,6 +264,14 @@ public class NewCandidacy {
 	public void setSelectedPosition(String selectedPosition) {
 		this.selectedPosition = selectedPosition;
 		setPosition(selectedPosition);
+	}
+
+	public Part getFile() {
+		return file;
+	}
+
+	public void setFile(Part file) {
+		this.file = file;
 	}
 
 }

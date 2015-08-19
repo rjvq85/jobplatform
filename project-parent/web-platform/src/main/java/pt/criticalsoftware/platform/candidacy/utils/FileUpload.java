@@ -20,10 +20,10 @@ public class FileUpload implements Serializable {
 	private String path;
 	private Part file;
 
-	public String fileUpload() throws IOException {
+	public String fileUpload(String username) throws IOException { // 'String username' is the username of the person whose CV is being uploaded
 		path = System.getProperty("user.dir");
 		File folder = new File(path + "/cvs/");
-		String fileName = getFilename(file);
+		String fileName = username.concat("_").concat(getFilename(file));
 		InputStream inputStream = file.getInputStream();
 		if (folder.exists()) {
 			FileOutputStream outputStream = new FileOutputStream(new File(folder, fileName));

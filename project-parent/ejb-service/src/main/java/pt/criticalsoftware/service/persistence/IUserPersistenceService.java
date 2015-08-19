@@ -21,6 +21,8 @@ public interface IUserPersistenceService {
 	void verifyUsername(String username) throws DuplicateUsernameException;
 	
 	List<IUser> getAllUsersByRole(Role role);
+
+	IUser findByID(Object id);
 		
 
 }

@@ -4,7 +4,8 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
 
 <h:head>
 	<meta charset="utf-8" />
@@ -12,6 +13,62 @@
 </h:head>
 <h:body>
 	<ui:composition>
+		<h:form prependId="false" id="navform">
+			<nav class="navbar navbar-red">
+				<div class="container-fluid">
+					<!-- Brand and toggle get grouped for better mobile display -->
+					<div class="navbar-header">
+						<button type="button" class="navbar-toggle collapsed"
+							data-toggle="collapse"
+							data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+							<span class="sr-only">Toggle navigation</span> <span
+								class="icon-bar"></span> <span class="icon-bar"></span> <span
+								class="icon-bar"></span>
+						</button>
+						<h:link styleClass="navbar-brand" value="Inicio"
+							outcome="index?faces-redirect=true" disabled="false" />
+					</div>
+
+					<!-- Collect the nav links, forms, and other content for toggling -->
+					<div class="collapse navbar-collapse"
+						id="bs-example-navbar-collapse-1">
+						<ul class="nav navbar-nav">
+							<!-- Botões como Candidaturas, Posições, Entrevistas, etc... -->
+							<li><h:link value="Posições"
+									outcome="positionListAdminMain?faces-redirect=true"
+									disabled="false" /></li>
+							<li><h:link value="Candidaturas"
+									outcome="candidacies?faces-redirect=true" disabled="false" /></li>
+							<li><h:link value="Candidatos"
+									outcome="candidates?faces-redirect=true" disabled="false" /></li>
+							<li><h:link value="Entrevistas"
+									outcome="interviews?faces-redirect=true" disabled="false" /></li>
+							<li><h:link value="Relatórios"
+									outcome="reports?faces-redirect=true" disabled="false" /></li>
+							<li><h:link value="Guiões"
+									outcome="scripts?faces-redirect=true" disabled="false" /></li>
+						</ul>
+						<ul class="nav navbar-nav navbar-right">
+							<li class="dropdown"><h:link value="#{userNAME}" outcome="#"
+									styleClass="dropdown-toggle" a:data-toggle="dropdown"
+									a:role="button" a:aria-haspopup="true" a:aria-expanded="false"
+									disabled="false">
+									<span class="caret"></span>
+								</h:link>
+								<ul class="dropdown-menu">
+									<li><a href="#">Perfil</a></li>
+									<li><a href="#">Password</a></li>
+									<li role="separator" class="divider"></li>
+									<li><a href="#">Gestão Utilizadores</a></li>
+								</ul></li>
+							<li><h:commandLink action="#{login.logout()}" value="Logout" /></li>
+						</ul>
+					</div>
+					<!-- /.navbar-collapse -->
+				</div>
+				<!-- /.container-fluid -->
+			</nav>
+		</h:form>
 	</ui:composition>
 </h:body>
 </html>

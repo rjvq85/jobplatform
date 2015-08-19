@@ -17,13 +17,115 @@
 		right: 0;
 	}
 }
+
 .ui-datatable * {
-	border-style:none;
+	border-style: none;
 }
+
 .ui-datatable thead th, .ui-datatable tbody td, .ui-datatable tfoot td {
 	border-style: none;
 }
 
-#fileUpload{
-  display: none; /* do not display the actual file upload button */
+#fileUpload {
+	display: none; /* do not display the actual file upload button */
 }
+
+/* Navbar Red */
+.navbar-red {
+	background-color: #e74c3d;
+	border-color: #fd7d70;
+}
+
+.navbar-red .navbar-brand {
+	color: #ffffff;
+}
+
+.navbar-red .navbar-brand:hover, .navbar-red .navbar-brand:focus {
+	color: #903536;
+}
+
+.navbar-red .navbar-text {
+	color: #ffffff;
+}
+
+.navbar-red .navbar-nav>li>a {
+	color: #ffffff;
+}
+
+.navbar-red .navbar-nav>li>a:hover, .navbar-red .navbar-nav>li>a:focus {
+	color: #903536;
+}
+
+.navbar-red .navbar-nav>.active>a, .navbar-red .navbar-nav>.active>a:hover,
+	.navbar-red .navbar-nav>.active>a:focus {
+	color: #903536;
+	background-color: #fd7d70;
+}
+
+.navbar-red .navbar-nav>.open>a, .navbar-red .navbar-nav>.open>a:hover,
+	.navbar-red .navbar-nav>.open>a:focus {
+	color: #903536;
+	background-color: #fd7d70;
+}
+
+.navbar-red .navbar-toggle {
+	border-color: #fd7d70;
+}
+
+.navbar-red .navbar-toggle:hover, .navbar-red .navbar-toggle:focus {
+	background-color: #fd7d70;
+}
+
+.navbar-red .navbar-toggle .icon-bar {
+	background-color: #ffffff;
+}
+
+.navbar-red .navbar-collapse, .navbar-red .navbar-form {
+	border-color: #ffffff;
+}
+
+.navbar-red .navbar-link {
+	color: #ffffff;
+}
+
+.navbar-red .navbar-link:hover {
+	color: #903536;
+}
+
+@media ( max-width : 767px) {
+	.navbar-red .navbar-nav .open .dropdown-menu>li>a {
+		color: #ffffff;
+	}
+	.navbar-red .navbar-nav .open .dropdown-menu>li>a:hover, .navbar-red .navbar-nav .open .dropdown-menu>li>a:focus
+		{
+		color: #903536;
+	}
+	.navbar-red .navbar-nav .open .dropdown-menu>.active>a, .navbar-red .navbar-nav .open .dropdown-menu>.active>a:hover,
+		.navbar-red .navbar-nav .open .dropdown-menu>.active>a:focus {
+		color: #903536;
+		background-color: #fd7d70;
+	}
+}
+
+.navbar-red .navbar-nav>li>span {
+	color: #ffffff;
+	line-height: 3.7;
+}
+
+.navbar-red .navbar-nav>li>span:hover, .navbar-red .navbar-nav>li>span:focus {
+	color: #903536;
+}
+
+.navbar-red .navbar-nav>.active>span, .navbar-red .navbar-nav>.active>span:hover,
+	.navbar-red .navbar-nav>.active>span:focus {
+	color: #903536;
+	background-color: #fd7d70;
+}
+
+.navbar-red .navbar-nav>.open>span, .navbar-red .navbar-nav>.open>span:hover,
+	.navbar-red .navbar-nav>.open>span:focus {
+	color: #903536;
+	background-color: #fd7d70;
+}
+
+/* End Red Bar */

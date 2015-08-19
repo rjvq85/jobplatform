@@ -11,7 +11,17 @@
 <h:body>
 	<ui:composition template="../Admin/Layout/layout.xhtml">
 		<ui:define name="content">
-			<h3>Administrador</h3>
+			<div class="jumbotron">
+				<div class="container">
+					<h1>
+						Bem-vindo, <strong><h:outputText value="#{userFNLN}" /></strong>!
+					</h1>
+					<p>Na barra de navegação, em cima, poderá aceder, a partir de
+						qualquer lugar, às diferentes opções que tem disponível no seu
+						perfil.</p>
+					<p>Em baixo consegue aceder às secções principais</p>
+				</div>
+			</div>
 		</ui:define>
 	</ui:composition>
 </h:body>

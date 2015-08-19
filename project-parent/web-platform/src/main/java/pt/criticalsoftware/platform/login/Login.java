@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import pt.criticalsoftware.service.business.IUserBusinessService;
+import pt.criticalsoftware.service.model.IUser;
 import pt.criticalsoftware.service.persistence.roles.Role;
 
 @Named
@@ -47,6 +48,7 @@ public class Login {
 			request.login(username, password);
 			Integer id = userservice.getUserId(username);
 			setUserLogged(id);
+			setLoggedUsername(username, id);
 			return landingPage(id);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -69,7 +71,7 @@ public class Login {
 		return null;
 	}
 
-	public String landingPage(Integer id) {
+	private String landingPage(Integer id) {
 		StringBuilder result = new StringBuilder(AUTH_URL);
 		List<Role> roles = userservice.getRoles(id);
 		if (1 == roles.size()) {
@@ -96,15 +98,26 @@ public class Login {
 		return result.toString();
 	}
 
-	public void setUserLogged(Integer id) {
-		FacesContext context = currentFacesContext();
-		HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
-		HttpSession session = request.getSession();
-		session.setAttribute("userID", id);
+	private void setUserLogged(Integer id) {
+		getSession().setAttribute("userID", id);
+	}
+	
+	private void setLoggedUsername(String username, Integer id) {
+		String uname = username.substring(0,1).toUpperCase().concat(username.substring(1)).toLowerCase();
+		getSession().setAttribute("userNAME", uname);
+		IUser user = userservice.getUserByID(id);
+		String name = user.getFirstName().concat(" ").concat(user.getLastName());
+		getSession().setAttribute("userFNLN", name);
 	}
 	
 	private FacesContext currentFacesContext() {
 		return FacesContext.getCurrentInstance();
+	}
+	
+	private HttpSession getSession() {
+		FacesContext context = currentFacesContext();
+		HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
+		return request.getSession();
 	}
 
 }

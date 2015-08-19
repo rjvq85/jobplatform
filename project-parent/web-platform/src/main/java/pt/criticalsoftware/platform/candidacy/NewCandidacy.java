@@ -68,7 +68,7 @@ public class NewCandidacy {
 		
 		try {
 			upload.setFile(file);
-			String filePath = upload.fileUpload();
+			String filePath = upload.fileUpload(username);
 			ICandidate icandidate = candidate.address(address).country(country).course(course).degree(degree).email(email)
 					.firstName(firstName).lastName(lastName).mobile(mobile).password(password).phone(phone).school(school)
 					.town(city).username(username).cv(filePath).build();

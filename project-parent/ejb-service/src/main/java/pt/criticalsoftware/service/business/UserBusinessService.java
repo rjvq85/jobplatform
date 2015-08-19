@@ -65,4 +65,9 @@ public class UserBusinessService implements IUserBusinessService {
 		
 	}
 
+	@Override
+	public IUser getUserByID(Object id) {
+		return userpersistence.findByID(id);
+	}
+
 }

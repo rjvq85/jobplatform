@@ -112,5 +112,10 @@ public class UserPersistenceService implements IUserPersistenceService {
 		}
 	}
 
+	@Override
+	public IUser findByID(Object id) {
+		return new UserProxy(em.find(UserEntity.class, id));
+	}
+
 
 }

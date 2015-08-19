@@ -31,4 +31,6 @@ public interface IPositionBusinessService {
 	
 	void verifyReference(String reference) throws DuplicateReferenceException;
 
+	List<IPosition> getManagerPositions(Integer currentUserID);
+
 }

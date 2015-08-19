@@ -23,4 +23,6 @@ public interface IPositionPersistenceService {
 
 	IPosition find(Object id);
 
+	List<IPosition> getManagerPositions(Integer currentUserID);
+
 }

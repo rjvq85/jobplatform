@@ -156,4 +156,16 @@ public class PositionPersistenceService implements IPositionPersistenceService {
 		}
 		return proxies;
 	}
+
+	@Override
+	public List<IPosition> getManagerPositions(Integer currentUserID) {
+		TypedQuery<PositionEntity> query = em.createNamedQuery("Position.getPositionByManager",PositionEntity.class)
+				.setParameter("param", currentUserID);
+		List<PositionEntity> entities = query.getResultList();
+		List<IPosition> interfaces = new ArrayList<>();
+		for (PositionEntity p:entities) {
+			interfaces.add(new PositionProxy(p));
+		}
+		return interfaces;
+	}
 }

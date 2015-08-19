@@ -1,5 +1,6 @@
 package pt.criticalsoftware.service.model.dtos;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,13 +12,19 @@ import javax.inject.Inject;
 import javax.ejb.LocalBean;
 import org.dozer.DozerBeanMapper;
 import pt.criticalsoftware.service.business.ICandidacyBusinessService;
+import pt.criticalsoftware.service.business.IPositionBusinessService;
 import pt.criticalsoftware.service.model.ICandidacyBuilder;
 import pt.criticalsoftware.service.model.ICandidateBuilder;
+import pt.criticalsoftware.service.model.IPosition;
+import pt.criticalsoftware.service.model.IPositionBuilder;
+
 import org.dozer.Mapper;
 import pt.criticalsoftware.service.model.IUser;
 import pt.criticalsoftware.service.model.IUserBuilder;
 import pt.criticalsoftware.service.persistence.IUserPersistenceService;
+import pt.criticalsoftware.service.persistence.positions.TechnicalAreaType;
 import pt.criticalsoftware.service.persistence.roles.Role;
+import pt.criticalsoftware.service.persistence.states.PositionState;
 
 /**
  * Session Bean implementation class DozerMapperSingl
@@ -37,8 +44,13 @@ public class DozerMapperSingl {
 	private ICandidateBuilder candidate;
 	@Inject
 	private ICandidacyBuilder candidacy;
-	@Inject
+	@EJB
 	private ICandidacyBusinessService business;
+
+	@Inject
+	private IPositionBuilder posBuilder;
+	@EJB
+	private IPositionBusinessService posBness;
 
 	@PostConstruct
 	void mapping() {
@@ -48,22 +60,26 @@ public class DozerMapperSingl {
 		IUser gestor = builder.email("gestor@email.com").firstName("Gestor").lastName("de Candidaturas")
 				.password("123456").role(Role.GESTOR).username("quirino").build();
 		persistence.create(gestor);
-//		ICandidate icandidate1 = candidate.address("Porto").country("Portugal").course("Engenharia")
-//				.degree("Licenciatura").email("ricardo@email.com").firstName("Ricardo").lastName("Quirino")
-//				.mobile(919191919).password("123456").phone(222222222).school("FEUP").town("Porto").username("ricardo")
-//				.build();
-//		ICandidacy icandidacy1 = candidacy.state(CandidacyState.SUBMETIDA).candidate(icandidate1).build();
-//		business.createCandidacy(icandidacy1);
-//		try {
-//			Thread.sleep(50);
-//		} catch (InterruptedException e) {
-//			e.printStackTrace();
-//		}
-//		ICandidate icandidate2 = candidate.address("Porto").country("Portugal").course("Design").degree("Licenciatura")
-//				.email("ana@email.com").firstName("Ana").lastName("Martins").mobile(919191919).password("123456")
-//				.phone(222222222).school("ESAD").town("Porto").username("ana").build();
-//		ICandidacy icandidacy2 = candidacy.state(CandidacyState.SUBMETIDA).candidate(icandidate2).build();
-//		business.createCandidacy(icandidacy2);
+		// ICandidate icandidate1 =
+		// candidate.address("Porto").country("Portugal").course("Engenharia")
+		// .degree("Licenciatura").email("ricardo@email.com").firstName("Ricardo").lastName("Quirino")
+		// .mobile(919191919).password("123456").phone(222222222).school("FEUP").town("Porto").username("ricardo")
+		// .build();
+		// ICandidacy icandidacy1 =
+		// candidacy.state(CandidacyState.SUBMETIDA).candidate(icandidate1).build();
+		// business.createCandidacy(icandidacy1);
+		// try {
+		// Thread.sleep(50);
+		// } catch (InterruptedException e) {
+		// e.printStackTrace();
+		// }
+		// ICandidate icandidate2 =
+		// candidate.address("Porto").country("Portugal").course("Design").degree("Licenciatura")
+		// .email("ana@email.com").firstName("Ana").lastName("Martins").mobile(919191919).password("123456")
+		// .phone(222222222).school("ESAD").town("Porto").username("ana").build();
+		// ICandidacy icandidacy2 =
+		// candidacy.state(CandidacyState.SUBMETIDA).candidate(icandidate2).build();
+		// business.createCandidacy(icandidacy2);
 		dozermapping.add("META-INF/dtomapping.xml");
 	}
 

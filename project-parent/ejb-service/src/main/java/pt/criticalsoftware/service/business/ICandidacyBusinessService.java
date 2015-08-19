@@ -10,7 +10,7 @@ import pt.criticalsoftware.service.model.ICandidacy;
 public interface ICandidacyBusinessService {
 
 	List<ICandidacy> getAllCandidacies();
-
+	
 	void createCandidacy(ICandidacy icandidacy) throws DuplicateCandidateException;
 
 	List<ICandidacy> getSearchedCandidaciesAdmin(String param);
@@ -19,4 +19,8 @@ public interface ICandidacyBusinessService {
 
 	List<ICandidacy> getSearchedDatesCandidaciesAdmin(LocalDate date);
 
+	List<ICandidacy> getManagerCandidacies(Integer id);
+
+	List<ICandidacy> getSearchedDatesCandidaciesManager(LocalDate date, Integer currentUserID);
+	
 }

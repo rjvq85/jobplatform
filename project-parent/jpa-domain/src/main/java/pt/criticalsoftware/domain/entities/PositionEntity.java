@@ -35,7 +35,8 @@ import pt.criticalsoftware.service.persistence.utils.LocalDatePersistenceConvert
 	@NamedQuery(name = "Position.getPositionsByCompany",query = "SELECT u from PositionEntity u WHERE u.company = :company"),
 	@NamedQuery(name = "Position.getPositionsByTechnicalArea", query = "SELECT u FROM PositionEntity u WHERE u.technicalArea = :technicalArea"),
 	@NamedQuery(name = "Position.verifyReference", query = "SELECT u FROM PositionEntity u WHERE u.reference = :reference"),
-	@NamedQuery(name = "Position.excludingCandidacy", query = "SELECT p FROM PositionEntity p JOIN p.candidacy c WHERE c.candidate.username NOT like :param")
+	@NamedQuery(name = "Position.excludingCandidacy", query = "SELECT p FROM PositionEntity p JOIN p.candidacy c WHERE c.candidate.username NOT like :param"),
+	@NamedQuery(name = "Position.getPositionByManager", query = "SELECT p FROM PositionEntity p WHERE p.responsable.id = :param")
 })
 public class PositionEntity {
 	

@@ -108,5 +108,29 @@ public class CandidacyPersistenceService implements ICandidacyPersistenceService
 		}
 		return icand;
 	}
+	
+	@Override
+	public List<ICandidacy> searchManagerCandidaciesDate(LocalDate localDate, Integer id) {
+		List<ICandidacy> icand = new ArrayList<>();
+		TypedQuery<CandidacyEntity> query = em.createNamedQuery("Candidacy.searchDate",CandidacyEntity.class)
+				.setParameter("param", localDate);
+		List<CandidacyEntity> ce = query.getResultList();
+		for (CandidacyEntity c:ce) {
+			if (c.getPositionCandidacy().getResponsable().getId() == id) icand.add(new CandidacyProxy(c));
+		}
+		return icand;
+	}
+
+	@Override
+	public List<ICandidacy> getManagerCandidacies(Integer id) {
+		TypedQuery<CandidacyEntity> query = em.createNamedQuery("Candidacy.manager",CandidacyEntity.class)
+				.setParameter("param", id);
+		List<CandidacyEntity> entitiesList = query.getResultList();
+		List<ICandidacy> interfaceList = new ArrayList<>();
+		for (CandidacyEntity ce:entitiesList) {
+			interfaceList.add(new CandidacyProxy(ce));
+		}
+		return interfaceList;
+	}
 
 }

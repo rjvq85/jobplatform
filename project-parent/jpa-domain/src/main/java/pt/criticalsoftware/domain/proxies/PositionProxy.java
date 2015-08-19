@@ -164,10 +164,12 @@ public class PositionProxy implements IEntityAware<PositionEntity>, IPosition {
 		return (IUser) position.getResponsable();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void setResponsable(IUser responsable) {
-		position.setResponsable((UserEntity) responsable);
-		
+		if (responsable instanceof IEntityAware<?>) {
+			position.setResponsable(((IEntityAware<UserEntity>)responsable).getEntity());
+		}
 	}
 	
 	@Override

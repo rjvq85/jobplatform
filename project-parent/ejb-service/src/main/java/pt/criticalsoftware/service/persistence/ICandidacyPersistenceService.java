@@ -19,4 +19,8 @@ public interface ICandidacyPersistenceService {
 
 	List<ICandidacy> searchAdminCandidaciesDate(LocalDate date);
 
+	List<ICandidacy> getManagerCandidacies(Integer id);
+
+	List<ICandidacy> searchManagerCandidaciesDate(LocalDate localDate, Integer id);
+
 }

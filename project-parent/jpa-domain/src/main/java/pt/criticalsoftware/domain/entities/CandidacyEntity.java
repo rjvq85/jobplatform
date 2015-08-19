@@ -30,7 +30,8 @@ import pt.criticalsoftware.service.persistence.utils.LocalDatePersistenceConvert
 @NamedQueries({ @NamedQuery(name = "Candidacy.findAll", query = "SELECT c FROM CandidacyEntity c "),
 		@NamedQuery(name = "Candidacy.search", query = "SELECT c FROM CandidacyEntity as c INNER JOIN c.candidate as a WHERE UPPER(a.firstName) LIKE :param OR UPPER(a.lastName) LIKE :param"),
 		@NamedQuery(name = "Candidacy.uniqueConstraintViolation", query = "SELECT COUNT(c) FROM CandidacyEntity c WHERE c.candidate.id = :candidateId AND c.positionCandidacy.id = :positionId"),
-		@NamedQuery(name = "Candidacy.searchDate", query = "SELECT c FROM CandidacyEntity c WHERE c.date = :param")})
+		@NamedQuery(name = "Candidacy.searchDate", query = "SELECT c FROM CandidacyEntity c WHERE c.date = :param"),
+		@NamedQuery(name = "Candidacy.manager", query = "SELECT c FROM CandidacyEntity c WHERE c.positionCandidacy.responsable.id = :param")})
 
 public class CandidacyEntity {
 

@@ -63,11 +63,12 @@
 
 
 			<p:outputLabel value="Responsável" for="positionResponsable" />
-			<p:selectOneMenu id="positionResponsable"
-				value="#{newPosition.responsableName}" filter="true"
-				filterMatchMode="startsWith" width="30">
-				<f:selectItems value="#{newPosition.allResponsables}" />
-			</p:selectOneMenu>
+			<h:selectOneMenu id="positionResponsable"
+				value="#{newPosition.selectedResponsable}">
+				<f:selectItems value="#{newPosition.responsables}" var="resp"
+					itemLabel="#{resp.firstName} #{resp.lastName}"
+					itemValue="#{resp.id}" />
+			</h:selectOneMenu>
 
 			<p:outputLabel value="Descrição" for="positionDescription" />
 			<p:inputText id="positionDescription" required="true"

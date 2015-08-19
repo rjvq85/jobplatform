@@ -63,7 +63,7 @@ public class PositionBusinessService implements IPositionBusinessService{
 				.locale(locale).openDate(openDate)
 				.reference(reference).sla(sla)
 				.state(state).technicalArea(technicalArea)
-				.title(title).vacancies(vacancies).adChannels(adChannels).build();
+				.title(title).vacancies(vacancies).adChannels(adChannels).responsable(responsable).build();
 		
 		positionPersistence.create(position);
 
@@ -85,6 +85,13 @@ public class PositionBusinessService implements IPositionBusinessService{
 			String searchCode) {
 		return positionPersistence.getPositionsByWord(positionWord, searchCode);
 		
+	}
+
+
+
+	@Override
+	public List<IPosition> getManagerPositions(Integer currentUserID) {
+		return positionPersistence.getManagerPositions(currentUserID);
 	}
 
 }

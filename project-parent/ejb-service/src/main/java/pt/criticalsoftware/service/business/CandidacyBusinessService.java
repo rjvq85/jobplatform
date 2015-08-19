@@ -54,5 +54,15 @@ public class CandidacyBusinessService implements ICandidacyBusinessService {
 	public void assignCandidacy(ICandidacy cand) throws UniqueConstraintException {
 		persistence.assignCandidacy(cand);
 	}
+
+	@Override
+	public List<ICandidacy> getManagerCandidacies(Integer id) {
+		return persistence.getManagerCandidacies(id);
+	}
+
+	@Override
+	public List<ICandidacy> getSearchedDatesCandidaciesManager(LocalDate date, Integer currentUserID) {
+		return persistence.searchManagerCandidaciesDate(date, currentUserID);
+	}
 	
 }

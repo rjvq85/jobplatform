@@ -9,6 +9,8 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
 import org.slf4j.Logger;
@@ -48,8 +50,10 @@ public class NewCandidacy {
 	private IPosition position;
 	private CandidacyState state;
 	private List<IPosition> availablePositions;
+	private List<IPosition> availableManagerPositions;
 	private String selectedPosition;
 	private Part file;
+
 	public NewCandidacy() {
 	}
 
@@ -65,13 +69,13 @@ public class NewCandidacy {
 	private FileUpload upload;
 
 	public void create() {
-		
+
 		try {
 			upload.setFile(file);
 			String filePath = upload.fileUpload(username);
-			ICandidate icandidate = candidate.address(address).country(country).course(course).degree(degree).email(email)
-					.firstName(firstName).lastName(lastName).mobile(mobile).password(password).phone(phone).school(school)
-					.town(city).username(username).cv(filePath).build();
+			ICandidate icandidate = candidate.address(address).country(country).course(course).degree(degree)
+					.email(email).firstName(firstName).lastName(lastName).mobile(mobile).password(password).phone(phone)
+					.school(school).town(city).username(username).cv(filePath).build();
 			ICandidacy icandidacy = candidacy.state(CandidacyState.SUBMETIDA).candidate(icandidate).position(position)
 					.build();
 			business.createCandidacy(icandidacy);
@@ -84,7 +88,8 @@ public class NewCandidacy {
 			FacesContext.getCurrentInstance().addMessage(null, message);
 			logger.error(e.getMessage());
 		} catch (IOException e) {
-			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao fazer o envio do ficheiro", "");
+			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao fazer o envio do ficheiro",
+					"");
 			FacesContext.getCurrentInstance().addMessage(null, message);
 		}
 	}
@@ -237,9 +242,17 @@ public class NewCandidacy {
 		if (position.equals("none"))
 			this.position = null;
 		else {
-			for (IPosition p : availablePositions) {
-				if (Integer.valueOf(position) == p.getId()) {
-					this.position = p;
+			if (null != availablePositions) {
+				for (IPosition p : availablePositions) {
+					if (Integer.valueOf(position) == p.getId()) {
+						this.position = p;
+					}
+				}
+			} else if (null != availableManagerPositions) {
+				for (IPosition p : availableManagerPositions) {
+					if (Integer.valueOf(position) == p.getId()) {
+						this.position = p;
+					}
 				}
 			}
 		}
@@ -272,6 +285,28 @@ public class NewCandidacy {
 
 	public void setFile(Part file) {
 		this.file = file;
+	}
+
+	public List<IPosition> getAvailableManagerPositions() {
+		if (null == availableManagerPositions) {
+			availableManagerPositions = positionBusiness.getManagerPositions(getCurrentUserID());
+			return availableManagerPositions;
+		}
+		return null;
+	}
+
+	public void setAvailableManagerPositions(List<IPosition> availableManagerPositions) {
+		this.availableManagerPositions = availableManagerPositions;
+	}
+
+	private Integer getCurrentUserID() {
+		return (Integer) getSession().getAttribute("userID");
+	}
+
+	private HttpSession getSession() {
+		FacesContext context = FacesContext.getCurrentInstance();
+		HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
+		return request.getSession();
 	}
 
 }

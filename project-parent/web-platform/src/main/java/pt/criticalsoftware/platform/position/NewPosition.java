@@ -10,12 +10,10 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
-import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
-import org.primefaces.context.RequestContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,8 +24,6 @@ import pt.criticalsoftware.service.model.IUser;
 import pt.criticalsoftware.service.persistence.positions.TechnicalAreaType;
 import pt.criticalsoftware.service.persistence.roles.Role;
 import pt.criticalsoftware.service.persistence.states.PositionState;
-
-import java.io.Serializable;
 
 @Named
 @RequestScoped
@@ -63,6 +59,7 @@ public class NewPosition{
 	private List<IUser> responsables;
 	private List<String> selectedChannels;
 	private List<String> channels;
+	private String selectedResponsable;
 	
 
 	@PostConstruct
@@ -93,8 +90,7 @@ public class NewPosition{
 	}
 
 	public List<String> getAllResponsables() {
-		Role role=Role.GESTOR;
-		this.responsables=userService.getAllUsersByRole(role);
+		this.responsables=userService.getAllUsersByRole(Role.GESTOR);
 		allResponsables= new ArrayList<String>();
 		for (IUser r:this.responsables)
 			allResponsables.add(r.getFirstName()+" "+r.getLastName());
@@ -191,6 +187,14 @@ public class NewPosition{
 	public void setResponsable(IUser responsable) {
 		this.responsable = responsable;
 	}
+	public void setResponsable(String id) {
+		System.out.println("\n\n\n\n\n\n ###### ENTROU PARA DEFINIR O RESPONSAVEL COM ID: "+id+"####### \n\n\n\n\n\n");
+		Integer respId = Integer.parseInt(id);
+		responsables = (null == responsables) ? getResponsables() : responsables;
+		for (IUser u:responsables) {
+			if (u.getId() == respId) responsable = u;
+		}
+	}
 	public String getDescription() {
 		return description;
 	}
@@ -227,4 +231,23 @@ public class NewPosition{
 			FacesContext.getCurrentInstance().addMessage(null, message);
 		}
 	}
+
+	public List<IUser> getResponsables() {
+		return (null == responsables) ? userService.getAllUsersByRole(Role.GESTOR) : responsables;
+	}
+
+	public void setResponsables(List<IUser> responsables) {
+		this.responsables = responsables;
+	}
+
+	public String getSelectedResponsable() {
+		return selectedResponsable;
+	}
+
+	public void setSelectedResponsable(String selectedResponsable) {
+		System.out.println("\n\n\n\n\n\n ###### ENTROU PARA DEFINIR O RESPONSAVEL COM ID: "+selectedResponsable+"####### \n\n\n\n\n\n");
+		this.selectedResponsable = selectedResponsable;
+		setResponsable(selectedResponsable);
+	}
+	
 }

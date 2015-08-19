@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+	<!-- Positions list -->
+	<p:dataTable id="gridPositions" var="position"
+		value="#{positionListView.positions}" selectionMode="single"
+		selection="#{editPosition.editPosition}" rowKey="#{position.id}"
+		paginator="true" paginatorPosition="bottom" rows="15"
+		styleClass="paginated">
+
+		<p:ajax event="rowSelect" listener="#{editPosition.onRowSelect}"
+			update=":formEditPosition:dialog-EditPosition :toolbarForm:toolbarPosition" />
+		<p:ajax event="rowUnselect" update=":toolbarForm:toolbarPosition" />
+
+		<p:column headerText="Data Abertura">
+			<p:outputLabel value="#{position.openDate}"></p:outputLabel>
+		</p:column>
+		<p:column headerText="Data Fecho">
+			<p:outputLabel value="#{position.closeDate}"></p:outputLabel>
+		</p:column>
+		<p:column headerText="Código">
+			<p:outputLabel value="#{position.reference}"></p:outputLabel>
+		</p:column>
+		<p:column headerText="Título">
+			<p:outputLabel value="#{position.title}"></p:outputLabel>
+		</p:column>
+		<p:column headerText="Localização">
+			<p:outputLabel value="#{position.locale}"></p:outputLabel>
+		</p:column>
+		<p:column headerText="Estado">
+			<p:outputLabel value="#{position.state}"></p:outputLabel>
+		</p:column>
+		<p:column headerText="Empresa">
+			<p:outputLabel value="#{position.company}"></p:outputLabel>
+		</p:column>
+		<p:column headerText="Área Técnica">
+			<p:outputLabel value="#{position.technicalArea}"></p:outputLabel>
+		</p:column>
+	</p:dataTable>
+</ui:composition>
+</html>

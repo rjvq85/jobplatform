@@ -169,22 +169,20 @@
 									</h:panelGroup>
 								</h:panelGroup>
 								<h:panelGroup layout="block"
-									styleClass="col-md-offset-2 col-md-7 text-right">
-									<div class="input-group" role="group">
-										<h:message for="fileUpload"
-											styleClass="glyphicon glyphicon-exclamation-sign" />
-										<h:inputFile id="fileUpload"
-											styleClass="btn btn-lg btn-primary btn-primary btn-block btn-file file"
-											value="#{newCandidacy.file}" required="true"
-											validator="pt.criticalsoftware.platform.validators.FileValidator">
-											<f:ajax event="change" execute="file" requiredMessage="" />
-										</h:inputFile>
-										<div class="input-group-addon">
-											<span class="glyphicon glyphicon-upload"></span>
-										</div>
-										<h:panelGroup id="fileName" styleClass="form-control" />
-										<div id="selectFile" class="input-group-addon">Seleccionar</div>
-									</div>
+									styleClass="col-md-2">
+									<h:message for="ficheiro"
+										styleClass="glyphicon glyphicon-exclamation-sign" />
+									<span class="form-control file-input btn btn-primary btn-file">Curriculum Vitae
+									<h:inputFile id="ficheiro" value="#{newCandidacy.file}"
+									validator="pt.criticalsoftware.platform.validators.FileValidator"
+									styleClass="form-control btn btn-info" required="true" requiredMessage="">
+									<f:ajax event="change" render="filename :messages"/>
+									</h:inputFile>
+									</span>
+								</h:panelGroup>
+								<h:panelGroup layout="block"
+									styleClass="col-md-7">
+									<h:outputText id="filename" value="#{newCandidacy.file.submittedFileName.toUpperCase()}" styleClass="form-control text-right"/>
 								</h:panelGroup>
 							</h:panelGroup>
 							<br />
@@ -193,7 +191,7 @@
 									styleClass="col-md-offset-8 col-md-4 text-right">
 									<h:commandButton action="#{newCandidacy.create()}"
 										value="Submeter" styleClass="btn btn-success">
-										<f:ajax execute="inputform" render=":container :bottomform" />
+										<f:ajax execute="inputform" render=":container :bottomform :messages" />
 									</h:commandButton>
 								</h:panelGroup>
 							</h:panelGroup>

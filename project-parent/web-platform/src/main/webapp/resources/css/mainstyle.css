@@ -112,7 +112,8 @@
 	line-height: 3.7;
 }
 
-.navbar-red .navbar-nav>li>span:hover, .navbar-red .navbar-nav>li>span:focus {
+.navbar-red .navbar-nav>li>span:hover, .navbar-red .navbar-nav>li>span:focus
+	{
 	color: #903536;
 }
 
@@ -129,3 +130,75 @@
 }
 
 /* End Red Bar */
+
+/* Special Containers */
+@media ( min-width : 768px) {
+	.container-small {
+		width: 300px;
+	}
+	.container-large {
+		width: 970px;
+	}
+}
+
+@media ( min-width : 992px) {
+	.container-small {
+		width: 500px;
+	}
+	.container-large {
+		width: 1170px;
+	}
+}
+
+@media ( min-width : 1200px) {
+	.container-small {
+		width: 700px;
+	}
+	.container-large {
+		width: 1500px;
+	}
+}
+
+.container-small, .container-large {
+	max-width: 100%;
+}
+
+/* End of Special Containers */
+.no-gutter>[class*='col-'] {
+	padding-right: 0;
+	padding-left: 0;
+}
+
+.no-gutter-left>[class*='col-'] {
+	padding-left: 0;
+}
+
+.no-gutter-right>[class*='col-'] {
+	padding-left: 0;
+}
+
+btnhovercolor.hover {
+	color: #282828 !important;
+	border: none !important;
+}
+
+.btn-file {
+	position: relative;
+	overflow: hidden;
+}
+
+.btn-file input[type=file] {
+	position: absolute;
+	top: 0;
+	right: 0;
+	min-width: 100%;
+	min-height: 100%;
+	font-size: 100px;
+	text-align: right;
+	filter: alpha(opacity = 0);
+	opacity: 0;
+	outline: none;
+	background: white;
+	cursor: inherit;
+	display: block;
+}

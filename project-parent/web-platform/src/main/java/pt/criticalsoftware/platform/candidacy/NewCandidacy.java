@@ -86,11 +86,18 @@ public class NewCandidacy {
 		} catch (DuplicateCandidateException e) {
 			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), "");
 			FacesContext.getCurrentInstance().addMessage(null, message);
+			reset();
 			logger.error(e.getMessage());
 		} catch (IOException e) {
 			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao fazer o envio do ficheiro",
 					"");
 			FacesContext.getCurrentInstance().addMessage(null, message);
+			reset();
+		} catch (NullPointerException npe) {
+			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Todos os campos são obrigatórios!",
+					"");
+			FacesContext.getCurrentInstance().addMessage(null, message);
+			reset();
 		}
 	}
 
@@ -112,6 +119,7 @@ public class NewCandidacy {
 		state = null;
 		position = null;
 		selectedPosition = null;
+		file = null;
 	}
 
 	public String getFirstName() {

@@ -1,22 +1,13 @@
 package pt.criticalsoftware.domain.service;
 
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceException;
-import javax.persistence.TemporalType;
 import javax.persistence.TypedQuery;
-
-import org.hibernate.HibernateException;
-import org.hibernate.NonUniqueObjectException;
-import org.hibernate.exception.ConstraintViolationException;
-
 import pt.criticalsoftware.domain.entities.CandidacyEntity;
 import pt.criticalsoftware.domain.proxies.CandidacyProxy;
 import pt.criticalsoftware.domain.proxies.IEntityAware;
@@ -87,9 +78,9 @@ public class CandidacyPersistenceService implements ICandidacyPersistenceService
 			candidacy = getEntity(cand);
 			Integer positionId = cand.getPositionCandidacy().getId();
 			Integer candidateId = cand.getCandidate().getId();
-			if ((Long) em.createNamedQuery("Candidacy.uniqueConstraintViolation")
-					.setParameter("positionId", positionId)
-					.setParameter("candidateId", candidateId).getSingleResult() > 0) throw new UniqueConstraintException("O candidato já tem uma candidatura associada a esta posição.");
+			if ((Long) em.createNamedQuery("Candidacy.uniqueConstraintViolation").setParameter("positionId", positionId)
+					.setParameter("candidateId", candidateId).getSingleResult() > 0)
+				throw new UniqueConstraintException("O candidato já tem uma candidatura associada a esta posição.");
 			em.merge(candidacy);
 		} catch (IllegalStateException ies) {
 			// log
@@ -100,37 +91,55 @@ public class CandidacyPersistenceService implements ICandidacyPersistenceService
 	@Override
 	public List<ICandidacy> searchAdminCandidaciesDate(LocalDate localDate) {
 		List<ICandidacy> icand = new ArrayList<>();
-		TypedQuery<CandidacyEntity> query = em.createNamedQuery("Candidacy.searchDate",CandidacyEntity.class)
+		TypedQuery<CandidacyEntity> query = em.createNamedQuery("Candidacy.searchDate", CandidacyEntity.class)
 				.setParameter("param", localDate);
 		List<CandidacyEntity> ce = query.getResultList();
-		for (CandidacyEntity c:ce) {
+		for (CandidacyEntity c : ce) {
 			icand.add(new CandidacyProxy(c));
 		}
 		return icand;
 	}
-	
+
 	@Override
 	public List<ICandidacy> searchManagerCandidaciesDate(LocalDate localDate, Integer id) {
 		List<ICandidacy> icand = new ArrayList<>();
-		TypedQuery<CandidacyEntity> query = em.createNamedQuery("Candidacy.searchDate",CandidacyEntity.class)
+		TypedQuery<CandidacyEntity> query = em.createNamedQuery("Candidacy.searchDate", CandidacyEntity.class)
 				.setParameter("param", localDate);
 		List<CandidacyEntity> ce = query.getResultList();
-		for (CandidacyEntity c:ce) {
-			if (c.getPositionCandidacy().getResponsable().getId() == id) icand.add(new CandidacyProxy(c));
+		for (CandidacyEntity c : ce) {
+			if (c.getPositionCandidacy().getResponsable().getId() == id)
+				icand.add(new CandidacyProxy(c));
 		}
 		return icand;
 	}
 
 	@Override
 	public List<ICandidacy> getManagerCandidacies(Integer id) {
-		TypedQuery<CandidacyEntity> query = em.createNamedQuery("Candidacy.manager",CandidacyEntity.class)
+		TypedQuery<CandidacyEntity> query = em.createNamedQuery("Candidacy.manager", CandidacyEntity.class)
 				.setParameter("param", id);
 		List<CandidacyEntity> entitiesList = query.getResultList();
 		List<ICandidacy> interfaceList = new ArrayList<>();
-		for (CandidacyEntity ce:entitiesList) {
+		for (CandidacyEntity ce : entitiesList) {
 			interfaceList.add(new CandidacyProxy(ce));
 		}
 		return interfaceList;
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public ICandidacy update(ICandidacy entity) {
+		if (entity instanceof IEntityAware<?>) {
+			return new CandidacyProxy(em.merge(((IEntityAware<CandidacyEntity>) entity).getEntity()));
+		}
+		return null;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public void delete(ICandidacy candidacy) {
+		if (candidacy instanceof IEntityAware<?>) {
+			em.remove(em.merge(((IEntityAware<CandidacyEntity>) candidacy).getEntity()));
+		}
 	}
 
 }

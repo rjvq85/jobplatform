@@ -22,5 +22,9 @@ public interface ICandidacyBusinessService {
 	List<ICandidacy> getManagerCandidacies(Integer id);
 
 	List<ICandidacy> getSearchedDatesCandidaciesManager(LocalDate date, Integer currentUserID);
+
+	void updateEntity(ICandidacy candidacy);
+
+	void deleteCandidacy(ICandidacy candidacy);
 	
 }

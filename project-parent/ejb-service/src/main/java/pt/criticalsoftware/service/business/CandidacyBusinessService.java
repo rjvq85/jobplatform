@@ -64,5 +64,15 @@ public class CandidacyBusinessService implements ICandidacyBusinessService {
 	public List<ICandidacy> getSearchedDatesCandidaciesManager(LocalDate date, Integer currentUserID) {
 		return persistence.searchManagerCandidaciesDate(date, currentUserID);
 	}
+
+	@Override
+	public void updateEntity(ICandidacy candidacy) {
+		persistence.update(candidacy);
+	}
+
+	@Override
+	public void deleteCandidacy(ICandidacy candidacy) {
+		persistence.delete(candidacy);
+	}
 	
 }

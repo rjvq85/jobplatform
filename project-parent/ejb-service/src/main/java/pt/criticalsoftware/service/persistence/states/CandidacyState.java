@@ -4,7 +4,7 @@ public enum CandidacyState {
 
 	SUBMETIDA("Submetida"),
 	EM_ENTREVISTA("Em entrevista"),
-	EM_NEGOCIACAO("Em Negociacao"),
+	EM_NEGOCIACAO("Em Negocição"),
 	REJEITADA("Rejeitada"),
 	FECHADA("Fechada");
 	

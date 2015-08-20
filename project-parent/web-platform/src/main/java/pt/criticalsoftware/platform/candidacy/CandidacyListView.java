@@ -10,11 +10,13 @@ import java.util.List;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 import pt.criticalsoftware.service.business.ICandidacyBusinessService;
 import pt.criticalsoftware.service.model.ICandidacy;
 import pt.criticalsoftware.service.model.ICandidate;
+import pt.criticalsoftware.service.persistence.states.CandidacyState;
 
 @Named
 @RequestScoped
@@ -22,6 +24,9 @@ public class CandidacyListView {
 
 	@EJB
 	private ICandidacyBusinessService business;
+	
+	@Inject
+	private ManageCandidacy manage;
 
 	private ICandidacy candidacy;
 
@@ -32,6 +37,8 @@ public class CandidacyListView {
 	private ICandidate candidate;
 
 	private String searchText;
+	
+	private CandidacyState newState;
 
 	public CandidacyListView() {
 	}
@@ -142,6 +149,31 @@ public class CandidacyListView {
 
 	public String getCandidacyDate(ICandidacy cand) {
 		return cand.getDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+	}
+	
+	public void updateCandidacyState() {
+		manage.updateCandidacy();
+	}
+
+	public CandidacyState getNewState() {
+		return newState;
+	}
+
+	public void setNewState(CandidacyState newState) {
+		manage.setNewState(newState);
+	}
+	
+	public CandidacyState[] getAllStates() {
+		return CandidacyState.values();
+	}
+	
+	public void chooseSelectedCandidacy(ICandidacy candidacy) {
+		manage.setCandidacy(candidacy);
+	}
+	
+	public void delete(ICandidacy candidacy) {
+		manage.setCandidacy(candidacy);
+		manage.deleteCandidacy();
 	}
 
 }

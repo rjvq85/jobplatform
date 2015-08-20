@@ -23,4 +23,8 @@ public interface ICandidacyPersistenceService {
 
 	List<ICandidacy> searchManagerCandidaciesDate(LocalDate localDate, Integer id);
 
+	ICandidacy update(ICandidacy entity);
+
+	void delete(ICandidacy candidacy);
+
 }

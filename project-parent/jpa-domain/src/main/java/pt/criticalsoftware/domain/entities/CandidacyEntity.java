@@ -53,7 +53,7 @@ public class CandidacyEntity {
 	@Column(name = "estado_candidatura", nullable = false)
 	private CandidacyState state;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.MERGE)
 	private CandidateEntity candidate;
 
 	@ManyToOne

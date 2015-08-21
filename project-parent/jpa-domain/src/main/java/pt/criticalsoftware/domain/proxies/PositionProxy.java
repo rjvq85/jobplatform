@@ -2,6 +2,7 @@ package pt.criticalsoftware.domain.proxies;
 
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.Date;
 
 import pt.criticalsoftware.domain.entities.PositionEntity;
 import pt.criticalsoftware.domain.entities.UserEntity;
@@ -45,13 +46,13 @@ public class PositionProxy implements IEntityAware<PositionEntity>, IPosition {
 	}
 
 	@Override
-	public void setCloseDate(LocalDate closeDate) {
+	public void setCloseDate(Date closeDate) {
 		position.setCloseDate(closeDate);
 		
 	}
 
 	@Override
-	public LocalDate getCloseDate() {
+	public Date getCloseDate() {
 		return position.getCloseDate();
 		
 	}

@@ -2,6 +2,7 @@ package pt.criticalsoftware.service.model;
 
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.Date;
 
 import pt.criticalsoftware.service.persistence.positions.TechnicalAreaType;
 import pt.criticalsoftware.service.persistence.states.PositionState;
@@ -14,9 +15,9 @@ public interface IPosition {
 
 	LocalDate getOpenDate();
 
-	void setCloseDate(LocalDate closeDate);
+	void setCloseDate(Date closeDate);
 
-	LocalDate getCloseDate();
+	Date getCloseDate();
 
 	String getReference();
 

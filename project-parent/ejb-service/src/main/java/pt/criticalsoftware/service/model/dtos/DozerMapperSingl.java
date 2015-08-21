@@ -42,9 +42,9 @@ public class DozerMapperSingl {
 
 	@PostConstruct
 	void mapping() {
-		IUser admin = builder.email("admin@email.com").firstName("Administrador").lastName("do Sistema")
-				.password("123456").role(Role.ADMIN).username("ricardo").build();
-		persistence.create(admin);
+//		IUser admin = builder.email("admin@email.com").firstName("Administrador").lastName("do Sistema")
+//				.password("123456").role(Role.ADMIN).username("ricardo").build();
+//		persistence.create(admin);
 //		ICandidate icandidate1 = candidate.address("Porto").country("Portugal").course("Engenharia")
 //				.degree("Licenciatura").email("ricardo@email.com").firstName("Ricardo").lastName("Quirino")
 //				.mobile(919191919).password("123456").phone(222222222).school("FEUP").town("Porto").username("ricardo")

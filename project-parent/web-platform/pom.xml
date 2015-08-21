@@ -15,7 +15,7 @@
 	</build>
 
 	<!-- Repositories -->
-
+	
 	<!-- Dependencies -->
 	<dependencies>
 		<dependency>
@@ -47,7 +47,7 @@
 			<version>5.2</version>
 			<scope>compile</scope>
 		</dependency>
-
+		
 		<!-- Logging -->
 
 	</dependencies>

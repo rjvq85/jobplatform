@@ -7,32 +7,22 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <ui:composition>
-	
-		<!-- toolbar with buttons add, edit, and delete-->
-		<p:toolbar id="toolbarPosition">
-			<p:toolbarGroup align="left">
-				<!-- New Position button -->
-				<p:commandButton type="button" icon="ui-icon-document"
-					onclick="PF('dialogNewPosition').show(); return false;">
-					<p:resetInput target="formNewPosition"></p:resetInput>
-				</p:commandButton>
-				<!-- Edit position dialog -->
-				<p:commandButton type="button" icon="ui-icon-pencil"
-					disabled="#{editPosition.editPosition==null}"
-					onclick="PF('dialogEditPosition').show()"
-					update=":formEditPosition:dialog-EditPosition">
-					<f:setPropertyActionListener value="#{editPosition.editPosition}"
-						target="#{editPosition.editPosition}" />
-				</p:commandButton>
-				<!-- Delete position dialog-->
-				<p:commandButton type="button" icon="ui-icon-trash"
-					disabled="#{editPosition.editPosition==null}"
-					onclick="PF('deletePositionDialog').show(); return false;">
-				</p:commandButton>
-				<span class="ui-separator"><span
-					class="ui-icon ui-icon-grip-dotted-vertical" /> </span>
-			</p:toolbarGroup>
-			<!-- search menu -->
+
+	<!-- toolbar with buttons add, edit, and delete-->
+	<p:toolbar id="toolbarPosition">
+		<p:toolbarGroup align="left">
+			<!-- Edit position dialog -->
+			<p:commandButton type="button" icon="ui-icon-pencil"
+				disabled="#{editPosition.editPosition==null}"
+				onclick="PF('dialogEditPosition').show()" process="@this"
+				update=":formEditPosition:dialog-EditPosition">
+				<f:setPropertyActionListener value="#{editPosition.editPosition}"
+					target="#{editPosition.editPosition}" />
+			</p:commandButton>
+			<span class="ui-separator"><span
+				class="ui-icon ui-icon-grip-dotted-vertical" /> </span>
+		</p:toolbarGroup>
+		<!-- search menu -->
 			<p:toolbarGroup align="right">
 				<!-- Search menu -->
 				<h:selectOneMenu id="positionWord"
@@ -65,10 +55,9 @@
 					action="#{positionListView.searchAll()}"
 					update=":positionForm:gridPositions :toolbarForm:toolbarPosition" />
 				<!-- End search menu -->
-				
-			</p:toolbarGroup>
-		</p:toolbar>
-		<p />
+		</p:toolbarGroup>
+	</p:toolbar>
+	<p />
 
 </ui:composition>
 </html>

@@ -17,3 +17,13 @@
 		right: 0;
 	}
 }
+.ui-datatable * {
+	border-style:none;
+}
+.ui-datatable thead th, .ui-datatable tbody td, .ui-datatable tfoot td {
+	border-style: none;
+}
+
+#fileUpload{
+  display: none; /* do not display the actual file upload button */
+}

@@ -36,7 +36,6 @@ public class PositionBusinessService implements IPositionBusinessService{
 
 	@Override
 	public List<IPosition> getAllPositions() {
-
 		return positionPersistence.getAllPositions();
 	}
 

@@ -34,7 +34,7 @@ import pt.criticalsoftware.service.persistence.positions.TechnicalAreaType;
 import pt.criticalsoftware.service.persistence.states.PositionState;
 
 @Stateless
-public class PositionPersistenceService implements IPositionPersistenceService{
+public class PositionPersistenceService implements IPositionPersistenceService {
 
 	private final Logger logger = LoggerFactory.getLogger(PositionPersistenceService.class);
 
@@ -42,12 +42,17 @@ public class PositionPersistenceService implements IPositionPersistenceService{
 	private EntityManager em;
 
 	@Override
+	public IPosition find(Object id) {
+		return new PositionProxy(em.find(PositionEntity.class, id));
+	}
+
+	@Override
 	public List<IPosition> getAllPositions() {
-		TypedQuery<PositionEntity> query=em.createNamedQuery("Position.getAll", PositionEntity.class);
-		List<PositionEntity> entities=query.getResultList();
-		List<IPosition> proxies=new ArrayList<>();
-		for(PositionEntity pe:entities){
-			PositionProxy positionProxy= new PositionProxy(pe);
+		TypedQuery<PositionEntity> query = em.createNamedQuery("Position.getAll", PositionEntity.class);
+		List<PositionEntity> entities = query.getResultList();
+		List<IPosition> proxies = new ArrayList<>();
+		for (PositionEntity pe : entities) {
+			PositionProxy positionProxy = new PositionProxy(pe);
 			proxies.add(positionProxy);
 		}
 		return proxies;
@@ -56,13 +61,13 @@ public class PositionPersistenceService implements IPositionPersistenceService{
 	@Override
 	public void verifyReference(String reference) throws DuplicateReferenceException {
 
-		TypedQuery<PositionEntity> q = em.createNamedQuery("Position.verifyReference",PositionEntity.class)
+		TypedQuery<PositionEntity> q = em.createNamedQuery("Position.verifyReference", PositionEntity.class)
 				.setParameter("reference", reference);
 		try {
 			q.getSingleResult().getReference();
-			throw new DuplicateReferenceException("A referência "+reference+" já existe!");
+			throw new DuplicateReferenceException("A referência " + reference + " já existe!");
 		} catch (NoResultException nre) {
-			logger.info("A referência "+reference+" está disponível!");
+			logger.info("A referência " + reference + " está disponível!");
 		}
 	}
 
@@ -117,7 +122,7 @@ public class PositionPersistenceService implements IPositionPersistenceService{
 	}
 
 	@Override
-	public List<IPosition> getPositionsByWord(String positionWord,String searchCode) {
+	public List<IPosition> getPositionsByWord(String positionWord, String searchCode) {
 
 		TypedQuery<PositionEntity> query = null;
 
@@ -138,7 +143,6 @@ public class PositionPersistenceService implements IPositionPersistenceService{
 				state=PositionState.FECHADA;
 			else if (searchCode.equalsIgnoreCase("em espera"))
 				state=PositionState.EM_ESPERA;
-
 			query=em.createNamedQuery("Position.getPositionsByState", PositionEntity.class)
 					.setParameter("state", state);
 		}
@@ -162,10 +166,10 @@ public class PositionPersistenceService implements IPositionPersistenceService{
 			query=em.createNamedQuery("Position.getPositionsByTechnicalArea", PositionEntity.class)
 					.setParameter("technicalArea", area);
 		}
-		List<PositionEntity> entities=query.getResultList();
-		List<IPosition> proxies=new ArrayList<>();
-		for(PositionEntity pe:entities){
-			PositionProxy positionProxy= new PositionProxy(pe);
+		List<PositionEntity> entities = query.getResultList();
+		List<IPosition> proxies = new ArrayList<>();
+		for (PositionEntity pe : entities) {
+			PositionProxy positionProxy = new PositionProxy(pe);
 			proxies.add(positionProxy);
 		}
 		return proxies;
@@ -174,17 +178,17 @@ public class PositionPersistenceService implements IPositionPersistenceService{
 	@Override
 	public List<IPosition> getPositionsByDate(String positionWord,
 			Date closeDate) {
-				TypedQuery<PositionEntity> query = null;
-				query=em.createNamedQuery("Position.getPositionsByDate", PositionEntity.class)
-						.setParameter("closeDate", closeDate);
-				
-				List<PositionEntity> entities=query.getResultList();
-				List<IPosition> proxies=new ArrayList<>();
-				for(PositionEntity pe:entities){
-					PositionProxy positionProxy= new PositionProxy(pe);
-					proxies.add(positionProxy);
-				}
-				return proxies;
+		TypedQuery<PositionEntity> query = null;
+		query=em.createNamedQuery("Position.getPositionsByDate", PositionEntity.class)
+				.setParameter("closeDate", closeDate);
+
+		List<PositionEntity> entities=query.getResultList();
+		List<IPosition> proxies=new ArrayList<>();
+		for(PositionEntity pe:entities){
+			PositionProxy positionProxy= new PositionProxy(pe);
+			proxies.add(positionProxy);
+		}
+		return proxies;
 
 	}
 
@@ -287,7 +291,7 @@ public class PositionPersistenceService implements IPositionPersistenceService{
 				return proxies4;
 			}
 		}
-		
+
 		if (!aux){
 			LocalDate openDate = LocalDate.parse(searchCode);
 			List<IPosition> entities=getPositionsByOpenDate(positionWord,openDate);
@@ -301,18 +305,18 @@ public class PositionPersistenceService implements IPositionPersistenceService{
 
 	@Override
 	public List<IPosition> getPositionsByOpenDate(String positionWord,LocalDate openDate) {
-				TypedQuery<PositionEntity> query = null;
-				query=em.createNamedQuery("Position.getPositionsByOpenDate", PositionEntity.class)
-						.setParameter("openDate", openDate);
-				
-				List<PositionEntity> entities=query.getResultList();
-				List<IPosition> proxies=new ArrayList<>();
-				for(PositionEntity pe:entities){
-					PositionProxy positionProxy= new PositionProxy(pe);
-					proxies.add(positionProxy);
-				}
-				logger.info("tamanho"+proxies.size());
-				return proxies;
+		TypedQuery<PositionEntity> query = null;
+		query=em.createNamedQuery("Position.getPositionsByOpenDate", PositionEntity.class)
+				.setParameter("openDate", openDate);
+
+		List<PositionEntity> entities=query.getResultList();
+		List<IPosition> proxies=new ArrayList<>();
+		for(PositionEntity pe:entities){
+			PositionProxy positionProxy= new PositionProxy(pe);
+			proxies.add(positionProxy);
+		}
+		logger.info("tamanho"+proxies.size());
+		return proxies;
 
 	}
 	private Date convertStringToDate(String dateString)

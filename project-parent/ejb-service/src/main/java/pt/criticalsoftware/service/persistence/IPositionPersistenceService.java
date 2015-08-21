@@ -25,8 +25,12 @@ public interface IPositionPersistenceService {
 	
 	IPosition delete(IPosition position);
 
+
 	List<IPosition> getPositionsByDate(String positionWord, Date closedate);
 	
 	List<IPosition> getPositionsByOpenDate(String positionWord, LocalDate opendate);
+
+	IPosition find(Object id);
+
 
 }

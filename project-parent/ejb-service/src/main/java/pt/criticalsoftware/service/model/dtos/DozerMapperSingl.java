@@ -42,25 +42,14 @@ public class DozerMapperSingl {
 
 	@PostConstruct
 	void mapping() {
-//		IUser admin = builder.email("admin@email.com").firstName("Administrador").lastName("do Sistema")
-//				.password("123456").role(Role.ADMIN).username("ricardo").build();
-//		persistence.create(admin);
-//		ICandidate icandidate1 = candidate.address("Porto").country("Portugal").course("Engenharia")
-//				.degree("Licenciatura").email("ricardo@email.com").firstName("Ricardo").lastName("Quirino")
-//				.mobile(919191919).password("123456").phone(222222222).school("FEUP").town("Porto").username("ricardo")
-//				.build();
-//		ICandidacy icandidacy1 = candidacy.state(CandidacyState.SUBMETIDA).candidate(icandidate1).build();
-//		business.createCandidacy(icandidacy1);
-//		try {
-//			Thread.sleep(50);
-//		} catch (InterruptedException e) {
-//			e.printStackTrace();
-//		}
-//		ICandidate icandidate2 = candidate.address("Porto").country("Portugal").course("Design").degree("Licenciatura")
-//				.email("ana@email.com").firstName("Ana").lastName("Martins").mobile(919191919).password("123456")
-//				.phone(222222222).school("ESAD").town("Porto").username("ana").build();
-//		ICandidacy icandidacy2 = candidacy.state(CandidacyState.SUBMETIDA).candidate(icandidate2).build();
-//		business.createCandidacy(icandidacy2);
+
+		IUser admin = builder.email("admin@email.com").firstName("Administrador").lastName("do Sistema")
+				.password("123456").role(Role.ADMIN).username("ricardo").build();
+		persistence.create(admin);
+		IUser gestor = builder.email("gestor@email.com").firstName("Gestor").lastName("de Candidaturas")
+				.password("123456").role(Role.GESTOR).username("quirino").build();
+		persistence.create(gestor);
+
 		dozermapping.add("META-INF/dtomapping.xml");
 	}
 

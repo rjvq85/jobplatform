@@ -14,4 +14,6 @@ public interface ICandidacyBuilder {
 
 	ICandidacyBuilder candidate(ICandidate candidate);
 
+	ICandidacyBuilder position(IPosition position);
+
 }

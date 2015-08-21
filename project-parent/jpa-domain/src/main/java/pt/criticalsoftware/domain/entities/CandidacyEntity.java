@@ -1,31 +1,36 @@
 package pt.criticalsoftware.domain.entities;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import pt.criticalsoftware.service.persistence.states.CandidacyState;
+import pt.criticalsoftware.service.persistence.utils.LocalDatePersistenceConverter;
 
 @Entity
-@Table(name = "candidaturas")
+@Table(name = "candidaturas", uniqueConstraints = {
+		@UniqueConstraint(columnNames = { "candidate_id", "positioncandidacy_id" }) })
 
-@NamedQueries({ 
-	@NamedQuery(name = "Candidacy.findAll", query = "SELECT c FROM CandidacyEntity c "), 
-	@NamedQuery(name = "Candidacy.search", query = "SELECT c FROM CandidacyEntity as c INNER JOIN c.candidate as a WHERE UPPER(a.firstName) LIKE :param OR UPPER(a.lastName) LIKE :param")
-})
+@NamedQueries({ @NamedQuery(name = "Candidacy.findAll", query = "SELECT c FROM CandidacyEntity c "),
+		@NamedQuery(name = "Candidacy.search", query = "SELECT c FROM CandidacyEntity as c INNER JOIN c.candidate as a WHERE UPPER(a.firstName) LIKE :param OR UPPER(a.lastName) LIKE :param"),
+		@NamedQuery(name = "Candidacy.uniqueConstraintViolation", query = "SELECT COUNT(c) FROM CandidacyEntity c WHERE c.candidate.id = :candidateId AND c.positionCandidacy.id = :positionId"),
+		@NamedQuery(name = "Candidacy.searchDate", query = "SELECT c FROM CandidacyEntity c WHERE c.date = :param")})
 
 public class CandidacyEntity {
 
@@ -39,10 +44,15 @@ public class CandidacyEntity {
 	@Column(name = "fonte")
 	private String source;
 
+	@Convert(converter = LocalDatePersistenceConverter.class)
+	@Column(name = "data_candidatura")
+	private LocalDate date;
+
 	@Enumerated(EnumType.STRING)
 	@Column(name = "estado_candidatura", nullable = false)
 	private CandidacyState state;
 
+<<<<<<< HEAD
 	@ManyToOne(cascade=CascadeType.ALL)
 ////	@JoinColumn(name = "candidato")
 	private CandidateEntity candidate;
@@ -60,6 +70,15 @@ public class CandidacyEntity {
 	private PositionEntity positionCandidacy;
 
 	@OneToMany(mappedBy = "candidacy")
+=======
+	@ManyToOne(cascade = CascadeType.ALL)
+	private CandidateEntity candidate;
+
+	@ManyToOne
+	private PositionEntity positionCandidacy;
+
+	@OneToMany(mappedBy = "candidacy", fetch = FetchType.EAGER)
+>>>>>>> origin/master
 	private List<InterviewEntity> interviews;
 
 	public CandidacyEntity() {
@@ -141,5 +160,13 @@ public class CandidacyEntity {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+
+	public LocalDate getDate() {
+		return date;
+	}
+
+	public void setDate(LocalDate date) {
+		this.date = date;
 	}
 }

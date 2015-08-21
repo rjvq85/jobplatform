@@ -1,5 +1,6 @@
 package pt.criticalsoftware.service.model;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import pt.criticalsoftware.service.persistence.states.CandidacyState;
@@ -31,5 +32,9 @@ public interface ICandidacy {
 	List<IInterview> getInterviews();
 
 	void setInterviews(List<IInterview> interviews);
+
+	LocalDate getDate();
+
+	void setDate(LocalDate date);
 
 }

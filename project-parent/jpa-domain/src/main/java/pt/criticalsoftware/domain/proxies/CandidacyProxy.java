@@ -1,9 +1,9 @@
 package pt.criticalsoftware.domain.proxies;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.inject.Inject;
 
 import pt.criticalsoftware.domain.entities.CandidacyEntity;
 import pt.criticalsoftware.domain.entities.CandidateEntity;
@@ -16,27 +16,27 @@ import pt.criticalsoftware.service.model.IPosition;
 import pt.criticalsoftware.service.persistence.states.CandidacyState;
 
 public class CandidacyProxy implements ICandidacy, IEntityAware<CandidacyEntity> {
-	
+
 	private CandidacyEntity candidacy;
-	
+
 	@Override
 	public CandidacyEntity getEntity() {
 		return candidacy;
 	}
-	
+
 	public CandidacyProxy() {
 		this(null);
 	}
-	
+
 	public CandidacyProxy(CandidacyEntity entity) {
 		candidacy = entity != null ? entity : new CandidacyEntity();
 	}
-	
+
 	@Override
 	public String getMotivationLetter() {
 		return candidacy.getMotivationLetter();
 	}
-	
+
 	@Override
 	public void setMotivationLetter(String motivationLetter) {
 		candidacy.setMotivationLetter(motivationLetter);
@@ -77,6 +77,16 @@ public class CandidacyProxy implements ICandidacy, IEntityAware<CandidacyEntity>
 	}
 
 	@Override
+	public LocalDate getDate() {
+		return candidacy.getDate();
+	}
+
+	@Override
+	public void setDate(LocalDate date) {
+		candidacy.setDate(date);
+	}
+
+	@Override
 	public Integer getId() {
 		return candidacy.getId();
 	}
@@ -97,12 +107,12 @@ public class CandidacyProxy implements ICandidacy, IEntityAware<CandidacyEntity>
 	@Override
 	public List<IInterview> getInterviews() {
 		List<IInterview> interviews = new ArrayList<>();
-		for (InterviewEntity interview:candidacy.getInterviews()) {
+		for (InterviewEntity interview : candidacy.getInterviews()) {
 			interviews.add(new InterviewProxy(interview));
 		}
 		return interviews;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setInterviews(List<IInterview> interviews) {
@@ -113,7 +123,5 @@ public class CandidacyProxy implements ICandidacy, IEntityAware<CandidacyEntity>
 			}
 		}
 	}
-	
-	
 
 }

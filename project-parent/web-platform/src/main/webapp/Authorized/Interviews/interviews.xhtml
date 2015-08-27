@@ -70,11 +70,11 @@
 						<h:panelGroup layout="block" class="row spacer"></h:panelGroup>
 						<h:form prependId="false" id="listform">
 							<h:panelGroup layout="block" styleClass="table-responsive">
-								<p:dataTable id="lista" tableStyleClass="table-condensed"
+								<p:dataTable id="lista" tableStyleClass="table-condensed newlabeled"
 									var="interv" value="#{interviewListView.interviews}"
 									emptyMessage="Sem resultados..." styleClass="text-center"
 									paginator="true" paginatorPosition="bottom"
-									paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+									paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 									rowsPerPageTemplate="5,10,15" rows="5">
 									<p:column headerText="Referência" sortBy="#{interv.id}">
 										<h:outputText value="I#{interv.id}" />

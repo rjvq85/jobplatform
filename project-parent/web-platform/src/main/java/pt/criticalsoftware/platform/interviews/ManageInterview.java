@@ -34,4 +34,16 @@ public class ManageInterview {
 		}
 	}
 	
+	public void updateInterview(IInterview interv) {
+		try {
+			business.updateInterview(interv);
+			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,"Entrevista actualizada com sucesso","");
+			FacesContext.getCurrentInstance().addMessage(null, msg);
+		} catch (Exception e) {
+			logger.error(e.getStackTrace().toString());
+			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR,"Erro ao cancelar entrevista","");
+			FacesContext.getCurrentInstance().addMessage(null, msg);
+		}
+	}
+	
 }

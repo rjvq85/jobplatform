@@ -273,11 +273,24 @@ btnhovercolor.hover {
 
 .newlabeled {
 	border: none !important;
+	border-radius: inherit !important;
 	background-color: white !important;
 	background-image: none !important;
 }
 .newlabeled th {
-	font-size: 0;
+	font-weight: 400 !important;
+	border: none !important;
+	border-radius: inherit;
+	background-color: firebrick !important;
+	color:white !important;
+	font-size:large !important;
+	background-image: none !important;
+}
+
+.newlabeled td {
+	border-left: none !important;
+	border-right: none !important;
+	border-bottom-width: medium !important;
 }
 
 #lista_paginator_bottom {

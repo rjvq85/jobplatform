@@ -12,7 +12,7 @@
 		widgetVar="positionList"
 		selection="#{editPosition.editPosition}" rowKey="#{position.id}"
 		paginator="true" paginatorPosition="bottom" rows="15"
-		styleClass="paginated">
+		styleClass="table-condensed newlabeled">
 
 		<p:ajax event="rowSelect" listener="#{editPosition.onRowSelect}"
 			update=":formEditPosition:dialog-EditPosition :toolbarForm:toolbarPosition" />

@@ -1,5 +1,6 @@
 package pt.criticalsoftware.platform.candidacy;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -14,6 +15,9 @@ import pt.criticalsoftware.service.model.IInterview;
 import pt.criticalsoftware.service.model.IPosition;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.text.DateFormat;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 @Named
@@ -27,7 +31,9 @@ public class CandidacyInterviews implements Serializable {
 	@Inject
 	private ManageInterview manage;
 
+	private Date newDate;
 	private ICandidacy selectedCandidacy;
+	private IInterview selectedInterview;
 	private List<IInterview> existingInterviews;
 
 	public ICandidacy getSelectedCandidacy() {
@@ -56,12 +62,39 @@ public class CandidacyInterviews implements Serializable {
 		manage.deleteInterview(interv);
 	}
 	
+	public void updateDate() {
+		DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+		String nDate = df.format(newDate);
+		selectedInterview.setDate(LocalDate.parse(nDate, DateTimeFormatter.ofPattern("dd-MM-yyyy")));
+		manage.updateInterview(selectedInterview);
+	}
+	
 	public IPosition getSelectedPosition() {
 		return selectedCandidacy.getPositionCandidacy();
 	}
 	
 	public void addNewInterview(IInterview interv) {
 		existingInterviews.add(interv);
+	}
+
+	public Date getNewDate() {
+		return newDate;
+	}
+
+	public void setNewDate(Date newDate) {
+		this.newDate = newDate;
+	}
+	
+	public String currentDate() {
+		return LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+	}
+
+	public IInterview getSelectedInterview() {
+		return selectedInterview;
+	}
+
+	public void setSelectedInterview(IInterview selectedInterview) {
+		this.selectedInterview = selectedInterview;
 	}
 
 }

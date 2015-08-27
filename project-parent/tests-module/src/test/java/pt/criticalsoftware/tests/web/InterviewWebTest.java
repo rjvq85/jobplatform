@@ -4,9 +4,12 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.io.File;
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -163,10 +166,11 @@ public class InterviewWebTest {
 		
 		// ID from the user requesting the list
 		when(sessionMock.getAttribute("userID")).thenReturn(user2.getId());
-
+		LocalDate now = LocalDate.now();
+		Date date = Date.from(now.atStartOfDay(ZoneId.systemDefault()).toInstant());
 		IPosition position = pos
 				.adChannels(new ArrayList<String>())
-				.closeDate(LocalDate.now())
+				.closeDate(date)
 				.company("Empresa")
 				.description("Descrição")
 				.locale("Local")

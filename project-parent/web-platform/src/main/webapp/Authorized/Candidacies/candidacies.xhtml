@@ -66,18 +66,19 @@
 						<h:panelGroup layout="block" class="row spacer"></h:panelGroup>
 						<h:form prependId="false" id="listform">
 							<h:panelGroup layout="block" styleClass="table-responsive">
-								<p:dataTable  id="lista" tableStyleClass="table-condensed"
+								<p:dataTable id="lista" tableStyleClass="table-condensed"
 									var="cand" value="#{candidacyListView.candidacies}"
 									emptyMessage="Sem resultados..." styleClass="text-center"
 									paginator="true" paginatorPosition="bottom"
-									paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+									paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 									rowsPerPageTemplate="5,10,15" rows="5">
-									<p:column id="newlabel" styleClass="text-center newlabeled">
-										<h:panelGroup styleClass="label label-default"
-											rendered="#{candidacyListView.isNew(cand)}">Novo</h:panelGroup>
-									</p:column>
 									<p:column headerText="Referência" sortBy="#{cand.id}">
 										<h:outputText value="C#{cand.id}" />
+										<h:panelGroup layout="block"
+											rendered="#{candidacyListView.isNew(cand)}">
+											<sup><span class="label label-default"
+												style="font-size: 8px;">NOVO</span></sup>
+										</h:panelGroup>
 									</p:column>
 									<p:column headerText="Candidato"
 										sortBy="#{cand.candidate.firstName}">
@@ -95,7 +96,7 @@
 											oncomplete="PF('stateWidget').show()" update="stateDialog" />
 									</p:column>
 									<p:column headerText="Posição">
-										<h:outputText value="#{cand.positionCandidacy}"
+										<h:outputText value="(P#{cand.positionCandidacy.id}) #{cand.positionCandidacy.title}"
 											rendered="#{cand.positionCandidacy != 'Espontânea'}" />
 										<h:commandLink
 											action="#{assignCandidacy.newAssignment(cand.candidate.username)}"
@@ -109,7 +110,7 @@
 											value="Ver Entrevistas" />
 									</p:column>
 									<p:column style="width:5%;"
-										rendered="#{not empty candidacyListView.candidacies}">
+										rendered="#{not empty candidacyListView.candidacies and userROLE eq 'ADMIN'}">
 										<p:commandLink id="deleteButton"
 											action="#{candidacyListView.delete(cand)}"
 											rendered="#{cand.positionCandidacy != 'Espontânea'}"

@@ -47,7 +47,7 @@ public class PositionBusinessService implements IPositionBusinessService{
 
 
 	@Override
-	public IPosition createPosition(LocalDate openDate, LocalDate closeDate,
+	public IPosition createPosition(LocalDate openDate, Date closeDate,
 			String reference, String title, String locale, PositionState state,
 			String company, TechnicalAreaType technicalArea, String sla,
 			Integer vacancies, IUser responsable, String description,

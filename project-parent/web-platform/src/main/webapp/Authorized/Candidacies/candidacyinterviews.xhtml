@@ -52,7 +52,7 @@
 									emptyMessage="Sem entrevistas agendadas."
 									styleClass="text-center" paginator="true"
 									paginatorPosition="bottom"
-									paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+									paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 									rowsPerPageTemplate="5,10,15" rows="5">
 									<p:column headerText="Referência" sortBy="#{interv.id}">
 										<h:outputText value="I#{interv.id}" />
@@ -81,7 +81,7 @@
 								</p:dataTable>
 							</h:panelGroup>
 						</h:form>
-						<h:panelGroup layout="block" class="page-header">
+						<h:panelGroup layout="block" class="page-header" rendered="#{candidacyInterviews.selectedCandidacy.positionCandidacy != 'Espontânea'}">
 							<h:panelGroup layout="block" class="row">
 								<h:panelGroup layout="block" class="col-md-5">
 									<h:form prependId="false" id="addform">

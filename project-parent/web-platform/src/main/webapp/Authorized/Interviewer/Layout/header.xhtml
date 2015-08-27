@@ -33,20 +33,15 @@
 									class="icon-bar"></span> <span class="icon-bar"></span> <span
 									class="icon-bar"></span>
 							</button>
-							<h:link styleClass="navbar-brand" value="Inicio"
-								outcome="index?faces-redirect=true" disabled="false" />
+							<a
+								href="#{request.contextPath}/Authorized/Interviewer/myinterviews.xhtml"
+								class="navbar-brand">Início</a>
 						</div>
 						<!-- Collect the nav links, forms, and other content for toggling -->
 						<div class="collapse navbar-collapse"
 							id="bs-example-navbar-collapse-1">
 							<ul class="nav navbar-nav">
 								<!-- Botões como Candidaturas, Posições, Entrevistas, etc... -->
-								<li><h:link value="Candidatos"
-										outcome="/Authorized/Interviewer/candidates?faces-redirect=true"
-										disabled="false" /></li>
-								<li><h:link value="Entrevistas"
-										outcome="/Authorized/Interviewer/interviews?faces-redirect=true"
-										disabled="false" /></li>
 							</ul>
 							<ul class="nav navbar-nav navbar-right">
 								<li class="dropdown"><h:link value="#{userNAME}"

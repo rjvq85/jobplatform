@@ -15,12 +15,11 @@
 		<h2>Posições</h2>
 		<p></p>
 		<p:separator />
-
+		<p:messages id="msgs" />
 
 		<h:form id="toolbarForm">
-			<p:messages id="msgs" />
 			<ui:insert name="toolbar">
-				<ui:include src="positionListAdminToolbar.xhtml" />
+				<ui:include src="positionListManagerToolbar.xhtml" />
 			</ui:insert>
 		</h:form>
 
@@ -32,21 +31,11 @@
 
 		<h:form id="formEditPosition">
 			<ui:insert name="EditPosition">
-				<ui:include src="positionListAdminEditPosition.xhtml" />
+				<ui:include src="positionListManagerEditPosition.xhtml" />
 			</ui:insert>
 		</h:form>
 
-		<h:form id="deletePositionForm">
-			<ui:insert name="DeletePosition">
-				<ui:include src="positionListAdminDeletePosition.xhtml" />
-			</ui:insert>
-		</h:form>
-
-		<h:form id="formNewPosition">
-			<ui:insert name="NewPosition">
-				<ui:include src="positionListAdminNewPosition.xhtml" />
-			</ui:insert>
-		</h:form>
+		
 	</div>
 </h:body>
 </html>

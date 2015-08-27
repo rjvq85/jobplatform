@@ -8,21 +8,25 @@
 	<p:dialog id="dialog-NewPosition" header="Adicionar Posição"
 		widgetVar="dialogNewPosition" modal="true" showEffect="blind"
 		resizable="false">
+		
 		<h:panelGrid columns="2">
 
 			<p:outputLabel value="Código" for="positionReference" />
 			<p:inputText id="positionReference" required="true"
 				requiredMessage="referência" size="30"
 				value="#{newPosition.reference}" />
+			
 
 			<p:outputLabel value="Título" for="positionTitle" />
 			<p:inputText id="positionTitle" required="true"
 				requiredMessage="título" size="30" value="#{newPosition.title}" />
+			
 
 			<p:outputLabel value="Localização" for="positionLocale" />
 			<p:inputText id="positionLocale" required="true"
 				requiredMessage="localização" size="30"
 				value="#{newPosition.locale}" />
+			
 
 			<p:outputLabel value="Estado" for="positionState" />
 			<p:selectOneMenu id="positionState" value="#{newPosition.stateStr}"
@@ -51,7 +55,8 @@
 			<p:outputLabel value="SLA" for="positionSla" />
 			<p:inputText id="positionSla" required="true" requiredMessage="SLA"
 				size="30" value="#{newPosition.sla}" />
-
+			
+			
 			<p:outputLabel value="Número de vagas" for="positionVacancies" />
 			<p:spinner id="positionVacancies" value="#{newPosition.vacancies}"
 				required="true" min="1" max="100" />
@@ -60,22 +65,22 @@
 			<p:outputLabel value="Empresa" for="positionCompany" />
 			<p:inputText id="positionCompany" required="true"
 				requiredMessage="empresa" size="30" value="#{newPosition.company}" />
-
+			
 
 			<p:outputLabel value="Responsável" for="positionResponsable" />
-			<p:selectOneMenu id="positionResponsable"
-				value="#{newPosition.selectedResponsable}" filter="true"
-				filterMatchMode="startsWith" width="30">
+			<h:selectOneMenu id="positionResponsable"
+				value="#{newPosition.selectedResponsable}">
 				<f:selectItems value="#{newPosition.responsables}" var="resp"
 					itemLabel="#{resp.firstName} #{resp.lastName}"
 					itemValue="#{resp.id}" />
-			</p:selectOneMenu>
+			</h:selectOneMenu>
 
 			<p:outputLabel value="Descrição" for="positionDescription" />
 			<p:inputText id="positionDescription" required="true"
 				requiredMessage="descrição" size="30"
 				value="#{newPosition.description}" />
-
+		
+			
 			<p:outputLabel value="Data Fecho" />
 			<p:calendar pattern="dd/MM/yyyy" mask="99.99.9999" navigator="true"
 				id="positionCloseDate" required="true" mindate="1/1/50" size="30"

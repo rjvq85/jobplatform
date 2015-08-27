@@ -23,6 +23,7 @@ import javax.servlet.http.HttpSession;
 import pt.criticalsoftware.service.business.IInterviewBusinessService;
 import pt.criticalsoftware.service.business.IUserBusinessService;
 import pt.criticalsoftware.service.model.IInterview;
+import pt.criticalsoftware.service.model.IScript;
 import pt.criticalsoftware.service.model.IUser;
 
 @Named
@@ -32,11 +33,13 @@ public class InterviewListView {
 	private List<IInterview> interviews;
 	private IInterview selectedInterview;
 	private List<IUser> availableInterviewers;
+	private List<IScript> availableScripts;
 	private List<IUser> existingInterviewers;
 	private IUser selectedInterviewer;
 	private IUser deletingInterviewer;
 	private Date newDate;
 	private String searchText;
+	private IScript newScript;
 
 	@EJB
 	private IInterviewBusinessService business;
@@ -216,6 +219,12 @@ public class InterviewListView {
 		updateInterview();
 		selectedInterview = null;
 	}
+	
+	public void addScript() {
+		edit.getSelectedInterview().setScript(newScript);
+		updateInterview();
+		selectedInterview = null;
+	}
 
 	public void removeInterviewer() {
 		edit.getSelectedInterview().deleteInterviewer(deletingInterviewer);
@@ -253,6 +262,22 @@ public class InterviewListView {
 		return LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
 	}
 
+	public IScript getNewScript() {
+		return newScript;
+	}
+
+	public void setNewScript(IScript newScript) {
+		this.newScript = newScript;
+	}
+
+	public List<IScript> getAvailableScripts() {
+		return business.getAvailableScripts(edit.getSelectedInterview().getId());
+	}
+
+	public void setAvailableScripts(List<IScript> availableScripts) {
+		this.availableScripts = availableScripts;
+	}
+	
 	/*
 	 * Private methods used to access params like Session's attributes
 	 */

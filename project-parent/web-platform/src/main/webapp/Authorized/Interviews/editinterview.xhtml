@@ -41,40 +41,52 @@
 					<h:panelGroup layout="block" styleClass="row">
 						<h:panelGroup layout="block" styleClass="col-md-12 text-center">
 							<h:messages id="editglobalmsgs" globalOnly="true"
-								styleClass="alert alert-info" style="list-style-type: none;" />
+								infoClass="alert alert-success" errorClass="alert alert-danger" warnClass="alert alert-danger" style="list-style-type: none;" />
 						</h:panelGroup>
 					</h:panelGroup>
 					<h:panelGroup layout="block" class="spacer">
 						<h:panelGroup layout="block" class="row">
 							<h:panelGroup layout="block" class="col-md-12 text-center">
-								<h:panelGroup id="grp-btns" layout="block" class="btn-group" style="width:100%;">
+								<h:panelGroup id="grp-btns" layout="block" class="btn-group"
+									style="width:100%;">
 									<h:commandLink id="newintbutton" value=""
 										styleClass="btn btn-default"
 										onclick="PF('newIntWidget').show(); return false;"
-										style="height: 80px; width:33%;">
-										<i class="glyphicon glyphicon-plus-sign"
+										style="height: 80px; width:25%;">
+										<i class="glyphicon glyphicon-plus-sign glyph-xl"
 											style="left: 0; right: 0; top: 15%;"></i>
-										<p style="position: relative; top: 25%;">Adicionar</p>
-										<strong style="top: 50%; position: relative;">Entrevistador</strong>
-										<f:ajax render="addintform"/>
+										<p style="position: relative;">Adicionar</p>
+										<strong style="bottom:15px; position: relative;">Entrevistador</strong>
+										<f:ajax render="addintform" />
 									</h:commandLink>
 									<h:commandLink id="remintbutton" value=""
 										styleClass="btn btn-default"
 										onclick="PF('remIntWidget').show(); return false;"
-										style="height: 80px; width:33%;">
+										style="height: 80px; width:25%;">
 										<i style="left: 0; right: 0; top: 15%;"
-											class="glyphicon glyphicon-minus-sign"></i>
-										<p style="position: relative; top: 25%;">Remover</p>
-										<strong style="top: 50%; position: relative;">Entrevistador</strong>
-										<f:ajax render="remintform"/>
+											class="glyphicon glyphicon-minus-sign glyph-xl"></i>
+										<p style="position: relative;">Remover</p>
+										<strong style="bottom: 15px; position: relative;">Entrevistador</strong>
+										<f:ajax render="remintform" />
+									</h:commandLink>
+									<h:commandLink id="iscptbutton" value=""
+										styleClass="btn btn-default"
+										onclick="PF('iscptWidget').show(); return false;"
+										style="height: 80px; width:25%;">
+										<i style="left: 0; right: 0; top: 15%;"
+											class="glyphicon glyphicon-list-alt glyph-xl"></i>
+										<p style="position: relative;">Adicionar / Alterar</p>
+										<strong style="bottom:15px; position: relative;">Guião</strong>
+										<f:ajax render="remintform" />
 									</h:commandLink>
 									<h:commandLink id="cancelintbutton"
 										action="#{interviewListView.deleteInterview()}" value=""
-										styleClass="btn btn-default" style="height: 80px; width:33%;" onclick="return intredirect();fadeoutMsg();">
+										styleClass="btn btn-default" style="height: 80px; width:25%;"
+										onclick="return intredirect();fadeoutMsg();">
 										<i style="left: 0; right: 0; top: 15%;"
-											class="glyphicon glyphicon-erase"></i>
-										<p style="position: relative; top: 25%;">Cancelar</p>
-										<strong style="top: 50%; position: relative;">Entrevista</strong>
+											class="glyphicon glyphicon-erase glyph-xl"></i>
+										<p style="position: relative;">Cancelar</p>
+										<strong style="bottom:15px; position: relative;">Entrevista</strong>
 									</h:commandLink>
 								</h:panelGroup>
 							</h:panelGroup>
@@ -95,6 +107,12 @@
 								entrevista.
 							</p>
 							<p class="text-justify">
+								<span class="label label-primary">Adicionar / Alterar
+									Guião</span> permite alterar o guião da entrevista, se este estiver já
+								definido, ou adicionar um guião, caso não esteja ainda atribuído
+								qualquer guião à presente entrevista.
+							</p>
+							<p class="text-justify">
 								<span class="label label-primary">Cancelar Entrevista</span>
 								permite anular a marcação desta entrevista. Todos os dados
 								relativos a esta (data, identificação do candidato e da posição)
@@ -112,6 +130,11 @@
 			<h:form id="remintform" prependId="false">
 				<ui:insert name="RemoveInterviewer">
 					<ui:include src="reminterviewer.xhtml" />
+				</ui:insert>
+			</h:form>
+			<h:form id="nscptform" prependId="false">
+				<ui:insert name="AddChangeScript">
+					<ui:include src="intervscript.xhtml" />
 				</ui:insert>
 			</h:form>
 		</ui:define>

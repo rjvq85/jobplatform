@@ -27,8 +27,8 @@
 									class="icon-bar"></span> <span class="icon-bar"></span> <span
 									class="icon-bar"></span>
 							</button>
-							<h:link styleClass="navbar-brand" value="Inicio"
-								outcome="index?faces-redirect=true" disabled="false" />
+							<a href="#{request.contextPath}/Authorized/index.xhtml"
+								class="navbar-brand">Início</a>
 						</div>
 						<!-- Collect the nav links, forms, and other content for toggling -->
 						<div class="collapse navbar-collapse"
@@ -72,7 +72,7 @@
 										<li><a href="#">Perfil</a></li>
 										<li><a href="#">Password</a></li>
 										<li role="separator" class="divider"></li>
-										<li><h:commandLink action="myinterviews?faces-redirect=true" value="As minhas entrevistas" /></li>
+										<li><a href="#{request.contextPath}/Authorized/Interviews/myinterviews.xhtml">As minhas Entrevistas</a></li>
 										<h:panelGroup layout="block" rendered="#{userROLE eq 'ADMIN'}">
 											<li role="separator" class="divider"></li>
 											<li><a href="#">Gestão Utilizadores</a></li>

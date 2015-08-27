@@ -11,9 +11,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
-import javax.persistence.TemporalType;
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.ParameterExpression;
 import javax.resource.spi.IllegalStateException;
 
 import org.slf4j.Logger;
@@ -198,7 +196,6 @@ public class PositionPersistenceService implements IPositionPersistenceService {
 
 	}
 
-	@SuppressWarnings("unused")
 	@Override
 	public List<IPosition> getPositionsByKeyWords(String positionWord,
 			String searchCode) {
@@ -234,7 +231,7 @@ public class PositionPersistenceService implements IPositionPersistenceService {
 			else if (searchCode.equalsIgnoreCase("Project Management"))
 				area=TechnicalAreaType.PROJECT_MANAGEMENT;
 			else if (searchCode.equalsIgnoreCase("Integration"))
-				area=TechnicalAreaType.INETGRATION;
+				area=TechnicalAreaType.INTEGRATION;
 			query=em.createNamedQuery("Position.getPositionsByTechnicalArea", PositionEntity.class)
 					.setParameter("technicalArea", area);
 		}

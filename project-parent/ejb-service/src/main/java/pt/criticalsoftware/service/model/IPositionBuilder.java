@@ -2,6 +2,7 @@ package pt.criticalsoftware.service.model;
 
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.Date;
 
 import pt.criticalsoftware.service.persistence.positions.TechnicalAreaType;
 import pt.criticalsoftware.service.persistence.states.PositionState;
@@ -9,7 +10,7 @@ import pt.criticalsoftware.service.persistence.states.PositionState;
 public interface IPositionBuilder {
 
 	IPositionBuilder openDate(LocalDate openDate);
-	IPositionBuilder closeDate(LocalDate closeDate);
+	IPositionBuilder closeDate(Date closeDate);
 	IPositionBuilder reference(String reference);
 	IPositionBuilder title(String title);
 	IPositionBuilder locale(String locale);

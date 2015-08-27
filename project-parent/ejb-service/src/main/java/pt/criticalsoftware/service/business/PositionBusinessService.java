@@ -2,6 +2,7 @@ package pt.criticalsoftware.service.business;
 
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -97,6 +98,27 @@ public class PositionBusinessService implements IPositionBusinessService{
 	@Override
 	public List<IPosition> getManagerPositions(Integer currentUserID) {
 		return positionPersistence.getManagerPositions(currentUserID);
+	}
+	
+	@Override
+	public List<IPosition> getPositionsByDate(String positionWord,Date date) {
+		return positionPersistence.getPositionsByDate(positionWord, date);
+	}
+
+
+
+	@Override
+	public List<IPosition> getPositionsByKeyWords(String positionWord,
+			String searchCode) {
+		return positionPersistence.getPositionsByKeyWords(positionWord, searchCode);
+	}
+
+
+
+	@Override
+	public List<IPosition> getPositionsByOpenDate(String positionWord,
+			LocalDate openDate) {
+		return positionPersistence.getPositionsByOpenDate(positionWord, openDate);
 	}
 
 }

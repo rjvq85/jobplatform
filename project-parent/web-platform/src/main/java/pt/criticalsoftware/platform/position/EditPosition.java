@@ -16,6 +16,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.primefaces.event.SelectEvent;
+import org.primefaces.event.UnselectEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -202,7 +203,11 @@ public class EditPosition implements Serializable {
 	public void onRowSelect(SelectEvent event) {
 		this.editPosition=((IPosition) event.getObject());
 		init();
-
+	}
+	
+	public void onRowUnselect(UnselectEvent event) {
+		this.editPosition=((IPosition) event.getObject());
+		this.editPosition=null;
 	}
 
 }

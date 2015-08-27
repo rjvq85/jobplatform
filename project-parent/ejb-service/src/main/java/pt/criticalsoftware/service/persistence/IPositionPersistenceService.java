@@ -1,5 +1,7 @@
 package pt.criticalsoftware.service.persistence;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 import pt.criticalsoftware.service.exceptions.DuplicateEmailException;
@@ -13,6 +15,8 @@ public interface IPositionPersistenceService {
 	
 	List<IPosition>  getPositionsByWord(String positionWord,String searchCode);
 	
+	List<IPosition>  getPositionsByKeyWords(String positionWord,String searchCode);
+	
 	void verifyReference(String reference) throws DuplicateReferenceException;
 	
 	IPosition create(IPosition position);
@@ -20,6 +24,10 @@ public interface IPositionPersistenceService {
 	IPosition update(IPosition position);
 	
 	IPosition delete(IPosition position);
+
+	List<IPosition> getPositionsByDate(String positionWord, Date closedate);
+	
+	List<IPosition> getPositionsByOpenDate(String positionWord, LocalDate opendate);
 
 	IPosition find(Object id);
 

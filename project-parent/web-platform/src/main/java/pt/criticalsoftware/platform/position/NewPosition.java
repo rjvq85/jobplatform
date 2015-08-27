@@ -40,7 +40,6 @@ public class NewPosition{
 
 	private LocalDate openDate;
 	private Date closeDate;
-	private LocalDate closeDt;
 	private String reference;
 	private String title;
 	private String locale;
@@ -107,13 +106,15 @@ public class NewPosition{
 	public void setOpenDate() {
 		this.openDate = LocalDate.now();
 	}
+	
 	public Date getCloseDate() {
 		return closeDate;
 	}
+
 	public void setCloseDate(Date closeDate) {
 		this.closeDate = closeDate;
-		this.closeDt = closeDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 	}
+
 	public String getReference() {
 		return reference;
 	}
@@ -219,7 +220,7 @@ public class NewPosition{
 		try {
 			setOpenDate();
 			logger.info("Id"+this.responsable.getId());
-			positionService.createPosition(this.openDate, this.closeDt, this.reference, 
+			positionService.createPosition(this.openDate, this.closeDate, this.reference, 
 					this.title, this.locale, this.state, this.company, this.technicalArea, 
 					this.sla, this.vacancies, this.responsable, this.description, this.adChannels);
 		

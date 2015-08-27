@@ -1,7 +1,11 @@
 package pt.criticalsoftware.platform.position;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -37,12 +41,24 @@ public class PositionListView implements Serializable{
 	private String searchCode;
 	private String positionWord;
 	private boolean searchBoolean=false;
+	private String placeholder="????";
 
 	public PositionListView() {
 	}
 
 
+	public String getPlaceholder() {
+		return this.placeholder;
+	}
 
+	public void setPlaceholder(String placeholder) {
+		this.placeholder = placeholder;
+	}
+
+	public void onChange(){
+		if (this.positionWord.equals("Data abertura") || this.positionWord.equals("Data fecho"))
+			setPlaceholder("AAAA-MM-dd");
+	}
 	public List<IPosition> showPositions() {
 		return positionService.getAllPositions();
 	}
@@ -70,11 +86,39 @@ public class PositionListView implements Serializable{
 	public void setSearchCode(String searchCode) {
 		this.searchCode = searchCode;
 	}
+
+	private Date convertStringToDate(String dateString)
+	{
+		String expectedPattern = "yyyy-MM-dd";
+		SimpleDateFormat formatter = new SimpleDateFormat(expectedPattern);
+		try
+		{
+			String dateInput = dateString;
+			Date date = formatter.parse(dateInput);
+			return date;
+		}
+		catch (ParseException e)
+		{
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+
 	public void search(){
-		logger.info(this.positionWord);
-		logger.info(this.searchCode);
-		this.positions= positionService.getPositionsByWord(this.positionWord,this.searchCode);
-		logger.info("tamanho"+this.positions.size());
+		if (this.positionWord.equals("Data fecho")){	
+			Date ld=convertStringToDate(this.searchCode);
+			this.positions= positionService.getPositionsByDate(this.positionWord,ld);
+		}
+		else if (this.positionWord.equals("Data abertura")){	
+			LocalDate date = LocalDate.parse(this.searchCode);
+			this.positions= positionService.getPositionsByOpenDate(this.positionWord,date);
+			}
+		else if (this.positionWord.equals("Pesquisa livre")){	
+			this.positions= positionService.getPositionsByKeyWords(this.positionWord,this.searchCode);
+		}
+		else
+			this.positions= positionService.getPositionsByWord(this.positionWord,this.searchCode);
 		this.searchBoolean=true;
 	}
 

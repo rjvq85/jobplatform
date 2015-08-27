@@ -2,6 +2,7 @@ package pt.criticalsoftware.domain.entities;
 
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Convert;
@@ -17,6 +18,10 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.Future;
+import javax.validation.constraints.Past;
 
 import pt.criticalsoftware.service.persistence.positions.TechnicalAreaType;
 import pt.criticalsoftware.service.persistence.states.PositionState;
@@ -31,6 +36,9 @@ import pt.criticalsoftware.service.persistence.utils.LocalDatePersistenceConvert
 	@NamedQuery(name = "Position.getPositionsByState",query = "SELECT u from PositionEntity u WHERE u.state = :state"),
 	@NamedQuery(name = "Position.getPositionsByCompany",query = "SELECT u from PositionEntity u WHERE u.company = :company"),
 	@NamedQuery(name = "Position.getPositionsByTechnicalArea", query = "SELECT u FROM PositionEntity u WHERE u.technicalArea = :technicalArea"),
+	@NamedQuery(name = "Position.getPositionsByLocale", query = "SELECT u FROM PositionEntity u WHERE u.locale = :locale"),
+	@NamedQuery(name = "Position.getPositionsByDate", query = "SELECT u FROM PositionEntity u WHERE u.closeDate = :closeDate"),
+	@NamedQuery(name = "Position.getPositionsByOpenDate", query = "SELECT u FROM PositionEntity u WHERE u.openDate = :openDate"),
 	@NamedQuery(name = "Position.verifyReference", query = "SELECT u FROM PositionEntity u WHERE u.reference = :reference"),
 	@NamedQuery(name = "Position.excludingCandidacy", query = "SELECT p FROM PositionEntity p JOIN p.candidacy c WHERE c.candidate.username NOT like :param"),
 	@NamedQuery(name = "Position.getPositionByManager", query = "SELECT p FROM PositionEntity p WHERE p.responsable.id = :param")
@@ -43,11 +51,13 @@ public class PositionEntity {
 	
 	@Convert(converter = LocalDatePersistenceConverter.class)
 	@Column(name="data_abertura",nullable=false)
+
 	private LocalDate openDate;
 	
-	@Convert(converter = LocalDatePersistenceConverter.class)
+	@Future
+	@Temporal(TemporalType.DATE)
 	@Column(name="data_fecho",nullable=false)
-	private LocalDate closeDate;
+	private Date closeDate;
 	
 	@Column(name="referencia",nullable=false)
 	private String reference;
@@ -102,11 +112,11 @@ public class PositionEntity {
 		this.openDate = openDate;
 	}
 
-	public LocalDate getCloseDate() {
+	public Date getCloseDate() {
 		return closeDate;
 	}
 
-	public void setCloseDate(LocalDate closeDate) {
+	public void setCloseDate(Date closeDate) {
 		this.closeDate = closeDate;
 	}
 

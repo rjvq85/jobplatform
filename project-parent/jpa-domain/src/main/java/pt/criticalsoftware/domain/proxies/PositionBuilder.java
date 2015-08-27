@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.Date;
 
 import pt.criticalsoftware.domain.service.UserPersistenceService;
 import pt.criticalsoftware.service.model.IPosition;
@@ -31,7 +32,7 @@ public class PositionBuilder implements IPositionBuilder {
 	}
 
 	@Override
-	public IPositionBuilder closeDate(LocalDate closeDate) {
+	public IPositionBuilder closeDate(Date closeDate) {
 		position.setCloseDate(closeDate);
 		return this;
 	}

@@ -2,6 +2,7 @@ package pt.criticalsoftware.service.business;
 
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 import pt.criticalsoftware.service.exceptions.DuplicateReferenceException;
@@ -14,9 +15,15 @@ public interface IPositionBusinessService {
 	
 	List<IPosition> getAllPositions();
 	
+	List<IPosition> getPositionsByKeyWords(String positionWord,String searchCode);
+	
 	List<IPosition> getPositionsByWord(String positionWord,String searchCode);
 	
-	IPosition createPosition(LocalDate openDate, LocalDate closeDate,String reference,String title,String locale,
+	List<IPosition> getPositionsByDate(String positionWord,Date ld);
+	
+	List<IPosition> getPositionsByOpenDate(String positionWord,LocalDate openDate);
+	
+	IPosition createPosition(LocalDate openDate, Date closeDate,String reference,String title,String locale,
 	PositionState state,String company, TechnicalAreaType technicalArea,String sla, Integer vacancies,IUser responsable,
 	String description, Collection<String> adChannels) throws DuplicateReferenceException;
 

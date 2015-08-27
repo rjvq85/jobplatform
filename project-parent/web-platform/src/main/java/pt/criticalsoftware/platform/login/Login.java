@@ -49,6 +49,7 @@ public class Login {
 			Integer id = userservice.getUserId(username);
 			setUserLogged(id);
 			setLoggedUsername(username, id);
+			setRole();
 			return landingPage(id);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -77,11 +78,11 @@ public class Login {
 		if (1 == roles.size()) {
 			switch (roles.get(0).getRole()) {
 			case "ADMIN": {
-				result.append("Admin/index.xhtml?faces-redirect=true");
+				result.append("index.xhtml?faces-redirect=true");
 				break;
 			}
 			case "GESTOR": {
-				result.append("Manager/index.xhtml?faces-redirect=true");
+				result.append("index.xhtml?faces-redirect=true");
 				break;
 			}
 			default: {
@@ -91,9 +92,9 @@ public class Login {
 			}
 		} else {
 			if (roles.contains(Role.ADMIN))
-				result.append("Admin/index.xhtml?faces-redirect=true");
+				result.append("index.xhtml?faces-redirect=true");
 			else
-				result.append("Manager/index.xhtml?faces-redirect=true");
+				result.append("index.xhtml?faces-redirect=true");
 		}
 		return result.toString();
 	}
@@ -118,6 +119,22 @@ public class Login {
 		FacesContext context = currentFacesContext();
 		HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
 		return request.getSession();
+	}
+	
+	private HttpServletRequest getRequest() {
+		return (HttpServletRequest) currentFacesContext().getExternalContext().getRequest();
+	}
+	
+	private void setRole() {
+		FacesContext context = currentFacesContext();
+		HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
+		if (request.isUserInRole("ADMIN")) {
+			getSession().setAttribute("userROLE", Role.ADMIN);
+		} else if (request.isUserInRole("GESTOR")) {
+			getSession().setAttribute("userROLE", Role.GESTOR);
+		} else if (request.isUserInRole("ENTREVISTADOR")) {
+			getSession().setAttribute("userROLE", Role.ENTREVISTADOR);
+		}
 	}
 
 }

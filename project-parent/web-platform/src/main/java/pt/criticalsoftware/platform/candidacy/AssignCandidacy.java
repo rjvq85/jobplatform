@@ -50,7 +50,6 @@ public class AssignCandidacy implements Serializable {
 	private IPositionBusinessService posBness;
 	
 	public String assignCandidacy() {
-		System.out.println("\n\n### USERNAME: "+username+" ###\n\n");
 		defineCandidate(username);
 		ICandidacy candidacy = candBuilder
 				.candidate(candidate)

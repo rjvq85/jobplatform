@@ -6,8 +6,7 @@
 	<display-name>web-platform</display-name>
 	<module-name>pt.criticalsoftware.jobs.platform.web-platform</module-name>
 	<welcome-file-list>
-		<welcome-file>/Authorized/Admin/index.xhtml</welcome-file>
-		<welcome-file>/Authorized/Manager/index.xhtml</welcome-file>
+		<welcome-file>/Authorized/index.xhtml</welcome-file>
 		<welcome-file>/Authorized/Interviewer/index.xhtml</welcome-file>
 	</welcome-file-list>
 	<session-config>
@@ -33,7 +32,7 @@
 		<display-name>Admin Access</display-name>
 		<web-resource-collection>
 			<web-resource-name>Only Admin Access</web-resource-name>
-			<url-pattern>/Authorized/Admin/*</url-pattern>
+			<url-pattern>/Authorized/*</url-pattern>
 		</web-resource-collection>
 		<auth-constraint>
 			<role-name>ADMIN</role-name>
@@ -46,10 +45,9 @@
 		<display-name>Manager Access</display-name>
 		<web-resource-collection>
 			<web-resource-name>Only Manager Access</web-resource-name>
-			<url-pattern>/Authorized/Manager/*</url-pattern>
+			<url-pattern>/Authorized/*</url-pattern>
 		</web-resource-collection>
 		<auth-constraint>
-			<role-name>ADMIN</role-name>
 			<role-name>GESTOR</role-name>
 		</auth-constraint>
 		<user-data-constraint>
@@ -63,7 +61,6 @@
 			<url-pattern>/Authorized/Interviewer/*</url-pattern>
 		</web-resource-collection>
 		<auth-constraint>
-			<role-name>ADMIN</role-name>
 			<role-name>ENTREVISTADOR</role-name>
 		</auth-constraint>
 		<user-data-constraint>

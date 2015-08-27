@@ -10,12 +10,16 @@ import java.util.List;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import pt.criticalsoftware.service.business.ICandidacyBusinessService;
 import pt.criticalsoftware.service.model.ICandidacy;
 import pt.criticalsoftware.service.model.ICandidate;
+import pt.criticalsoftware.service.persistence.roles.Role;
 import pt.criticalsoftware.service.persistence.states.CandidacyState;
 
 @Named
@@ -24,9 +28,11 @@ public class CandidacyListView {
 
 	@EJB
 	private ICandidacyBusinessService business;
-	
+
 	@Inject
 	private ManageCandidacy manage;
+	@Inject
+	private CandidacyInterviews interview;
 
 	private ICandidacy candidacy;
 
@@ -37,8 +43,10 @@ public class CandidacyListView {
 	private ICandidate candidate;
 
 	private String searchText;
-	
+
 	private CandidacyState newState;
+	
+	private LocalDate isNewDate;
 
 	public CandidacyListView() {
 	}
@@ -49,7 +57,8 @@ public class CandidacyListView {
 			LocalDate date;
 			try {
 				date = LocalDate.parse(searchText, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
-				candidacies = business.getSearchedDatesCandidaciesAdmin(date);
+				if (isAdmin()) candidacies = business.getSearchedDatesCandidaciesAdmin(date);
+				if (isManager()) candidacies = business.getSearchedDatesCandidaciesManager(date, getCurrentUserID());
 				isDate = true;
 			} catch (DateTimeParseException dtpe) {
 				isDate = false;
@@ -57,12 +66,15 @@ public class CandidacyListView {
 			if (!isDate) {
 				try {
 					date = LocalDate.parse(searchText, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-					candidacies = business.getSearchedDatesCandidaciesAdmin(date);
+					if (isAdmin()) candidacies = business.getSearchedDatesCandidaciesAdmin(date);
+					if (isManager()) candidacies = business.getSearchedDatesCandidaciesManager(date, getCurrentUserID());
 					isDate = true;
 				} catch (DateTimeParseException dtpe) {
 					Collection<ICandidacy> searchedCandidacies = new HashSet<ICandidacy>();
 					String[] params = searchText.split(" ");
-					List<ICandidacy> cands = business.getAllCandidacies();
+					List<ICandidacy> cands = new ArrayList<>();
+					if (isAdmin()) cands = business.getAllCandidacies();
+					if (isManager()) cands = business.getManagerCandidacies(getCurrentUserID());
 					for (String s : params) {
 						for (ICandidacy cand : cands) {
 							if (null != cand.getPositionCandidacy().getTitle()) {
@@ -106,10 +118,17 @@ public class CandidacyListView {
 	}
 
 	public List<ICandidacy> getCandidacies() {
-		if (null == candidacies) {
-			candidacies = business.getAllCandidacies();
-		}
-		return candidacies;
+		if (isAdmin()) {
+			if (null == candidacies) {
+				candidacies = business.getAllCandidacies();
+			}
+			return candidacies;
+		} else if (isManager()) {
+			if (null == candidacies) {
+				candidacies = business.getManagerCandidacies((Integer)getSession().getAttribute("userID"));
+			}
+			return candidacies;
+		} else return null;
 	}
 
 	public void setCandidacies(List<ICandidacy> candidacies) {
@@ -140,17 +159,15 @@ public class CandidacyListView {
 		this.candidate = candidate;
 	}
 
-	public String goToInterviews() {
-		if (candidacy.getInterviews().size() < 2)
-			return "candinterview?faces-redirect=true";
-		else
-			return "candinterviews?faces-redirect=true";
+	public String goToInterviews(ICandidacy cand) {
+		interview.setSelectedCandidacy(cand);
+		return "candidacyinterviews?faces-redirect=true";
 	}
 
 	public String getCandidacyDate(ICandidacy cand) {
 		return cand.getDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
 	}
-	
+
 	public void updateCandidacyState() {
 		manage.updateCandidacy();
 	}
@@ -162,18 +179,50 @@ public class CandidacyListView {
 	public void setNewState(CandidacyState newState) {
 		manage.setNewState(newState);
 	}
-	
+
 	public CandidacyState[] getAllStates() {
 		return CandidacyState.values();
 	}
-	
+
 	public void chooseSelectedCandidacy(ICandidacy candidacy) {
 		manage.setCandidacy(candidacy);
 	}
-	
+
 	public void delete(ICandidacy candidacy) {
 		manage.setCandidacy(candidacy);
 		manage.deleteCandidacy();
+	}
+	
+	public boolean isNew(ICandidacy cand) {
+		LocalDate minusTwo = LocalDate.now().minusDays(2);
+		if (cand.getDate().isBefore(minusTwo)) return false;
+		else return true;
+	}
+
+	private HttpSession getSession() {
+		FacesContext context = FacesContext.getCurrentInstance();
+		HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
+		return request.getSession();
+	}
+	
+	private boolean isAdmin() {
+		return getSession().getAttribute("userROLE").equals(Role.ADMIN);
+	}
+	
+	private boolean isManager() {
+		return getSession().getAttribute("userROLE").equals(Role.GESTOR);
+	}
+	
+	private Integer getCurrentUserID() {
+		return (Integer) getSession().getAttribute("userID");
+	}
+
+	public LocalDate getIsNewDate() {
+		return isNewDate;
+	}
+
+	public void setIsNewDate(LocalDate isNewDate) {
+		this.isNewDate = isNewDate;
 	}
 
 }

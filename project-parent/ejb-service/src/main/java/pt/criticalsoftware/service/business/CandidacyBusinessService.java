@@ -10,6 +10,7 @@ import javax.persistence.NoResultException;
 import pt.criticalsoftware.service.exceptions.DuplicateCandidateException;
 import pt.criticalsoftware.service.exceptions.UniqueConstraintException;
 import pt.criticalsoftware.service.model.ICandidacy;
+import pt.criticalsoftware.service.model.IInterview;
 import pt.criticalsoftware.service.persistence.ICandidacyPersistenceService;
 
 @Stateful
@@ -46,8 +47,8 @@ public class CandidacyBusinessService implements ICandidacyBusinessService {
 	}
 
 	@Override
-	public void createCandidacy(ICandidacy icandidacy) throws DuplicateCandidateException {
-		persistence.newCandidacy(icandidacy);
+	public ICandidacy createCandidacy(ICandidacy icandidacy) throws DuplicateCandidateException {
+		return persistence.newCandidacy(icandidacy);
 	}
 	
 	@Override
@@ -73,6 +74,11 @@ public class CandidacyBusinessService implements ICandidacyBusinessService {
 	@Override
 	public void deleteCandidacy(ICandidacy candidacy) {
 		persistence.delete(candidacy);
+	}
+
+	@Override
+	public List<IInterview> getCandidacyInterviews(Integer id) {
+		return persistence.getInterviews(id);
 	}
 	
 }

@@ -2,16 +2,15 @@ package pt.criticalsoftware.domain.proxies;
 
 import java.time.LocalDate;
 
-import javax.enterprise.context.RequestScoped;
+import javax.ejb.Stateless;
 
-import pt.criticalsoftware.domain.entities.CandidateEntity;
 import pt.criticalsoftware.service.model.ICandidacy;
 import pt.criticalsoftware.service.model.ICandidacyBuilder;
 import pt.criticalsoftware.service.model.ICandidate;
 import pt.criticalsoftware.service.model.IPosition;
 import pt.criticalsoftware.service.persistence.states.CandidacyState;
 
-@RequestScoped
+@Stateless
 public class CandidacyBuilder implements ICandidacyBuilder {
 
 	private CandidacyProxy candidacy;

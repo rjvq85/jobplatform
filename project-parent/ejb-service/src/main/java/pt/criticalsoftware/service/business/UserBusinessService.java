@@ -48,6 +48,13 @@ public class UserBusinessService implements IUserBusinessService {
 				.role(role).build();
 		userpersistence.create(user);
 	}
+	
+	@Override
+	public IUser createUser(IUser user) throws DuplicateEmailException, DuplicateUsernameException {
+		verifyEmail(user.getEmail());
+		verifyUsername(user.getUsername());
+		return userpersistence.create(user);
+	}
 
 
 	private void verifyEmail(String email) throws DuplicateEmailException {
@@ -68,6 +75,11 @@ public class UserBusinessService implements IUserBusinessService {
 	@Override
 	public IUser getUserByID(Object id) {
 		return userpersistence.findByID(id);
+	}
+
+	@Override
+	public List<IUser> getAllUsers() {
+		return userpersistence.getAll();
 	}
 
 }

@@ -6,7 +6,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
-import javax.enterprise.context.RequestScoped;
+import javax.ejb.Stateless;
 
 import com.sun.syndication.io.impl.Base64;
 
@@ -14,7 +14,7 @@ import pt.criticalsoftware.service.model.IUser;
 import pt.criticalsoftware.service.model.IUserBuilder;
 import pt.criticalsoftware.service.persistence.roles.Role;
 
-@RequestScoped
+@Stateless
 public class UserBuilder implements IUserBuilder {
 	
 	private UserProxy user;

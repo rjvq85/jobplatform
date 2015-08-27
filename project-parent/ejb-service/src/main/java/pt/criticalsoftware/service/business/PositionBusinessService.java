@@ -6,14 +6,11 @@ import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.inject.Inject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import pt.criticalsoftware.service.exceptions.DuplicateReferenceException;
-import pt.criticalsoftware.service.model.ICandidacy;
-import pt.criticalsoftware.service.model.IInterview;
 import pt.criticalsoftware.service.model.IPosition;
 import pt.criticalsoftware.service.model.IPositionBuilder;
 import pt.criticalsoftware.service.model.IUser;
@@ -30,7 +27,7 @@ public class PositionBusinessService implements IPositionBusinessService{
 	@EJB
 	private IPositionPersistenceService positionPersistence;
 
-	@Inject
+	@EJB
 	private IPositionBuilder positionBuilder;
 
 	@Override
@@ -49,7 +46,7 @@ public class PositionBusinessService implements IPositionBusinessService{
 
 
 	@Override
-	public void createPosition(LocalDate openDate, LocalDate closeDate,
+	public IPosition createPosition(LocalDate openDate, LocalDate closeDate,
 			String reference, String title, String locale, PositionState state,
 			String company, TechnicalAreaType technicalArea, String sla,
 			Integer vacancies, IUser responsable, String description,
@@ -65,9 +62,17 @@ public class PositionBusinessService implements IPositionBusinessService{
 				.state(state).technicalArea(technicalArea)
 				.title(title).vacancies(vacancies).adChannels(adChannels).responsable(responsable).build();
 		
-		positionPersistence.create(position);
+		return positionPersistence.create(position);
 
 	}
+	
+	@Override
+	public IPosition createPosition(IPosition position) throws DuplicateReferenceException {
+		verifyReference(position.getReference());
+		logger.debug("Posição criada");
+		return positionPersistence.create(position);
+	}
+	
 	@Override
 	public void update(IPosition position) {
 		positionPersistence.update(position);

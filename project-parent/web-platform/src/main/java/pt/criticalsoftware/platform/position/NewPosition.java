@@ -167,7 +167,7 @@ public class NewPosition{
 		else if (technicalAreaStr.equals("Project Management"))
 			this.technicalArea=TechnicalAreaType.PROJECT_MANAGEMENT;
 		else if (technicalAreaStr.equals("Integration"))
-			this.technicalArea=TechnicalAreaType.INETGRATION;
+			this.technicalArea=TechnicalAreaType.INTEGRATION;
 	}
 	public String getSla() {
 		return sla;
@@ -245,7 +245,6 @@ public class NewPosition{
 	}
 
 	public void setSelectedResponsable(String selectedResponsable) {
-		System.out.println("\n\n\n\n\n\n ###### ENTROU PARA DEFINIR O RESPONSAVEL COM ID: "+selectedResponsable+"####### \n\n\n\n\n\n");
 		this.selectedResponsable = selectedResponsable;
 		setResponsable(selectedResponsable);
 	}

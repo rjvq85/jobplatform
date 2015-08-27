@@ -9,11 +9,14 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import pt.criticalsoftware.domain.entities.CandidacyEntity;
+import pt.criticalsoftware.domain.entities.InterviewEntity;
 import pt.criticalsoftware.domain.proxies.CandidacyProxy;
 import pt.criticalsoftware.domain.proxies.IEntityAware;
+import pt.criticalsoftware.domain.proxies.InterviewProxy;
 import pt.criticalsoftware.service.exceptions.DuplicateCandidateException;
 import pt.criticalsoftware.service.exceptions.UniqueConstraintException;
 import pt.criticalsoftware.service.model.ICandidacy;
+import pt.criticalsoftware.service.model.IInterview;
 import pt.criticalsoftware.service.persistence.ICandidacyPersistenceService;
 
 @Stateless
@@ -34,7 +37,7 @@ public class CandidacyPersistenceService implements ICandidacyPersistenceService
 	}
 
 	@Override
-	public void newCandidacy(ICandidacy icandidacy) throws DuplicateCandidateException {
+	public ICandidacy newCandidacy(ICandidacy icandidacy) throws DuplicateCandidateException {
 		CandidacyEntity entity;
 		try {
 			entity = getEntity(icandidacy);
@@ -43,11 +46,12 @@ public class CandidacyPersistenceService implements ICandidacyPersistenceService
 					&& (Long) em.createNamedQuery("Candidate.findDuplicateByEmail")
 							.setParameter("param", icandidacy.getCandidate().getEmail().toUpperCase())
 							.getSingleResult() < 1) {
-				em.merge(entity);
+				em.persist(entity);
+				return new CandidacyProxy(entity);
 			} else
 				throw new DuplicateCandidateException("Username / E-mail já existente");
 		} catch (IllegalStateException ise) {
-
+			return null;
 		}
 	}
 
@@ -124,7 +128,7 @@ public class CandidacyPersistenceService implements ICandidacyPersistenceService
 		}
 		return interfaceList;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public ICandidacy update(ICandidacy entity) {
@@ -140,6 +144,17 @@ public class CandidacyPersistenceService implements ICandidacyPersistenceService
 		if (candidacy instanceof IEntityAware<?>) {
 			em.remove(em.merge(((IEntityAware<CandidacyEntity>) candidacy).getEntity()));
 		}
+	}
+
+	@Override
+	public List<IInterview> getInterviews(Integer id) {
+		TypedQuery<InterviewEntity> query = em.createNamedQuery("Candidacy.interviews", InterviewEntity.class)
+				.setParameter("param", id);
+		List<InterviewEntity> entities = query.getResultList();
+		List<IInterview> intervs = new ArrayList<>();
+		for (InterviewEntity ie : entities)
+			intervs.add(new InterviewProxy(ie));
+		return intervs;
 	}
 
 }

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<meta charset="utf-8" />
+	<title>Plataforma de Emprego - Administrador</title>
+</h:head>
+<h:body>
+	<ui:composition template="../Authorized/Layout/layout.xhtml">
+		<ui:define name="content">
+			<div class="jumbotron">
+				<div class="container">
+					<h2>
+						Bem-vindo, <strong><h:outputText value="#{userFNLN}" /></strong>!
+					</h2>
+					<p>Na barra de navegação, em cima, poderá aceder, a partir de
+						qualquer lugar, às diferentes opções que tem disponível no seu
+						perfil.</p>
+				</div>
+			</div>
+			<h:panelGroup styleClass="container"
+				rendered="#{userROLE eq 'ADMIN'}">
+				<div class="row">
+					<div class="col-md-4 text-center">
+						<h:link
+							outcome="/Authorized/Positions/positionListAdminMain?faces-redirect=true">
+							<div class="media image-box">
+								<h:graphicImage
+									styleClass="media-object media-maxheight fade-box"
+									library="imgs" name="positions.jpg" />
+								<div class="dark-box"></div>
+								<h2 class="text-overlay-image">
+									<strong>Posições</strong>
+								</h2>
+							</div>
+						</h:link>
+					</div>
+					<div class="col-md-4 text-center">
+						<h:link outcome="/Authorized/Candidacies/candidacies?faces-redirect=true">
+							<div class="media image-box">
+								<h:graphicImage
+									styleClass="media-object media-maxheight fade-box"
+									library="imgs" name="candidacy.jpg" />
+								<div class="dark-box"></div>
+								<h2 class="text-overlay-image">
+									<strong>Candidaturas</strong>
+								</h2>
+							</div>
+						</h:link>
+					</div>
+					<h:panelGroup layout="block" rendered="#{userROLE eq 'ADMIN'}">
+						<div class="col-md-4 text-center">
+							<h:link outcome="/Authorized/Reports/reports?faces-redirect=true">
+								<div class="media image-box">
+									<h:graphicImage
+										styleClass="media-object media-maxheight fade-box"
+										library="imgs" name="reports.jpg" />
+									<div class="dark-box"></div>
+									<h1 class="text-overlay-image">
+										<strong>Relatórios</strong>
+									</h1>
+
+								</div>
+							</h:link>
+						</div>
+					</h:panelGroup>
+				</div>
+				<div class="row spacer"></div>
+			</h:panelGroup>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

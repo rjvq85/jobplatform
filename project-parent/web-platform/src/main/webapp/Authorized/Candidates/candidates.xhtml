@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+<h:head>
+	<meta charset="utf-8" />
+	<h:outputScript library="js" name="jquery-2.1.4.min.js" />
+	<h:outputScript library="js" name="bootstrap.js" />
+	<h:outputScript library="js" name="tablepagination.js" />
+	<h:outputStylesheet library="css" name="mainstyle.css" />
+	<h:outputStylesheet library="css" name="bootstrap.css" />
+	<title>Plataforma de Emprego</title>
+</h:head>
+<h:body>
+	<ui:composition template="../Layout/layout.xhtml">
+		<ui:define name="content">
+			<h:panelGroup layout="block" class="container" id="container">
+				<h:panelGroup id="candList" layout="block">
+					<h:panelGroup layout="block" class="title" id="title">
+						<h:panelGroup layout="block" class="page-header">
+							<h:panelGroup layout="block" class="row" id="titlerow">
+								<h:panelGroup layout="block" class="col-md-8">
+									<h1>Candidaturas</h1>
+								</h:panelGroup>
+								<h:panelGroup layout="block" class="col-md-offset-2 col-md-2">
+									<h:panelGroup layout="block" class="media">
+										<h:graphicImage styleClass="media-object" library="imgs"
+											name="logocritical.png"
+											style="min-height: 50px; height: 50px;" />
+									</h:panelGroup>
+								</h:panelGroup>
+							</h:panelGroup>
+						</h:panelGroup>
+						<h:panelGroup layout="block" class="row">
+							<h:panelGroup layout="block" class="col-md-4">
+								<h:form prependId="false" id="form">
+									<h:panelGroup layout="block" class="input-group">
+										<h:panelGroup styleClass="input-group-btn">
+											<h:commandButton action="#{candidacyListView.clearSearch()}"
+												value="x" styleClass="btn btn-default">
+												<f:ajax render="lista" />
+											</h:commandButton>
+										</h:panelGroup>
+										<h:inputText id="campopesquisa"
+											value="#{candidacyListView.searchText}"
+											styleClass="form-control"
+											a:placeholder="Pesquisa de candidaturas (por data: dd-MM-aaaa ou dd/MM/aaaa)" />
+										<h:panelGroup styleClass="input-group-btn">
+											<h:commandButton action="#{candidacyListView.doSearch()}"
+												value="Pesquisar" styleClass="btn btn-default">
+												<f:ajax execute="campopesquisa" render="lista" />
+											</h:commandButton>
+										</h:panelGroup>
+									</h:panelGroup>
+								</h:form>
+							</h:panelGroup>
+							<h:panelGroup layout="block" class="col-md-offset-6 col-md-3">
+								<h5 class="bg-danger text-center">
+									<h:message id="mensagens" styleClass="bg-info" />
+								</h5>
+							</h:panelGroup>
+						</h:panelGroup>
+						<h:panelGroup layout="block" class="row spacer"></h:panelGroup>
+						<h:form prependId="false" id="listform">
+							<h:panelGroup layout="block" styleClass="table-responsive">
+								<p:dataTable id="lista" tableStyleClass="table" var="cand"
+									value="#{candidacyListView.candidacies}"
+									emptyMessage="Sem resultados..." styleClass="text-center">
+									<p:column headerText="Referência" sortBy="#{cand.id}">
+										<h:outputText value="C#{cand.id}" />
+									</p:column>
+									<p:column headerText="Candidato"
+										sortBy="#{cand.candidate.firstName}">
+										<h:outputText value="#{cand.candidate}" />
+									</p:column>
+									<p:column headerText="Data da Candidatura"
+										sortBy="#{cand.date}">
+										<h:outputText value="#{candidacyListView.getCandidacyDate(cand)}"/>
+									</p:column>
+									<p:column headerText="Posição">
+										<h:outputText value="#{cand.positionCandidacy}"
+											rendered="#{cand.positionCandidacy != 'Espontânea'}" />
+										<h:commandLink
+											action="#{assignCandidacy.newAssignment(cand.candidate.username)}"
+											value="Espontânea"
+											rendered="#{cand.positionCandidacy == 'Espontânea'}" />
+									</p:column>
+									<p:column headerText="Entrevistas">
+										<h:commandLink action="#{candidacyListView.goToInterviews()}"
+											value="Ver Entrevistas">
+											<f:setPropertyActionListener value="#{cand}"
+												target="#{candidacyListView.candidacy}" />
+										</h:commandLink>
+									</p:column>
+								</p:dataTable>
+							</h:panelGroup>
+						</h:form>
+						<h:panelGroup layout="block" class="page-header">
+							<h:panelGroup layout="block" class="row">
+								<h:panelGroup layout="block" class="col-md-5">
+									<h:form prependId="false" id="addform">
+										<h:commandLink action="newcandidacy?faces-redirect=true"
+											styleClass="btn btn-primary">
+											<span class="glyphicon glyphicon-plus-sign"></span> Adicionar candidatura
+										</h:commandLink>
+									</h:form>
+								</h:panelGroup>
+							</h:panelGroup>
+						</h:panelGroup>
+					</h:panelGroup>
+				</h:panelGroup>
+			</h:panelGroup>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

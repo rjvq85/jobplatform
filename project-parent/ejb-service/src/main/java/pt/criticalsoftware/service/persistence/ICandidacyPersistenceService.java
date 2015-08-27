@@ -6,12 +6,13 @@ import java.util.List;
 import pt.criticalsoftware.service.exceptions.DuplicateCandidateException;
 import pt.criticalsoftware.service.exceptions.UniqueConstraintException;
 import pt.criticalsoftware.service.model.ICandidacy;
+import pt.criticalsoftware.service.model.IInterview;
 
 public interface ICandidacyPersistenceService {
 
 	List<ICandidacy> getAllCandidacies();
 
-	void newCandidacy(ICandidacy icandidacy) throws DuplicateCandidateException;
+	ICandidacy newCandidacy(ICandidacy icandidacy) throws DuplicateCandidateException;
 
 	List<ICandidacy> searchAdminCandidacies(String param);
 
@@ -26,5 +27,7 @@ public interface ICandidacyPersistenceService {
 	ICandidacy update(ICandidacy entity);
 
 	void delete(ICandidacy candidacy);
+
+	List<IInterview> getInterviews(Integer id);
 
 }

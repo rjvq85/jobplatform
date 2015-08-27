@@ -202,3 +202,84 @@ btnhovercolor.hover {
 	cursor: inherit;
 	display: block;
 }
+
+/* index */
+.image-box {
+	position: relative;
+}
+
+.dark-box {
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	position: absolute;
+	visibility: hidden;
+	opacity: 0;
+}
+
+.image-box:hover .dark-box {
+	text-align: center;
+	visibility: visible;
+	opacity: 1;
+	background-color: rgba(0, 0, 0, 0.5);
+	padding: 0;
+	margin: 0;
+}
+
+.text-overlay-image {
+	top: 37.5%;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	position: absolute;
+	visibility: hidden;
+	opacity: 0;
+}
+
+.image-box:hover .text-overlay-image {
+	text-align: center;
+	visibility: visible;
+	opacity: 1;
+	color: white;
+}
+
+.image-box:hover .fade-box {
+	opacity: 0.7;
+}
+
+.media-maxheight {
+	max-height: 300px;
+}
+
+.ui-state-default {
+	text-shadow: none !important;
+}
+
+/* Glyphs's size */
+.glyph-xl {
+	font-size: 35px !important;
+}
+
+/* 'New' label */
+#newlabel {
+	border: none !important;
+}
+
+#newlabel th {
+	font-size: 0;
+	background-color: white;
+}
+
+.newlabeled {
+	border: none !important;
+	background-color: white !important;
+	background-image: none !important;
+}
+.newlabeled th {
+	font-size: 0;
+}
+
+#lista_paginator_bottom {
+	background-color:white !important;
+}

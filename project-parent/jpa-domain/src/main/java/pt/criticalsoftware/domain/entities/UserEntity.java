@@ -22,17 +22,18 @@ import javax.persistence.UniqueConstraint;
 import pt.criticalsoftware.service.persistence.roles.Role;
 
 @Entity
-@Table(name="utilizadores")
+@Table(name = "utilizadores")
 @NamedQueries({
-	@NamedQuery(name = "User.findIdByUsername",query="SELECT u.id FROM UserEntity u WHERE u.username = :username"),
-	@NamedQuery(name = "User.getRoles",query="SELECT r FROM UserEntity u JOIN u.roles r WHERE u.id = :id"),
-	@NamedQuery(name = "User.verifyEmail", query = "SELECT u FROM UserEntity u WHERE u.email = :email"),
-	@NamedQuery(name = "User.verifyUsername", query = "SELECT u FROM UserEntity u WHERE u.username = :username"),
-	@NamedQuery(name = "User.findByRole", query = "SELECT u FROM UserEntity u")
+		@NamedQuery(name = "User.findIdByUsername", query = "SELECT u.id FROM UserEntity u WHERE u.username = :username"),
+		@NamedQuery(name = "User.getRoles", query = "SELECT r FROM UserEntity u JOIN u.roles r WHERE u.id = :id"),
+		@NamedQuery(name = "User.verifyEmail", query = "SELECT u FROM UserEntity u WHERE u.email = :email"),
+		@NamedQuery(name = "User.verifyUsername", query = "SELECT u FROM UserEntity u WHERE u.username = :username"),
+		@NamedQuery(name = "User.findByRole", query = "SELECT u FROM UserEntity u"),
+		@NamedQuery(name = "User.findAll", query = "SELECT u FROM UserEntity u")
 
 })
 public class UserEntity implements Serializable {
-	
+
 	/**
 	 * 
 	 */
@@ -41,35 +42,33 @@ public class UserEntity implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
-	
-	@Column(name="nome_utilizador", nullable=false, unique = true)
+
+	@Column(name = "nome_utilizador", nullable = false, unique = true)
 	private String username;
-	
-	@Column(name="palavra_passe",nullable=false)
+
+	@Column(name = "palavra_passe", nullable = false)
 	private String password;
-	
-	@Column(name="endereco_email",nullable=false, unique = true)
+
+	@Column(name = "endereco_email", nullable = false, unique = true)
 	private String email;
-	
-	@Column(name="primeiro_nome",nullable=false)
+
+	@Column(name = "primeiro_nome", nullable = false)
 	private String firstName;
-	
-	@Column(name="sobrenome",nullable=false)
+
+	@Column(name = "sobrenome", nullable = false)
 	private String lastName;
-	
+
 	@ElementCollection
-	@CollectionTable(name="cargos",joinColumns=@JoinColumn(name="nome_utilizador",referencedColumnName="nome_utilizador"),uniqueConstraints=@UniqueConstraint(columnNames={"cargo","nome_utilizador"}))
+	@CollectionTable(name = "cargos", joinColumns = @JoinColumn(name = "nome_utilizador", referencedColumnName = "nome_utilizador") , uniqueConstraints = @UniqueConstraint(columnNames = {
+			"cargo", "nome_utilizador" }) )
 	@Enumerated(EnumType.STRING)
-	@Column(name="cargo")
+	@Column(name = "cargo")
 	private Collection<Role> roles;
-	
-	@OneToMany(mappedBy="interviewer")
-	private Collection<InterviewEntity> interviews;
-	
-	@OneToMany(mappedBy="responsable")
+
+	@OneToMany(mappedBy = "responsable")
 	private Collection<PositionEntity> positions;
-	
-	@OneToMany(mappedBy="receptor")
+
+	@OneToMany(mappedBy = "receptor")
 	private Collection<NotificationEntity> notifications;
 
 	public String getUsername() {
@@ -120,14 +119,6 @@ public class UserEntity implements Serializable {
 		this.roles = roles;
 	}
 
-	public Collection<InterviewEntity> getInterviews() {
-		return interviews;
-	}
-
-	public void setInterviews(Collection<InterviewEntity> interviews) {
-		this.interviews = interviews;
-	}
-
 	public Collection<PositionEntity> getPositions() {
 		return positions;
 	}
@@ -147,7 +138,6 @@ public class UserEntity implements Serializable {
 	public Integer getId() {
 		return id;
 	}
-	
 
 	@Override
 	public int hashCode() {
@@ -156,8 +146,6 @@ public class UserEntity implements Serializable {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
-	
-	
 
 	@Override
 	public boolean equals(Object obj) {
@@ -175,11 +163,5 @@ public class UserEntity implements Serializable {
 			return false;
 		return true;
 	}
-	
-	
-	
-	
-	
-	
 
 }

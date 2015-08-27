@@ -1,6 +1,7 @@
 package pt.criticalsoftware.service.model;
 
 import java.util.Collection;
+import java.util.List;
 
 import pt.criticalsoftware.service.persistence.roles.Role;
 
@@ -31,5 +32,9 @@ public interface IUser {
 	void setUsername(String username);
 
 	String getUsername();
+
+	List<IPosition> getPositions();
+
+	void setPositions(List<IPosition> positions);
 
 }

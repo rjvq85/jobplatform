@@ -1,53 +1,65 @@
 package pt.criticalsoftware.domain.entities;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+
+import pt.criticalsoftware.service.persistence.utils.LocalDatePersistenceConverter;
 
 @Entity
-@Table(name="entrevistas")
+@Table(name = "entrevistas")
 
-@NamedQueries({
-@NamedQuery(name="Interview.findAll", query="select p from InterviewEntity p "),
-@NamedQuery(name="Interview.findByDate", query="select p from InterviewEntity p where p.date = :date "),
-@NamedQuery(name="Interview.findById", query="select p from InterviewEntity p where p.id = :interviewId ")
-}
-)
+@NamedQueries({ @NamedQuery(name = "Interview.findAll", query = "select p from InterviewEntity p "),
+		@NamedQuery(name = "Interview.findByDate", query = "SELECT i from InterviewEntity i WHERE i.date = :param "),
+		@NamedQuery(name = "Interview.findById", query = "select p from InterviewEntity p where p.id = :interviewId "),
+		@NamedQuery(name = "Interview.findByInterviewer", query = "SELECT i FROM InterviewEntity i JOIN i.interviewers u WHERE u.id = :param"),
+		@NamedQuery(name = "Interview.availableInterviewers", query = "SELECT u FROM UserEntity u WHERE u NOT IN (SELECT DISTINCT elements(i.interviewers) FROM InterviewEntity i WHERE i.id = :param)"),
+		@NamedQuery(name = "Interview.availableScripts", query = "SELECT s FROM ScriptEntity s WHERE s NOT IN (SELECT i.script FROM InterviewEntity i WHERE i.id = :param)") })
 public class InterviewEntity {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
-	
-	@Column(name="data_entrevista",nullable=false)
+
+	@Convert(converter = LocalDatePersistenceConverter.class)
+	@Column(name = "data_entrevista", nullable = false)
 	private LocalDate date;
-	
-	@Column(name="feedback")
+
+	@Column(name = "feedback")
 	private String feedback;
-	
-	@ManyToOne
-	private UserEntity interviewer;
-	
+
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "entrevistadores", uniqueConstraints = {
+			@UniqueConstraint(columnNames = { "interview_id", "interviewer_id" }) }, joinColumns = {
+					@JoinColumn(name = "interview_id") }, inverseJoinColumns = { @JoinColumn(name = "interviewer_id") })
+	private List<UserEntity> interviewers;
+
 	@ManyToOne
 	private ScriptEntity script;
-	
-	@ManyToOne
+
+	@ManyToOne(optional = false)
 	private PositionEntity position;
-	
-	@ManyToOne
+
+	@ManyToOne(optional = false)
 	private CandidacyEntity candidacy;
 
 	public InterviewEntity() {
-	
+
 	}
 
 	public LocalDate getDate() {
@@ -66,14 +78,6 @@ public class InterviewEntity {
 		this.feedback = feedback;
 	}
 
-	public UserEntity getInterviewer() {
-		return interviewer;
-	}
-
-	public void setInterviewer(UserEntity interviewer) {
-		this.interviewer = interviewer;
-	}
-
 	public ScriptEntity getScript() {
 		return script;
 	}
@@ -84,6 +88,30 @@ public class InterviewEntity {
 
 	public Integer getId() {
 		return id;
+	}
+
+	public List<UserEntity> getInterviewers() {
+		return interviewers;
+	}
+
+	public void setInterviewers(List<UserEntity> interviewers) {
+		this.interviewers = interviewers;
+	}
+
+	public PositionEntity getPosition() {
+		return position;
+	}
+
+	public void setPosition(PositionEntity position) {
+		this.position = position;
+	}
+
+	public CandidacyEntity getCandidacy() {
+		return candidacy;
+	}
+
+	public void setCandidacy(CandidacyEntity candidacy) {
+		this.candidacy = candidacy;
 	}
 
 	@Override
@@ -110,8 +138,5 @@ public class InterviewEntity {
 			return false;
 		return true;
 	}
-	
-	
-	
 
 }

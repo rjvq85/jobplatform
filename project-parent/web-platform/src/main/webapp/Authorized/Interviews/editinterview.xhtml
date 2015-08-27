@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<meta charset="utf-8" />
+	<h:outputScript name="jquery/jquery.js" library="primefaces" />
+	<h:outputScript library="js" name="bootstrap.js" />
+	<h:outputScript library="js" name="bootstrap-select.js" />
+	<h:outputScript library="js" name="tablepagination.js" />
+	<h:outputScript library="js" name="customscripts.js" />
+	<h:outputStylesheet library="css" name="mainstyle.css" />
+	<h:outputStylesheet library="css" name="bootstrap.css" />
+	<h:outputScript library="js" name="fileupload.js" />
+	<title>Plataforma de Emprego</title>
+</h:head>
+<h:body>
+	<ui:composition template="../Layout/layout.xhtml">
+		<ui:define name="content">
+			<h:form id="editintform" prependId="false">
+				<h:panelGroup id="editcontainer" layout="block"
+					styleClass="container">
+					<h:panelGroup layout="block" class="page-header">
+						<h:panelGroup layout="block" class="row" id="titlerow">
+							<h:panelGroup layout="block" class="col-md-8">
+								<h1>Editar Entrevista - Referência:
+									I#{interviewListView.selectedInterview.id}</h1>
+							</h:panelGroup>
+							<h:panelGroup layout="block" class="col-md-offset-2 col-md-2">
+								<h:panelGroup layout="block" class="media">
+									<h:graphicImage styleClass="media-object" library="imgs"
+										name="logocritical.png"
+										style="min-height: 50px; height: 50px;" />
+								</h:panelGroup>
+							</h:panelGroup>
+						</h:panelGroup>
+					</h:panelGroup>
+					<h:panelGroup layout="block" styleClass="row">
+						<h:panelGroup layout="block" styleClass="col-md-12 text-center">
+							<h:messages id="editglobalmsgs" globalOnly="true"
+								styleClass="alert alert-info" style="list-style-type: none;" />
+						</h:panelGroup>
+					</h:panelGroup>
+					<h:panelGroup layout="block" class="spacer">
+						<h:panelGroup layout="block" class="row">
+							<h:panelGroup layout="block" class="col-md-12 text-center">
+								<h:panelGroup id="grp-btns" layout="block" class="btn-group" style="width:100%;">
+									<h:commandLink id="newintbutton" value=""
+										styleClass="btn btn-default"
+										onclick="PF('newIntWidget').show(); return false;"
+										style="height: 80px; width:33%;">
+										<i class="glyphicon glyphicon-plus-sign"
+											style="left: 0; right: 0; top: 15%;"></i>
+										<p style="position: relative; top: 25%;">Adicionar</p>
+										<strong style="top: 50%; position: relative;">Entrevistador</strong>
+										<f:ajax render="addintform"/>
+									</h:commandLink>
+									<h:commandLink id="remintbutton" value=""
+										styleClass="btn btn-default"
+										onclick="PF('remIntWidget').show(); return false;"
+										style="height: 80px; width:33%;">
+										<i style="left: 0; right: 0; top: 15%;"
+											class="glyphicon glyphicon-minus-sign"></i>
+										<p style="position: relative; top: 25%;">Remover</p>
+										<strong style="top: 50%; position: relative;">Entrevistador</strong>
+										<f:ajax render="remintform"/>
+									</h:commandLink>
+									<h:commandLink id="cancelintbutton"
+										action="#{interviewListView.deleteInterview()}" value=""
+										styleClass="btn btn-default" style="height: 80px; width:33%;" onclick="return intredirect();fadeoutMsg();">
+										<i style="left: 0; right: 0; top: 15%;"
+											class="glyphicon glyphicon-erase"></i>
+										<p style="position: relative; top: 25%;">Cancelar</p>
+										<strong style="top: 50%; position: relative;">Entrevista</strong>
+									</h:commandLink>
+								</h:panelGroup>
+							</h:panelGroup>
+						</h:panelGroup>
+					</h:panelGroup>
+					<div class="spacer">
+						<div class="jumbotron">
+							<h2 class="text-center">Alterações à entrevista</h2>
+							<div class="spacer"></div>
+							<p class="text-justfify">
+								<span class="label label-primary">Adicionar Entrevistador</span>
+								apresenta uma lista com os entrevistadores disponíveis, que
+								ainda não foram atribuídos à entrevista em edição.
+							</p>
+							<p class="text-justify">
+								<span class="label label-primary">Remover Entrevistador</span>
+								apresenta uma lista com os entrevistadores atribuídos à corrente
+								entrevista.
+							</p>
+							<p class="text-justify">
+								<span class="label label-primary">Cancelar Entrevista</span>
+								permite anular a marcação desta entrevista. Todos os dados
+								relativos a esta (data, identificação do candidato e da posição)
+								serão perdidos.
+							</p>
+						</div>
+					</div>
+				</h:panelGroup>
+			</h:form>
+			<h:form id="addintform" prependId="false">
+				<ui:insert name="NewInterviewer">
+					<ui:include src="newinterviewer.xhtml" />
+				</ui:insert>
+			</h:form>
+			<h:form id="remintform" prependId="false">
+				<ui:insert name="RemoveInterviewer">
+					<ui:include src="reminterviewer.xhtml" />
+				</ui:insert>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

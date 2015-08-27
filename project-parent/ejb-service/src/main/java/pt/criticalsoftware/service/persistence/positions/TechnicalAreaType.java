@@ -7,7 +7,7 @@ public enum TechnicalAreaType {
 	JAVA_DEVELOPMENT("Java Development"),
 	SAFETY_CRITICAL("Safety Critical"),
 	PROJECT_MANAGEMENT("Project Management"),
-	INETGRATION("Integration");
+	INTEGRATION("Integration");
 	
 	private String name;
 	

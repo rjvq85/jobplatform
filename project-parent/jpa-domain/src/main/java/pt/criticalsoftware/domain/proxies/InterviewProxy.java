@@ -1,11 +1,17 @@
 package pt.criticalsoftware.domain.proxies;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
+import pt.criticalsoftware.domain.entities.CandidacyEntity;
 import pt.criticalsoftware.domain.entities.InterviewEntity;
+import pt.criticalsoftware.domain.entities.PositionEntity;
 import pt.criticalsoftware.domain.entities.ScriptEntity;
 import pt.criticalsoftware.domain.entities.UserEntity;
+import pt.criticalsoftware.service.model.ICandidacy;
 import pt.criticalsoftware.service.model.IInterview;
+import pt.criticalsoftware.service.model.IPosition;
 import pt.criticalsoftware.service.model.IScript;
 import pt.criticalsoftware.service.model.IUser;
 
@@ -47,16 +53,24 @@ public class InterviewProxy implements IEntityAware<InterviewEntity>, IInterview
 	}
 
 	@Override
-	public IUser getInterviewer() {
-		return new UserProxy(interview.getInterviewer());
+	public List<IUser> getInterviewers() {
+		List<IUser> interviewers = new ArrayList<>();
+		for (UserEntity ie : interview.getInterviewers()) {
+			interviewers.add(new UserProxy(ie));
+		}
+		return interviewers;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public void setInterviewer(IUser interviewer) {
-		if (interviewer instanceof IEntityAware<?>) {
-			interview.setInterviewer(((IEntityAware<UserEntity>) interviewer).getEntity());
+	public void setInterviewers(List<IUser> interviewers) {
+		List<UserEntity> users = new ArrayList<>();
+		for (IUser user : interviewers) {
+			if (user instanceof IEntityAware<?>) {
+				users.add(((IEntityAware<UserEntity>) user).getEntity());
+			}
 		}
+		interview.setInterviewers(users);
 	}
 
 	@Override
@@ -71,10 +85,57 @@ public class InterviewProxy implements IEntityAware<InterviewEntity>, IInterview
 			interview.setScript(((IEntityAware<ScriptEntity>) script).getEntity());
 		}
 	}
+	
+	@Override
+	public IPosition getPosition() {
+		return new PositionProxy(interview.getPosition());
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public void setPosition(IPosition pos) {
+		if (pos instanceof IEntityAware<?>) {
+			interview.setPosition(((IEntityAware<PositionEntity>) pos).getEntity());
+		}
+	}
+	
+	@Override
+	public ICandidacy getCandidacy() {
+		return new CandidacyProxy(interview.getCandidacy());
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public void setCandidacy(ICandidacy cand) {
+		if (cand instanceof IEntityAware<?>) {
+			interview.setCandidacy(((IEntityAware<CandidacyEntity>)cand).getEntity());
+		}
+	}
 
 	@Override
 	public Integer getId() {
 		return interview.getId();
+	}
+	
+	@Override
+	public String toString() {
+		return interview.getId().toString();
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public void addInterviewer(IUser interviewer) {
+		if (interviewer instanceof IEntityAware<?>) {
+			interview.getInterviewers().add(((IEntityAware<UserEntity>) interviewer).getEntity());
+		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public void deleteInterviewer(IUser interviewer) {
+		if (interviewer instanceof IEntityAware<?>) {
+			interview.getInterviewers().remove(((IEntityAware<UserEntity>) interviewer).getEntity());
+		}
 	}
 
 }

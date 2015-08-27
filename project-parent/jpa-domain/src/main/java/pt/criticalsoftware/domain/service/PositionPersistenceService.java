@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
-import javax.persistence.NamedQuery;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -15,14 +14,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import pt.criticalsoftware.domain.entities.PositionEntity;
-import pt.criticalsoftware.domain.entities.UserEntity;
 import pt.criticalsoftware.domain.proxies.IEntityAware;
 import pt.criticalsoftware.domain.proxies.PositionProxy;
-import pt.criticalsoftware.domain.proxies.UserProxy;
-import pt.criticalsoftware.service.exceptions.DuplicateEmailException;
 import pt.criticalsoftware.service.exceptions.DuplicateReferenceException;
 import pt.criticalsoftware.service.model.IPosition;
-import pt.criticalsoftware.service.model.IUser;
 import pt.criticalsoftware.service.persistence.IPositionPersistenceService;
 import pt.criticalsoftware.service.persistence.positions.TechnicalAreaType;
 
@@ -144,7 +139,7 @@ public class PositionPersistenceService implements IPositionPersistenceService {
 			else if (positionWord.equalsIgnoreCase("Project Management"))
 				area = TechnicalAreaType.PROJECT_MANAGEMENT;
 			else if (positionWord.equalsIgnoreCase("Integration"))
-				area = TechnicalAreaType.INETGRATION;
+				area = TechnicalAreaType.INTEGRATION;
 			query = em.createNamedQuery("Position.getPositionsByTechnicalArea", PositionEntity.class)
 					.setParameter("technicalArea", area);
 		}

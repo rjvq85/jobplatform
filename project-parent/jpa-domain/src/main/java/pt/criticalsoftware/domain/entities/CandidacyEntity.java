@@ -31,7 +31,8 @@ import pt.criticalsoftware.service.persistence.utils.LocalDatePersistenceConvert
 		@NamedQuery(name = "Candidacy.search", query = "SELECT c FROM CandidacyEntity as c INNER JOIN c.candidate as a WHERE UPPER(a.firstName) LIKE :param OR UPPER(a.lastName) LIKE :param"),
 		@NamedQuery(name = "Candidacy.uniqueConstraintViolation", query = "SELECT COUNT(c) FROM CandidacyEntity c WHERE c.candidate.id = :candidateId AND c.positionCandidacy.id = :positionId"),
 		@NamedQuery(name = "Candidacy.searchDate", query = "SELECT c FROM CandidacyEntity c WHERE c.date = :param"),
-		@NamedQuery(name = "Candidacy.manager", query = "SELECT c FROM CandidacyEntity c WHERE c.positionCandidacy.responsable.id = :param")})
+		@NamedQuery(name = "Candidacy.manager", query = "SELECT c FROM CandidacyEntity c WHERE c.positionCandidacy.responsable.id = :param"),
+		@NamedQuery(name = "Candidacy.interviews", query = "SELECT elements(c.interviews) FROM CandidacyEntity as c WHERE c.id = :param") })
 
 public class CandidacyEntity {
 
@@ -53,7 +54,7 @@ public class CandidacyEntity {
 	@Column(name = "estado_candidatura", nullable = false)
 	private CandidacyState state;
 
-	@ManyToOne(cascade = CascadeType.MERGE)
+	@ManyToOne(cascade = CascadeType.PERSIST)
 	private CandidateEntity candidate;
 
 	@ManyToOne
@@ -126,6 +127,14 @@ public class CandidacyEntity {
 		return result;
 	}
 
+	public LocalDate getDate() {
+		return date;
+	}
+
+	public void setDate(LocalDate date) {
+		this.date = date;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -143,11 +152,4 @@ public class CandidacyEntity {
 		return true;
 	}
 
-	public LocalDate getDate() {
-		return date;
-	}
-
-	public void setDate(LocalDate date) {
-		this.date = date;
-	}
 }

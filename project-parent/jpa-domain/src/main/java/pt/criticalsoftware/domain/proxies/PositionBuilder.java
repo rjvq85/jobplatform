@@ -1,5 +1,5 @@
 package pt.criticalsoftware.domain.proxies;
-import javax.enterprise.context.RequestScoped;
+import javax.ejb.Stateless;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,15 +8,13 @@ import java.time.LocalDate;
 import java.util.Collection;
 
 import pt.criticalsoftware.domain.service.UserPersistenceService;
-import pt.criticalsoftware.service.model.ICandidacy;
-import pt.criticalsoftware.service.model.IInterview;
 import pt.criticalsoftware.service.model.IPosition;
 import pt.criticalsoftware.service.model.IPositionBuilder;
 import pt.criticalsoftware.service.model.IUser;
 import pt.criticalsoftware.service.persistence.positions.TechnicalAreaType;
 import pt.criticalsoftware.service.persistence.states.PositionState;
 
-@RequestScoped
+@Stateless
 public class PositionBuilder implements IPositionBuilder {
 
 	private final Logger logger = LoggerFactory.getLogger(UserPersistenceService.class);
@@ -106,6 +104,7 @@ public class PositionBuilder implements IPositionBuilder {
 	
 	@Override
 	public IPosition build() {
+		logger.debug("Posição criada pelo builder");
 		return position;
 	}
 

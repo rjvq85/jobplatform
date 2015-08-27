@@ -23,6 +23,8 @@ public interface IUserPersistenceService {
 	List<IUser> getAllUsersByRole(Role role);
 
 	IUser findByID(Object id);
+
+	List<IUser> getAll();
 		
 
 }

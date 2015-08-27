@@ -2,7 +2,6 @@ package pt.criticalsoftware.domain.service;
 
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -15,14 +14,11 @@ import javax.resource.spi.IllegalStateException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import pt.criticalsoftware.domain.entities.PositionEntity;
 import pt.criticalsoftware.domain.entities.UserEntity;
 import pt.criticalsoftware.domain.proxies.IEntityAware;
-import pt.criticalsoftware.domain.proxies.PositionProxy;
 import pt.criticalsoftware.domain.proxies.UserProxy;
 import pt.criticalsoftware.service.exceptions.DuplicateEmailException;
 import pt.criticalsoftware.service.exceptions.DuplicateUsernameException;
-import pt.criticalsoftware.service.model.IPosition;
 import pt.criticalsoftware.service.model.IUser;
 import pt.criticalsoftware.service.persistence.IUserPersistenceService;
 import pt.criticalsoftware.service.persistence.roles.Role;
@@ -70,7 +66,7 @@ public class UserPersistenceService implements IUserPersistenceService {
 		UserEntity entity;
 		try {
 			entity = getEntity(user);
-			entity = em.merge(entity);
+			em.persist(entity);
 			return new UserProxy(entity);
 		} catch (IllegalStateException e) {
 			e.printStackTrace();
@@ -115,6 +111,17 @@ public class UserPersistenceService implements IUserPersistenceService {
 	@Override
 	public IUser findByID(Object id) {
 		return new UserProxy(em.find(UserEntity.class, id));
+	}
+
+	@Override
+	public List<IUser> getAll() {
+		TypedQuery<UserEntity> query = em.createNamedQuery("User.findAll",UserEntity.class);
+		List<UserEntity> entities = query.getResultList();
+		List<IUser> users = new ArrayList<>();
+		for (UserEntity u : entities) {
+			users.add(new UserProxy(u));
+		}
+		return users;
 	}
 
 

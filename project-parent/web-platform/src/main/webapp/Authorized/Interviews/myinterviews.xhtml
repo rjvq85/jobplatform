@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+<h:head>
+	<meta charset="utf-8" />
+	<h:outputScript library="js" name="jquery-2.1.4.min.js" />
+	<h:outputScript library="js" name="bootstrap.js" />
+	<h:outputScript library="js" name="tablepagination.js" />
+	<h:outputStylesheet library="css" name="mainstyle.css" />
+	<h:outputStylesheet library="css" name="bootstrap.css" />
+	<title>Plataforma de Empregos</title>
+</h:head>
+<h:body>
+	<ui:composition template="../Layout/layout.xhtml">
+		<ui:define name="content">
+			<h:panelGroup layout="block" class="container" id="container">
+				<h:panelGroup id="intervList" layout="block">
+					<h:panelGroup layout="block" class="title" id="title">
+						<h:panelGroup layout="block" class="page-header">
+							<h:panelGroup layout="block" class="row" id="titlerow">
+								<h:panelGroup layout="block" class="col-md-8">
+									<h1>As minhas Entrevistas</h1>
+								</h:panelGroup>
+								<h:panelGroup layout="block" class="col-md-offset-2 col-md-2">
+									<h:panelGroup layout="block" class="media">
+										<h:graphicImage styleClass="media-object" library="imgs"
+											name="logocritical.png"
+											style="min-height: 50px; height: 50px;" />
+									</h:panelGroup>
+								</h:panelGroup>
+							</h:panelGroup>
+						</h:panelGroup>
+						<h:panelGroup layout="block" styleClass="col-md-12 text-center">
+							<h:messages id="globalmsgs" globalOnly="true"
+								styleClass="alert alert-info" style="list-style-type: none;" />
+						</h:panelGroup>
+						<h:panelGroup layout="block" class="row">
+							<h:panelGroup layout="block" class="col-md-12">
+								<h:form prependId="false" id="searchform">
+									<h:panelGroup layout="block" class="input-group">
+										<h:panelGroup styleClass="input-group-btn">
+											<h:commandButton action="#{interviewListView.clearSearch()}"
+												value="x" styleClass="btn btn-default">
+												<f:ajax render="lista" />
+											</h:commandButton>
+										</h:panelGroup>
+										<h:inputText id="campopesquisa"
+											value="#{interviewListView.searchText}"
+											styleClass="form-control"
+											a:placeholder="Pesquisa de entrevistas (por data: dd-MM-aaaa ou dd/MM/aaaa)" />
+										<h:panelGroup styleClass="input-group-btn">
+											<h:commandButton action="#{interviewListView.doSearch()}"
+												value="Pesquisar" styleClass="btn btn-default">
+												<f:ajax execute="campopesquisa" render="lista" />
+											</h:commandButton>
+										</h:panelGroup>
+									</h:panelGroup>
+								</h:form>
+							</h:panelGroup>
+						</h:panelGroup>
+						<h:panelGroup layout="block" class="row spacer"></h:panelGroup>
+						<h:form prependId="false" id="listform">
+							<h:panelGroup layout="block" styleClass="table-responsive">
+								<p:dataTable id="lista" tableStyleClass="table-condensed"
+									var="i" value="#{myInterviews.myInterviews}"
+									emptyMessage="Sem resultados..." styleClass="text-center"
+									paginator="true" paginatorPosition="bottom"
+									paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+									rowsPerPageTemplate="5,10,15" rows="5">
+									<p:column headerText="Referência" sortBy="#{i.id}">
+										<h:outputText value="I#{i.id}" />
+									</p:column>
+									<p:column headerText="Data" sortBy="#{i.date}">
+										<h:outputText value="#{i.date}" />
+									</p:column>
+									<p:column headerText="Candidato"
+										sortBy="#{i.candidacy.candidate.firstName}">
+										<h:outputText
+											value="#{i.candidacy.candidate.firstName} #{i.candidacy.candidate.lastName}" />
+									</p:column>
+									<p:column headerText="Posição" sortBy="#{i.position}">
+										<h:outputText value="P#{i.position}" />
+									</p:column>
+									<p:column headerText="Iniciar Entrevista">
+										<p:commandLink id="beginterviewbutton" action="#"
+											rendered="#{myInterviews.isToday(i)}">
+											<i class="glyphicon glyph-xl glyphicon-paste"></i>
+										</p:commandLink>
+									</p:column>
+								</p:dataTable>
+							</h:panelGroup>
+						</h:form>
+					</h:panelGroup>
+				</h:panelGroup>
+			</h:panelGroup>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

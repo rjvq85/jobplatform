@@ -20,5 +20,9 @@ public interface IUserBusinessService {
 	
 	IUser getUserByID(Object id);
 
+	IUser createUser(IUser user) throws DuplicateEmailException, DuplicateUsernameException;
+
+	List<IUser> getAllUsers();
+
 
 }

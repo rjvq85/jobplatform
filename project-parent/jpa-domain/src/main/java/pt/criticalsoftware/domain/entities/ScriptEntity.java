@@ -15,40 +15,35 @@ import javax.persistence.Table;
 
 import pt.criticalsoftware.domain.entities.questions.Question;
 
-
 @Entity
-@Table(name="guioes")
+@Table(name = "guioes")
 
-@NamedQueries({
-@NamedQuery(name="ScriptEntity.findAll", query="select p from ScriptEntity p "),
-@NamedQuery(name="ScriptEntity.findByReference", query="select p from ScriptEntity p where p.reference = :reference "),
-@NamedQuery(name="ScriptEntity.findByTitle", query="select p from ScriptEntity p where p.title = :title ")
-}
-)
+@NamedQueries({ @NamedQuery(name = "ScriptEntity.findAll", query = "select p from ScriptEntity p "),
+		@NamedQuery(name = "ScriptEntity.findByReference", query = "select p from ScriptEntity p where p.reference = :reference "),
+		@NamedQuery(name = "ScriptEntity.findByTitle", query = "select p from ScriptEntity p where p.title = :title "),
+		@NamedQuery(name = "ScriptEntity.findById", query = "select p from ScriptEntity p where p.id = :param ") })
 
 public class ScriptEntity {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
-	
-	@Column(name="titulo",nullable=false)
+
+	@Column(name = "titulo", nullable = false)
 	private String title;
 
-	@Column(name="referencia",nullable=false)
+	@Column(name = "referencia", nullable = false)
 	private String reference;
-	
+
 	@ElementCollection
-	@Column(name="questoes")
+	@Column(name = "questoes")
 	private Collection<Question> questions;
-	
-	@OneToMany(mappedBy="script")
+
+	@OneToMany(mappedBy = "script")
 	private Collection<InterviewEntity> interviews;
-	
-	
 
 	public ScriptEntity() {
-		
+
 	}
 
 	public String getTitle() {
@@ -111,7 +106,5 @@ public class ScriptEntity {
 			return false;
 		return true;
 	}
-	
-	
-	
+
 }

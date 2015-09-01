@@ -39,6 +39,9 @@ public class CandidacyEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
+	
+	@Column(name = "referencia")
+	private String reference;
 
 	@Column(name = "carta_motivacao")
 	private String motivationLetter;
@@ -119,6 +122,22 @@ public class CandidacyEntity {
 		this.interviews = interviews;
 	}
 
+	public LocalDate getDate() {
+		return date;
+	}
+
+	public void setDate(LocalDate date) {
+		this.date = date;
+	}
+
+	public String getReference() {
+		return reference;
+	}
+
+	public void setReference(String reference) {
+		this.reference = reference;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -127,13 +146,6 @@ public class CandidacyEntity {
 		return result;
 	}
 
-	public LocalDate getDate() {
-		return date;
-	}
-
-	public void setDate(LocalDate date) {
-		this.date = date;
-	}
 
 	@Override
 	public boolean equals(Object obj) {

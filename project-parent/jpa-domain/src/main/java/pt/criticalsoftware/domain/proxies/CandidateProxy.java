@@ -1,6 +1,9 @@
 package pt.criticalsoftware.domain.proxies;
 
 import java.util.Collection;
+import java.util.List;
+
+import javax.xml.bind.annotation.XmlTransient;
 
 import pt.criticalsoftware.domain.entities.CandidateEntity;
 import pt.criticalsoftware.service.model.ICandidate;
@@ -10,6 +13,7 @@ public class CandidateProxy implements ICandidate, IEntityAware<CandidateEntity>
 	private CandidateEntity candidate;
 
 	@Override
+	@XmlTransient
 	public CandidateEntity getEntity() {
 		return candidate;
 	}
@@ -128,8 +132,8 @@ public class CandidateProxy implements ICandidate, IEntityAware<CandidateEntity>
 	}
 
 	@Override
-	public Collection<String> getCourse() {
-		return candidate.getCourse();
+	public List<String> getCourse() {
+		return (List<String>) candidate.getCourse();
 	}
 
 	@Override

@@ -111,6 +111,16 @@ public class InterviewProxy implements IEntityAware<InterviewEntity>, IInterview
 			interview.setCandidacy(((IEntityAware<CandidacyEntity>)cand).getEntity());
 		}
 	}
+	
+	@Override
+	public String getReference() {
+		return interview.getInterviewRef();
+	}
+	
+	@Override
+	public void setReference(String reference) {
+		interview.setInterviewRef(reference);
+	}
 
 	@Override
 	public Integer getId() {

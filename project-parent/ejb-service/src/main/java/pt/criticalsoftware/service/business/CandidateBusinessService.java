@@ -17,4 +17,9 @@ public class CandidateBusinessService implements ICandidateBusinessService {
 		return persistence.findByUsername(username);
 	}
 
+	@Override
+	public ICandidate getCandidateById(Integer id) {
+		return persistence.findById(id);
+	}
+
 }

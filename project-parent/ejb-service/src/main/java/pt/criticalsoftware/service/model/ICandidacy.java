@@ -37,4 +37,8 @@ public interface ICandidacy {
 
 	void setDate(LocalDate date);
 
+	void setReference(String ref);
+
+	String getReference();
+
 }

@@ -13,6 +13,7 @@
 		<class>pt.criticalsoftware.domain.entities.ScriptEntity</class>
 		<class>pt.criticalsoftware.domain.entities.NotificationEntity</class>
 		<class>pt.criticalsoftware.service.persistence.utils.LocalDatePersistenceConverter.class</class>
+		<class>pt.criticalsoftware.domain.utils.InterviewReferenceGenerator.class</class>
 		<properties>
 			<property name="hibernate.connection.url" value="jdbc:postgresql:Jobs;DB_CLOSE_ON_EXIT=TRUE" />
 			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />

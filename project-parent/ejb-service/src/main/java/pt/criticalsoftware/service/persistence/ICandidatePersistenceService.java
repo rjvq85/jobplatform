@@ -6,4 +6,6 @@ public interface ICandidatePersistenceService {
 
 	ICandidate findByUsername(String username);
 
+	ICandidate findById(Integer id);
+
 }

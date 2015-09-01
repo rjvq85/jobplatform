@@ -166,7 +166,7 @@ public class InterviewWebTest {
 		
 		// ID from the user requesting the list
 		when(sessionMock.getAttribute("userID")).thenReturn(user2.getId());
-		LocalDate now = LocalDate.now();
+		LocalDate now = LocalDate.now().plusWeeks(2);
 		Date date = Date.from(now.atStartOfDay(ZoneId.systemDefault()).toInstant());
 		IPosition position = pos
 				.adChannels(new ArrayList<String>())

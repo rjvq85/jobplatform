@@ -20,6 +20,7 @@ import org.slf4j.LoggerFactory;
 import pt.criticalsoftware.domain.entities.PositionEntity;
 import pt.criticalsoftware.domain.proxies.IEntityAware;
 import pt.criticalsoftware.domain.proxies.PositionProxy;
+import pt.criticalsoftware.domain.utils.GenerateReferenceValue;
 import pt.criticalsoftware.service.exceptions.DuplicateReferenceException;
 import pt.criticalsoftware.service.model.IPosition;
 import pt.criticalsoftware.service.persistence.IPositionPersistenceService;
@@ -66,10 +67,11 @@ public class PositionPersistenceService implements IPositionPersistenceService {
 
 	@Override
 	public IPosition create(IPosition position) {
-		PositionEntity entity;
 		try {
-			entity = getEntity(position);
+			PositionEntity entity = getEntity(position);
 			em.persist(entity);
+			entity.setReference(GenerateReferenceValue.genReference("P", entity.getId()));
+			em.merge(entity);
 			return new PositionProxy(entity);
 		} catch (IllegalStateException e) {
 			e.printStackTrace();

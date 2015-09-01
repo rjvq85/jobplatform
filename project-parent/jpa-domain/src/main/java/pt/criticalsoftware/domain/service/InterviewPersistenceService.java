@@ -17,6 +17,7 @@ import pt.criticalsoftware.domain.proxies.IEntityAware;
 import pt.criticalsoftware.domain.proxies.InterviewProxy;
 import pt.criticalsoftware.domain.proxies.ScriptProxy;
 import pt.criticalsoftware.domain.proxies.UserProxy;
+import pt.criticalsoftware.domain.utils.GenerateReferenceValue;
 import pt.criticalsoftware.service.model.IInterview;
 import pt.criticalsoftware.service.model.IScript;
 import pt.criticalsoftware.service.model.IUser;
@@ -100,7 +101,9 @@ public class InterviewPersistenceService implements IInterviewPersistenceService
 	@Override
 	public IInterview create(IInterview entity) {
 		if (entity instanceof IEntityAware<?>) {
-			em.persist(em.merge(((IEntityAware<InterviewEntity>) entity).getEntity()));
+			InterviewEntity ent = em.merge(((IEntityAware<InterviewEntity>) entity).getEntity());
+			ent.setInterviewRef(GenerateReferenceValue.genReference("I",ent.getId()));
+			return new InterviewProxy(em.merge(ent));
 		}
 		return null;
 	}

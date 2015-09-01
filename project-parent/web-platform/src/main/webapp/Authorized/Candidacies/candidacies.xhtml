@@ -66,14 +66,15 @@
 						<h:panelGroup layout="block" class="row spacer"></h:panelGroup>
 						<h:form prependId="false" id="listform">
 							<h:panelGroup layout="block" styleClass="table-responsive">
-								<p:dataTable id="lista" tableStyleClass="table-condensed newlabeled"
-									var="cand" value="#{candidacyListView.candidacies}"
+								<p:dataTable id="lista"
+									tableStyleClass="table-condensed newlabeled" var="cand"
+									value="#{candidacyListView.candidacies}"
 									emptyMessage="Sem resultados..." styleClass="text-center"
 									paginator="true" paginatorPosition="bottom"
 									paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 									rowsPerPageTemplate="5,10,15" rows="5">
-									<p:column headerText="Referência" sortBy="#{cand.id}">
-										<h:outputText value="C#{cand.id}" />
+									<p:column headerText="Referência" sortBy="#{cand.reference}">
+										<h:outputText value="#{cand.reference}" />
 										<h:panelGroup layout="block"
 											rendered="#{candidacyListView.isNew(cand)}">
 											<sup><span class="label label-default"
@@ -96,7 +97,7 @@
 											oncomplete="PF('stateWidget').show()" update="stateDialog" />
 									</p:column>
 									<p:column headerText="Posição">
-										<h:outputText value="(P#{cand.positionCandidacy.id}) #{cand.positionCandidacy.title}"
+										<h:outputText value="#{cand.positionCandidacy.reference}"
 											rendered="#{cand.positionCandidacy != 'Espontânea'}" />
 										<h:commandLink
 											action="#{assignCandidacy.newAssignment(cand.candidate.username)}"

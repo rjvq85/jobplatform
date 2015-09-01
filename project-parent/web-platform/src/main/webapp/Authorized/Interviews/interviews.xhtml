@@ -36,7 +36,7 @@
 						</h:panelGroup>
 						<h:panelGroup layout="block" styleClass="col-md-12 text-center">
 							<h:messages id="globalmsgs" globalOnly="true"
-								styleClass="alert alert-info" style="list-style-type: none;" />
+								infoClass="alert alert-info" errorClass="alert alert-danger" warnClass="alert alert-danger" style="list-style-type: none;" />
 						</h:panelGroup>
 						<h:panelGroup layout="block" class="row">
 							<h:panelGroup layout="block" class="col-md-12">
@@ -76,8 +76,8 @@
 									paginator="true" paginatorPosition="bottom"
 									paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 									rowsPerPageTemplate="5,10,15" rows="5">
-									<p:column headerText="Referência" sortBy="#{interv.id}">
-										<h:outputText value="I#{interv.id}" />
+									<p:column headerText="Referência" sortBy="#{interv.reference}">
+										<h:outputText value="#{interv.reference}" />
 									</p:column>
 									<p:column headerText="Data da Entrevista"
 										sortBy="#{interv.date}">

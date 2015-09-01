@@ -5,6 +5,7 @@ import java.util.Collection;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -12,7 +13,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 
 @Entity
 @Table(name = "candidatos")
@@ -62,22 +62,22 @@ public class CandidateEntity {
 	@Column(name = "telemovel", nullable = false, length = 9)
 	private Integer mobilePhone;
 
-	@ElementCollection
+	@ElementCollection(fetch = FetchType.EAGER)
 	@Column(name = "curso")
 	private Collection<String> course;
 
-	@ElementCollection
+	@ElementCollection(fetch = FetchType.EAGER)
 	@Column(name = "grau")
 	private Collection<String> degree;
 
-	@ElementCollection
+	@ElementCollection(fetch = FetchType.EAGER)
 	@Column(name = "universidade")
 	private Collection<String> university;
 
 	@Column(name = "cv", unique = true)
 	private String cv;
 
-	@OneToMany(mappedBy = "candidate")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "candidate")
 	private Collection<CandidacyEntity> candidacies;
 
 	public CandidateEntity() {

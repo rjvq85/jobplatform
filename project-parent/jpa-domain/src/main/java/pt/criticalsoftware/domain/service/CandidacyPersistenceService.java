@@ -13,6 +13,7 @@ import pt.criticalsoftware.domain.entities.InterviewEntity;
 import pt.criticalsoftware.domain.proxies.CandidacyProxy;
 import pt.criticalsoftware.domain.proxies.IEntityAware;
 import pt.criticalsoftware.domain.proxies.InterviewProxy;
+import pt.criticalsoftware.domain.utils.GenerateReferenceValue;
 import pt.criticalsoftware.service.exceptions.DuplicateCandidateException;
 import pt.criticalsoftware.service.exceptions.UniqueConstraintException;
 import pt.criticalsoftware.service.model.ICandidacy;
@@ -38,15 +39,16 @@ public class CandidacyPersistenceService implements ICandidacyPersistenceService
 
 	@Override
 	public ICandidacy newCandidacy(ICandidacy icandidacy) throws DuplicateCandidateException {
-		CandidacyEntity entity;
 		try {
-			entity = getEntity(icandidacy);
 			if ((Long) em.createNamedQuery("Candidate.findDuplicateByUsername")
 					.setParameter("param", icandidacy.getCandidate().getUsername().toUpperCase()).getSingleResult() < 1
 					&& (Long) em.createNamedQuery("Candidate.findDuplicateByEmail")
 							.setParameter("param", icandidacy.getCandidate().getEmail().toUpperCase())
 							.getSingleResult() < 1) {
+				CandidacyEntity entity = getEntity(icandidacy);
 				em.persist(entity);
+				entity.setReference(GenerateReferenceValue.genReference("C", entity.getId()));
+				em.merge(entity);
 				return new CandidacyProxy(entity);
 			} else
 				throw new DuplicateCandidateException("Username / E-mail já existente");

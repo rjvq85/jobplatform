@@ -36,6 +36,9 @@ public class InterviewEntity {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 
+	@Column(name = "referencia")
+	private String interviewRef;
+
 	@Convert(converter = LocalDatePersistenceConverter.class)
 	@Column(name = "data_entrevista", nullable = false)
 	private LocalDate date;
@@ -137,6 +140,14 @@ public class InterviewEntity {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+
+	public String getInterviewRef() {
+		return interviewRef;
+	}
+
+	public void setInterviewRef(String interviewRef) {
+		this.interviewRef = interviewRef;
 	}
 
 }

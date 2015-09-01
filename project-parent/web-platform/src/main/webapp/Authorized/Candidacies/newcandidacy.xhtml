@@ -20,7 +20,7 @@
 			<h:panelGroup layout="block" styleClass="container" id="container">
 				<h:panelGroup layout="block"
 					styleClass="alert col-md-offset-4 col-md-4 text-center">
-					<h:messages id="messages" styleClass="list-group alert alert-info"
+					<h:messages id="editglobalmsgs" styleClass="list-group alert alert-info"
 						globalOnly="true" infostyleClass="alert alert-success"
 						errorstyleClass="alert alert-danger"
 						style="list-style-type: none; margin-top:30px;" />
@@ -190,7 +190,7 @@
 								<h:panelGroup layout="block"
 									styleClass="col-md-offset-8 col-md-4 text-right">
 									<h:commandButton action="#{newCandidacy.create()}"
-										value="Submeter" styleClass="btn btn-success">
+										value="Submeter" styleClass="btn btn-success" onclick="fadeoutMsg();">
 										<f:ajax execute="inputform" render=":container :bottomform :messages" />
 									</h:commandButton>
 								</h:panelGroup>

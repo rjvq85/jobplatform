@@ -54,6 +54,9 @@
 									paginatorPosition="bottom"
 									paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 									rowsPerPageTemplate="5,10,15" rows="5">
+									<p:column headerText="Referência">
+										<h:outputText value="#{interv.reference}" />
+									</p:column>
 									<p:column headerText="Data da Entrevista"
 										sortBy="#{interv.date}">
 										<p:commandLink id="interviewdate"
@@ -76,7 +79,7 @@
 									</p:column>
 									<p:column headerText="Posição">
 										<h:outputText
-											value="P#{interv.position.id} - #{interv.position.title}" />
+											value="P#{interv.position.reference}" />
 									</p:column>
 									<p:column style="width:5%;">
 										<p:commandLink id="deleteButton"

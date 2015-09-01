@@ -78,13 +78,12 @@ public class CandidacyListView {
 					for (String s : params) {
 						for (ICandidacy cand : cands) {
 							if (null != cand.getPositionCandidacy().getTitle()) {
-								String posRef = "p" + String.valueOf(cand.getPositionCandidacy().getId());
 								if (cand.getCandidate().getFirstName().toLowerCase().contains(s.toLowerCase())
 										|| cand.getCandidate().getLastName().toLowerCase().contains(s.toLowerCase())
 										|| cand.getPositionCandidacy().getTitle().toLowerCase()
 												.contains(s.toLowerCase())
 										|| cand.getPositionCandidacy().getReference().toLowerCase()
-												.contains(s.toLowerCase()) || posRef.toLowerCase().contains(s.toLowerCase()) || cand.getState().getName().toLowerCase().contains(s.toLowerCase())) {
+												.contains(s.toLowerCase()) || cand.getReference().toLowerCase().contains(s.toLowerCase()) || cand.getState().getName().toLowerCase().contains(s.toLowerCase())) {
 									searchedCandidacies.add(cand);
 								}
 							} else {

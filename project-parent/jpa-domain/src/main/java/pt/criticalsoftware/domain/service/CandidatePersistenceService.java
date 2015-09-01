@@ -28,4 +28,11 @@ public class CandidatePersistenceService implements ICandidatePersistenceService
 		}
 	}
 
+	@Override
+	public ICandidate findById(Integer id) {
+		TypedQuery<CandidateEntity> query = em.createNamedQuery("Candidate.findById",CandidateEntity.class)
+				.setParameter("candidateId", id);
+		return new CandidateProxy(query.getSingleResult());
+	}
+
 }

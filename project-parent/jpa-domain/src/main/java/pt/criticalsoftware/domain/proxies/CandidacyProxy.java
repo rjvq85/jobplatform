@@ -102,6 +102,16 @@ public class CandidacyProxy implements ICandidacy, IEntityAware<CandidacyEntity>
 			candidacy.setPositionCandidacy(((IEntityAware<PositionEntity>) position).getEntity());
 		}
 	}
+	
+	@Override
+	public void setReference(String ref) {
+		candidacy.setReference(ref);
+	}
+	
+	@Override
+	public String getReference() {
+		return candidacy.getReference();
+	}
 
 	@Override
 	public List<IInterview> getInterviews() {

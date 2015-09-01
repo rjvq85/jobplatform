@@ -80,9 +80,8 @@ public class InterviewListView {
 						intervs = business.getInterviewsByInterviewer((Integer) getCurrentUserID());
 					for (String s : params) {
 						for (IInterview interv : intervs) {
-							String reference = "I" + interv.getId();
 							if (null != interv.getPosition().getTitle()) {
-								if (reference.equalsIgnoreCase(s)
+								if (interv.getReference().equalsIgnoreCase(s)
 										|| interv.getCandidacy().getCandidate().getFirstName().toLowerCase()
 												.contains(s.toLowerCase())
 										|| interv.getCandidacy().getCandidate().getLastName().toLowerCase()
@@ -93,7 +92,7 @@ public class InterviewListView {
 									searchedInterviews.add(interv);
 								}
 							} else {
-								if (reference.equalsIgnoreCase(s)
+								if (interv.getReference().equalsIgnoreCase(s)
 										|| interv.getCandidacy().getCandidate().getFirstName().toLowerCase()
 												.contains(s.toLowerCase())
 										|| interv.getCandidacy().getCandidate().getLastName().toLowerCase()

@@ -36,4 +36,8 @@ public interface IInterview {
 
 	void deleteInterviewer(IUser interviewer);
 
+	String getReference();
+
+	void setReference(String reference);
+
 }

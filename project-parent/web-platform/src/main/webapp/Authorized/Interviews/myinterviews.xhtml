@@ -71,8 +71,8 @@
 									paginator="true" paginatorPosition="bottom"
 									paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 									rowsPerPageTemplate="5,10,15" rows="5">
-									<p:column headerText="Referência" sortBy="#{i.id}">
-										<h:outputText value="I#{i.id}" />
+									<p:column headerText="Referência" sortBy="#{i.reference}">
+										<h:outputText value="#{i.reference}" />
 									</p:column>
 									<p:column headerText="Data" sortBy="#{i.date}">
 										<h:outputText value="#{i.date}" />

@@ -277,13 +277,14 @@ btnhovercolor.hover {
 	background-color: white !important;
 	background-image: none !important;
 }
+
 .newlabeled th {
 	font-weight: 400 !important;
 	border: none !important;
 	border-radius: inherit;
 	background-color: firebrick !important;
-	color:white !important;
-	font-size:large !important;
+	color: white !important;
+	font-size: large !important;
 	background-image: none !important;
 }
 
@@ -294,5 +295,18 @@ btnhovercolor.hover {
 }
 
 #lista_paginator_bottom {
-	background-color:white !important;
+	background-color: white !important;
+}
+
+/* Botões */
+.bbtn {
+	background-image: none !important;
+}
+
+.bbtn-success {
+	background-color: #5cb85c;
+}
+
+.bbtn-default {
+	background-color: #fff;
 }

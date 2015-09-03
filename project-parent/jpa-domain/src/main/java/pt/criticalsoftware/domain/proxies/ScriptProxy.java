@@ -1,11 +1,24 @@
 package pt.criticalsoftware.domain.proxies;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import pt.criticalsoftware.domain.entities.QuestionEntity;
 import pt.criticalsoftware.domain.entities.ScriptEntity;
+import pt.criticalsoftware.service.model.IQuestion;
 import pt.criticalsoftware.service.model.IScript;
 
-public class ScriptProxy implements IEntityAware<ScriptEntity>, IScript {
 
+public class ScriptProxy implements IEntityAware<ScriptEntity>,IScript {
+	
 	private ScriptEntity script;
+	private final Logger logger = LoggerFactory.getLogger(ScriptProxy.class);
+	
+
 
 	public ScriptProxy() {
 		this(null);
@@ -25,12 +38,47 @@ public class ScriptProxy implements IEntityAware<ScriptEntity>, IScript {
 		return script.getId();
 	}
 
+	
+
 	@Override
+
 	public String getTitle() {
 		return script.getTitle();
 	}
 
 	@Override
+
+	public void setReference(String reference) {
+		script.setReference(reference);
+		
+	}
+
+	@Override
+	public String getReference() {
+		
+		return script.getReference();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public void setQuestions(Collection<IQuestion> questions) {
+		List<QuestionEntity> questionEnt = new ArrayList<>();
+		for (IQuestion question : questions) {
+			if (question instanceof IEntityAware<?>) {
+				questionEnt.add(((IEntityAware<QuestionEntity>) question).getEntity());
+			}
+		}
+			
+	}
+
+	@Override
+	public Collection<IQuestion> getQuestions() {
+		List<IQuestion> questions = new ArrayList<>();
+		for (QuestionEntity question : script.getQuestions()) {
+			questions.add(new QuestionProxy(question));
+		}
+		return questions;
+	}
 	public void setTitle(String title) {
 		script.setTitle(title);
 	}
@@ -49,6 +97,7 @@ public class ScriptProxy implements IEntityAware<ScriptEntity>, IScript {
 	@Override
 	public String toString() {
 		return String.valueOf(script.getId());
+
 	}
 
 }

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<meta charset="utf-8" />
+	<h:outputStylesheet library="css" name="positionListAdmin.css" />
+</h:head>
+<h:body>
+	<div id="outBox">
+		<h2>Guiões</h2>
+		<p></p>
+		<p:separator />
+
+		<h:form id="toolbarForm">
+			<p:messages id="messages" autoUpdate="true" closable="true" />
+
+			<ui:insert name="toolbar">
+				<ui:include src="scriptToolbar.xhtml" />
+			</ui:insert>
+		</h:form>
+
+		<h:form id="scriptForm">
+			<ui:insert name="positionsList">
+				<ui:include src="scriptList.xhtml" />
+			</ui:insert>
+		</h:form>
+
+		<h:form id="deleteScriptForm">
+			<ui:insert name="DeletePosition">
+				<ui:include src="scriptDelete.xhtml" />
+			</ui:insert>
+		</h:form>
+	</div>
+
+</h:body>
+</html>

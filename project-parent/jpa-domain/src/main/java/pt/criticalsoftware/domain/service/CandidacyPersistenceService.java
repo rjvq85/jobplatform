@@ -87,6 +87,8 @@ public class CandidacyPersistenceService implements ICandidacyPersistenceService
 			if ((Long) em.createNamedQuery("Candidacy.uniqueConstraintViolation").setParameter("positionId", positionId)
 					.setParameter("candidateId", candidateId).getSingleResult() > 0)
 				throw new UniqueConstraintException("O candidato já tem uma candidatura associada a esta posição.");
+			em.persist(candidacy);
+			candidacy.setReference(GenerateReferenceValue.genReference("C", candidacy.getId()));
 			em.merge(candidacy);
 		} catch (IllegalStateException ies) {
 			// log

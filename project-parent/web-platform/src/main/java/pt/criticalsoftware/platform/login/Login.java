@@ -42,10 +42,8 @@ public class Login {
 	}
 
 	public String login() {
-		FacesContext context = currentFacesContext();
-		HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
 		try {
-			request.login(username, password);
+			getRequest().login(username, password);
 			Integer id = userservice.getUserId(username);
 			setUserLogged(id);
 			setLoggedUsername(username, id);

@@ -45,9 +45,7 @@ public class CandidacyInterviews implements Serializable {
 	}
 
 	public List<IInterview> getExistingInterviews() {
-		if (null == existingInterviews)
-			existingInterviews = candBness.getCandidacyInterviews(selectedCandidacy.getId());
-		return existingInterviews;
+		return existingInterviews = candBness.getCandidacyInterviews(selectedCandidacy.getId());
 	}
 
 	public void setExistingInterviews(List<IInterview> existingInterviews) {
@@ -61,18 +59,18 @@ public class CandidacyInterviews implements Serializable {
 	public void deleteInterview(IInterview interv) {
 		manage.deleteInterview(interv);
 	}
-	
+
 	public void updateDate() {
 		DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
 		String nDate = df.format(newDate);
 		selectedInterview.setDate(LocalDate.parse(nDate, DateTimeFormatter.ofPattern("dd-MM-yyyy")));
 		manage.updateInterview(selectedInterview);
 	}
-	
+
 	public IPosition getSelectedPosition() {
 		return selectedCandidacy.getPositionCandidacy();
 	}
-	
+
 	public void addNewInterview(IInterview interv) {
 		existingInterviews.add(interv);
 	}
@@ -84,7 +82,7 @@ public class CandidacyInterviews implements Serializable {
 	public void setNewDate(Date newDate) {
 		this.newDate = newDate;
 	}
-	
+
 	public String currentDate() {
 		return LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
 	}

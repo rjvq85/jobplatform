@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+	<p:dataTable value="#{editScript.questions}" var="question"
+		widgetVar="scriptList" selectionMode="single"
+		selection="#{editScript.editQuestion}" rowKey="#{question.id}"
+		draggableRows="true" itemValue="#{question}" id="scriptList">
+
+		<p:ajax event="rowSelect" listener="#{editScript.onSelect}"
+			update=":toolbarForm:toolbarScript   
+		:editQuestionDialog:dialog-EditQuestion" />
+		<p:ajax event="rowReorder" listener="#{editScript.onRowReorder}" />
+		<p:column headerText="Pergunta">
+			<h:outputText value="#{question.questionStr}" />
+		</p:column>
+
+		<p:column headerText="Tipo Resposta">
+			<h:outputText value="#{question.answer.name}" />
+		</p:column>
+
+	</p:dataTable>
+
+	<h5>* arrastar as linhas para ordenar</h5>
+</ui:composition>
+</html>

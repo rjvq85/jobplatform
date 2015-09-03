@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+	<p:confirmDialog header="Confirmação de eliminação"
+		message="Pretende eliminar este guião?"
+		widgetVar="deleteScriptDialog">
+		<p:commandButton value="Sim" type="submit"
+			action="#{editScript.deleteScript}"
+			oncomplete="PF('deleteScriptDialog').hide()"
+			update="toolbarForm:toolbarScript :scriptForm:gridScripts" />
+		<p:button value="Cancel"
+			onclick="PF('deleteScriptDialog').hide(); return false;" />
+	</p:confirmDialog>
+</ui:composition>
+</html>

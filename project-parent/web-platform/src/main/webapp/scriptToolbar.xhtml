@@ -1,0 +1,63 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+
+	<!-- toolbar with buttons add, edit, and delete-->
+	<p:toolbar id="toolbarScript">
+
+		<p:toolbarGroup align="left">
+			<!-- NewScript button -->
+			<p:button icon="ui-icon-plus"
+				outcome="newScript.xhtml?faces-redirect=true" />
+			<!-- Edit SCRIPT dialog -->
+			<p:button type="button" icon="ui-icon-pencil"
+				disabled="#{editScript.editScript==null}"
+				outcome="scriptEditC.xhtml?faces-redirect=true" />
+			<!-- Delete position dialog-->
+			<p:commandButton type="button" icon="ui-icon-trash"
+				disabled="#{editScript.editScript==null}"
+				onclick="PF('deleteScriptDialog').show(); return false;">
+			</p:commandButton>
+			<span class="ui-separator"><span
+				class="ui-icon ui-icon-grip-dotted-vertical" /> </span>
+		</p:toolbarGroup>
+
+		<!-- search menu -->
+		<p:toolbarGroup align="right">
+			<!-- Search menu -->
+			<h:selectOneMenu id="scriptWord" value="#{scriptListView.scriptWord}" required="true"
+				filter="true" filterMatchMode="startsWith" width="5">
+				<f:selectItem itemLabel="Pesquisar por:" itemValue=""
+					noSelectionOption="true" />
+				<f:selectItem itemLabel="Título" itemValue="Título" />
+				<f:selectItem itemLabel="Referência" itemValue="Referência" />
+			</h:selectOneMenu>
+			<span class="ui-separator"><span /> </span>
+			<p:inputText id="scriptsSearch" required="true" size="10"
+				value="#{scriptListView.searchCode}" />
+			<span class="ui-separator"><span /> </span>
+
+			<p:commandButton type="submit" icon="ui-icon-search"
+				action="#{scriptListView.search}"
+				update=":scriptForm:gridScripts :toolbarForm:toolbarScript" />
+			<span class="ui-separator"><span
+				class="ui-icon ui-icon-grip-dotted-vertical" /> </span>
+			<!-- view all scripts -->
+			<p:commandButton type="submit" value="Todos"
+				action="#{scriptListView.searchAll()}"
+				update=":scriptForm:gridScripts :toolbarForm:toolbarScript" />
+			<!-- End search menu -->
+
+		</p:toolbarGroup>
+
+	</p:toolbar>
+	<p />
+
+</ui:composition>
+</html>

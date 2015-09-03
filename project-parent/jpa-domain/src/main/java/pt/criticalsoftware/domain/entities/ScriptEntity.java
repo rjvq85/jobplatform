@@ -3,7 +3,6 @@ package pt.criticalsoftware.domain.entities;
 import java.util.Collection;
 
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,15 +12,21 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import pt.criticalsoftware.domain.entities.questions.Question;
 
 @Entity
 @Table(name = "guioes")
 
-@NamedQueries({ @NamedQuery(name = "ScriptEntity.findAll", query = "select p from ScriptEntity p "),
-		@NamedQuery(name = "ScriptEntity.findByReference", query = "select p from ScriptEntity p where p.reference = :reference "),
-		@NamedQuery(name = "ScriptEntity.findByTitle", query = "select p from ScriptEntity p where p.title = :title "),
-		@NamedQuery(name = "ScriptEntity.findById", query = "select p from ScriptEntity p where p.id = :param ") })
+
+@NamedQueries({
+@NamedQuery(name="ScriptEntity.getAll", query="select p from ScriptEntity p "),
+@NamedQuery(name="ScriptEntity.findByReference", query="select p from ScriptEntity p where p.reference = :reference "),
+@NamedQuery(name="ScriptEntity.findByTitle", query="select p from ScriptEntity p where p.title = :title "),
+@NamedQuery(name="ScriptEntity.verifyTitle", query="select p from ScriptEntity p where p.title = :title "),
+@NamedQuery(name="ScriptEntity.getAllQuestionsById", query="select p from ScriptEntity p where p.id =:id "),
+@NamedQuery(name="ScriptEntity.getScriptById", query="select p from ScriptEntity p where p.id =:id "),
+@NamedQuery(name = "ScriptEntity.findById", query = "select p from ScriptEntity p where p.id = :param ") })
+ 
+
 
 public class ScriptEntity {
 
@@ -34,13 +39,14 @@ public class ScriptEntity {
 
 	@Column(name = "referencia", nullable = false)
 	private String reference;
-
-	@ElementCollection
-	@Column(name = "questoes")
-	private Collection<Question> questions;
-
-	@OneToMany(mappedBy = "script")
+	
+	@OneToMany(mappedBy="script" )
+	private Collection<QuestionEntity> questions;
+	
+	@OneToMany(mappedBy="script")
 	private Collection<InterviewEntity> interviews;
+	
+
 
 	public ScriptEntity() {
 
@@ -62,11 +68,11 @@ public class ScriptEntity {
 		this.reference = reference;
 	}
 
-	public Collection<Question> getQuestions() {
+	public Collection<QuestionEntity> getQuestions() {
 		return questions;
 	}
 
-	public void setQuestions(Collection<Question> questions) {
+	public void setQuestions(Collection<QuestionEntity> questions) {
 		this.questions = questions;
 	}
 

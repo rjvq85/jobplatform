@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+	<h:form id="editQuestionDialog">
+		<p:dialog id="dialog-EditQuestion" header="Editar Questão"
+			widgetVar="dialogEditQuestion" modal="true" showEffect="blind"
+			resizable="false">
+
+			<h:panelGrid columns="2" id="questionDetail">
+
+				<p:outputLabel value="Questão" for="questionString" />
+				<p:inputText id="questionString" required="true"
+					requiredMessage="questão" size="30"
+					value="#{editScript.editQuestionStr}" />
+
+				<p:outputLabel value="Tipo resposta" for="answerType" />
+				<p:selectOneMenu id="answerType"
+					value="#{editScript.editQuestionType}" required="true"
+					filter="true" filterMatchMode="startsWith" width="30">
+					<f:selectItem itemLabel="VERDADEIRO ou FALSO" itemValue="V/F" />
+					<f:selectItem itemLabel="1 a 5" itemValue="1/5" />
+					<f:selectItem itemLabel="Resposta Livre" itemValue="Resposta Livre" />
+				</p:selectOneMenu>
+			</h:panelGrid>
+			<p:commandButton value="Guardar" type="submit"
+				style="width:100px;margin-left:10px;margin-top:15px;"
+				action="#{editScript.saveQuestion()}"
+				oncomplete="if (!args.validationFailed)PF('dialogEditQuestion').hide();"
+				update=":scriptEditForm:toolbarForm:toolbarScript "
+				icon="ui-icon-check"></p:commandButton>
+		</p:dialog>
+		<br />
+	</h:form>
+</ui:composition>
+</html>

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+	<p:button value="Cancel" type="button"
+		style="width:100px; margin-left:90px; margin-top:15px;"
+		onclick="PF('dialogNewQuestion').hide(); return false;"
+		icon="ui-icon-cancel"></p:button>
+
+	<p:commandButton value="Criar" type="submit"
+		style="width:100px; margin-right:auto; margin-left:10px; margin-top:15px;"
+		action="#{newScript.createQuestion()}"
+		update=":scriptNewForm:scriptList :formNewQuestion:dialog-NewQuestion"
+		icon="ui-icon-check"></p:commandButton>
+</ui:composition>
+</html>

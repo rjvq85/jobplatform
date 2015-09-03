@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+	<!-- Scripts list -->
+	<p:dataTable id="gridScripts" var="script"
+		value="#{scriptListView.scripts}" selectionMode="single"
+		widgetVar="scriptList" selection="#{editScript.editScript}"
+		rowKey="#{script.id}" paginator="true" paginatorPosition="bottom"
+		rows="15" styleClass="paginated">
+
+		<p:ajax event="rowSelect" listener="#{editScript.onRowSelect}"
+			update=":toolbarForm:toolbarScript" />
+		<p:ajax event="rowUnselect" listener="#{editScript.onRowUnselect}"
+			update=":toolbarForm:toolbarScript :scriptForm:gridScripts" />
+
+		<p:column headerText="Referência">
+			<p:outputLabel value="#{script.reference}"></p:outputLabel>
+		</p:column>
+		<p:column headerText="Nome">
+			<p:outputLabel value="#{script.title}"></p:outputLabel>
+		</p:column>
+	</p:dataTable>
+
+</ui:composition>
+</html>

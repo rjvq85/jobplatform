@@ -15,7 +15,7 @@
 	</build>
 
 	<!-- Repositories -->
-	
+
 	<!-- Dependencies -->
 	<dependencies>
 		<dependency>
@@ -47,7 +47,11 @@
 			<version>5.2</version>
 			<scope>compile</scope>
 		</dependency>
-
+		<dependency>
+			<groupId>org.primefaces.extensions</groupId>
+			<artifactId>primefaces-extensions</artifactId>
+			<version>3.2.0</version>
+		</dependency>
 		<dependency>
 			<groupId>org.primefaces.themes</groupId>
 			<artifactId>all-themes</artifactId>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<meta charset="utf-8" />
+	<h:outputScript name="jquery/jquery.js" library="primefaces" />
+	<h:outputScript library="js" name="bootstrap.js" />
+	<h:outputScript library="js" name="bootstrap-select.js" />
+	<h:outputScript library="js" name="customscripts.js" />
+	<h:outputStylesheet library="css" name="register.css" />
+	<h:outputStylesheet library="css" name="mainstyle.css" />
+	<h:outputStylesheet library="css" name="bootstrap.css" />
+	<title>Sessão Expirada</title>
+</h:head>
+<h:body>
+	<div class="expiredbg">
+		<div class="container">
+			<div class="expiredbox">
+				<h1>
+					<span class="superstrong">Erro:</span> Sessão Expirada.
+				</h1>
+				<p>Por favor, clique no botão em baixo para voltar ao início e,
+					desta forma, aceder novamente ao nosso site. Obrigado.</p>
+			</div>
+			<div class="ctrbtn">
+				<h:form prependId="false">
+					<h:commandLink action="index?faces-redirect=true"
+						styleClass="btn btn-default btncnf" value="Continuar" />
+				</h:form>
+			</div>
+		</div>
+	</div>
+</h:body>
+
+</html>

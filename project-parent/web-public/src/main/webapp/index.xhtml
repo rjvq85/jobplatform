@@ -6,11 +6,34 @@
 	xmlns:p="http://primefaces.org/ui">
 <h:head>
 	<meta charset="utf-8" />
-	<title>Plataforma de Emprego - Administrador</title>
+	<h:outputScript name="jquery/jquery.js" library="primefaces" />
+	<h:outputScript library="js" name="bootstrap.js" />
+	<h:outputScript library="js" name="bootstrap-select.js" />
+	<h:outputScript library="js" name="customscripts.js" />
+	<h:outputStylesheet library="css" name="mainstyle.css" />
+	<h:outputStylesheet library="css" name="bootstrap.css" />
+	<title>Index</title>
 </h:head>
 <h:body>
-	<h1>Bem-vindo!</h1>
-	<br/>
-	<h:link outcome="login.xhtml" value="Login"/>
+	<h:panelGroup layout="block" id="container" styleClass="container">
+		<h1>Bem-vindo!</h1>
+		<br />
+		<h:form prependId="false">
+			<h:outputLink value="Login"
+				onclick="PF('loginWidget').show(); return false;" title="Login">
+				<span class="glyphicon glyphicon-log-in"></span> Login
+			</h:outputLink>
+			<h:link outcome="register.xhtml" value="Registo sem Posição"
+				rendered="#{not userIsLogged}" />
+			<h:commandLink action="#{searchedPosition.testingPos(1)}"
+				value="Registo com Posição" rendered="#{not userIsLogged}" />
+		</h:form>
+	</h:panelGroup>
+
+	<h:form id="loginform" prependId="false">
+		<ui:insert name="LoginPanel">
+			<ui:include src="logindlg.xhtml" />
+		</ui:insert>
+	</h:form>
 </h:body>
 </html>

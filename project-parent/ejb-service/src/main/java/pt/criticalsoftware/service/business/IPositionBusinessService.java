@@ -37,4 +37,6 @@ public interface IPositionBusinessService {
 
 	IPosition createPosition(IPosition position) throws DuplicateReferenceException;
 
+	IPosition getPositionById(Integer positionId);
+
 }

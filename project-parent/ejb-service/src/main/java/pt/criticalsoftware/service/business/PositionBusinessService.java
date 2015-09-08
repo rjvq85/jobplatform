@@ -121,4 +121,11 @@ public class PositionBusinessService implements IPositionBusinessService{
 		return positionPersistence.getPositionsByOpenDate(positionWord, openDate);
 	}
 
+
+
+	@Override
+	public IPosition getPositionById(Integer positionId) {
+		return positionPersistence.find(positionId);
+	}
+
 }

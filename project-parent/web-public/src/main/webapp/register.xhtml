@@ -3,72 +3,350 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui">
-
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
 <h:head>
 	<meta charset="utf-8" />
+	<h:outputScript library="js" name="jquery-2.1.4.min.js" />
+	<h:outputScript library="js" name="bootstrap.js" />
+	<h:outputScript library="js" name="customscripts.js" />
+	<h:outputScript library="js" name="navbar.js" />
 	<h:outputStylesheet library="css" name="register.css" />
+	<h:outputStylesheet library="css" name="mainstyle.css" />
+	<h:outputStylesheet library="css" name="bootstrap.css" />
+	<title>Registo de Candidato</title>
 </h:head>
-
 <h:body>
-	<div id="outBox">
-		<h:form id="newuser">
-			<p:panel id="panel" header="Novo Utilizador" text-align="center">
-				<p:messages id="msgs" />
-				<h:panelGrid columns="1" cellpadding="5" styleClass="grid-login">
+	<h:panelGroup layout="block" id="registerpage">
+		<h:panelGroup layout="block" styleClass="pageheader">
+			<h1>Novo Registo</h1>
+			<h:panelGroup layout="block" styleClass="row text-center">
+				<h:panelGroup layout="block" styleClass="col-md-offset-4 col-md-6">
+					<h:messages id="editglobalmsgs" globalOnly="true"
+						infoClass="alert alert-success" fatalClass="alert errormsg"
+						errorClass="alert errormsg" warnClass="alert errormsg"
+						style="list-style-type: none; margin-top:10px; border-radius:0px !important; padding-left:70px;" />
+				</h:panelGroup>
+			</h:panelGroup>
+		</h:panelGroup>
 
-					<p:outputLabel for="firstName" value="Primeiro Nome:" />
-					<p:inputText id="firstName" required="true" label="nome" size="30"
-						requiredMessage="Campo de primeiro nome obrigatório"
-						value="#{register.firstName}">
-						<f:validateLength minimum="2" />
-					</p:inputText>
-					<p:message for="firstName" display="icon" />
-
-					<p:outputLabel for="lastName" value="Sobrenome:" />
-					<p:inputText id="lastName" required="true" label="nome" size="30"
-						requiredMessage="Campo de sobrenome obrigatório"
-						value="#{register.lastName}">
-						<f:validateLength minimum="2" />
-					</p:inputText>
-					<p:message for="lastName" id="msgLastname" display="icon" />
-
-					<p:outputLabel for="email" value="E-mail:" />
-					<p:inputText id="email" required="true" label="email" size="30"
-						requiredMessage="Campo de email obrigatório"
-						validatorMessage="Formato de email inválido"
-						value="#{register.email}">
-						<f:validateRegex
-							pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
-					</p:inputText>
-
-					<p:outputLabel for="role" value="Cargo:" />
-					<p:selectOneMenu id="role" value="#{register.role}"
-						style="width:125px">
-						<f:selectItem itemLabel="Administrador" itemValue="Admin" />
-						<f:selectItem itemLabel="Entrevistador" itemValue="Entrevistador" />
-						<f:selectItem itemLabel="Gestor" itemValue="Gestor" />
-					</p:selectOneMenu>
-
-					<p:outputLabel for="username" value="Username:" />
-					<p:inputText id="username" required="true" label="nome" size="30"
-						requiredMessage="Campo de username obrigatório"
-						value="#{register.username}" />
-
-					<p:outputLabel for="pwd1" value="Password:" />
-					<p:password id="pwd1" value="#{register.password}" match="pwd2"
-						label="Password 1" required="true" />
-
-					<p:outputLabel for="pwd2" value="Confirm:" />
-					<p:password id="pwd2" label="Password 2" required="true" />
-					<p>* Campos de preenchimento obrigatório</p>
-					<f:facet name="footer">
-						<p:commandButton value="Register" type="submit"
-							action="#{register.doRegister()}" update="@form" />
-					</f:facet>
-				</h:panelGrid>
-			</p:panel>
+		<h:form id="registerform" prependId="false"
+			enctype="multipart/form-data">
+			<h:panelGroup layout="block" styleClass="jumbotron registerjumbo">
+				<h:panelGroup layout="block" styleClass="container" id="container">
+					<h:panelGroup layout="block" styleClass="row">
+						<h:panelGroup layout="block" styleClass="col-md-8">
+							<!-- Register form -->
+							<h:panelGroup layout="block" styleClass="col-md-12 form-group">
+								<h:panelGroup layout="block" styleClass="row">
+									<h:panelGroup layout="block" styleClass="col-md-7">
+										<h:panelGroup layout="block" styleClass="input-group">
+											<h:inputText value="#{register.firstName}" id="firstname"
+												type="text" styleClass="form-control firstinput"
+												a:placeholder="Primeiro Nome" required="true"
+												requiredMessage="Campo obrigatório" />
+											<span class="input-group-addon firstspan"><span
+												class="glyphicon glyphicon-asterisk"></span></span>
+										</h:panelGroup>
+									</h:panelGroup>
+									<h:panelGroup layout="block" styleClass="col-md-5">
+										<h:message for="firstname" styleClass="label label-info"
+											style="border-radius: 0px; font-weight: 400; padding-left: 10px !important; padding-right: 10px !important;" />
+									</h:panelGroup>
+								</h:panelGroup>
+								<h:panelGroup layout="block" styleClass="row">
+									<h:panelGroup layout="block" styleClass="col-md-7">
+										<h:panelGroup layout="block" styleClass="input-group">
+											<h:inputText value="#{register.lastName}" type="text"
+												styleClass="form-control midinput"
+												a:placeholder="Último Nome" required="true"
+												requiredMessage="Campo obrigatório" id="lastname" />
+											<span class="input-group-addon midspan"><span
+												class="glyphicon glyphicon-asterisk"></span></span>
+										</h:panelGroup>
+									</h:panelGroup>
+									<h:panelGroup layout="block" styleClass="col-md-5">
+										<h:message for="lastname" styleClass="label label-info"
+											style="border-radius: 0px; font-weight: 400; padding-left: 10px !important; padding-right: 10px !important;" />
+									</h:panelGroup>
+								</h:panelGroup>
+								<h:panelGroup layout="block" styleClass="row">
+									<h:panelGroup layout="block" styleClass="col-md-7">
+										<h:panelGroup layout="block" styleClass="input-group">
+											<h:inputText value="#{register.email}" type="text"
+												styleClass="form-control midinput" a:placeholder="E-mail"
+												required="true" requiredMessage="Campo obrigatório"
+												id="email" />
+											<span class="input-group-addon midspan"><span
+												class="glyphicon glyphicon-asterisk"></span></span>
+										</h:panelGroup>
+									</h:panelGroup>
+									<h:panelGroup layout="block" styleClass="col-md-5">
+										<h:message for="email" styleClass="label label-info"
+											style="border-radius: 0px; font-weight: 400; padding-left: 10px !important; padding-right: 10px !important;" />
+									</h:panelGroup>
+								</h:panelGroup>
+								<h:panelGroup layout="block" styleClass="row">
+									<h:panelGroup layout="block" styleClass="col-md-7">
+										<h:panelGroup layout="block" styleClass="input-group">
+											<h:inputText value="#{register.username}" type="text"
+												styleClass="form-control midinput" a:placeholder="Username"
+												required="true" requiredMessage="Campo obrigatório"
+												id="username" />
+											<span class="input-group-addon midspan"><span
+												class="glyphicon glyphicon-asterisk"></span></span>
+										</h:panelGroup>
+									</h:panelGroup>
+									<h:panelGroup layout="block" styleClass="col-md-5">
+										<h:message for="username" styleClass="label label-info"
+											style="border-radius: 0px; font-weight: 400; padding-left: 10px !important; padding-right: 10px !important;" />
+									</h:panelGroup>
+								</h:panelGroup>
+								<h:panelGroup layout="block" styleClass="row">
+									<h:panelGroup layout="block" styleClass="col-md-7">
+										<h:panelGroup layout="block" styleClass="input-group">
+											<h:inputSecret value="#{register.password}"
+												binding="#{passwordComponent}" type="text"
+												styleClass="form-control midinput" a:placeholder="Password"
+												required="true" requiredMessage="Campo obrigatório"
+												id="password" validatorMessage="Mín: 8 carac.">
+												<f:validateLength minimum="8" />
+											</h:inputSecret>
+											<span class="input-group-addon midspan"><span
+												class="glyphicon glyphicon-asterisk"></span></span>
+										</h:panelGroup>
+									</h:panelGroup>
+									<h:panelGroup layout="block" styleClass="col-md-5">
+										<h:message for="password" styleClass="label label-info"
+											style="border-radius: 0px; font-weight: 400; padding-left: 10px !important; padding-right: 10px !important;" />
+									</h:panelGroup>
+								</h:panelGroup>
+								<h:panelGroup layout="block" styleClass="row">
+									<h:panelGroup layout="block" styleClass="col-md-7">
+										<h:panelGroup layout="block" styleClass="input-group">
+											<h:inputSecret type="text" styleClass="form-control midinput"
+												a:placeholder="Confirmação da Password"
+												required="#{not empty passwordComponent.value}"
+												requiredMessage="Confirma a password"
+												validatorMessage="Passwords não coincidem" id="confirmpw">
+												<f:validator
+													validatorId="pt.criticalsoftware.publicplatform.validators.PasswordValidator" />
+												<f:attribute name="otherValue"
+													value="#{passwordComponent.value}" />
+											</h:inputSecret>
+											<span class="input-group-addon midspan"><span
+												class="glyphicon glyphicon-asterisk"></span></span>
+										</h:panelGroup>
+									</h:panelGroup>
+									<h:panelGroup layout="block" styleClass="col-md-5">
+										<h:message for="confirmpw" styleClass="label label-info"
+											style="border-radius: 0px; font-weight: 400; padding-left: 10px !important; padding-right: 10px !important;" />
+									</h:panelGroup>
+								</h:panelGroup>
+								<h:panelGroup layout="block" styleClass="row">
+									<h:panelGroup layout="block" styleClass="col-md-7">
+										<h:panelGroup layout="block" styleClass="input-group">
+											<h:inputText value="#{register.address}" type="text"
+												styleClass="form-control midinput" a:placeholder="Morada"
+												required="true" requiredMessage="Campo obrigatório"
+												id="address" />
+											<span class="input-group-addon midspan"><span
+												class="glyphicon glyphicon-asterisk"></span></span>
+										</h:panelGroup>
+									</h:panelGroup>
+									<h:panelGroup layout="block" styleClass="col-md-5">
+										<h:message for="address" styleClass="label label-info"
+											style="border-radius: 0px; font-weight: 400; padding-left: 10px !important; padding-right: 10px !important;" />
+									</h:panelGroup>
+								</h:panelGroup>
+								<h:panelGroup layout="block" styleClass="row">
+									<h:panelGroup layout="block" styleClass="col-md-7">
+										<h:panelGroup layout="block" styleClass="input-group">
+											<h:inputText value="#{register.city}" type="text"
+												styleClass="form-control midinput" a:placeholder="Cidade"
+												required="true" requiredMessage="Campo obrigatório"
+												id="city" />
+											<span class="input-group-addon midspan"><span
+												class="glyphicon glyphicon-asterisk"></span></span>
+										</h:panelGroup>
+									</h:panelGroup>
+									<h:panelGroup layout="block" styleClass="col-md-5">
+										<h:message for="city" styleClass="label label-info"
+											style="border-radius: 0px; font-weight: 400; padding-left: 10px !important; padding-right: 10px !important;" />
+									</h:panelGroup>
+								</h:panelGroup>
+								<h:panelGroup layout="block" styleClass="row">
+									<h:panelGroup layout="block" styleClass="col-md-7">
+										<h:panelGroup layout="block" styleClass="input-group">
+											<h:inputText value="#{register.country}" type="text"
+												styleClass="form-control midinput" a:placeholder="País"
+												required="true" requiredMessage="Campo obrigatório"
+												id="country" />
+											<span class="input-group-addon midspan"><span
+												class="glyphicon glyphicon-asterisk"></span></span>
+										</h:panelGroup>
+									</h:panelGroup>
+									<h:panelGroup layout="block" styleClass="col-md-5">
+										<h:message for="country" styleClass="label label-info"
+											style="border-radius: 0px; font-weight: 400; padding-left: 10px !important; padding-right: 10px !important;" />
+									</h:panelGroup>
+								</h:panelGroup>
+								<h:panelGroup layout="block" styleClass="row">
+									<h:panelGroup layout="block" styleClass="col-md-7">
+										<h:panelGroup layout="block" styleClass="input-group">
+											<h:inputText value="#{register.phone}" type="text"
+												styleClass="form-control midinput" a:placeholder="Telefone"
+												required="true" requiredMessage="Campo obrigatório"
+												id="phone"
+												validator="pt.criticalsoftware.publicplatform.validators.NumberValidator"
+												validatorMessage="Formato incorrecto" />
+											<span class="input-group-addon midspan"><span
+												class="glyphicon glyphicon-asterisk"></span></span>
+										</h:panelGroup>
+									</h:panelGroup>
+									<h:panelGroup layout="block" styleClass="col-md-5">
+										<h:message for="phone" styleClass="label label-info"
+											style="border-radius: 0px; font-weight: 400; padding-left: 10px !important; padding-right: 10px !important;" />
+									</h:panelGroup>
+								</h:panelGroup>
+								<h:panelGroup layout="block" styleClass="row">
+									<h:panelGroup layout="block" styleClass="col-md-7">
+										<h:panelGroup layout="block" styleClass="input-group">
+											<h:inputText value="#{register.mobile}" type="text"
+												styleClass="form-control midinput" a:placeholder="Telemóvel"
+												required="true" requiredMessage="Campo obrigatório"
+												id="mobile"
+												validator="pt.criticalsoftware.publicplatform.validators.NumberValidator"
+												validatorMessage="Formato incorrecto" />
+											<span class="input-group-addon midspan"><span
+												class="glyphicon glyphicon-asterisk"></span></span>
+										</h:panelGroup>
+									</h:panelGroup>
+									<h:panelGroup layout="block" styleClass="col-md-5">
+										<h:message for="mobile" styleClass="label label-info"
+											style="border-radius: 0px; font-weight: 400; padding-left: 10px !important; padding-right: 10px !important;" />
+									</h:panelGroup>
+								</h:panelGroup>
+								<h:panelGroup layout="block" styleClass="row">
+									<h:panelGroup layout="block" styleClass="col-md-7">
+										<h:panelGroup layout="block" styleClass="input-group">
+											<h:inputText value="#{register.course}" type="text"
+												styleClass="form-control midinput" a:placeholder="Curso"
+												required="true" requiredMessage="Campo obrigatório"
+												id="course" />
+											<span class="input-group-addon midspan"><span
+												class="glyphicon glyphicon-asterisk"></span></span>
+										</h:panelGroup>
+									</h:panelGroup>
+									<h:panelGroup layout="block" styleClass="col-md-5">
+										<h:message for="course" styleClass="label label-info"
+											style="border-radius: 0px; font-weight: 400; padding-left: 10px !important; padding-right: 10px !important;" />
+									</h:panelGroup>
+								</h:panelGroup>
+								<h:panelGroup layout="block" styleClass="row">
+									<h:panelGroup layout="block" styleClass="col-md-7">
+										<h:panelGroup layout="block" styleClass="input-group">
+											<h:inputText value="#{register.degree}" type="text"
+												styleClass="form-control midinput" a:placeholder="Grau"
+												required="true" requiredMessage="Campo obrigatório"
+												id="degree" />
+											<span class="input-group-addon midspan"><span
+												class="glyphicon glyphicon-asterisk"></span></span>
+										</h:panelGroup>
+									</h:panelGroup>
+									<h:panelGroup layout="block" styleClass="col-md-5">
+										<h:message for="degree" styleClass="label label-info"
+											style="border-radius: 0px; font-weight: 400; padding-left: 10px !important; padding-right: 10px !important;" />
+									</h:panelGroup>
+								</h:panelGroup>
+								<h:panelGroup layout="block" styleClass="row">
+									<h:panelGroup layout="block" styleClass="col-md-7">
+										<h:panelGroup layout="block" styleClass="input-group">
+											<h:inputText value="#{register.school}" type="text"
+												styleClass="form-control lastinput"
+												a:placeholder="Escola / Universidade" required="true"
+												requiredMessage="Campo obrigatório" id="school" />
+											<span class="input-group-addon lastspan"><span
+												class="glyphicon glyphicon-asterisk"></span></span>
+										</h:panelGroup>
+									</h:panelGroup>
+									<h:panelGroup layout="block" styleClass="col-md-5">
+										<h:message for="school" styleClass="label label-info"
+											style="border-radius: 0px; font-weight: 400; padding-left: 10px !important; padding-right: 10px !important;" />
+									</h:panelGroup>
+								</h:panelGroup>
+								<h:panelGroup layout="block" styleClass="row no-gutter"
+									style="padding-left:15px; margin-top: 0px; top: 15px;">
+									<h:panelGroup layout="block" styleClass="col-md-2">
+										<span class="form-control file-input btn btn-danger btn-file"
+											style="border-top-right-radius: 0; border-bottom-right-radius: 0;">Curriculum
+											Vitae<h:inputFile id="ficheiro" value="#{register.file}"
+												validator="pt.criticalsoftware.publicplatform.validators.FileValidator"
+												styleClass="form-control btn btn-info" required="true"
+												requiredMessage="Obrigatório">
+												<f:ajax event="change" render="filename" />
+											</h:inputFile>
+										</span>
+									</h:panelGroup>
+									<h:panelGroup layout="block" styleClass="col-md-4">
+										<h:outputText id="filename"
+											value="#{register.file.submittedFileName.toUpperCase()}"
+											styleClass="form-control text-right well-sm"
+											style="border-radius:0px;" />
+									</h:panelGroup>
+									<h:panelGroup layout="block" styleClass="col-md-1"
+										style="width:5%;">
+										<span class="input-group-addon"
+											style="border-bottom-right-radius: 5px; border-top-right-radius: 5px; padding-left: 13px; padding-right: 13px; padding-top: 9px; padding-bottom: 9px;"><span
+											class="glyphicon glyphicon-asterisk"></span></span>
+									</h:panelGroup>
+									<h:panelGroup layout="block" styleClass="col-md-5">
+										<h:message for="ficheiro" styleClass="label label-info"
+											style="border-radius: 0px; font-weight: 400; padding-left: 10px !important; padding-right: 10px !important; margin-left:40px;" />
+									</h:panelGroup>
+								</h:panelGroup>
+							</h:panelGroup>
+						</h:panelGroup>
+						<!--  Messages and Information -->
+						<h:panelGroup layout="block" styleClass="col-md-4 form-group">
+							<h:panelGroup layout="block" styleClass="row">
+								<h2 class="text-center" style="color: coral;">Termos &#38;
+									Condições</h2>
+								<textarea id="terms" rows="15"
+									class="form-control well text-justify"
+									style="color: grey; overflow-y: scroll; padding-bottom: 19px; border-bottom-width: 20px; margin-bottom: 0px; border-bottom-left-radius: 0px; border-bottom-right-radius: 0px;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non eros non dolor consequat aliquet. Nullam mattis sit amet massa a congue. Aenean porta egestas felis, et lobortis turpis porta vel. Morbi vitae maximus neque. Pellentesque congue tincidunt justo, nec laoreet elit faucibus quis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla consectetur mauris ac elit luctus viverra. Pellentesque id erat nulla. Nullam porttitor nisl quis massa tincidunt, nec molestie libero feugiat. Donec id consequat nisl. Morbi eget ullamcorper leo, a laoreet sapien. Aliquam sodales id mi non pharetra. Nunc a vestibulum neque. Etiam eu neque in arcu porta viverra. Curabitur vitae enim maximus, accumsan tellus sed, posuere enim. Aliquam erat volutpat. Mauris eget urna lacinia, vestibulum mauris non, tincidunt velit. Quisque quam odio, fringilla sed fringilla sit amet, dapibus non urna. Proin et placerat nibh, ut scelerisque ex. Nunc efficitur risus sed lectus suscipit auctor. Nullam quis lorem tempus, placerat urna vulputate, gravida dolor. Curabitur neque augue, sollicitudin non arcu sit amet, vestibulum tincidunt sapien. In at condimentum metus. Aenean vehicula, magna at viverra pharetra, neque risus venenatis eros, eget blandit ligula massa non eros. Aliquam erat volutpat. Nam eget lobortis ligula. Aenean quis turpis ac justo interdum sagittis. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Ut sed leo id massa rutrum vestibulum. Fusce maximus ante ipsum, ac iaculis diam consectetur eu. Donec pulvinar luctus tortor ac maximus. Mauris at sollicitudin nulla, in egestas felis. Nulla facilisi. Proin imperdiet vestibulum nunc, in pulvinar nulla varius ornare. Maecenas semper, sem sit amet ultricies fermentum, nisl lectus molestie nulla, ac porttitor libero augue id tellus. Suspendisse congue felis eu ante semper fringilla. Phasellus dignissim augue id pharetra tempus. Phasellus non auctor felis. Suspendisse pellentesque lacinia tempus. Aliquam scelerisque lorem sed elit condimentum finibus. In et elementum sem. Aliquam sit amet sem in justo semper ultricies in eu risus. Aliquam ut pulvinar tellus. Nullam pharetra arcu sit amet ipsum dapibus sollicitudin. Quisque vel massa augue. Nulla maximus enim tellus, eu facilisis lacus vulputate vitae. Ut vitae est cursus neque efficitur imperdiet. Etiam consectetur ullamcorper ultrices. Proin eu molestie ex. Vestibulum ut ex sed nunc porta fringilla ac eget orci. In in elit ornare, elementum dui ac, hendrerit nibh. Donec finibus eget turpis quis ultrices. Integer ut erat a lorem mollis pretium. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Donec varius tortor sed nisl suscipit, et euismod tortor placerat. Vestibulum gravida vitae elit imperdiet luctus. Ut dictum convallis sapien in ultrices. Mauris venenatis semper pharetra. Donec lacinia lacinia elit non posuere. Duis in eros varius, feugiat massa ut, pretium nulla. Proin consequat orci feugiat lectus tempus rutrum. Etiam tincidunt diam laoreet augue aliquet, iaculis dictum libero euismod. Ut nec mauris sit amet arcu auctor congue. Integer ultricies vitae dui sit amet tempus. Pellentesque auctor volutpat libero, commodo elementum ex porta vitae. Ut ornare arcu vitae gravida bibendum. Phasellus nibh arcu, rhoncus feugiat ipsum vel, facilisis porttitor quam. Donec vitae urna accumsan, auctor felis sed, hendrerit dolor. Nam ac sagittis metus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nam sagittis risus sit amet nibh eleifend dapibus. Morbi odio eros, tincidunt non convallis ut, malesuada sed nunc. Aliquam sapien tellus, vulputate in sagittis sit amet, lacinia id mi. Aenean ac leo vitae ante euismod dignissim eu at tortor. Pellentesque sodales sem ac mi posuere pellentesque at vel justo. Donec elementum sed eros ac viverra. Nulla a hendrerit magna, vitae porttitor leo. Morbi facilisis magna sed quam finibus egestas. Duis lacinia venenatis nunc, non finibus urna faucibus non. Donec mauris elit, dictum hendrerit pulvinar at, fermentum id elit. Donec quis tortor nec ex porta sodales. Vivamus nunc enim, pellentesque eget tellus sed, ultrices sollicitudin nunc. Aliquam erat volutpat. Donec quis nisl quis quam condimentum accumsan quis eu purus. Sed eleifend ac dolor id interdum. Quisque in massa maximus, feugiat enim a, placerat augue. Vestibulum varius eget tortor ac tincidunt. Vivamus in cursus neque. Sed vitae efficitur turpis. Fusce elementum, leo id porta fringilla, mi nisl bibendum ex, sit amet egestas elit justo in dolor. Praesent viverra, nisl sit amet dignissim convallis, dolor erat faucibus dui, consectetur laoreet justo ante sit amet ipsum. Quisque eget nunc ac massa laoreet condimentum a quis elit. Phasellus elementum dignissim arcu, viverra rhoncus risus rhoncus sed. Morbi ac dui sit amet enim convallis vestibulum. Sed vel est vel velit pretium tempus tincidunt porttitor metus. Morbi ac mi nisl. Proin nec nunc in erat viverra gravida non in leo. Maecenas vestibulum id magna in ultrices. Interdum et malesuada fames ac ante ipsum primis in faucibus. Praesent tempus, nibh sit amet ullamcorper elementum, tortor ex luctus ipsum, a euismod justo leo quis nunc. Vivamus dignissim vehicula ultrices. Etiam sed ex interdum velit dictum convallis et ut ipsum. Suspendisse felis ex, faucibus eget imperdiet nec, commodo eu dolor. Sed felis leo, ultricies nec libero vel, blandit faucibus ligula. Sed placerat molestie metus, mollis luctus justo accumsan ac. Maecenas sit amet rhoncus risus. Vestibulum sodales metus ac commodo ultricies. Phasellus sed cursus nunc. Sed at dolor sit amet mi aliquam tincidunt quis sed dolor. Nulla et lacinia ipsum. Suspendisse semper non nulla eget hendrerit. Curabitur dapibus a justo vitae aliquet. Aenean cursus ante lectus, in porttitor enim tempor id. Nulla facilisi. styleClass aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Proin at risus turpis. Etiam nec nulla tellus. Vestibulum congue quam quis dui luctus maximus. Nam varius nulla eget justo semper, eu cursus nulla consectetur. Cras at erat metus. Proin posuere aliquet odio eget pretium. Integer id aliquet augue, vitae cursus quam. Morbi sit amet rhoncus odio. In ultrices, velit sed consectetur tincidunt, nunc sem pretium enim, eu pulvinar arcu sapien quis ante. Fusce congue ante sit amet ex tristique, id vestibulum velit finibus. Ut fermentum nec mi sit amet viverra. Quisque ut libero orci. Fusce id enim ante. Sed non velit ut mi porttitor condimentum. Praesent at dignissim sem. Quisque ut eleifend arcu, non viverra augue. Quisque fringilla sem quis odio mattis, in bibendum ipsum lacinia. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Duis eu venenatis ipsum. Curabitur et nisi sit amet velit auctor fringilla. Ut in maximus libero, quis consequat arcu. Nunc magna orci, vehicula quis vehicula sit amet, congue ac odio. Curabitur consectetur gravida quam, nec varius enim maximus vulputate. Nam fringilla rhoncus augue. Etiam non erat et massa pellentesque tincidunt dapibus et ligula. Phasellus rhoncus iaculis orci, ac cursus urna porta at. Sed id neque eget odio malesuada hendrerit. Etiam eu neque vitae tortor mattis sodales ac vitae odio. Duis luctus metus nibh, at ullamcorper mi imperdiet vitae. Integer et sapien auctor, efficitur lorem fringilla, tincidunt risus. Mauris quis enim arcu. Aenean lobortis, quam ut tincidunt fermentum, nisi sapien finibus nulla, eu semper elit massa at sapien. Nunc nec vestibulum tortor, quis accumsan arcu. Nullam viverra, enim vitae tristique mollis, risus dui sodales quam, eu varius ligula diam vitae erat. Curabitur commodo, magna vitae suscipit lobortis, neque orci accumsan sapien, eget malesuada tortor dui sed est. Morbi bibendum justo sed nisi tincidunt, vel consectetur sapien maximus. Donec purus mi, sodales ac nisl non, posuere venenatis mauris. Etiam eget tortor lorem. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc ac malesuada enim. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Sed quis leo et dui ullamcorper hendrerit. Suspendisse ac facilisis odio. Nulla at leo in magna vulputate malesuada. Donec volutpat pretium sodales. In ac nisi lacinia, congue leo et, malesuada neque. Suspendisse quis finibus eros, sit amet hendrerit felis. Morbi condimentum ex vitae lacinia euismod. Maecenas mollis hendrerit nisi. Morbi molestie eu augue eu laoreet. Nunc at metus cursus, tempus dui ac, laoreet massa. Donec luctus ut magna at pulvinar. Sed facilisis justo vel magna rutrum vehicula. Duis lorem risus, lacinia at neque non, faucibus molestie lorem. Donec efficitur diam eu vehicula scelerisque. Phasellus a felis quis nisl interdum fringilla sit amet eget ante. Etiam arcu libero, pretium sit amet imperdiet at, vulputate vel tellus. Donec vel varius diam. Pellentesque eget scelerisque leo.</textarea>
+							</h:panelGroup>
+							<h:panelGroup layout="block" styleClass="row">
+								<h:panelGroup layout="block" styleClass="col-md-12 text-right"
+									style="padding-left: 0px; padding-right: 0px;">
+									<h:panelGroup layout="block" styleClass="alert alert-danger"
+										style="background-color: white !important;box-shadow: 0px 4px 13px -2px rgba(102,102,102,0.75);font-size: 14px !important;text-shadow: none !important;color: #2829!important;border-color: 1px solid black !important;width: 100% !important;font-size: 12px; font-weight: 500;border-top-left-radius: 0px !important;border-top-right-radius: 0px !important;">
+										<h:selectBooleanCheckbox id="termsbox"
+											value="#{register.readTerms}">
+											<p:ajax execute="termsbox" update="rbtn" event="change" />
+										</h:selectBooleanCheckbox> Aceito os termos propostos
+								</h:panelGroup>
+								</h:panelGroup>
+							</h:panelGroup>
+						</h:panelGroup>
+					</h:panelGroup>
+					<br />
+					<h:panelGroup layout="block" styleClass="row text-center">
+						<h:panelGroup layout="block" styleClass="col-md-12 text-center">
+							<h:commandButton id="rbtn" action="#{register.register()}"
+								value="Submeter" styleClass="btn btn-info registerbtns"
+								disabled="#{!register.readTerms}" onclick="fadeoutMsg();">
+								<f:ajax render=":registerpage" execute="@form :registerform" />
+							</h:commandButton>
+							<h:commandButton id="cbtn" action="#{searchedPosition.goOn()}"
+								value="Cancelar" styleClass="btn btn-default registerbtns cancelbtn">
+								<f:ajax execute="cbtn" />
+							</h:commandButton>
+						</h:panelGroup>
+					</h:panelGroup>
+				</h:panelGroup>
+			</h:panelGroup>
 		</h:form>
-	</div>
+	</h:panelGroup>
 </h:body>
 </html>

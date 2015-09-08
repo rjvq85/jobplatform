@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+<h:head>
+	<meta charset="utf-8" />
+	<h:outputScript library="js" name="jquery-2.1.4.min.js" />
+	<h:outputScript library="js" name="bootstrap.js" />
+	<h:outputScript library="js" name="tablepagination.js" />
+	<h:outputStylesheet library="css" name="mainstyle.css" />
+	<h:outputStylesheet library="css" name="bootstrap.css" />
+	<title>Plataforma de Emprego</title>
+</h:head>
+<h:body>
+	<ui:composition template="/Layout/layout.xhtml">
+		<ui:define name="content">
+			<f:metadata>
+				<f:viewParam name="ref"
+					value="#{searchedPosition.positionId}"></f:viewParam>
+				<f:viewAction action="#{searchedPosition.getPosition()}"></f:viewAction>
+			</f:metadata>
+			<h:panelGroup layout="block" class="container" id="container">
+				<h:panelGroup id="posfound" layout="block"
+					rendered="#{not empty searchedPosition.selectedPosition}">
+					<h:panelGroup layout="block" class="title" id="title">
+						<h:panelGroup layout="block" class="page-header">
+							<h:panelGroup layout="block" class="row" id="titlerow">
+								<h:panelGroup layout="block" class="col-md-8">
+									<h1>Posição: #{searchedPosition.selectedPosition.reference} - #{searchedPosition.selectedPosition.title}</h1>
+								</h:panelGroup>
+								<h:panelGroup layout="block" class="col-md-offset-2 col-md-2">
+									<h:panelGroup layout="block" class="media">
+										<h:graphicImage styleClass="media-object" library="imgs"
+											name="logocritical.png"
+											style="min-height: 50px; height: 50px;" />
+									</h:panelGroup>
+								</h:panelGroup>
+							</h:panelGroup>
+						</h:panelGroup>
+					</h:panelGroup>
+				</h:panelGroup>
+				<h:panelGroup layout="block" id="posnotfound"
+					rendered="#{empty searchedPosition.selectedPosition}">
+					<h:panelGroup layout="block" styleClass="jumbotron">
+						<h1>Não encontrado!</h1>
+						<p>A posição que procura não foi encontrada. Esta poderá já não existir.</p>
+					</h:panelGroup>
+				</h:panelGroup>
+			</h:panelGroup>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

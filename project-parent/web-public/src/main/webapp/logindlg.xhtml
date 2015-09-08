@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+<h:head>
+	<meta charset="utf-8" />
+	<h:outputScript name="jquery/jquery.js" library="primefaces" />
+	<h:outputScript library="js" name="bootstrap.js" />
+	<h:outputScript library="js" name="bootstrap-select.js" />
+	<h:outputScript library="js" name="customscripts.js" />
+	<h:outputStylesheet library="css" name="mainstyle.css" />
+	<h:outputStylesheet library="css" name="bootstrap.css" />
+</h:head>
+<h:body>
+	<ui:composition>
+		<p:dialog id="loginDialog" widgetVar="loginWidget" header="Login" modal="true" resizable="false">
+			<h:panelGroup id="logincontainer" layout="block"
+				styleClass="container-small">
+				<br/>
+				<h:panelGroup layout="block" class="row">
+					<h:panelGroup layout="block" class="col-md-12">
+						<h:panelGroup layout="block" class="col-md-offset-3 col-md-6">
+							<label for="un">Username: </label>
+							<h:inputText value="#{login.username}"
+								a:placeholder="Introduza o seu nome de utilizador" id="un"
+								styleClass="input-group" style="width:100%;" />
+						</h:panelGroup>
+					</h:panelGroup>
+				</h:panelGroup>
+				<br/>
+				<h:panelGroup layout="block" class="row">
+					<h:panelGroup layout="block" class="col-md-12">
+						<h:panelGroup layout="block" class="col-md-offset-3 col-md-6">
+							<label for="pw">Password: </label>
+							<h:inputSecret value="#{login.password}"
+								a:placeholder="Introduza a sua password" id="pw"
+								styleClass="input-group" style="width:100%;" />
+						</h:panelGroup>
+					</h:panelGroup>
+				</h:panelGroup>
+				<br/>
+				<h:panelGroup layout="block" class="row">
+					<h:panelGroup layout="block" class="col-md-12">
+						<h:panelGroup layout="block" class="col-md-offset-3 col-md-6">
+							<h:commandButton action="#{login.loginDialog()}" value="Login"
+								styleClass="btn btn-info" style="width: 45%; border-radius: 0;">
+								<p:ajax oncomplete="handleLoginRequest(xhr, status, args)" update=":container" process="loginform"/>
+							</h:commandButton>
+							<h:commandButton action="#" value="Cancelar"
+								onclick="PF('loginWidget').hide(); return false;"
+								styleClass="btn btn-default pull-right"
+								style="width: 45%; border-radius: 0;"/>
+						</h:panelGroup>
+					</h:panelGroup>
+				</h:panelGroup>
+				<h:panelGroup layout="block" class="row">
+					<h:panelGroup layout="block" class="col-md-12">
+						<h:panelGroup layout="block"
+							class="col-md-offset-3 col-md-6 text-center">
+							<h:commandLink action="#"
+								value="Esqueceu-se da password? Anule, e
+								receba uma nova."
+								styleClass="small" />
+						</h:panelGroup>
+					</h:panelGroup>
+				</h:panelGroup>
+			</h:panelGroup>
+		</p:dialog>
+		<script type="text/javascript">
+    		function handleLoginRequest(xhr, status, args) {
+        		if(!args.loggedIn) {
+            		PF('loginWidget').jq.effect("shake", {times:5}, 100);
+        		} else {
+            		PF('loginWidget').hide();
+        		}
+    		}
+		</script>
+	</ui:composition>
+</h:body>
+</html>

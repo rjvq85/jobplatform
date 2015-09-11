@@ -1,7 +1,6 @@
 package pt.criticalsoftware.domain.proxies;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import pt.criticalsoftware.domain.entities.PositionEntity;
@@ -78,12 +77,12 @@ public class UserProxy implements IEntityAware<UserEntity>, IUser {
 	}
 
 	@Override
-	public Collection<Role> getRoles() {
+	public List<Role> getRoles() {
 		return user.getRoles();
 	}
 
 	@Override
-	public void setRoles(Collection<Role> roles) {
+	public void setRoles(List<Role> roles) {
 		user.setRoles(roles);
 	}
 

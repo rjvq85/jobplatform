@@ -124,5 +124,17 @@ public class UserPersistenceService implements IUserPersistenceService {
 		return users;
 	}
 
+	@Override
+	public void delete(IUser user) {
+		UserEntity entity;
+		try {
+			entity = getEntity(user);
+			em.remove(em.merge(entity));
+		} catch (IllegalStateException e) {
+			logger.error("Erro ao remover user "+user.getUsername());
+			e.printStackTrace();
+		}
+	}
+
 
 }

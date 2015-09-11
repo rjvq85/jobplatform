@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+	<!-- Positions list -->
+	<p:dataTable id="gridPositions" var="job" value="#{jobs.jobs}"
+		selectionMode="single" selection="#{jobs.selectedJob}"
+		widgetVar="jobsList" rowKey="#{job.id}" paginator="true"
+		paginatorPosition="bottom" rows="15"
+		styleClass="table-condensed newlabeled">
+		<p:ajax event="rowSelect" listener="#{jobs.onRowSelect}"
+			 />
+		<p:ajax event="rowUnselect" listener="#{jobs.onRowUnselect}"
+			 />
+		<p:column headerText="Data Abertura">
+			<p:outputLabel value="#{job.openDate}"></p:outputLabel>
+		</p:column>
+		<p:column headerText="Código">
+			<p:outputLabel value="#{job.reference}"></p:outputLabel>
+		</p:column>
+		<p:column headerText="Título">
+			<p:outputLabel value="#{job.title}"></p:outputLabel>
+		</p:column>
+		<p:column headerText="Localização">
+			<p:outputLabel value="#{job.locale}"></p:outputLabel>
+		</p:column>
+		<p:column headerText="Empresa">
+			<p:outputLabel value="#{job.company}"></p:outputLabel>
+		</p:column>
+		<p:column headerText="Área Técnica">
+			<p:outputLabel value="#{job.technicalArea}"></p:outputLabel>
+		</p:column>
+	</p:dataTable>
+</ui:composition>
+</html>

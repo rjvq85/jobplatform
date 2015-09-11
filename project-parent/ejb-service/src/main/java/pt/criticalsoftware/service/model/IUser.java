@@ -1,6 +1,5 @@
 package pt.criticalsoftware.service.model;
 
-import java.util.Collection;
 import java.util.List;
 
 import pt.criticalsoftware.service.persistence.roles.Role;
@@ -8,10 +7,6 @@ import pt.criticalsoftware.service.persistence.roles.Role;
 public interface IUser {
 
 	Integer getId();
-
-	void setRoles(Collection<Role> roles);
-
-	Collection<Role> getRoles();
 
 	void setLastName(String lastName);
 
@@ -36,5 +31,9 @@ public interface IUser {
 	List<IPosition> getPositions();
 
 	void setPositions(List<IPosition> positions);
+
+	void setRoles(List<Role> roles);
+
+	List<Role> getRoles();
 
 }

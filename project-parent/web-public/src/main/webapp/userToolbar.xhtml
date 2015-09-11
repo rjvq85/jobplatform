@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+	<p:toolbar id="toolbarUser">
+		<!-- Search menu Jobs-->
+
+		<p:toolbarGroup>
+			<!-- Search menu -->
+			<p:selectOneMenu value="#{jobs.jobWord}" filter="true"
+				filterMatchMode="startsWith" width="10"
+				style="float:left; height:22px; margin-top:19px;">
+				<f:selectItem itemLabel="Pesquisar por:" itemValue=""
+					noSelectionOption="true" />
+				<f:selectItem itemLabel="Área Técnica" itemValue="Área Técnica" />
+				<f:selectItem itemLabel="Localização" itemValue="Localizacao" />
+				<p:ajax listener="#{jobs.onChange}"
+					update=":toolbarForm:toolbarUser" />
+			</p:selectOneMenu>
+			<span class="ui-separator"><span /> </span>
+			<p:selectOneMenu id="positionWord" value="#{jobs.searchWord}"
+				style="float:left; height:22px; margin-top:19px;margin-left: 10px;"
+				filter="true" filterMatchMode="startsWith" width="10">
+				<f:selectItems value="#{jobs.items}" />
+			</p:selectOneMenu>
+
+			<span class="ui-separator"><span /> </span>
+			<p:commandButton type="submit" icon="ui-icon-search"
+				action="#{jobs.searchToolbar()}"
+				style="float:left; margin-top:19px;margin-left: 10px;"
+				update=":positionForm:gridPositions :toolbarForm:toolbarUser" />
+			<!-- End search menu -->
+		</p:toolbarGroup>
+		<!-- Account Menu -->
+		<p:toolbarGroup align="right">
+			<!-- logoutButton -->
+			<h:form id="form-edit">
+				<!-- Account edit -->
+				<p:commandButton id="dropbutton" value="Conta" type="button"
+					icon="ui-icon-person"
+					style="float:right; height:22px; margin-top:19px;margin-right: 10px;" />
+				<p:menu overlay="true" trigger="dropbutton" my="right top"
+					at="right bottom">
+					<p:submenu label="Dados Utilizador">
+						<p:menuitem value="Alterar Email" icon="ui-icon-pencil"
+							title="Editar dados" oncomplete="PF('editUserDialog').show()"
+							process="@this" />
+
+						<p:menuitem value="Alterar Password" icon="ui-icon-key"
+							title="Editar Password" oncomplete="PF('editPassDialog').show()"
+							process="@this">
+							<p:resetInput target="frmEditPass:formEditPass" />
+						</p:menuitem>
+
+						<p:menuitem value="Actualizar CV" icon="ui-icon-key"
+							title="Actualizar CV" oncomplete="PF('editCVDialog').show()"
+							process="@this">
+						</p:menuitem>
+
+						<p:menuitem value="Encerrar conta" icon="ui-icon-closethick"
+							onclick="PF('deleteAccountDialog').show(); return false;" />
+					</p:submenu>
+				</p:menu>
+			</h:form>
+			<h:form id="form-logout">
+				<p:commandButton value="Logout" icon="ui-icon-power"
+					action="#{jobs.logout}" ajax="false"
+					style="float:right; height:22px; margin-top:19px;margin-right: 10px;" />
+			</h:form>
+		</p:toolbarGroup>
+	</p:toolbar>
+
+	<!-- dialog edit info -->
+	<h:form id="frmEditData">
+		<p:dialog header="Edit Info" widgetVar="editUserDialog"
+			showEffect="explode" hideEffect="explode" id="formEditUserData"
+			resizable="false" modal="true" closeOnEscape="true">
+			<h:panelGrid columns="1" id="painel-dialogEdit">
+				<p:outputLabel value="E-mail" for="eMail" />
+				<p:inputText id="eMail" size="20" maxlenght="40"
+					value="#{jobs.userMail}" required="true"
+					requiredMessage="Obrigatório email" />
+			</h:panelGrid>
+			<p:button value="Cancel" style=" margin-right:10px; margin-top:10px;"
+				onclick="PF('editUserDialog').hide(); return false;" />
+
+			<p:commandButton value="Save" id="botao-editar"
+				style=" margin-left:10px;margin-top:10px;"
+				action="#{jobs.editData()}"
+				oncomplete="if (!args.validationFailed)PF('editUserDialog').hide()" />
+		</p:dialog>
+	</h:form>
+
+	<!-- DIALOG Edit PASSWORD -->
+	<h:form id="frmEditPass">
+		<p:dialog header="Edit Password" widgetVar="editPassDialog"
+			showEffect="explode" hideEffect="explode" id="formEditPass"
+			resizable="false" modal="true" closeOnEscape="true">
+			<h:panelGrid columns="2" id="painel-dialogEditPass">
+				<h:outputLabel for="pwd1" value="Nova Password" />
+				<p:password id="pwd1" value="#{jobs.password}" match="pwd2"
+					label="Password" required="true" />
+				<h:outputLabel for="pwd2" value="Confirmar Password" />
+				<p:password id="pwd2" label="Password" required="true" />
+			</h:panelGrid>
+			<p:button value="Cancel" style=" margin-right:10px; margin-top:10px;"
+				onclick="PF('editPassDialog').hide(); return false;" />
+			<p:commandButton value="Save" type="submit"
+				style="margin-left:10px;margin-top:10px;"
+				action="#{jobs.editPass()}"
+				oncomplete="if (!args.validationFailed)PF('editPassDialog').hide()" />
+		</p:dialog>
+	</h:form>
+	<!-- Delete account -->
+	<h:form id="form-delete">
+		<p:confirmDialog header="Confirmação de eliminação"
+			message="Tem a certeza que pretende eliminar a conta?"
+			showEffect="explode" hideEffect="explode"
+			widgetVar="deleteAccountDialog">
+			<p:commandButton value="Yes" action="#{jobs.deleteAccount()}"
+				oncomplete="PF('deleteAccountDialog').hide()"></p:commandButton>
+			<p:button value="Cancel"
+				onclick="PF('deleteAccountDialog').hide(); return false;" />
+		</p:confirmDialog>
+	</h:form>
+	<!-- Edit CV -->
+	<h:form id="formCV">
+		<p:dialog header="Atualizar CV" widgetVar="editCVDialog"
+			showEffect="explode" hideEffect="explode" id="formEditPass"
+			resizable="false" modal="true" closeOnEscape="true">
+		</p:dialog>
+	</h:form>
+
+</ui:composition>
+</html>

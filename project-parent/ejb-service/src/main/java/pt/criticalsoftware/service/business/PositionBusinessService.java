@@ -15,6 +15,7 @@ import pt.criticalsoftware.service.exceptions.DuplicateReferenceException;
 import pt.criticalsoftware.service.model.IPosition;
 import pt.criticalsoftware.service.model.IPositionBuilder;
 import pt.criticalsoftware.service.model.IUser;
+import pt.criticalsoftware.service.notifications.IMailSender;
 import pt.criticalsoftware.service.persistence.IPositionPersistenceService;
 import pt.criticalsoftware.service.persistence.positions.TechnicalAreaType;
 import pt.criticalsoftware.service.persistence.states.PositionState;
@@ -30,6 +31,9 @@ public class PositionBusinessService implements IPositionBusinessService{
 
 	@EJB
 	private IPositionBuilder positionBuilder;
+	
+	@EJB
+	private IMailSender notif;
 
 	@Override
 	public List<IPosition> getAllPositions() {
@@ -47,23 +51,24 @@ public class PositionBusinessService implements IPositionBusinessService{
 
 
 	@Override
-	public IPosition createPosition(LocalDate openDate, Date closeDate,
-			String reference, String title, String locale, PositionState state,
+	public IPosition createPosition(LocalDate openDate, Date closeDate, String title, String locale, PositionState state,
 			String company, TechnicalAreaType technicalArea, String sla,
 			Integer vacancies, IUser responsable, String description,
 			Collection<String> adChannels)
 					throws DuplicateReferenceException {
 
-		verifyReference(reference);
-				
 		IPosition position = positionBuilder.closeDate(closeDate)
 				.company(company).description(description)
-				.locale(locale).openDate(openDate)
-				.reference(reference).sla(sla)
+				.locale(locale).openDate(openDate).sla(sla)
 				.state(state).technicalArea(technicalArea)
 				.title(title).vacancies(vacancies).adChannels(adChannels).responsable(responsable).build();
-		
-		return positionPersistence.create(position);
+		try {
+			position = positionPersistence.create(position);
+			notif.sendEmail(position, responsable);
+			return position;
+		} catch (Exception e) {
+			return null;
+		}
 
 	}
 	
@@ -121,11 +126,32 @@ public class PositionBusinessService implements IPositionBusinessService{
 		return positionPersistence.getPositionsByOpenDate(positionWord, openDate);
 	}
 
+	@Override
+	public List<IPosition> getPositionsByLocaleAndArea(String locale,
+			String technicalAreaStr) {
+		return positionPersistence.getPositionsByLocaleAndArea(locale,technicalAreaStr);
+	}
 
+	@Override
+	public List<IPosition> getPositionsByLocale(String locale) {
+		return positionPersistence.getPositionsByLocale(locale);
+	}
+
+	@Override
+	public List<IPosition> getPositionsByTechnicalArea(String technicalArea) {
+		return positionPersistence.getPositionsByTechnicalArea(technicalArea);
+	}
+
+	@Override
+	public List<IPosition> getPositionsByLast() {
+		return positionPersistence.getPositionsByLast();
+	}
 
 	@Override
 	public IPosition getPositionById(Integer positionId) {
 		return positionPersistence.find(positionId);
 	}
+	
+	
 
 }

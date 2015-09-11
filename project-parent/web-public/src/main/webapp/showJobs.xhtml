@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<meta charset="utf-8" />
+	<h:outputStylesheet library="css" name="jobs.css" />
+</h:head>
+<h:body>
+	<div id="outBox">
+
+		<h:form id="toolbarForm">
+			<ui:insert name="toolbar">
+				<ui:include src="userToolbar.xhtml" />
+			</ui:insert>
+		</h:form>
+		<p></p>
+		<p></p>
+		<h:outputText value="#{jobs.selectedSearchType}" />
+		<p></p>
+		<p:separator />
+		<h:form id="jobsForm">
+			<ui:insert name="jobsList">
+				<ui:include src="jobsList.xhtml" />
+			</ui:insert>
+		</h:form>
+		<!-- falta transformar em link -->
+		<h5>Candidatura espontânea</h5>
+	</div>
+</h:body>
+</html>

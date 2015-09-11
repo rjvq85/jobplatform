@@ -72,10 +72,15 @@
 										<li><a href="#">Perfil</a></li>
 										<li><a href="#">Password</a></li>
 										<li role="separator" class="divider"></li>
-										<li><a href="#{request.contextPath}/Authorized/Interviews/myinterviews.xhtml">As minhas Entrevistas</a></li>
+										<li><a
+											href="#{request.contextPath}/Authorized/Interviews/myinterviews.xhtml">As
+												minhas Entrevistas</a></li>
 										<h:panelGroup layout="block" rendered="#{userROLE eq 'ADMIN'}">
 											<li role="separator" class="divider"></li>
-											<li><a href="#">Gestão Utilizadores</a></li>
+											<li><a href="#{request.contextPath}/Authorized/Users/users.xhtml">Gestão Utilizadores</a></li>
+											<li><p:commandLink action="#{newPosition.doNothing()}" oncomplete="PF('mailWidget').show();" value="Notificações (Definições)" update=":emailForm">
+												<p:resetInput target=":emailForm"></p:resetInput>
+											</p:commandLink></li>
 										</h:panelGroup>
 									</ul></li>
 								<li><h:commandLink action="#{login.logout()}"
@@ -88,6 +93,9 @@
 				</nav>
 			</h:panelGroup>
 		</h:form>
+		<ui:insert name="EmailSettings">
+			<ui:include src="../AdminOnly/emailsettings.xhtml" />
+		</ui:insert>
 	</ui:composition>
 </h:body>
 </html>

@@ -20,11 +20,13 @@ import pt.criticalsoftware.service.persistence.roles.Role;
 @Stateless
 public class UserBusinessService implements IUserBusinessService {
 
+	@SuppressWarnings("unused")
 	private final Logger logger = LoggerFactory.getLogger(UserBusinessService.class);
 
 	@EJB
 	private IUserPersistenceService userpersistence;
 
+	@SuppressWarnings("cdi-ambiguous-dependency")
 	@Inject
 	private IUserBuilder userbuilder;
 
@@ -80,6 +82,11 @@ public class UserBusinessService implements IUserBusinessService {
 	@Override
 	public List<IUser> getAllUsers() {
 		return userpersistence.getAll();
+	}
+
+	@Override
+	public void delUser(IUser user) {
+		userpersistence.delete(user);
 	}
 
 }

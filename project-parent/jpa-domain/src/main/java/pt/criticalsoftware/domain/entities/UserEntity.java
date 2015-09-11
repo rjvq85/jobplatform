@@ -2,6 +2,7 @@ package pt.criticalsoftware.domain.entities;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.List;
 
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
@@ -9,6 +10,7 @@ import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -58,12 +60,12 @@ public class UserEntity implements Serializable {
 	@Column(name = "sobrenome", nullable = false)
 	private String lastName;
 
-	@ElementCollection
+	@ElementCollection(fetch=FetchType.EAGER)
 	@CollectionTable(name = "cargos", joinColumns = @JoinColumn(name = "nome_utilizador", referencedColumnName = "nome_utilizador") , uniqueConstraints = @UniqueConstraint(columnNames = {
 			"cargo", "nome_utilizador" }) )
 	@Enumerated(EnumType.STRING)
 	@Column(name = "cargo")
-	private Collection<Role> roles;
+	private List<Role> roles;
 
 	@OneToMany(mappedBy = "responsable")
 	private Collection<PositionEntity> positions;
@@ -111,11 +113,11 @@ public class UserEntity implements Serializable {
 		this.lastName = lastName;
 	}
 
-	public Collection<Role> getRoles() {
+	public List<Role> getRoles() {
 		return roles;
 	}
 
-	public void setRoles(Collection<Role> roles) {
+	public void setRoles(List<Role> roles) {
 		this.roles = roles;
 	}
 

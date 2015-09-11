@@ -1,6 +1,5 @@
 package pt.criticalsoftware.service.business;
 
-import java.util.Collection;
 import java.util.List;
 
 import pt.criticalsoftware.service.exceptions.DuplicateEmailException;
@@ -23,6 +22,8 @@ public interface IUserBusinessService {
 	IUser createUser(IUser user) throws DuplicateEmailException, DuplicateUsernameException;
 
 	List<IUser> getAllUsers();
+
+	void delUser(IUser user);
 
 
 }

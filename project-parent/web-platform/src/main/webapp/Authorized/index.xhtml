@@ -11,64 +11,64 @@
 <h:body>
 	<ui:composition template="../Authorized/Layout/layout.xhtml">
 		<ui:define name="content">
-			<div class="jumbotron">
-				<div class="container">
+			<h:panelGroup layout="block" styleClass="jumbotron">
+				<h:panelGroup layout="block" styleClass="container">
 					<h2>
 						Bem-vindo, <strong><h:outputText value="#{userFNLN}" /></strong>!
 					</h2>
 					<p>Na barra de navegação, em cima, poderá aceder, a partir de
 						qualquer lugar, às diferentes opções que tem disponível no seu
 						perfil.</p>
-				</div>
-			</div>
+				</h:panelGroup>
+			</h:panelGroup>
 			<h:panelGroup styleClass="container"
 				rendered="#{userROLE eq 'ADMIN'}">
-				<div class="row">
-					<div class="col-md-4 text-center">
+				<h:panelGroup layout="block" styleClass="row">
+					<h:panelGroup layout="block" styleClass="col-md-4 text-center">
 						<h:link
 							outcome="/Authorized/Positions/positionListAdminMain?faces-redirect=true">
-							<div class="media image-box">
+							<h:panelGroup layout="block" styleClass="media image-box">
 								<h:graphicImage
 									styleClass="media-object media-maxheight fade-box"
 									library="imgs" name="positions.jpg" />
-								<div class="dark-box"></div>
+								<h:panelGroup layout="block" styleClass="dark-box"></h:panelGroup>
 								<h2 class="text-overlay-image">
 									<strong>Posições</strong>
 								</h2>
-							</div>
+							</h:panelGroup>
 						</h:link>
-					</div>
-					<div class="col-md-4 text-center">
+					</h:panelGroup>
+					<h:panelGroup layout="block" styleClass="col-md-4 text-center">
 						<h:link outcome="/Authorized/Candidacies/candidacies?faces-redirect=true">
-							<div class="media image-box">
+							<h:panelGroup layout="block" styleClass="media image-box">
 								<h:graphicImage
 									styleClass="media-object media-maxheight fade-box"
 									library="imgs" name="candidacy.jpg" />
-								<div class="dark-box"></div>
+								<h:panelGroup layout="block" styleClass="dark-box"></h:panelGroup>
 								<h2 class="text-overlay-image">
 									<strong>Candidaturas</strong>
 								</h2>
-							</div>
+							</h:panelGroup>
 						</h:link>
-					</div>
+					</h:panelGroup>
 					<h:panelGroup layout="block" rendered="#{userROLE eq 'ADMIN'}">
-						<div class="col-md-4 text-center">
+						<h:panelGroup layout="block" styleClass="col-md-4 text-center">
 							<h:link outcome="/Authorized/Reports/reports?faces-redirect=true">
-								<div class="media image-box">
+								<h:panelGroup layout="block" styleClass="media image-box">
 									<h:graphicImage
 										styleClass="media-object media-maxheight fade-box"
 										library="imgs" name="reports.jpg" />
-									<div class="dark-box"></div>
+									<h:panelGroup layout="block" styleClass="dark-box"></h:panelGroup>
 									<h1 class="text-overlay-image">
 										<strong>Relatórios</strong>
 									</h1>
 
-								</div>
+								</h:panelGroup>
 							</h:link>
-						</div>
+						</h:panelGroup>
 					</h:panelGroup>
-				</div>
-				<div class="row spacer"></div>
+				</h:panelGroup>
+				<h:panelGroup layout="block" styleClass="row spacer"></h:panelGroup>
 			</h:panelGroup>
 		</ui:define>
 	</ui:composition>

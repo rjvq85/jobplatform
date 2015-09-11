@@ -27,79 +27,78 @@ import pt.criticalsoftware.service.persistence.states.PositionState;
 import pt.criticalsoftware.service.persistence.utils.LocalDatePersistenceConverter;
 
 @Entity
-@Table(name="posicoes")
-@NamedQueries({
-	@NamedQuery(name = "Position.getAll",query = "SELECT u from PositionEntity u"),
-	@NamedQuery(name = "Position.getPositionsByReference",query = "SELECT u from PositionEntity u WHERE u.reference = :reference"),
-	@NamedQuery(name = "Position.getPositionsByTitle",query = "SELECT u from PositionEntity u WHERE u.title = :title"),
-	@NamedQuery(name = "Position.getPositionsByState",query = "SELECT u from PositionEntity u WHERE u.state = :state"),
-	@NamedQuery(name = "Position.getPositionsByCompany",query = "SELECT u from PositionEntity u WHERE u.company = :company"),
-	@NamedQuery(name = "Position.getPositionsByTechnicalArea", query = "SELECT u FROM PositionEntity u WHERE u.technicalArea = :technicalArea"),
-	@NamedQuery(name = "Position.getPositionsByLocale", query = "SELECT u FROM PositionEntity u WHERE u.locale = :locale"),
-	@NamedQuery(name = "Position.getPositionsByDate", query = "SELECT u FROM PositionEntity u WHERE u.closeDate = :closeDate"),
-	@NamedQuery(name = "Position.getPositionsByOpenDate", query = "SELECT u FROM PositionEntity u WHERE u.openDate = :openDate"),
-	@NamedQuery(name = "Position.verifyReference", query = "SELECT u FROM PositionEntity u WHERE u.reference = :reference"),
-	@NamedQuery(name = "Position.excludingCandidacy", query = "SELECT p FROM PositionEntity p JOIN p.candidacy c WHERE c.candidate.username NOT like :param"),
-	@NamedQuery(name = "Position.getPositionByManager", query = "SELECT p FROM PositionEntity p WHERE p.responsable.id = :param")
-})
+@Table(name = "posicoes")
+@NamedQueries({ @NamedQuery(name = "Position.getAll", query = "SELECT u from PositionEntity u"),
+		@NamedQuery(name = "Position.getPositionsByReference", query = "SELECT u from PositionEntity u WHERE u.reference = :reference"),
+		@NamedQuery(name = "Position.getPositionsByTitle", query = "SELECT u from PositionEntity u WHERE u.title = :title"),
+		@NamedQuery(name = "Position.getPositionsByState", query = "SELECT u from PositionEntity u WHERE u.state = :state"),
+		@NamedQuery(name = "Position.getPositionsByCompany", query = "SELECT u from PositionEntity u WHERE u.company = :company"),
+		@NamedQuery(name = "Position.getPositionsByTechnicalArea", query = "SELECT u FROM PositionEntity u WHERE u.technicalArea = :technicalArea"),
+		@NamedQuery(name = "Position.getPositionsByLocale", query = "SELECT u FROM PositionEntity u WHERE u.locale = :locale"),
+		@NamedQuery(name = "Position.getPositionsByDate", query = "SELECT u FROM PositionEntity u WHERE u.closeDate = :closeDate"),
+		@NamedQuery(name = "Position.getPositionsByOpenDate", query = "SELECT u FROM PositionEntity u WHERE u.openDate = :openDate"),
+		@NamedQuery(name = "Position.verifyReference", query = "SELECT u FROM PositionEntity u WHERE u.reference = :reference"),
+		@NamedQuery(name = "Position.excludingCandidacy", query = "SELECT p FROM PositionEntity p JOIN p.candidacy c WHERE c.candidate.username NOT like :param"),
+		@NamedQuery(name = "Position.getPositionByManager", query = "SELECT p FROM PositionEntity p WHERE p.responsable.id = :param"),
+		@NamedQuery(name = "Position.getLastPositions", query = "SELECT u FROM PositionEntity u ORDER BY u.openDate DESC") })
 public class PositionEntity {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
-	
+
 	@Convert(converter = LocalDatePersistenceConverter.class)
-	@Column(name="data_abertura",nullable=false)
+	@Column(name = "data_abertura", nullable = false)
 
 	private LocalDate openDate;
-	
+
 	@Future
 	@Temporal(TemporalType.DATE)
-	@Column(name="data_fecho",nullable=false)
+	@Column(name = "data_fecho", nullable = false)
 	private Date closeDate;
-	
-	@Column(name="referencia",nullable=false)
+
+	@Column(name = "referencia")
 	private String reference;
-	
-	@Column(name="titulo",nullable=false)
+
+	@Column(name = "titulo", nullable = false)
 	private String title;
-	
-	@Column(name="localizacao",nullable=false)
+
+	@Column(name = "localizacao", nullable = false)
 	private String locale;
-	
-	@Column(name="estado",nullable=false)
+
+	@Column(name = "estado", nullable = false)
 	@Enumerated(EnumType.STRING)
 	private PositionState state;
-	
-	@Column(name="empresa",nullable=false)
+
+	@Column(name = "empresa", nullable = false)
 	private String company;
-	
-	@Column(name="area_tecnica",nullable=false)
+
+	@Column(name = "area_tecnica", nullable = false)
 	@Enumerated(EnumType.STRING)
 	private TechnicalAreaType technicalArea;
-	
-	@Column(name="sla",nullable=false)
+
+	@Column(name = "sla", nullable = false)
 	private String sla;
-	
-	@Column(name="vagas",nullable=false)
+
+	@Column(name = "vagas", nullable = false)
 	private Integer vacancies;
-	
+
 	@ManyToOne
 	private UserEntity responsable;
-	
-	@Column(name="descricao",nullable=false)
+
+	@Column(name = "descricao", nullable = false)
 	private String description;
-	
+
 	@ElementCollection
-	@Column(name="canais_publicacao")
+	@Column(name = "canais_publicacao")
 	private Collection<String> adChannels;
-	
-	@OneToMany(mappedBy="position")
+
+	@OneToMany(mappedBy = "position")
 	private Collection<InterviewEntity> interviews;
-	
-	@OneToMany(mappedBy="positionCandidacy")
+
+	@OneToMany(mappedBy = "positionCandidacy")
 	private Collection<CandidacyEntity> candidacy;
-	
+
 	public PositionEntity() {
 	}
 
@@ -251,7 +250,5 @@ public class PositionEntity {
 			return false;
 		return true;
 	}
-	
-	
 
 }

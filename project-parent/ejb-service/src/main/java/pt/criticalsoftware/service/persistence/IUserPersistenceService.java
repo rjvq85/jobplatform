@@ -1,6 +1,5 @@
 package pt.criticalsoftware.service.persistence;
 
-import java.util.Collection;
 import java.util.List;
 
 import pt.criticalsoftware.service.exceptions.DuplicateEmailException;
@@ -25,6 +24,8 @@ public interface IUserPersistenceService {
 	IUser findByID(Object id);
 
 	List<IUser> getAll();
+
+	void delete(IUser user);
 		
 
 }

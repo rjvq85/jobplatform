@@ -122,29 +122,28 @@ public class PositionPersistenceService implements IPositionPersistenceService {
 		TypedQuery<PositionEntity> query = null;
 
 		if (positionWord.equals("Código"))
-			query=em.createNamedQuery("Position.getPositionsByReference", PositionEntity.class)
-			.setParameter("reference", searchCode);
-		else if (positionWord.equals("Título")) 
-			query=em.createNamedQuery("Position.getPositionsByTitle", PositionEntity.class)
-			.setParameter("title", searchCode);
-		else if (positionWord.equals("Localizacao")) 
-			query=em.createNamedQuery("Position.getPositionsByLocale", PositionEntity.class)
-			.setParameter("locale", searchCode);
+			query = em.createNamedQuery("Position.getPositionsByReference", PositionEntity.class)
+					.setParameter("reference", searchCode);
+		else if (positionWord.equals("Título"))
+			query = em.createNamedQuery("Position.getPositionsByTitle", PositionEntity.class).setParameter("title",
+					searchCode);
+		else if (positionWord.equals("Localizacao"))
+			query = em.createNamedQuery("Position.getPositionsByLocale", PositionEntity.class).setParameter("locale",
+					searchCode);
 		else if (positionWord.equals("Estado")) {
 			PositionState state = null;
 			if (searchCode.equalsIgnoreCase("aberta"))
-				state=PositionState.ABERTA;
+				state = PositionState.ABERTA;
 			else if (searchCode.equalsIgnoreCase("fechada"))
-				state=PositionState.FECHADA;
+				state = PositionState.FECHADA;
 			else if (searchCode.equalsIgnoreCase("em espera"))
-				state=PositionState.EM_ESPERA;
-			query=em.createNamedQuery("Position.getPositionsByState", PositionEntity.class)
-					.setParameter("state", state);
-		}
-		else if (positionWord.equals("Empresa")) 
-			query=em.createNamedQuery("Position.getPositionsByCompany", PositionEntity.class)
-			.setParameter("company", searchCode);
-		else if (positionWord.equals("Área Técnica")){
+				state = PositionState.EM_ESPERA;
+			query = em.createNamedQuery("Position.getPositionsByState", PositionEntity.class).setParameter("state",
+					state);
+		} else if (positionWord.equals("Empresa"))
+			query = em.createNamedQuery("Position.getPositionsByCompany", PositionEntity.class).setParameter("company",
+					searchCode);
+		else if (positionWord.equals("Área Técnica")) {
 			TechnicalAreaType area = null;
 			if (positionWord.equals("SSPA"))
 				area = TechnicalAreaType.SSPA;
@@ -172,26 +171,25 @@ public class PositionPersistenceService implements IPositionPersistenceService {
 
 	@Override
 	public List<IPosition> getManagerPositions(Integer currentUserID) {
-		TypedQuery<PositionEntity> query = em.createNamedQuery("Position.getPositionByManager",PositionEntity.class)
+		TypedQuery<PositionEntity> query = em.createNamedQuery("Position.getPositionByManager", PositionEntity.class)
 				.setParameter("param", currentUserID);
 		List<PositionEntity> entities = query.getResultList();
 		List<IPosition> interfaces = new ArrayList<>();
-		for (PositionEntity p:entities) {
+		for (PositionEntity p : entities) {
 			interfaces.add(new PositionProxy(p));
 		}
 		return interfaces;
 	}
-	
-	public List<IPosition> getPositionsByDate(String positionWord,
-			Date closeDate) {
-		TypedQuery<PositionEntity> query = null;
-		query=em.createNamedQuery("Position.getPositionsByDate", PositionEntity.class)
-				.setParameter("closeDate", closeDate);
 
-		List<PositionEntity> entities=query.getResultList();
-		List<IPosition> proxies=new ArrayList<>();
-		for(PositionEntity pe:entities){
-			PositionProxy positionProxy= new PositionProxy(pe);
+	public List<IPosition> getPositionsByDate(String positionWord, Date closeDate) {
+		TypedQuery<PositionEntity> query = null;
+		query = em.createNamedQuery("Position.getPositionsByDate", PositionEntity.class).setParameter("closeDate",
+				closeDate);
+
+		List<PositionEntity> entities = query.getResultList();
+		List<IPosition> proxies = new ArrayList<>();
+		for (PositionEntity pe : entities) {
+			PositionProxy positionProxy = new PositionProxy(pe);
 			proxies.add(positionProxy);
 		}
 		return proxies;
@@ -199,109 +197,111 @@ public class PositionPersistenceService implements IPositionPersistenceService {
 	}
 
 	@Override
-	public List<IPosition> getPositionsByKeyWords(String positionWord,
-			String searchCode) {
+	public List<IPosition> getPositionsByKeyWords(String positionWord, String searchCode) {
 
-		boolean aux=false;
+		boolean aux = false;
 		TypedQuery<PositionEntity> query = null;
-		if (searchCode.equalsIgnoreCase("aberta") || searchCode.equalsIgnoreCase("fechada")||searchCode.equalsIgnoreCase("em espera")){
+		if (searchCode.equalsIgnoreCase("aberta") || searchCode.equalsIgnoreCase("fechada")
+				|| searchCode.equalsIgnoreCase("em espera")) {
 			PositionState state = null;
-			aux=true;
+			aux = true;
 			if (searchCode.equalsIgnoreCase("aberta"))
-				state=PositionState.ABERTA;
+				state = PositionState.ABERTA;
 			else if (searchCode.equalsIgnoreCase("fechada"))
-				state=PositionState.FECHADA;
+				state = PositionState.FECHADA;
 			else if (searchCode.equalsIgnoreCase("em espera"))
-				state=PositionState.EM_ESPERA;
+				state = PositionState.EM_ESPERA;
 
-			query=em.createNamedQuery("Position.getPositionsByState", PositionEntity.class)
-					.setParameter("state", state);
-		}
-		else if(searchCode.equalsIgnoreCase("SSPA")||searchCode.equalsIgnoreCase(".Net Development")||
-				searchCode.equalsIgnoreCase("Java Development")|| searchCode.equalsIgnoreCase("Safety Critical")||
-				searchCode.equalsIgnoreCase("Project Management")||searchCode.equalsIgnoreCase("Integration")){
+			query = em.createNamedQuery("Position.getPositionsByState", PositionEntity.class).setParameter("state",
+					state);
+		} else if (searchCode.equalsIgnoreCase("SSPA") || searchCode.equalsIgnoreCase(".Net Development")
+				|| searchCode.equalsIgnoreCase("Java Development") || searchCode.equalsIgnoreCase("Safety Critical")
+				|| searchCode.equalsIgnoreCase("Project Management") || searchCode.equalsIgnoreCase("Integration")) {
 			TechnicalAreaType area = null;
-			aux=true;
+			aux = true;
 			if (searchCode.equalsIgnoreCase("SSPA"))
-				area=TechnicalAreaType.SSPA;
+				area = TechnicalAreaType.SSPA;
 			else if (searchCode.equalsIgnoreCase(".Net Development"))
-				area=TechnicalAreaType.NET_DEVELOPMENT;
+				area = TechnicalAreaType.NET_DEVELOPMENT;
 			else if (searchCode.equalsIgnoreCase("Java Development"))
-				area=TechnicalAreaType.JAVA_DEVELOPMENT;
+				area = TechnicalAreaType.JAVA_DEVELOPMENT;
 			else if (searchCode.equalsIgnoreCase("Safety Critical"))
-				area=TechnicalAreaType.SAFETY_CRITICAL;
+				area = TechnicalAreaType.SAFETY_CRITICAL;
 			else if (searchCode.equalsIgnoreCase("Project Management"))
-				area=TechnicalAreaType.PROJECT_MANAGEMENT;
+				area = TechnicalAreaType.PROJECT_MANAGEMENT;
 			else if (searchCode.equalsIgnoreCase("Integration"))
-				area=TechnicalAreaType.INTEGRATION;
-			query=em.createNamedQuery("Position.getPositionsByTechnicalArea", PositionEntity.class)
+				area = TechnicalAreaType.INTEGRATION;
+			query = em.createNamedQuery("Position.getPositionsByTechnicalArea", PositionEntity.class)
 					.setParameter("technicalArea", area);
 		}
-		if (aux){
-			List<PositionEntity> entities=query.getResultList();
-			List<IPosition> proxies=new ArrayList<>();
-			for(PositionEntity pe:entities){
-				PositionProxy positionProxy= new PositionProxy(pe);
+		if (aux) {
+			List<PositionEntity> entities = query.getResultList();
+			List<IPosition> proxies = new ArrayList<>();
+			for (PositionEntity pe : entities) {
+				PositionProxy positionProxy = new PositionProxy(pe);
 				proxies.add(positionProxy);
 			}
 			return proxies;
-		}else {
-			TypedQuery<PositionEntity> query1=em.createNamedQuery("Position.getPositionsByReference", PositionEntity.class)
+		} else {
+			TypedQuery<PositionEntity> query1 = em
+					.createNamedQuery("Position.getPositionsByReference", PositionEntity.class)
 					.setParameter("reference", searchCode);
-			TypedQuery<PositionEntity> query2=em.createNamedQuery("Position.getPositionsByTitle", PositionEntity.class)
+			TypedQuery<PositionEntity> query2 = em
+					.createNamedQuery("Position.getPositionsByTitle", PositionEntity.class)
 					.setParameter("title", searchCode);
-			TypedQuery<PositionEntity> query3=
-					em.createNamedQuery("Position.getPositionsByLocale", PositionEntity.class)
+			TypedQuery<PositionEntity> query3 = em
+					.createNamedQuery("Position.getPositionsByLocale", PositionEntity.class)
 					.setParameter("locale", searchCode);
-			TypedQuery<PositionEntity> query4=em.createNamedQuery("Position.getPositionsByCompany", PositionEntity.class)
+			TypedQuery<PositionEntity> query4 = em
+					.createNamedQuery("Position.getPositionsByCompany", PositionEntity.class)
 					.setParameter("company", searchCode);
-			List<PositionEntity> entities1=query1.getResultList();
-			List<PositionEntity> entities2=query2.getResultList();
-			List<PositionEntity> entities3=query3.getResultList();
-			List<PositionEntity> entities4=query4.getResultList();
-			if (entities1.size()>=1){
-				List<IPosition> proxies1=new ArrayList<>();
-				for(PositionEntity pe:entities1){
-					PositionProxy positionProxy= new PositionProxy(pe);
+			List<PositionEntity> entities1 = query1.getResultList();
+			List<PositionEntity> entities2 = query2.getResultList();
+			List<PositionEntity> entities3 = query3.getResultList();
+			List<PositionEntity> entities4 = query4.getResultList();
+			if (entities1.size() >= 1) {
+				List<IPosition> proxies1 = new ArrayList<>();
+				for (PositionEntity pe : entities1) {
+					PositionProxy positionProxy = new PositionProxy(pe);
 					proxies1.add(positionProxy);
 				}
-				aux=true;
+				aux = true;
 				return proxies1;
 			}
-			if (entities2.size()>=1){
-				List<IPosition> proxies2=new ArrayList<>();
-				for(PositionEntity pe:entities2){
-					PositionProxy positionProxy= new PositionProxy(pe);
+			if (entities2.size() >= 1) {
+				List<IPosition> proxies2 = new ArrayList<>();
+				for (PositionEntity pe : entities2) {
+					PositionProxy positionProxy = new PositionProxy(pe);
 					proxies2.add(positionProxy);
 				}
-				aux=true;
+				aux = true;
 				return proxies2;
 			}
-			if (entities3.size()>=1){
-				List<IPosition> proxies3=new ArrayList<>();
-				for(PositionEntity pe:entities3){
-					PositionProxy positionProxy= new PositionProxy(pe);
+			if (entities3.size() >= 1) {
+				List<IPosition> proxies3 = new ArrayList<>();
+				for (PositionEntity pe : entities3) {
+					PositionProxy positionProxy = new PositionProxy(pe);
 					proxies3.add(positionProxy);
 				}
-				aux=true;
+				aux = true;
 				return proxies3;
 			}
-			if (entities4.size()>=1){
-				List<IPosition> proxies4=new ArrayList<>();
-				for(PositionEntity pe:entities4){
-					PositionProxy positionProxy= new PositionProxy(pe);
+			if (entities4.size() >= 1) {
+				List<IPosition> proxies4 = new ArrayList<>();
+				for (PositionEntity pe : entities4) {
+					PositionProxy positionProxy = new PositionProxy(pe);
 					proxies4.add(positionProxy);
 				}
-				aux=true;
+				aux = true;
 				return proxies4;
 			}
 		}
 
-		if (!aux){
+		if (!aux) {
 			LocalDate openDate = LocalDate.parse(searchCode);
-			List<IPosition> entities=getPositionsByOpenDate(positionWord,openDate);
-			Date ld=convertStringToDate(searchCode);
-			List<IPosition> entities1=getPositionsByDate(positionWord,ld);
+			List<IPosition> entities = getPositionsByOpenDate(positionWord, openDate);
+			Date ld = convertStringToDate(searchCode);
+			List<IPosition> entities1 = getPositionsByDate(positionWord, ld);
 			entities.addAll(entities1);
 			return entities;
 		}
@@ -309,33 +309,125 @@ public class PositionPersistenceService implements IPositionPersistenceService {
 	}
 
 	@Override
-	public List<IPosition> getPositionsByOpenDate(String positionWord,LocalDate openDate) {
+	public List<IPosition> getPositionsByOpenDate(String positionWord, LocalDate openDate) {
 		TypedQuery<PositionEntity> query = null;
-		query=em.createNamedQuery("Position.getPositionsByOpenDate", PositionEntity.class)
-				.setParameter("openDate", openDate);
+		query = em.createNamedQuery("Position.getPositionsByOpenDate", PositionEntity.class).setParameter("openDate",
+				openDate);
 
-		List<PositionEntity> entities=query.getResultList();
-		List<IPosition> proxies=new ArrayList<>();
-		for(PositionEntity pe:entities){
-			PositionProxy positionProxy= new PositionProxy(pe);
+		List<PositionEntity> entities = query.getResultList();
+		List<IPosition> proxies = new ArrayList<>();
+		for (PositionEntity pe : entities) {
+			PositionProxy positionProxy = new PositionProxy(pe);
 			proxies.add(positionProxy);
 		}
-		logger.info("tamanho"+proxies.size());
+		logger.info("tamanho" + proxies.size());
 		return proxies;
 
 	}
-	private Date convertStringToDate(String dateString)
-	{
+
+	@Override
+	public List<IPosition> getPositionsByLocaleAndArea(String locale, String technicalAreaStr) {
+
+		TypedQuery<PositionEntity> query = null;
+		TechnicalAreaType area = null;
+
+		if (technicalAreaStr.equalsIgnoreCase("SSPA"))
+			area = TechnicalAreaType.SSPA;
+		else if (technicalAreaStr.equalsIgnoreCase(".Net Development"))
+			area = TechnicalAreaType.NET_DEVELOPMENT;
+		else if (technicalAreaStr.equalsIgnoreCase("Java Development"))
+			area = TechnicalAreaType.JAVA_DEVELOPMENT;
+		else if (technicalAreaStr.equalsIgnoreCase("Safety Critical"))
+			area = TechnicalAreaType.SAFETY_CRITICAL;
+		else if (technicalAreaStr.equalsIgnoreCase("Project Management"))
+			area = TechnicalAreaType.PROJECT_MANAGEMENT;
+		else if (technicalAreaStr.equalsIgnoreCase("Integration"))
+			area = TechnicalAreaType.INTEGRATION;
+
+		query = em.createNamedQuery("Position.getPositionsByLocaleAndArea", PositionEntity.class)
+				.setParameter("locale", locale).setParameter("technicalArea", area);
+
+		List<PositionEntity> entities = query.getResultList();
+		List<IPosition> proxies = new ArrayList<>();
+		for (PositionEntity pe : entities) {
+			PositionProxy positionProxy = new PositionProxy(pe);
+			proxies.add(positionProxy);
+		}
+
+		return proxies;
+	}
+
+	@Override
+	public List<IPosition> getPositionsByLocale(String locale) {
+		TypedQuery<PositionEntity> query = null;
+		query = em.createNamedQuery("Position.getPositionsByLocale", PositionEntity.class).setParameter("locale",
+				locale);
+
+		List<PositionEntity> entities = query.getResultList();
+		List<IPosition> proxies = new ArrayList<>();
+		for (PositionEntity pe : entities) {
+			PositionProxy positionProxy = new PositionProxy(pe);
+			proxies.add(positionProxy);
+		}
+
+		return proxies;
+	}
+
+	@Override
+	public List<IPosition> getPositionsByTechnicalArea(String technicalArea) {
+		TypedQuery<PositionEntity> query = null;
+		TechnicalAreaType area = null;
+
+		if (technicalArea.equalsIgnoreCase("SSPA"))
+			area = TechnicalAreaType.SSPA;
+		else if (technicalArea.equalsIgnoreCase(".Net Development"))
+			area = TechnicalAreaType.NET_DEVELOPMENT;
+		else if (technicalArea.equalsIgnoreCase("Java Development"))
+			area = TechnicalAreaType.JAVA_DEVELOPMENT;
+		else if (technicalArea.equalsIgnoreCase("Safety Critical"))
+			area = TechnicalAreaType.SAFETY_CRITICAL;
+		else if (technicalArea.equalsIgnoreCase("Project Management"))
+			area = TechnicalAreaType.PROJECT_MANAGEMENT;
+		else if (technicalArea.equalsIgnoreCase("Integration"))
+			area = TechnicalAreaType.INTEGRATION;
+
+		query = em.createNamedQuery("Position.getPositionsByTechnicalArea", PositionEntity.class)
+				.setParameter("technicalArea", area);
+
+		List<PositionEntity> entities = query.getResultList();
+		List<IPosition> proxies = new ArrayList<>();
+		for (PositionEntity pe : entities) {
+			PositionProxy positionProxy = new PositionProxy(pe);
+			proxies.add(positionProxy);
+		}
+
+		return proxies;
+	}
+
+	@Override
+	public List<IPosition> getPositionsByLast() {
+		TypedQuery<PositionEntity> query = null;
+
+		query = em.createNamedQuery("Position.getLastPositions", PositionEntity.class);
+
+		List<PositionEntity> entities = query.getResultList();
+		logger.info("Tamanho" + entities.size());
+		List<IPosition> proxies = new ArrayList<>();
+		for (PositionEntity pe : entities) {
+			PositionProxy positionProxy = new PositionProxy(pe);
+			proxies.add(positionProxy);
+		}
+		return proxies;
+	}
+
+	private Date convertStringToDate(String dateString) {
 		String expectedPattern = "yyyy-MM-dd";
 		SimpleDateFormat formatter = new SimpleDateFormat(expectedPattern);
-		try
-		{
+		try {
 			String dateInput = dateString;
 			Date date = formatter.parse(dateInput);
 			return date;
-		}
-		catch (ParseException e)
-		{
+		} catch (ParseException e) {
 			e.printStackTrace();
 		}
 		return null;

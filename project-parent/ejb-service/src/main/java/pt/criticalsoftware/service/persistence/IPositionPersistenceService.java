@@ -4,10 +4,8 @@ import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
-import pt.criticalsoftware.service.exceptions.DuplicateEmailException;
 import pt.criticalsoftware.service.exceptions.DuplicateReferenceException;
 import pt.criticalsoftware.service.model.IPosition;
-import pt.criticalsoftware.service.model.IUser;
 
 public interface IPositionPersistenceService {
 
@@ -32,5 +30,13 @@ public interface IPositionPersistenceService {
 	IPosition find(Object id);
 
 	List<IPosition> getManagerPositions(Integer currentUserID);
+
+	List<IPosition> getPositionsByLocaleAndArea(String locale, String technicalAreaStr);
+
+	List<IPosition> getPositionsByLocale(String locale);
+
+	List<IPosition> getPositionsByTechnicalArea(String technicalArea);
+
+	List<IPosition> getPositionsByLast();
 
 }

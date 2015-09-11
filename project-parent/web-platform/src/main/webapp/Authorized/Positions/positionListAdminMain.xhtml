@@ -11,14 +11,14 @@
 	<h:outputStylesheet library="css" name="positionListAdmin.css" />
 </h:head>
 <h:body>
-	<div id="outBox">
+	<h:panelGroup layout="block" id="outBox">
 		<h2>Posições</h2>
 		<p></p>
 		<p:separator />
 
 
 		<h:form id="toolbarForm">
-			<p:messages id="msgs" />
+			<p:messages id="msgs" globalOnly="true" />
 			<ui:insert name="toolbar">
 				<ui:include src="positionListAdminToolbar.xhtml" />
 			</ui:insert>
@@ -42,11 +42,10 @@
 			</ui:insert>
 		</h:form>
 
-		<h:form id="formNewPosition">
-			<ui:insert name="NewPosition">
-				<ui:include src="positionListAdminNewPosition.xhtml" />
-			</ui:insert>
-		</h:form>
-	</div>
+
+		<ui:insert name="NewPosition">
+			<ui:include src="positionListAdminNewPosition.xhtml" />
+		</ui:insert>
+	</h:panelGroup>
 </h:body>
 </html>

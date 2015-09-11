@@ -32,8 +32,8 @@
 
 /* Navbar Red */
 .navbar-red {
-	background-color: #e74c3d;
-	border-color: #fd7d70;
+	background-color: firebrick;
+	border-color: firebrick;
 }
 
 .navbar-red .navbar-brand {
@@ -256,6 +256,8 @@ btnhovercolor.hover {
 	text-shadow: none !important;
 }
 
+
+
 /* Glyphs's size */
 .glyph-xl {
 	font-size: 35px !important;
@@ -279,7 +281,7 @@ btnhovercolor.hover {
 }
 
 .newlabeled th {
-	font-weight: 400 !important;
+	font-weight: 200 !important;
 	border: none !important;
 	border-radius: inherit;
 	background-color: firebrick !important;
@@ -309,4 +311,13 @@ btnhovercolor.hover {
 
 .bbtn-default {
 	background-color: #fff;
+}
+
+/* Lista de utilizadores */
+
+.myRow {
+	background-color: cornflowerblue !important;
+    border-color: aqua !important;
+    color: antiquewhite !important;
+	
 }

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+	<p></p>
+	<p:separator />
+	<p:panel id="panelScriptList" style="margin-bottom:10px;">
+		<h:panelGrid columns="2" cellpadding="5">
+			<h:outputLabel for="title" value="Título do Guião" />
+			<p:inputText id="title" required="true" size="30"
+				value="#{newScript.title}" />
+		</h:panelGrid>
+	</p:panel>
+	<p:separator />
+	<p:dataTable value="#{newScript.questions}" var="question"
+		widgetVar="scriptList" selectionMode="single" rowKey="#{question.id}"
+		draggableRows="true" itemValue="#{question}" id="scriptList">
+
+		<p:ajax event="rowReorder" listener="#{newScript.onRowReorder}" />
+		<p:column headerText="Pergunta">
+			<h:outputText value="#{question.questionStr}" />
+		</p:column>
+
+		<p:column headerText="Tipo Resposta">
+			<h:outputText value="#{question.answer}" />
+		</p:column>
+
+	</p:dataTable>
+
+
+</ui:composition>
+</html>

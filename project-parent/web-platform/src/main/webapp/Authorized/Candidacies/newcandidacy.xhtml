@@ -17,7 +17,7 @@
 <h:body>
 	<ui:composition template="../Layout/layout.xhtml">
 		<ui:define name="content">
-			<h:panelGroup layout="block" styleClass="container" id="container">
+			<h:panelGroup layout="block" styleClass="container" id="newCandContainer">
 				<h:panelGroup layout="block"
 					styleClass="alert col-md-offset-4 col-md-4 text-center">
 					<h:messages id="editglobalmsgs" styleClass="list-group alert alert-info"
@@ -191,7 +191,7 @@
 									styleClass="col-md-offset-8 col-md-4 text-right">
 									<h:commandButton action="#{newCandidacy.create()}"
 										value="Submeter" styleClass="btn btn-success" onclick="fadeoutMsg();">
-										<f:ajax execute="inputform" render=":container :bottomform :messages" />
+										<f:ajax execute="inputform" render=":newCandContainer :bottomform :messages" />
 									</h:commandButton>
 								</h:panelGroup>
 							</h:panelGroup>
@@ -210,8 +210,8 @@
 									styleClass="col-md-offset-4 col-md-4 text-right">
 									<h:commandButton action="#{newCandidacy.reset()}"
 										value="Limpar" styleClass="btn btn-default">
-										<f:ajax render=":container" onevent="swapButtons();" />
-										<f:resetValues render=":container" />
+										<f:ajax render=":newCandContainer" onevent="swapButtons();" />
+										<f:resetValues render=":newCandContainer" />
 									</h:commandButton>
 								</h:panelGroup>
 							</h:panelGroup>

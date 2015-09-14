@@ -39,18 +39,19 @@
 								<h:form prependId="false" id="form">
 									<h:panelGroup layout="block" class="input-group">
 										<h:panelGroup styleClass="input-group-btn">
-											<h:commandButton action="#{candidacyListView.clearSearch()}"
-												value="x" styleClass="btn btn-default">
-												<f:ajax render="lista" />
+											<h:commandButton action="#{userList.clearSearch()}" value="x"
+												styleClass="btn btn-default">
+												<f:ajax render="userList" />
 											</h:commandButton>
 										</h:panelGroup>
-										<h:inputText id="campopesquisa"
-											value="#{candidacyListView.searchText}"
+										<h:inputText id="campopesquisa" value="#{userList.searchText}"
 											styleClass="form-control"
-											a:placeholder="Pesquisa de candidaturas (por data: dd-MM-aaaa ou dd/MM/aaaa)" />
+											a:placeholder="Pesquisa de utilizadores"
+											onkeypress="searchUser();" />
 										<h:panelGroup styleClass="input-group-btn">
-											<h:commandButton action="#{candidacyListView.doSearch()}"
-												value="Pesquisar" styleClass="btn btn-default">
+											<h:commandButton id="searchUsersBtn"
+												action="#{userList.doSearch()}" value="Pesquisar"
+												styleClass="btn btn-default">
 												<f:ajax execute="campopesquisa" render="lista" />
 											</h:commandButton>
 										</h:panelGroup>
@@ -87,12 +88,15 @@
 										sortBy="#{user.username}">
 										<h:outputText value="#{user.username}" />
 									</p:column>
-									<p:column headerText="Cargo" sortBy="#{user.roles.get(0).detail}">
+									<p:column headerText="Cargo"
+										sortBy="#{user.roles.get(0).detail}">
 										<h:outputText value="#{user.roles.get(0).detail}" />
 									</p:column>
 									<p:column headerText="Eliminar">
-										<p:commandLink rendered="#{user.id ne userID}" action="#{userList.deleteUser(user)}"
-											update=":userList" process="@this" onclick="if (!confirm('Tem a certeza?')) return false;">
+										<p:commandLink rendered="#{user.id ne userID}"
+											action="#{userList.deleteUser(user)}" update=":userList"
+											process="@this"
+											onclick="if (!confirm('Tem a certeza?')) return false;">
 											<i class="glyphicon glyphicon-remove-circle"></i>
 										</p:commandLink>
 									</p:column>
@@ -119,6 +123,11 @@
 			<ui:insert name="NewUser">
 				<ui:include src="newuserdlg.xhtml" />
 			</ui:insert>
+			<script>
+				function searchUser() {
+						$('#searchUsersBtn').click();
+					}
+			</script>
 		</ui:define>
 	</ui:composition>
 </h:body>

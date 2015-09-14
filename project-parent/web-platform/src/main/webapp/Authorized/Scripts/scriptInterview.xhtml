@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<meta charset="utf-8" />
+	<h:outputStylesheet library="css" name="script.css" />
+</h:head>
+<h:body>
+<f:metadata>    
+    <f:event type="preRenderView" listener="#{dynaFormController.startup()}"/>    
+</f:metadata>  
+	<div id="outBox">
+		<div id="scriptInterview">
+
+			<h:outputText id="display" value="#{dynaFormController.title}" />
+			<p:separator />
+			<p></p>
+
+		</div>
+		<h:form id="scriptGuide">
+		<p:messages id="messages"  autoUpdate="true" closable="true" />
+			<ui:insert name="toolbar">
+				<ui:include src="scriptConstruct.xhtml" />
+			</ui:insert>
+
+		</h:form>
+	</div>
+</h:body>
+</html>

@@ -65,8 +65,9 @@
 						<h:panelGroup layout="block" class="row spacer"></h:panelGroup>
 						<h:form prependId="false" id="listform">
 							<h:panelGroup layout="block" styleClass="table-responsive">
-								<p:dataTable id="lista" tableStyleClass="table-condensed newlabeled"
-									var="i" value="#{myInterviews.myInterviews}"
+								<p:dataTable id="lista"
+									tableStyleClass="table-condensed newlabeled" var="i"
+									value="#{myInterviews.myInterviews}"
 									emptyMessage="Sem resultados..." styleClass="text-center"
 									paginator="true" paginatorPosition="bottom"
 									paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
@@ -86,8 +87,11 @@
 										<h:outputText value="P#{i.position}" />
 									</p:column>
 									<p:column headerText="Iniciar Entrevista">
-										<p:commandLink id="beginterviewbutton" action="#"
+										<p:commandLink id="beginterviewbutton"
+											action="#{myInterviews.goToInterview()}"
 											rendered="#{myInterviews.isToday(i)}">
+											<f:setPropertyActionListener value="#{i}"
+												target="#{dynaFormController.interview}" />
 											<i class="glyphicon glyph-xl glyphicon-paste"></i>
 										</p:commandLink>
 									</p:column>

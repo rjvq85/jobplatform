@@ -56,6 +56,10 @@ public class MyInterviews {
 		return (Integer) getSession().getAttribute("userID");
 	}
 	
+	public String goToInterview() {
+		return (FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath() + "/Admin/Scripts/scriptInterview.xhtml?faces-redirect=true");
+	}
+	
 	
 
 }

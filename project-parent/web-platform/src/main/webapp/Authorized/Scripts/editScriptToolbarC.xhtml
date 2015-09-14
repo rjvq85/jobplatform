@@ -1,0 +1,86 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+	<h:form id="toolbarForm">
+		<!-- toolbar with buttons add, edit, and delete-->
+		<p:toolbar id="toolbarScript">
+			<p:toolbarGroup align="left">
+				<!-- NewQuestion button -->
+				<p:commandButton type="button" icon="ui-icon-circle-plus"
+					value="Nova Questão"
+					onclick="PF('dialogNewQuestion').show(); return false;">
+					<p:resetInput target="formNewQuestion:dialog-NewQuestion"></p:resetInput>
+				</p:commandButton>
+				<span class="ui-separator"><span
+					class="ui-icon ui-icon-grip-dotted-vertical" /> </span>
+
+				<!-- Edit position dialog -->
+				<p:commandButton type="button" icon="ui-icon-pencil"
+					disabled="#{editScript.editQuestion==null}"
+					onclick="PF('dialogEditQuestion').show()">
+
+					<f:setPropertyActionListener value="#{editScript.editQuestion}"
+						target="#{editQuestion.editQuestion}" />
+				</p:commandButton>
+
+				<!-- Delete question dialog-->
+				<p:commandButton type="button" icon="ui-icon-trash"
+					disabled="#{editScript.editQuestion==null}"
+					onclick="PF('deleteQuestiontDialog').show(); return false;">
+				</p:commandButton>
+			</p:toolbarGroup>
+			
+		</p:toolbar>
+	</h:form>
+
+	<h:form id="deletePositionForm">
+		<p:confirmDialog header="Confirmação de eliminação"
+			message="Pretende eliminar esta questão?"
+			widgetVar="deleteQuestiontDialog">
+			<p:commandButton value="Sim" type="submit"
+				action="#{editScript.deleteQuestion()}"
+				oncomplete="PF('deleteQuestiontDialog').hide()"
+				update=":toolbarForm:toolbarScript  :scriptEditForm:scriptList" />
+			<p:button value="Cancel"
+				onclick="PF('deleteQuestiontDialog').hide(); return false;" />
+		</p:confirmDialog>
+	</h:form>
+
+
+	<h:form id="editQuestionDialog">
+		<p:dialog id="dialog-EditQuestion" header="Editar Questão"
+			widgetVar="dialogEditQuestion" modal="true" showEffect="blind"
+			resizable="false">
+
+			<h:panelGrid columns="2" id="questionDetail">
+
+				<p:outputLabel value="Questão" for="questionString" />
+				<p:inputText id="questionString" required="true"
+					requiredMessage="questão" size="30"
+					value="#{editScript.editQuestionStr}" />
+
+				<p:outputLabel value="Tipo resposta" for="answerType" />
+				<p:selectOneMenu id="answerType"
+					value="#{editScript.editQuestionType}" required="true" width="30">
+					<f:selectItems value="#{editScript.questionTypes}" />
+				</p:selectOneMenu>
+
+			</h:panelGrid>
+			<p:commandButton value="Guardar" type="submit"
+				style="width:100px;margin-left:10px;margin-top:15px;"
+				action="#{editScript.saveQuestion()}"
+				oncomplete="if (!args.validationFailed)PF('dialogEditQuestion').hide();"
+				update=":toolbarForm:toolbarScript :scriptEditForm:scriptList"
+				icon="ui-icon-check"></p:commandButton>
+		</p:dialog>
+		<br />
+	</h:form>
+
+</ui:composition>
+</html>

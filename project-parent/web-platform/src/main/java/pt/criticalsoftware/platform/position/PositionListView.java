@@ -13,9 +13,12 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
@@ -120,6 +123,11 @@ public class PositionListView implements Serializable{
 		else
 			this.positions= positionService.getPositionsByWord(this.positionWord,this.searchCode);
 		this.searchBoolean=true;
+	}
+	
+	private Boolean isAdmin() {
+		HttpServletRequest req = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
+		return (Boolean) req.isUserInRole("ADMIN");
 	}
 
 }

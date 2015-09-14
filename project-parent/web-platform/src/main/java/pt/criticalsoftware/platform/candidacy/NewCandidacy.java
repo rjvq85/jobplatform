@@ -73,7 +73,6 @@ public class NewCandidacy {
 		try {
 			upload.setFile(file);
 			String filePath = upload.fileUpload(username);
-			System.out.println("\n#\n###\n##### Morada: "+address+"\n\n\n");
 			ICandidate icandidate = candidate.address(address).country(country).course(course).degree(degree)
 					.email(email).firstName(firstName).lastName(lastName).mobile(mobile).password(password).phone(phone)
 					.school(school).town(city).username(username).cv(filePath).build();

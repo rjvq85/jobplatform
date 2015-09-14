@@ -41,9 +41,6 @@
 								<li><h:link value="Candidaturas"
 										outcome="/Authorized/Candidacies/candidacies?faces-redirect=true"
 										disabled="false" /></li>
-								<li><h:link value="Candidatos"
-										outcome="/Authorized/Candidates/candidates?faces-redirect=true"
-										disabled="false" /></li>
 								<h:panelGroup layout="block" rendered="#{userROLE eq 'ADMIN'}">
 									<li><h:link value="Entrevistas"
 											outcome="/Authorized/Interviews/interviews?faces-redirect=true"
@@ -56,7 +53,7 @@
 								</h:panelGroup>
 								<h:panelGroup layout="block" rendered="#{userROLE eq 'ADMIN'}">
 									<li><h:link value="Guiões"
-											outcome="/Authorized/Scripts/scripts?faces-redirect=true"
+											outcome="/Authorized/Scripts/scriptMain?faces-redirect=true"
 											disabled="false" /></li>
 								</h:panelGroup>
 							</ul>
@@ -77,10 +74,14 @@
 												minhas Entrevistas</a></li>
 										<h:panelGroup layout="block" rendered="#{userROLE eq 'ADMIN'}">
 											<li role="separator" class="divider"></li>
-											<li><a href="#{request.contextPath}/Authorized/Users/users.xhtml">Gestão Utilizadores</a></li>
-											<li><p:commandLink action="#{newPosition.doNothing()}" oncomplete="PF('mailWidget').show();" value="Notificações (Definições)" update=":emailForm">
-												<p:resetInput target=":emailForm"></p:resetInput>
-											</p:commandLink></li>
+											<li><a
+												href="#{request.contextPath}/Authorized/Users/users.xhtml">Gestão
+													Utilizadores</a></li>
+											<li><p:commandLink action="#{newPosition.doNothing()}"
+													oncomplete="PF('mailWidget').show();"
+													value="Notificações (Definições)" update=":emailForm" style="font-size:14px !important;">
+													<p:resetInput target=":emailForm"></p:resetInput>
+												</p:commandLink></li>
 										</h:panelGroup>
 									</ul></li>
 								<li><h:commandLink action="#{login.logout()}"

@@ -26,8 +26,8 @@
 						styleClass="col-md-offset-3 col-md-6 text-center">
 						<p>Seleccionar nova data:</p>
 						<h:panelGroup layout="block" styleClass="form-group">
-							<h:message for="newdate" />
-							<p:calendar id="newdate" value="#{interviewListView.newDate}"
+							<h:message for="newInterviewDate" />
+							<p:calendar id="newInterviewDate" value="#{interviewListView.newDate}"
 								pattern="dd-MM-yyyy" locale="pt" navigator="true"
 								required="true" requiredMessage="*"
 								mindate="#{interviewListView.currentDate()}">

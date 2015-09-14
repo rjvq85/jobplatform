@@ -22,34 +22,42 @@
 	<ui:composition>
 		<h:form prependId="false" id="emailForm">
 			<p:dialog id="mailDialog" widgetVar="mailWidget"
-				header="Definições de E-mail (Notificações)" modal="true" draggable="false" resizable="false" hideEffect="puff">
+				header="Definições de E-mail (Notificações)" modal="true"
+				draggable="false" resizable="false" hideEffect="puff">
 				<h:panelGroup id="ctnr" layout="block" styleClass="container-small">
 					<h:panelGroup layout="block" styleClass="row">
 						<h:panelGroup layout="block" styleClass="col-md-offset-2 col-md-4">
-							<label for="hostname">Hostname: <h:message for="hostname" style="color: red !important; font-weight: 200 !important;" /></label>
-							<h:inputText styleClass="form-control" id="hostname" a:placeholder="ex: smtp.gmail.com"
+							<label for="hostname">Hostname: <h:message for="hostname"
+									style="color: red !important; font-weight: 200 !important;" /></label>
+							<h:inputText styleClass="form-control" id="hostname"
+								a:placeholder="ex: smtp.gmail.com"
 								value="#{mailSettingsWeb.hostname}" required="true"
 								requiredMessage="Campo obrigatório" />
 						</h:panelGroup>
 						<h:panelGroup layout="block" styleClass="col-md-4">
 							<label for="smtpport">SMTP Port: <h:message
-									for="smtpport" style="color: red !important; font-weight: 200 !important;" /></label>
-							<h:inputText styleClass="form-control" id="smtpport" value="#{mailSettingsWeb.smtpPort}"
-								a:placeholder="ex: 465" required="true"
-								requiredMessage="Campo obrigatório" />
+									for="smtpport"
+									style="color: red !important; font-weight: 200 !important;" /></label>
+							<h:inputText styleClass="form-control" id="smtpport"
+								value="#{mailSettingsWeb.smtpPort}" a:placeholder="ex: 465"
+								required="true" requiredMessage="Campo obrigatório" />
 						</h:panelGroup>
 					</h:panelGroup>
 					<h:panelGroup layout="block" styleClass="spacer" />
 					<h:panelGroup layout="block" styleClass="row">
 						<h:panelGroup layout="block" styleClass="col-md-offset-2 col-md-4">
-							<label for="username">Username: <h:message for="username" style="color: red !important; font-weight: 200 !important;"/></label>
-							<h:inputText styleClass="form-control" id="username" value="#{mailSettingsWeb.username}"
+							<label for="emailUsername">Username: <h:message for="emailUsername"
+									style="color: red !important; font-weight: 200 !important;" /></label>
+							<h:inputText styleClass="form-control" id="emailUsername"
+								value="#{mailSettingsWeb.username}"
 								a:placeholder="username@mail.com" required="true"
 								requiredMessage="Campo obrigatório" />
 						</h:panelGroup>
 						<h:panelGroup layout="block" styleClass="col-md-4">
-							<label for="password">Password: <h:message for="password" style="color: red !important; font-weight: 200 !important;" /></label>
-							<h:inputSecret styleClass="form-control" id="password" value="#{mailSettingsWeb.password}"
+							<label for="emailPassword">Password: <h:message for="emailPassword"
+									style="color: red !important; font-weight: 200 !important;" /></label>
+							<h:inputSecret styleClass="form-control" id="emailPassword"
+								value="#{mailSettingsWeb.password}"
 								a:placeholder="Password da conta" required="true"
 								requiredMessage="Campo obrigatório" />
 						</h:panelGroup>
@@ -57,38 +65,50 @@
 					<h:panelGroup layout="block" styleClass="spacer" />
 					<h:panelGroup layout="block" styleClass="row">
 						<h:panelGroup layout="block" styleClass="col-md-offset-2 col-md-4">
-							<label for="sslconnect">SSL on Connect: </label>
 							<h:selectBooleanCheckbox id="sslconnect"
-								value="#{mailSettingsWeb.sslOnConnect}" />
+								value="#{mailSettingsWeb.sslOnConnect}" style="margin-right: 10px;"/>
+							<label for="sslconnect">SSL
+								on Connect</label>
 						</h:panelGroup>
 					</h:panelGroup>
 					<h:panelGroup layout="block" styleClass="row">
 						<h:panelGroup layout="block" styleClass="col-md-offset-2 col-md-4">
-							<label for="starttls">STARTTLS: </label>
 							<h:selectBooleanCheckbox id="starttls"
-								value="#{mailSettingsWeb.startTLS}" />
+								value="#{mailSettingsWeb.startTLS}" style="margin-right: 10px;" />
+							<label for="starttls">STARTTLS</label>
 						</h:panelGroup>
 					</h:panelGroup>
 					<h:panelGroup layout="block" styleClass="row">
 						<h:panelGroup layout="block" styleClass="col-md-offset-2 col-md-4">
-							<label for="primary">Tornar definições activas: </label>
 							<h:selectBooleanCheckbox value="#{mailSettingsWeb.active}"
-								id="primary" />
+								id="primary" style="margin-right: 10px;" />
+							<label for="primary">Tornar
+								definições activas</label>
 						</h:panelGroup>
 					</h:panelGroup>
 					<br />
-					<h:panelGroup layout="block" styleClass="">
-						<h:panelGroup layout="block" styleClass="col-md-offset-4">
+					<h:panelGroup layout="block" styleClass="row">
+						<h:panelGroup layout="block" styleClass="col-md-12 text-center">
 							<h:commandButton action="#{mailSettingsWeb.newSettings()}"
-								styleClass="btn btn-default"
-								style="border-radius:0 !important;" value="Confirmar">
-								<p:ajax oncomplete="handleLoginRequest(xhr, status, args)" update="ctnr" process="emailForm" />
+								styleClass="btn btn-primary"
+								style="border-radius:0 !important; margin-right: 5px !important;"
+								value="Confirmar">
+								<p:ajax oncomplete="handleLoginRequest(xhr, status, args)"
+									update="ctnr" process="emailForm" />
 							</h:commandButton>
 							<h:commandButton action="#{mailSettingsWeb.clear()}"
 								styleClass="btn btn-default"
-								style="border-radius:0 !important;" value="Cancelar">
-								<p:ajax oncomplete="PF('mailWidget').hide('slow');" process="@this"/>
+								style="border-radius:0 !important; margin-right: 5px !important;"
+								value="Cancelar">
+								<p:ajax oncomplete="PF('mailWidget').hide('slow');"
+									process="@this" />
 							</h:commandButton>
+						</h:panelGroup>
+					</h:panelGroup>
+					<h:panelGroup layout="block" styleClass="row">
+						<h:panelGroup id="testingresult" layout="block"
+							styleClass="col-md-12">
+
 						</h:panelGroup>
 					</h:panelGroup>
 				</h:panelGroup>

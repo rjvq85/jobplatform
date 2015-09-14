@@ -33,7 +33,12 @@ public class EmailPersistenceService implements IEmailPersistenceService {
 	@Override
 	public IEmail getActiveSettings() {
 		TypedQuery<EmailEntity> query = em.createNamedQuery("Email.getActive", EmailEntity.class);
-		return new EmailProxy(query.getSingleResult());
+		try {
+			EmailEntity entity = query.getResultList().get(0);
+			return new EmailProxy(entity);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	private void removeActive() {

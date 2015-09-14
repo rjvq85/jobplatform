@@ -1,8 +1,6 @@
 package pt.criticalsoftware.platform.candidacy.utils;
 
 import javax.enterprise.context.RequestScoped;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.servlet.http.Part;
 import java.io.File;

@@ -62,14 +62,13 @@ public class PositionBusinessService implements IPositionBusinessService{
 				.locale(locale).openDate(openDate).sla(sla)
 				.state(state).technicalArea(technicalArea)
 				.title(title).vacancies(vacancies).adChannels(adChannels).responsable(responsable).build();
+		position = positionPersistence.create(position);
 		try {
-			position = positionPersistence.create(position);
 			notif.sendEmail(position, responsable);
-			return position;
 		} catch (Exception e) {
-			return null;
 		}
 
+		return position;
 	}
 	
 	@Override

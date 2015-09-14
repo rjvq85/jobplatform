@@ -43,7 +43,7 @@ public class InterviewEntity {
 	@Column(name = "data_entrevista", nullable = false)
 	private LocalDate date;
 
-	@Column(name = "feedback")
+	@Column(name = "feedback",columnDefinition="TEXT")
 	private String feedback;
 
 	@ManyToMany(fetch = FetchType.EAGER)

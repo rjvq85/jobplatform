@@ -104,5 +104,48 @@
 			<b>description</b>
 		</field>
 	</mapping>
-	
+	<mapping>
+		<class-a>pt.criticalsoftware.domain.entities.ScriptEntity</class-a>
+		<class-b>pt.criticalsoftware.service.model.dtos.ScriptDTO</class-b>
+		<field>
+			<a>id</a>
+			<b>id</b>
+		</field>
+		<field>
+			<a>title</a>
+			<b>title</b>
+		</field>
+		<field>
+			<a>reference</a>
+			<b>reference</b>
+		</field>
+		<field>
+			<a>questions</a>
+			<b>questions</b>
+		</field>
+	</mapping>
+	<mapping>
+		<class-a>pt.criticalsoftware.domain.entities.QuestionEntity</class-a>
+		<class-b>pt.criticalsoftware.service.model.dtos.QuestionDTO</class-b>
+		<field>
+			<a>id</a>
+			<b>id</b>
+		</field>
+		<field>
+			<a>questionStr</a>
+			<b>questionStr</b>
+		</field>
+		<field>
+			<a>answer</a>
+			<b>answer</b>
+		</field>
+		<field>
+			<a>number</a>
+			<b>number</b>
+		</field>
+		<field>
+			<a>script</a>
+			<b>script</b>
+		</field>
+	</mapping>
 </mappings> 

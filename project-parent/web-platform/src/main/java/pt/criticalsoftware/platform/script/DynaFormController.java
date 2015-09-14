@@ -43,7 +43,7 @@ public class DynaFormController implements Serializable {
 
 	@PostConstruct
 	private void init() {
-		String reference = "g0005";
+		String reference = "G000005";
 		this.script = scriptService.getScriptsByReference(reference).get(0);
 		this.questions = questionService.getAllQuestionsByScript(script);
 		this.title = this.script.getTitle();

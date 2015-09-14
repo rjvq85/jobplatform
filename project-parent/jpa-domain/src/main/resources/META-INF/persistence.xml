@@ -11,6 +11,7 @@
 		<class>pt.criticalsoftware.domain.entities.CandidacyEntity</class>
 		<class>pt.criticalsoftware.domain.entities.CandidateEntity</class>
 		<class>pt.criticalsoftware.domain.entities.ScriptEntity</class>
+		<class>pt.criticalsoftware.domain.entities.QuestionEntity</class>
 		<class>pt.criticalsoftware.domain.entities.NotificationEntity</class>
 		<class>pt.criticalsoftware.domain.entities.EmailEntity</class>
 		<class>pt.criticalsoftware.service.persistence.utils.LocalDatePersistenceConverter.class</class>
@@ -18,7 +19,7 @@
 		<properties>
 			<property name="hibernate.connection.url" value="jdbc:postgresql:Jobs;DB_CLOSE_ON_EXIT=TRUE" />
 			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />
-			<property name="hibernate.hbm2ddl.auto" value="create-drop" />
+			<property name="hibernate.hbm2ddl.auto" value="update" />
 			<property name="hibernate.show_sql" value="true" />
 		</properties>
 	</persistence-unit>

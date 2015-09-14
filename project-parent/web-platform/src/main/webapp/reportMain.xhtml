@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<meta charset="utf-8" />
+	<h:outputStylesheet library="css" name="positionListAdmin.css" />
+</h:head>
+<h:body>
+	<div id="outBox">
+		<h2>Relatórios</h2>
+		<p></p>
+		<p:separator />
+		<p:selectManyCheckbox id="grid" value="#{report.selectedOptions}"
+			layout="grid" columns="1">
+			<f:selectItems value="#{report.options}" var="option"
+				itemLabel="#{option}" itemValue="#{option}" />
+		</p:selectManyCheckbox>
+	</div>
+</h:body>
+</html>

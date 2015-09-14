@@ -60,12 +60,12 @@ public class DozerMapperSingl {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		IUser admin = builder.email("admin@email.com").firstName("Administrador").lastName("do Sistema")
-				.password("123456").role(Role.ADMIN).username("ricardo").build();
-		persistence.create(admin);
-		IUser gestor = builder.email("ricardoquirino@me.com").firstName("Gestor").lastName("de Candidaturas")
-				.password("123456").role(Role.GESTOR).username("quirino").build();
-		persistence.create(gestor);
+//		IUser admin = builder.email("admin@email.com").firstName("Administrador").lastName("do Sistema")
+//				.password("123456").role(Role.ADMIN).username("ricardo").build();
+//		persistence.create(admin);
+//		IUser gestor = builder.email("ricardoquirino@me.com").firstName("Gestor").lastName("de Candidaturas")
+//				.password("123456").role(Role.GESTOR).username("quirino").build();
+//		persistence.create(gestor);
 		// dozermapping.add("META-INF/dtomapping.xml");
 	}
 

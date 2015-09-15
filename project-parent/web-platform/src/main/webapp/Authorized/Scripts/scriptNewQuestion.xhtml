@@ -18,17 +18,28 @@
 
 			<p:outputLabel value="Tipo resposta" for="answerType" />
 			<p:selectOneMenu id="answerType" value="#{newScript.answerStr}"
-				required="true" filter="true" filterMatchMode="startsWith"
-				width="30">
-				<f:selectItem itemLabel="VERDADEIRO ou FALSO" itemValue="V/F" />
-				<f:selectItem itemLabel="1 a 5" itemValue="1/5" />
-				<f:selectItem itemLabel="Resposta Livre" itemValue="Resposta Livre" />
+				required="true" filter="true" filterMatchMode="startsWith" style="width:100%;">
+				<f:selectItem itemLabel="Verdadeiro ou Falso" itemValue="V/F" />
+				<f:selectItem itemLabel="De Um a Cinco" itemValue="1/5" />
+				<f:selectItem itemLabel="Resposta com Texto Livre"
+					itemValue="Resposta Livre" />
 			</p:selectOneMenu>
 		</h:panelGrid>
 
-		<ui:insert>
-			<ui:include src="newQuestionButtons.xhtml" />
-		</ui:insert>
+		<h:panelGroup layout="block" styleClass="row">
+			<h:panelGroup layout="block" styleClass="col-md-12 text-center">
+				<p:button value="Cancel" type="button"
+					style="width:30%;border-radius:0;"
+					onclick="PF('dialogNewQuestion').hide(); return false;"
+					icon="ui-icon-cancel" styleClass="btn btn-default"></p:button>
+				<p:commandButton value="Criar" type="submit"
+					style="width:30%;border-radius:0"
+					action="#{newScript.createQuestion()}"
+					update=":scriptNewForm:scriptList :formNewQuestion:dialog-NewQuestion :editglobalmsgs"
+					icon="ui-icon-check" styleClass="btn btn-success"
+					oncomplete="fadeoutMsg();"></p:commandButton>
+			</h:panelGroup>
+		</h:panelGroup>
 
 
 	</p:dialog>

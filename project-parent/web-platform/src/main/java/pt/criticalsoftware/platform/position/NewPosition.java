@@ -1,7 +1,11 @@
 package pt.criticalsoftware.platform.position;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -260,6 +264,17 @@ public class NewPosition {
 		  vacancies = null;
 		  description = null;
 		  selectedResponsable = null;
+	}
+	
+	public Date currentDate() {
+		try {
+			String lDate = LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+			DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+			return df.parse(lDate);
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	public List<IUser> getResponsables() {

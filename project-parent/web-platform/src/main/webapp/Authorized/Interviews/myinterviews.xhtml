@@ -35,7 +35,7 @@
 							</h:panelGroup>
 						</h:panelGroup>
 						<h:panelGroup layout="block" styleClass="col-md-12 text-center">
-							<h:messages id="globalmsgs" globalOnly="true"
+							<h:messages id="editglobalmsgs" globalOnly="true"
 								styleClass="alert alert-info" style="list-style-type: none;" />
 						</h:panelGroup>
 						<h:panelGroup layout="block" class="row">
@@ -70,7 +70,7 @@
 									value="#{myInterviews.myInterviews}"
 									emptyMessage="Sem resultados..." styleClass="text-center"
 									paginator="true" paginatorPosition="bottom"
-									paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+									paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 									rowsPerPageTemplate="5,10,15" rows="5">
 									<p:column headerText="Referência" sortBy="#{i.reference}">
 										<h:outputText value="#{i.reference}" />
@@ -84,16 +84,17 @@
 											value="#{i.candidacy.candidate.firstName} #{i.candidacy.candidate.lastName}" />
 									</p:column>
 									<p:column headerText="Posição" sortBy="#{i.position}">
-										<h:outputText value="P#{i.position}" />
+										<h:outputText value="#{i.position.reference}" />
 									</p:column>
 									<p:column headerText="Iniciar Entrevista">
 										<p:commandLink id="beginterviewbutton"
-											action="#{myInterviews.goToInterview()}"
-											rendered="#{myInterviews.isToday(i)}">
+											action="scriptInterview"
+											rendered="#{myInterviews.isToday(i)}" ajax="false">
 											<f:setPropertyActionListener value="#{i}"
 												target="#{dynaFormController.interview}" />
 											<i class="glyphicon glyph-xl glyphicon-paste"></i>
 										</p:commandLink>
+										<h:outputText value="Realizada" rendered="#{myInterviews.doneInterview(i)}"/>
 									</p:column>
 								</p:dataTable>
 							</h:panelGroup>

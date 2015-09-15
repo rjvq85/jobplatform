@@ -6,19 +6,16 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <ui:composition>
-	<p></p>
-	<p:separator />
-	<p:panel id="panelScriptList" style="margin-bottom:10px;">
-		<h:panelGrid columns="2" cellpadding="5">
-			<h:outputLabel for="title" value="Título do Guião" />
-			<p:inputText id="title" required="true" size="30"
-				value="#{newScript.title}" />
-		</h:panelGrid>
-	</p:panel>
-	<p:separator />
+	<h:outputLabel for="title" value="Título do Guião"
+		style="margin-right: 10px;" />
+	<p:inputText id="title" required="true" size="30"
+		value="#{newScript.title}" style="height: 25px;" />
+	<h:panelGroup layout="block" styleClass="spacer" />
 	<p:dataTable value="#{newScript.questions}" var="question"
 		widgetVar="scriptList" selectionMode="single" rowKey="#{question.id}"
-		draggableRows="true" itemValue="#{question}" id="scriptList">
+		draggableRows="true" itemValue="#{question}" id="scriptList"
+		tableStyleClass="table-condensed newlabeled" styleClass="text-center"
+		emptyMessage="Sem questões...">
 
 		<p:ajax event="rowReorder" listener="#{newScript.onRowReorder}" />
 		<p:column headerText="Pergunta">
@@ -26,11 +23,9 @@
 		</p:column>
 
 		<p:column headerText="Tipo Resposta">
-			<h:outputText value="#{question.answer}" />
+			<h:outputText value="#{question.answer.name}" />
 		</p:column>
 
 	</p:dataTable>
-
-
 </ui:composition>
 </html>

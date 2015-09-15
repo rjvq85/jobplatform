@@ -188,7 +188,7 @@ public class EditPosition implements Serializable {
 			allResponsables.add(r.getFirstName()+" "+r.getLastName());
 		return allResponsables;
 	}
-	public void updatePosition(){
+	public void updatePosition() {
 		positionService.update(this.editPosition);
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(
 				"A posição " + this.reference  + " foi editada com sucesso"));
@@ -198,6 +198,7 @@ public class EditPosition implements Serializable {
 		positionService.delete(this.editPosition);
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(
 				"A posição " + this.reference  + " foi eliminada com sucesso"));
+		deleted();
 	}
 	
 	public void onRowSelect(SelectEvent event) {
@@ -208,6 +209,10 @@ public class EditPosition implements Serializable {
 	public void onRowUnselect(UnselectEvent event) {
 		this.editPosition=((IPosition) event.getObject());
 		this.editPosition=null;
+	}
+	
+	private void deleted() {
+		editPosition = null;
 	}
 
 }

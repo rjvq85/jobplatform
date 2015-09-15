@@ -6,4 +6,25 @@
 	<application>
 		<message-bundle>CustomMsgs</message-bundle>
 	</application>
+	<navigation-rule>
+		<from-view-id>/Authorized/Interviews/myinterviews.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>scriptInterview</from-outcome>
+			<to-view-id>/Authorized/Scripts/scriptInterview.xhtml?faces-redirect=true</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/Authorized/Scripts/scriptInterview.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>feedbackSuccess</from-outcome>
+			<to-view-id>/Authorized/Interviews/myinterviews.xhtml?faces-redirect=true</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/Authorized/Scripts/scriptInterview.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>feedbackCancel</from-outcome>
+			<to-view-id>/Authorized/Interviews/myinterviews.xhtml?faces-redirect=true</to-view-id>
+		</navigation-case>
+	</navigation-rule>
 </faces-config>

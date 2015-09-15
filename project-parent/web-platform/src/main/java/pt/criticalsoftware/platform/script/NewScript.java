@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
-import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -21,7 +20,6 @@ import pt.criticalsoftware.service.business.IScriptBusinessService;
 import pt.criticalsoftware.service.exceptions.DuplicateTitleException;
 import pt.criticalsoftware.service.model.IQuestion;
 import pt.criticalsoftware.service.persistence.questions.AnswerType;
-import pt.criticalsoftware.service.persistence.questions.Question;
 
 import java.io.Serializable;
 

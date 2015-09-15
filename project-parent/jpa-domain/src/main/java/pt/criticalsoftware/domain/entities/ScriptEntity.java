@@ -2,6 +2,7 @@ package pt.criticalsoftware.domain.entities;
 
 import java.util.Collection;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -40,7 +41,7 @@ public class ScriptEntity {
 	@Column(name = "referencia", nullable = false)
 	private String reference;
 	
-	@OneToMany(mappedBy="script" )
+	@OneToMany(mappedBy="script",cascade=CascadeType.REMOVE)
 	private Collection<QuestionEntity> questions;
 	
 	@OneToMany(mappedBy="script")

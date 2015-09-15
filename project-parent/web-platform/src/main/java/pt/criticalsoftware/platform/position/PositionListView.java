@@ -44,7 +44,7 @@ public class PositionListView implements Serializable{
 	private String searchCode;
 	private String positionWord;
 	private boolean searchBoolean=false;
-	private String placeholder="????";
+	private String placeholder="";
 
 	public PositionListView() {
 	}

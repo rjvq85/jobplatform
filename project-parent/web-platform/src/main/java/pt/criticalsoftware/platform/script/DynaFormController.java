@@ -4,13 +4,13 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
 import pt.criticalsoftware.service.business.IQuestionBusinessService;
 import pt.criticalsoftware.service.business.IScriptBusinessService;
+import pt.criticalsoftware.service.model.IInterview;
 import pt.criticalsoftware.service.model.IQuestion;
 import pt.criticalsoftware.service.model.IScript;
 
@@ -26,9 +26,11 @@ import org.slf4j.LoggerFactory;
 public class DynaFormController implements Serializable {
 
 	private static final long serialVersionUID = 1578202248436017153L;
+	@SuppressWarnings("unused")
 	private final Logger logger = LoggerFactory.getLogger(DynaFormController.class);
 
 	private IScript script;
+	private IInterview interview;
 	private List<IQuestion> questions;
 
 	@EJB
@@ -38,13 +40,14 @@ public class DynaFormController implements Serializable {
 	private DynaFormModel model;
 	private String title;
 
+	private String scriptReference;
+
 	public DynaFormController() {
 	}
 
-	@PostConstruct
-	private void init() {
-		String reference = "G000005";
-		this.script = scriptService.getScriptsByReference(reference).get(0);
+	public void startup() {
+		scriptReference = interview.getScript().getReference();
+		this.script = scriptService.getScriptsByReference(scriptReference).get(0);
 		this.questions = questionService.getAllQuestionsByScript(script);
 		this.title = this.script.getTitle();
 		int listSize = this.questions.size();
@@ -113,4 +116,21 @@ public class DynaFormController implements Serializable {
 	public DynaFormModel getModel() {
 		return model;
 	}
+
+	public String getScriptReference() {
+		return scriptReference;
+	}
+
+	public void setScriptReference(String scriptReference) {
+		this.scriptReference = scriptReference;
+	}
+
+	public IInterview getInterview() {
+		return interview;
+	}
+
+	public void setInterview(IInterview interview) {
+		this.interview = interview;
+	}
+
 }

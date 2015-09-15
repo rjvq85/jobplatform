@@ -3,6 +3,7 @@ package pt.criticalsoftware.service.business;
 import java.time.LocalDate;
 import java.util.List;
 
+import pt.criticalsoftware.service.model.ICandidate;
 import pt.criticalsoftware.service.model.IInterview;
 import pt.criticalsoftware.service.model.IScript;
 import pt.criticalsoftware.service.model.IUser;
@@ -26,6 +27,8 @@ public interface IInterviewBusinessService {
 	List<IUser> getAvailableInterviewers(Integer id);
 
 	List<IScript> getAvailableScripts(Integer id);
+
+	List<IInterview> getInterviewsByCandidate(ICandidate candidate);
 
 
 }

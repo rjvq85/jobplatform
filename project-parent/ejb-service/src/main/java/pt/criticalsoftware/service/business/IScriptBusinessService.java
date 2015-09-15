@@ -30,4 +30,6 @@ public interface IScriptBusinessService {
 
 	IScript getScriptByID(int id);
 
+	void deleteScript(IScript script);
+
 }

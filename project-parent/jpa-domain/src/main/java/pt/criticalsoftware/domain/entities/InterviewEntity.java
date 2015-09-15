@@ -29,7 +29,8 @@ import pt.criticalsoftware.service.persistence.utils.LocalDatePersistenceConvert
 		@NamedQuery(name = "Interview.findById", query = "select p from InterviewEntity p where p.id = :interviewId "),
 		@NamedQuery(name = "Interview.findByInterviewer", query = "SELECT i FROM InterviewEntity i JOIN i.interviewers u WHERE u.id = :param"),
 		@NamedQuery(name = "Interview.availableInterviewers", query = "SELECT u FROM UserEntity u WHERE u NOT IN (SELECT DISTINCT elements(i.interviewers) FROM InterviewEntity i WHERE i.id = :param)"),
-		@NamedQuery(name = "Interview.availableScripts", query = "SELECT s FROM ScriptEntity s WHERE s NOT IN (SELECT i.script FROM InterviewEntity i WHERE i.id = :param)") })
+		@NamedQuery(name = "Interview.availableScripts", query = "SELECT s FROM ScriptEntity s WHERE s NOT IN (SELECT i.script FROM InterviewEntity i WHERE i.id = :param)"),
+		@NamedQuery(name="Interview.byCandidate", query="SELECT i FROM InterviewEntity i WHERE i.candidacy.candidate.id = :param AND i.feedback IS NOT EMPTY")})
 public class InterviewEntity {
 
 	@Id

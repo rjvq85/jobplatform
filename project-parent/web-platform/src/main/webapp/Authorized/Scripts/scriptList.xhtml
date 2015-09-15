@@ -10,8 +10,11 @@
 	<p:dataTable id="gridScripts" var="script"
 		value="#{scriptListView.scripts}" selectionMode="single"
 		widgetVar="scriptList" selection="#{editScript.editScript}"
-		rowKey="#{script.id}" paginator="true" paginatorPosition="bottom"
-		rows="15" styleClass="paginated">
+		rowKey="#{script.id}"  emptyMessage="Sem resultados..."
+		styleClass="text-center" paginator="true" paginatorPosition="bottom"
+		paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+		rowsPerPageTemplate="5,10,15" rows="5"
+		tableStyleClass="table-condensed newlabeled">
 
 		<p:ajax event="rowSelect" listener="#{editScript.onRowSelect}"
 			update=":toolbarForm:toolbarScript" />

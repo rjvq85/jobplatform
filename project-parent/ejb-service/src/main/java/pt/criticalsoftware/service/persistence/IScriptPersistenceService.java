@@ -28,4 +28,6 @@ public interface IScriptPersistenceService {
 
 	IScript getById(int id);
 
+	void delete(IScript script);
+
 }

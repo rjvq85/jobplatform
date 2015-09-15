@@ -83,7 +83,10 @@
 									</p:column>
 									<p:column headerText="Candidato"
 										sortBy="#{cand.candidate.firstName}">
-										<h:outputText value="#{cand.candidate}" />
+										<h:outputLink value="#{request.contextPath}/Authorized/Candidates/candidateprofile.xhtml">
+											<f:param name="candidato" value="#{cand.candidate.id}"/>
+											<h:outputText value="#{cand.candidate.firstName} #{cand.candidate.lastName}" />
+										</h:outputLink>
 									</p:column>
 									<p:column headerText="Data da Candidatura"
 										sortBy="#{cand.date}">

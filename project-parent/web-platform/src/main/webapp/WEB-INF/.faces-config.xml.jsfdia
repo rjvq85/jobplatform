@@ -1,2 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<PROCESS model-entity="JSFProcess"/>
+<PROCESS model-entity="JSFProcess">
+ <PROCESS-ITEM NAME="rules:#Authorized#Scripts#scriptInterview.xhtml"
+  PATH="/Authorized/Scripts/scriptInterview.xhtml" SHAPE="240,33,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#Authorized#Scripts#scriptInterview.xhtml:0"
+   NAME="item" PATH="/Authorized/Scripts/scriptInterview.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="feedbackSuccess::#Authorized#Interviews#myinterviews.xhtml?faces-redirect=true"
+    NAME="output"
+    PATH="/Authorized/Interviews/myinterviews.xhtml?faces-redirect=true"
+    TARGET="rules:#Authorized#Interviews#myinterviews.xhtml?faces-redirect=true"
+    TITLE="feedbackSuccess" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+  <PROCESS-ITEM ID="rules:#Authorized#Scripts#scriptInterview.xhtml:1"
+   NAME="item1" PATH="/Authorized/Scripts/scriptInterview.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="feedbackCancel::#Authorized#Interviews#myinterviews.xhtml?faces-redirect=true"
+    NAME="output"
+    PATH="/Authorized/Interviews/myinterviews.xhtml?faces-redirect=true"
+    TARGET="rules:#Authorized#Interviews#myinterviews.xhtml?faces-redirect=true"
+    TITLE="feedbackCancel" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#Authorized#Interviews#myinterviews.xhtml"
+  PATH="/Authorized/Interviews/myinterviews.xhtml" SHAPE="32,17,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#Authorized#Interviews#myinterviews.xhtml:0"
+   NAME="item" PATH="/Authorized/Interviews/myinterviews.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="scriptInterview::#Authorized#Scripts#scriptInterview.xhtml?faces-redirect=true"
+    NAME="output"
+    PATH="/Authorized/Scripts/scriptInterview.xhtml?faces-redirect=true"
+    TARGET="rules:#Authorized#Scripts#scriptInterview.xhtml?faces-redirect=true"
+    TITLE="scriptInterview" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM
+  NAME="rules:#Authorized#Scripts#scriptInterview.xhtml?faces-redirect=true"
+  PATH="/Authorized/Scripts/scriptInterview.xhtml?faces-redirect=true"
+  SHAPE="240,145,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM
+  NAME="rules:#Authorized#Interviews#myinterviews.xhtml?faces-redirect=true"
+  PATH="/Authorized/Interviews/myinterviews.xhtml?faces-redirect=true"
+  SHAPE="448,17,0,0" model-entity="JSFProcessGroup"/>
+</PROCESS>

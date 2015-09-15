@@ -61,3 +61,11 @@ function intredirect() {
 	} else
 		return false;
 };
+
+$(document).ready(function() {
+	if ($('#flashglobalmsgs').length != 0) {
+		setTimeout(function() {
+			$('#flashglobalmsgs').fadeOut();
+		}, 3000);
+	}
+});

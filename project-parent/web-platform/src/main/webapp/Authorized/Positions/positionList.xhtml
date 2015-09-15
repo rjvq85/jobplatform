@@ -9,15 +9,17 @@
 	<!-- Positions list -->
 	<p:dataTable id="gridPositions" var="position"
 		value="#{positionListView.positions}" selectionMode="single"
-		widgetVar="positionList"
-		selection="#{editPosition.editPosition}" rowKey="#{position.id}"
-		paginator="true" paginatorPosition="bottom" rows="15"
-		styleClass="table-condensed newlabeled">
+		widgetVar="positionList" selection="#{editPosition.editPosition}"
+		rowKey="#{position.id}" emptyMessage="Sem resultados..."
+		styleClass="text-center" paginator="true" paginatorPosition="bottom"
+		paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+		rowsPerPageTemplate="5,10,15" rows="5"
+		tableStyleClass="table-condensed newlabeled">
 
 		<p:ajax event="rowSelect" listener="#{editPosition.onRowSelect}"
 			update=":formEditPosition:dialog-EditPosition :toolbarForm:toolbarPosition" />
-		<p:ajax event="rowUnselect"  listener="#{editPosition.onRowUnselect}"	
-		update=":toolbarForm:toolbarPosition :positionForm:gridPositions" />
+		<p:ajax event="rowUnselect" listener="#{editPosition.onRowUnselect}"
+			update=":toolbarForm:toolbarPosition :positionForm:gridPositions" />
 
 		<p:column headerText="Data Abertura">
 			<p:outputLabel value="#{position.openDate}"></p:outputLabel>

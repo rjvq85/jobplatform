@@ -6,6 +6,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
+import pt.criticalsoftware.service.model.ICandidate;
 import pt.criticalsoftware.service.model.IInterview;
 import pt.criticalsoftware.service.model.IScript;
 import pt.criticalsoftware.service.model.IUser;
@@ -60,6 +61,11 @@ public class InterviewBusinessService implements IInterviewBusinessService {
 	@Override
 	public List<IScript> getAvailableScripts(Integer id) {
 		return persistence.getAvailableScripts(id);
+	}
+
+	@Override
+	public List<IInterview> getInterviewsByCandidate(ICandidate candidate) {
+		return persistence.getByCandidate(candidate);
 	}
 	
 

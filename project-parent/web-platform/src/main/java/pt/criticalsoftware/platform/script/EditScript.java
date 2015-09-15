@@ -9,17 +9,14 @@ import javax.inject.Named;
 import org.primefaces.event.ReorderEvent;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.UnselectEvent;
-import org.primefaces.model.DualListModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import pt.criticalsoftware.service.business.IQuestionBusinessService;
 import pt.criticalsoftware.service.business.IScriptBusinessService;
-import pt.criticalsoftware.service.exceptions.DuplicateTitleException;
 import pt.criticalsoftware.service.model.IQuestion;
 import pt.criticalsoftware.service.model.IScript;
 import pt.criticalsoftware.service.persistence.questions.AnswerType;
-import pt.criticalsoftware.service.persistence.questions.Question;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -43,47 +40,51 @@ public class EditScript implements Serializable {
 	private String answerStr;
 	private AnswerType answer;
 	private IQuestion question;
-	private List <IQuestion> questions;
+	private List<IQuestion> questions;
 	private String questionStr;
 	private List<Integer> questionsIds;
 	private int id;
 	private String editQuestionStr, qS, qA;
 	private String editQuestionType;
 	private List<String> questionTypes;
-	private boolean select=false;
+	private boolean select = false;
 
 	public EditScript() {
-		questions=new ArrayList <IQuestion>();
-		questionsIds= new ArrayList<Integer>();
-		questionTypes= new ArrayList<String>();
+		questions = new ArrayList<IQuestion>();
+		questionsIds = new ArrayList<Integer>();
+		questionTypes = new ArrayList<String>();
 		this.questionTypes.add("Resposta Livre");
 		this.questionTypes.add("1/5");
 		this.questionTypes.add("V/F");
 	}
-	public void init(){
-		this.questions=questionService.getAllQuestionsByScript(this.editScript);
-		this.title=this.editScript.getTitle();
+
+	public void init() {
+		this.questions = questionService.getAllQuestionsByScript(this.editScript);
+		this.title = this.editScript.getTitle();
 	}
 
-	//Questions List--------------
+	// Questions List--------------
 	public List<IQuestion> getQuestions() {
 		return this.questions;
 	}
+
 	public void setQuestions(List<IQuestion> questions) {
 		this.questions = questions;
 	}
-	//End Questions List--------------
+
+	// End Questions List--------------
 	public void setQuestion(IQuestion question) {
 		this.question = question;
 	}
+
 	public IQuestion getQuestion() {
 		return question;
 	}
 
 	public IScript getEditScript() {
-		logger.info("O guiao seleccionado é+ ");
 		return editScript;
 	}
+
 	public void setEditScript(IScript editScript) {
 		this.editScript = editScript;
 	}
@@ -92,44 +93,47 @@ public class EditScript implements Serializable {
 		logger.info("titulo" + this.editScript.getTitle());
 		return this.editScript.getTitle();
 	}
+
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	//------------------------------UPDATE SCRIPT-------------------------
-	public String updateScript(){
 
-		List<Integer> qId= new ArrayList<Integer>();
-		for(IQuestion q:this.questions)
+	// ------------------------------UPDATE SCRIPT-------------------------
+	public String updateScript() {
+
+		List<Integer> qId = new ArrayList<Integer>();
+		for (IQuestion q : this.questions)
 			qId.add(q.getId());
-		if (scriptService.verifyEditTitle(title, this.editScript.getId())){
-			scriptService.update(this.editScript.getId(),this.title, qId);
+		if (scriptService.verifyEditTitle(title, this.editScript.getId())) {
+			scriptService.update(this.editScript.getId(), this.title, qId);
 			FacesContext context = FacesContext.getCurrentInstance();
 			context.getExternalContext().getFlash().setKeepMessages(true);
-			context.addMessage(null, new FacesMessage(
-					"O guião " + this.title + " " +"foi editado com sucesso"));
+			context.addMessage(null, new FacesMessage("O guião " + this.title + " " + "foi editado com sucesso"));
 			return "scriptMain.xhtml?faces-redirect=true";
-		}else{
+		} else {
 			FacesContext context = FacesContext.getCurrentInstance();
 			context.getExternalContext().getFlash().setKeepMessages(true);
 			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Título já existente.", "");
 			context.addMessage(null, message);
-			this.title="";
+			this.title = "";
 			return "scriptEditC.xhtml?faces-redirect=true";
 		}
 
 	}
-	//--------------------------------Create NEW Question
-	public void createQuestion(){
-		question=questionService.createNewQuestion(this.questionStr, this.answer, this.editScript);
+
+	// --------------------------------Create NEW Question
+	public void createQuestion() {
+		question = questionService.createNewQuestion(this.questionStr, this.answer, this.editScript);
 		this.questions.add(question);
-		Integer aux= question.getId();
+		Integer aux = question.getId();
 		this.questionsIds.add(aux);
 		init();
-		this.questionStr=" ";
-		this.answerStr=" ";
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(
-				"A questão foi criada com sucesso"));
+		this.questionStr = " ";
+		this.answerStr = " ";
+		FacesContext.getCurrentInstance().addMessage(null,
+				new FacesMessage(FacesMessage.SEVERITY_INFO, "A questão foi criada com sucesso", null));
 	}
+
 	public String getAnswerStr() {
 		return answerStr;
 	}
@@ -137,89 +141,100 @@ public class EditScript implements Serializable {
 	public void setAnswerStr(String answerStr) {
 		this.answerStr = answerStr;
 		if (answerStr.equalsIgnoreCase("V/F"))
-			this.answer=AnswerType.VERDADEIRO_FALSO;
+			this.answer = AnswerType.VERDADEIRO_FALSO;
 		else if (answerStr.equalsIgnoreCase("1/5"))
-			this.answer=AnswerType.UM_A_CINCO;
+			this.answer = AnswerType.UM_A_CINCO;
 		else if (answerStr.equalsIgnoreCase("Resposta Livre"))
-			this.answer=AnswerType.TEXTO_LIVRE;
+			this.answer = AnswerType.TEXTO_LIVRE;
 	}
 
 	public String getQuestionStr() {
 		return questionStr;
 	}
+
 	public void setQuestionStr(String questionStr) {
 		this.questionStr = questionStr;
 	}
-	//---------------------------Delete Script
-	public void deleteScript(){
-		List<Integer> qId= new ArrayList<Integer>();
-		for(IQuestion q:this.questions)
-			qId.add(q.getId());
-		scriptService.deleteScript(this.editScript, qId);
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(
-				"O guião foi eliminado com sucesso"));
+
+	// ---------------------------Delete Script
+	public void deleted() {
+		editScript = null;
 	}
-	//Question selected-------------------------
+
+	public void deleteScript() {
+		editScript = scriptService.getScriptByID(editScript.getId());
+		scriptService.deleteScript(editScript);
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("O guião foi eliminado com sucesso"));
+		deleted();
+	}
+
+	// Question selected-------------------------
 	public IQuestion getEditQuestion() {
 		return this.editQuestion;
 	}
+
 	public void setEditQuestion(IQuestion editQuestion) {
 		this.editQuestion = editQuestion;
 	}
-	//---------------------------Delete Question
-	public void deleteQuestion(){
-		for(IQuestion q:questions)
-			if (q.getId()==this.id){
+
+	// ---------------------------Delete Question
+	public void deleteQuestion() {
+		for (IQuestion q : questions)
+			if (q.getId() == this.id) {
 				questionService.delete(q);
 				init();
 			}
-		for(Integer i:questionsIds)
-			if(i==this.id)
+		for (Integer i : questionsIds)
+			if (i == this.id)
 				questionsIds.remove(i);
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(
-				"A questão foi eliminada com sucesso"));
+		FacesContext.getCurrentInstance().addMessage(null,
+				new FacesMessage(FacesMessage.SEVERITY_INFO, "A questão foi eliminada com sucesso", null));
 	}
-	//---------------------------Update Question
-	public void saveQuestion(){
-		if (this.editQuestionType.equalsIgnoreCase("V/F"))
-			this.answer=AnswerType.VERDADEIRO_FALSO;
-		else if (this.editQuestionType.equalsIgnoreCase("1/5"))
-			this.answer=AnswerType.UM_A_CINCO;
-		else if (this.editQuestionType.equalsIgnoreCase("Resposta Livre"))
-			this.answer=AnswerType.TEXTO_LIVRE;
 
-		for(IQuestion q:this.questions)
-			if (q.getId()==this.id){
+	// ---------------------------Update Question
+	public void saveQuestion() {
+		if (this.editQuestionType.equalsIgnoreCase("V/F"))
+			this.answer = AnswerType.VERDADEIRO_FALSO;
+		else if (this.editQuestionType.equalsIgnoreCase("1/5"))
+			this.answer = AnswerType.UM_A_CINCO;
+		else if (this.editQuestionType.equalsIgnoreCase("Resposta Livre"))
+			this.answer = AnswerType.TEXTO_LIVRE;
+
+		for (IQuestion q : this.questions)
+			if (q.getId() == this.id) {
 				q.setQuestionStr(this.editQuestionStr);
 				q.setAnswerType(this.answer);
 				questionService.update(q, id);
 			}
 		setQuestions(this.questions);
+		FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Questão guardada com sucesso.", null);
+		FacesContext.getCurrentInstance().addMessage(null, msg);
 	}
 
-	private void updateSelectedQuestion(IQuestion question){
-		this.editQuestion=question;
-		this.id=this.editQuestion.getId();	
-		this.select=true;
-		this.qS=this.editQuestion.getQuestionStr();
-		this.qA=this.editQuestion.getAnswer().getName();
+	private void updateSelectedQuestion(IQuestion question) {
+		this.editQuestion = question;
+		this.id = this.editQuestion.getId();
+		this.select = true;
+		this.qS = this.editQuestion.getQuestionStr();
+		this.qA = this.editQuestion.getAnswer().getName();
 
 	}
+
 	public List<String> getQuestionTypes() {
-		if (this.qA!=null){
+		if (this.qA != null) {
 			logger.info("alterada e a resposta é " + this.qA);
-			if (this.qA.equals("verdadeiro/falso")){
-				this.questionTypes=new ArrayList<String>();
+			if (this.qA.equals("verdadeiro/falso")) {
+				this.questionTypes = new ArrayList<String>();
 				this.questionTypes.add("V/F");
 				this.questionTypes.add("1/5");
 				this.questionTypes.add("Resposta Livre");
-			}else if (this.qA.equals("1 a 5")){
-				this.questionTypes=new ArrayList<String>();
+			} else if (this.qA.equals("1 a 5")) {
+				this.questionTypes = new ArrayList<String>();
 				this.questionTypes.add("1/5");
 				this.questionTypes.add("V/F");
 				this.questionTypes.add("Resposta Livre");
-			}else if (this.qA.equals("texto livre")){
-				this.questionTypes=new ArrayList<String>();
+			} else if (this.qA.equals("texto livre")) {
+				this.questionTypes = new ArrayList<String>();
 				this.questionTypes.add("Resposta Livre");
 				this.questionTypes.add("1/5");
 				this.questionTypes.add("V/F");
@@ -227,6 +242,7 @@ public class EditScript implements Serializable {
 		}
 		return questionTypes;
 	}
+
 	public void setQuestionTypes(List<String> questionTypes) {
 		this.questionTypes = questionTypes;
 	}
@@ -237,9 +253,10 @@ public class EditScript implements Serializable {
 		else
 			return this.qA;
 	}
+
 	public void setEditQuestionType(String editQuestionType) {
 		this.editQuestionType = editQuestionType;
-		this.qA= editQuestionType;
+		this.qA = editQuestionType;
 	}
 
 	public String getEditQuestionStr() {
@@ -248,27 +265,29 @@ public class EditScript implements Serializable {
 		else
 			return this.qS;
 	}
+
 	public void setEditQuestionStr(String editQuestionStr) {
 		this.editQuestionStr = editQuestionStr;
-		this.qS= editQuestionStr;
+		this.qS = editQuestionStr;
 	}
 
-	//-----------------------------------EVENTS
+	// -----------------------------------EVENTS
 	public void onRowSelect(SelectEvent event) {
-		this.editScript=((IScript) event.getObject());
+		editScript = (IScript) event.getObject();
 		init();
 	}
+
 	public void onRowUnselect(UnselectEvent event) {
-		this.editScript=((IScript) event.getObject());
-		this.editScript=null;
+		this.editScript = ((IScript) event.getObject());
+		this.editScript = null;
 	}
 
 	public void onSelect(SelectEvent event) {
-		this.editQuestion=((IQuestion) event.getObject());
+		this.editQuestion = ((IQuestion) event.getObject());
 		updateSelectedQuestion(this.editQuestion);
 	}
+
 	public void onRowReorder(ReorderEvent event) {
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(
-				"Guião reordenado"));
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Guião reordenado"));
 	}
 }

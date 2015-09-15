@@ -218,12 +218,24 @@ public class ScriptPersistenceService implements IScriptPersistenceService {
 		}
 
 	}
+	
+	@Override
+	public void delete(IScript script) {
+		try {
+			ScriptEntity entity = getEntity(script);
+			em.remove(em.merge(entity));
+		} catch (IllegalStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 	@Override
 	public IScript getById(int id) {
 		TypedQuery<ScriptEntity> query = em.createNamedQuery("ScriptEntity.findById", ScriptEntity.class)
 				.setParameter("param", id);
-		return new ScriptProxy(query.getSingleResult());
+		ScriptEntity entity = query.getResultList().get(0);
+		return new ScriptProxy(entity);
 	}
 
 }

@@ -6,15 +6,18 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <ui:composition>
-	<p:button value="Cancel" type="button"
-		style="width:100px; margin-left:90px; margin-top:15px;"
-		onclick="PF('dialogNewQuestion').hide(); return false;"
-		icon="ui-icon-cancel"></p:button>
-
-	<p:commandButton value="Criar" type="submit"
-		style="width:100px; margin-right:auto; margin-left:10px; margin-top:15px;"
-		action="#{newScript.createQuestion()}"
-		update=":scriptNewForm:scriptList :formNewQuestion:dialog-NewQuestion"
-		icon="ui-icon-check"></p:commandButton>
+	<h:panelGroup layout="block" styleClass="row">
+		<h:panelGroup layout="block" styleClass="col-md-12 text-center">
+			<p:button value="Cancel" type="button"
+				style="width:100px; margin-left:90px; margin-top:15px;border-radius:0;"
+				onclick="PF('dialogNewQuestion').hide(); return false;"
+				icon="ui-icon-cancel" styleClass="btn btn-default"></p:button>
+			<p:commandButton value="Criar" type="submit"
+				style="width:100px; margin-right:auto; margin-left:10px; margin-top:15px;border-radius:0"
+				action="#{newScript.createQuestion()}"
+				update=":scriptNewForm:scriptList :formNewQuestion:dialog-NewQuestion :editglobalmsgs"
+				icon="ui-icon-check" styleClass="btn btn-danger" oncomplete="fadeoutMsg();"></p:commandButton>
+		</h:panelGroup>
+	</h:panelGroup>
 </ui:composition>
 </html>

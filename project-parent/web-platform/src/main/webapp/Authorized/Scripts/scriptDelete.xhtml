@@ -7,14 +7,18 @@
 
 <ui:composition>
 	<p:confirmDialog header="Confirmação de eliminação"
-		message="Pretende eliminar este guião?"
-		widgetVar="deleteScriptDialog">
-		<p:commandButton value="Sim" type="submit"
-			action="#{editScript.deleteScript}"
-			oncomplete="PF('deleteScriptDialog').hide()"
-			update="toolbarForm:toolbarScript :scriptForm:gridScripts" />
-		<p:button value="Cancel"
-			onclick="PF('deleteScriptDialog').hide(); return false;" />
+		message="Pretende eliminar este guião?" widgetVar="deleteScriptDialog">
+		<h:panelGroup layout="block" styleClass="row">
+			<h:panelGroup layout="block" styleClass="col-md-12 text-center">
+				<p:commandButton value="Apagar" type="submit"
+					action="#{editScript.deleteScript}"
+					oncomplete="PF('deleteScriptDialog').hide();fadeoutMsg();"
+					update="toolbarForm:toolbarScript :scriptForm:gridScripts :flashglobalmsgs"  style="width:30%;" styleClass="btn btn-danger">
+					</p:commandButton>
+				<p:button value="Cancelar"
+					onclick="PF('deleteScriptDialog').hide(); return false;"  style="width:30%;" styleClass="btn btn-default" />
+			</h:panelGroup>
+		</h:panelGroup>
 	</p:confirmDialog>
 </ui:composition>
 </html>

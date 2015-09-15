@@ -49,10 +49,8 @@ public class PositionEntity {
 
 	@Convert(converter = LocalDatePersistenceConverter.class)
 	@Column(name = "data_abertura", nullable = false)
-
 	private LocalDate openDate;
 
-	@Future
 	@Temporal(TemporalType.DATE)
 	@Column(name = "data_fecho", nullable = false)
 	private Date closeDate;

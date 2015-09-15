@@ -10,44 +10,66 @@
 	<h:outputStylesheet library="css" name="positionListAdmin.css" />
 </h:head>
 <h:body>
-	<div id="editScript">
-		<h2>Editar Guião</h2>
-		<p></p>
-		<p:separator />
-		<p:messages id="messages"  closable="true" />
-		<ui:insert name="toolbar">
-			<ui:include src="editScriptToolbarC.xhtml" />
-		</ui:insert>
-		<h:form id="scriptEditForm">
+	<ui:composition template="../Layout/layout.xhtml">
+		<ui:define name="content">
+			<h:panelGroup layout="block" id="editScript">
+				<h:panelGroup layout="block" styleClass="container">
+					<h:panelGroup layout="block" class="page-header">
+						<h:panelGroup layout="block" class="row" id="titlerow">
+							<h:panelGroup layout="block" class="col-md-8">
+								<h1>Edição de Guião</h1>
+							</h:panelGroup>
+							<h:panelGroup layout="block" class="col-md-offset-2 col-md-2">
+								<h:panelGroup layout="block" class="media">
+									<h:graphicImage styleClass="media-object" library="imgs"
+										name="logocritical.png"
+										style="min-height: 50px; height: 50px;" />
+								</h:panelGroup>
+							</h:panelGroup>
+						</h:panelGroup>
+					</h:panelGroup>
+					<h:panelGroup layout="block" styleClass="col-md-12 text-center">
+						<h:messages id="editglobalmsgs" globalOnly="true"
+							styleClass="alert alert-info" style="list-style-type: none;" />
+					</h:panelGroup>
+					<ui:insert name="toolbar">
+						<ui:include src="editScriptToolbarC.xhtml" />
+					</ui:insert>
+					<h:form id="scriptEditForm">
+						<h:outputLabel for="title" value="Título do Guião"
+							style="margin-right:10px;" />
+						<p:inputText id="title" required="true" size="30"
+							value="#{editScript.title}" />
 
-			<p:panel id="panelScriptList" style="margin-bottom:10px;">
-
-				<h:panelGrid columns="2" cellpadding="5">
-					<h:outputLabel for="title" value="Título do Guião" />
-					<p:inputText id="title" required="true" size="30"
-						value="#{editScript.title}" />
-				</h:panelGrid>
-			</p:panel>
-			<ui:insert name="elements">
-				<ui:include src="scriptElementsEditC.xhtml" />
-			</ui:insert>
-			<p></p>
-			<p:commandButton value="Guardar" type="submit"
-				style="width:100px; margin-right:auto; margin-left:10px; margin-top:15px;"
-				action="#{editScript.updateScript()}" icon="ui-icon-disk">
-
-			</p:commandButton>
-		</h:form>
-
-
-		<h:form id="formNewQuestion">
-			<ui:insert name="elements">
-				<ui:include src="scriptNewQuestionEditC.xhtml" />
-			</ui:insert>
+						<h:panelGroup layout="block" styleClass="spacer" />
+						<ui:insert name="elements">
+							<ui:include src="scriptElementsEditC.xhtml" />
+						</ui:insert>
+						<br />
+						<h:panelGroup layout="block" styleClass="row">
+							<h:panelGroup layout="block" styleClass="col-md-12 text-center">
+								<p:commandButton value="Guardar" type="submit"
+									styleClass="btn btn-success" style="border-radius:0;width:10%;"
+									action="#{editScript.updateScript()}" icon="ui-icon-disk">
+								</p:commandButton>
+								<p:commandButton value="Voltar" type="submit"
+									styleClass="btn btn-default" style="border-radius:0;width:10%;"
+									action="scriptMain.xhtml?faces-redirect=true"
+									icon="ui-icon-disk">
+								</p:commandButton>
+							</h:panelGroup>
+						</h:panelGroup>
+					</h:form>
 
 
-		</h:form>
-	</div>
-
+					<h:form id="formNewQuestion">
+						<ui:insert name="elements">
+							<ui:include src="scriptNewQuestionEditC.xhtml" />
+						</ui:insert>
+					</h:form>
+				</h:panelGroup>
+			</h:panelGroup>
+		</ui:define>
+	</ui:composition>
 </h:body>
 </html>

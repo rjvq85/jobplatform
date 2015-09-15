@@ -321,3 +321,37 @@ btnhovercolor.hover {
     color: antiquewhite !important;
 	
 }
+
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+	background-color: none;
+	background-image: none;
+}
+
+.ui-selectonemenu-trigger {
+	width:auto;
+}
+
+/* Guião de Entrevista */
+
+#intScriptContainer input[type="checkbox"] {
+	padding: 10px !important;
+}
+
+td > label {
+	padding: 10px;
+}
+
+#intScriptContainer label {
+	font-weight:400;
+	float:left;
+}
+
+.pe-dynaform-label {
+	font-weight:400 !important;
+	text-align: left !important;
+}
+
+.ui-radiobutton-icon {
+	margin-left: 0px !important;
+	margin-top: -1px !important;
+}

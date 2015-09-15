@@ -9,7 +9,7 @@
 <ui:composition>
 
 	<!-- toolbar with buttons add, edit, and delete-->
-	<p:toolbar id="toolbarScript">
+	<p:toolbar id="toolbarScript" style="display:inline-block !important; width:100% !important;">
 
 		<p:toolbarGroup align="left">
 			<!-- NewScript button -->
@@ -19,28 +19,26 @@
 			<p:button type="button" icon="ui-icon-pencil"
 				disabled="#{editScript.editScript==null}"
 				outcome="scriptEditC.xhtml?faces-redirect=true" />
-			<!-- Delete position dialog-->
+			<!-- Delete SCRIPT dialog-->
 			<p:commandButton type="button" icon="ui-icon-trash"
 				disabled="#{editScript.editScript==null}"
 				onclick="PF('deleteScriptDialog').show(); return false;">
 			</p:commandButton>
-			<span class="ui-separator"><span
-				class="ui-icon ui-icon-grip-dotted-vertical" /> </span>
 		</p:toolbarGroup>
 
 		<!-- search menu -->
 		<p:toolbarGroup align="right">
 			<!-- Search menu -->
 			<h:selectOneMenu id="scriptWord" value="#{scriptListView.scriptWord}" required="true"
-				filter="true" filterMatchMode="startsWith" width="5">
+				filter="true" filterMatchMode="startsWith" width="5" styleClass="btn-info" style="height:30px;">
 				<f:selectItem itemLabel="Pesquisar por:" itemValue=""
 					noSelectionOption="true" />
 				<f:selectItem itemLabel="Título" itemValue="Título" />
 				<f:selectItem itemLabel="Referência" itemValue="Referência" />
 			</h:selectOneMenu>
 			<span class="ui-separator"><span /> </span>
-			<p:inputText id="scriptsSearch" required="true" size="10"
-				value="#{scriptListView.searchCode}" />
+			<p:inputText id="scriptsSearch" required="true" size="50"
+				value="#{scriptListView.searchCode}" styleClass="form-contro"/>
 			<span class="ui-separator"><span /> </span>
 
 			<p:commandButton type="submit" icon="ui-icon-search"

@@ -9,7 +9,8 @@
 <ui:composition>
 	<h:form id="toolbarForm">
 		<!-- toolbar with buttons add, edit, and delete-->
-		<p:toolbar id="toolbarScript">
+		<p:toolbar id="toolbarScript"
+			style="display:inline-block !important; width:100% !important;">
 			<p:toolbarGroup align="left">
 				<!-- NewQuestion button -->
 				<p:commandButton type="button" icon="ui-icon-circle-plus"
@@ -17,9 +18,6 @@
 					onclick="PF('dialogNewQuestion').show(); return false;">
 					<p:resetInput target="formNewQuestion:dialog-NewQuestion"></p:resetInput>
 				</p:commandButton>
-				<span class="ui-separator"><span
-					class="ui-icon ui-icon-grip-dotted-vertical" /> </span>
-
 				<!-- Edit position dialog -->
 				<p:commandButton type="button" icon="ui-icon-pencil"
 					disabled="#{editScript.editQuestion==null}"
@@ -35,7 +33,7 @@
 					onclick="PF('deleteQuestiontDialog').show(); return false;">
 				</p:commandButton>
 			</p:toolbarGroup>
-			
+
 		</p:toolbar>
 	</h:form>
 
@@ -43,12 +41,16 @@
 		<p:confirmDialog header="Confirmação de eliminação"
 			message="Pretende eliminar esta questão?"
 			widgetVar="deleteQuestiontDialog">
-			<p:commandButton value="Sim" type="submit"
-				action="#{editScript.deleteQuestion()}"
-				oncomplete="PF('deleteQuestiontDialog').hide()"
-				update=":toolbarForm:toolbarScript  :scriptEditForm:scriptList" />
-			<p:button value="Cancel"
-				onclick="PF('deleteQuestiontDialog').hide(); return false;" />
+			<h:panelGroup layout="block" styleClass="row">
+				<h:panelGroup layout="block" styleClass="col-md-12 text-center">
+					<p:commandButton value="Eliminar" type="submit"
+						action="#{editScript.deleteQuestion()}"
+						oncomplete="PF('deleteQuestiontDialog').hide(); fadeoutMsg();"
+						update=":toolbarForm:toolbarScript  :scriptEditForm:scriptList :editglobalmsgs" styleClass="btn btn-danger" style="width:30%;border-radius:0;"/>
+					<p:button value="Cancelar"
+						onclick="PF('deleteQuestiontDialog').hide(); return false;"  styleClass="btn btn-default" style="width:30%;border-radius:0;"/>
+				</h:panelGroup>
+			</h:panelGroup>
 		</p:confirmDialog>
 	</h:form>
 
@@ -75,9 +77,9 @@
 			<p:commandButton value="Guardar" type="submit"
 				style="width:100px;margin-left:10px;margin-top:15px;"
 				action="#{editScript.saveQuestion()}"
-				oncomplete="if (!args.validationFailed)PF('dialogEditQuestion').hide();"
-				update=":toolbarForm:toolbarScript :scriptEditForm:scriptList"
-				icon="ui-icon-check"></p:commandButton>
+				oncomplete="if (!args.validationFailed)PF('dialogEditQuestion').hide(); fadeoutMsg();"
+				update=":toolbarForm:toolbarScript :scriptEditForm:scriptList :editglobalmsgs"
+				icon="ui-icon-check" styleClass="btn btn-success"></p:commandButton>
 		</p:dialog>
 		<br />
 	</h:form>

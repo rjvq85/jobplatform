@@ -10,32 +10,49 @@
 	<meta charset="utf-8" />
 	<h:outputStylesheet library="css" name="positionListAdmin.css" />
 </h:head>
-<h:body>
-	<div id="outBox">
-		<h2>Posições</h2>
-		<p></p>
-		<p:separator />
-		<p:messages id="msgs" />
+<ui:composition template="../Layout/layout.xhtml">
+	<ui:define name="content">
+		<h:panelGroup layout="block" id="outBox">
+			<h:panelGroup layout="block" styleClass="container">
+				<h:panelGroup layout="block" class="page-header">
+					<h:panelGroup layout="block" class="row" id="titlerow">
+						<h:panelGroup layout="block" class="col-md-8">
+							<h1>Posições</h1>
+						</h:panelGroup>
+						<h:panelGroup layout="block" class="col-md-offset-2 col-md-2">
+							<h:panelGroup layout="block" class="media">
+								<h:graphicImage styleClass="media-object" library="imgs"
+									name="logocritical.png" style="min-height: 50px; height: 50px;" />
+							</h:panelGroup>
+						</h:panelGroup>
+					</h:panelGroup>
+				</h:panelGroup>
+				<h:panelGroup layout="block" styleClass="col-md-12 text-center">
+					<h:messages id="editglobalmsgs" globalOnly="true"
+						styleClass="alert alert-info" style="list-style-type: none;" />
+				</h:panelGroup>
 
-		<h:form id="toolbarForm">
-			<ui:insert name="toolbar">
-				<ui:include src="positionListManagerToolbar.xhtml" />
-			</ui:insert>
-		</h:form>
+				<h:form id="toolbarForm">
+					<ui:insert name="toolbar">
+						<ui:include src="positionListManagerToolbar.xhtml" />
+					</ui:insert>
+				</h:form>
 
-		<h:form id="positionForm">
-			<ui:insert name="positionsList">
-				<ui:include src="positionList.xhtml" />
-			</ui:insert>
-		</h:form>
+				<h:form id="positionForm">
+					<ui:insert name="positionsList">
+						<ui:include src="positionList.xhtml" />
+					</ui:insert>
+				</h:form>
 
-		<h:form id="formEditPosition">
-			<ui:insert name="EditPosition">
-				<ui:include src="positionListManagerEditPosition.xhtml" />
-			</ui:insert>
-		</h:form>
+				<h:form id="formEditPosition">
+					<ui:insert name="EditPosition">
+						<ui:include src="positionListManagerEditPosition.xhtml" />
+					</ui:insert>
+				</h:form>
+			</h:panelGroup>
+		</h:panelGroup>
+	</ui:define>
+</ui:composition>
 
-		
-	</div>
 </h:body>
 </html>

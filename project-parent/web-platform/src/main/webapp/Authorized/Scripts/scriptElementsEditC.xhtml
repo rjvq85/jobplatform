@@ -9,7 +9,9 @@
 	<p:dataTable value="#{editScript.questions}" var="question"
 		widgetVar="scriptList" selectionMode="single"
 		selection="#{editScript.editQuestion}" rowKey="#{question.id}"
-		draggableRows="true" itemValue="#{question}" id="scriptList">
+		draggableRows="true" itemValue="#{question}" id="scriptList"
+		tableStyleClass="table-condensed newlabeled" styleClass="text-center"
+		emptyMessage="Sem questões...">
 
 		<p:ajax event="rowSelect" listener="#{editScript.onSelect}"
 			update=":toolbarForm:toolbarScript   
@@ -25,6 +27,6 @@
 
 	</p:dataTable>
 
-	<h5>* arrastar as linhas para ordenar</h5>
+	<h5>* arrastar as linhas para ordenar as questões</h5>
 </ui:composition>
 </html>

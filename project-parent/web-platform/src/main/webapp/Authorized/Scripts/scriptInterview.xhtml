@@ -6,27 +6,46 @@
 	xmlns:p="http://primefaces.org/ui">
 <h:head>
 	<meta charset="utf-8" />
-	<h:outputStylesheet library="css" name="script.css" />
+	<h:outputScript library="js" name="jquery-2.1.4.min.js" />
+	<h:outputScript library="js" name="bootstrap.js" />
+	<h:outputScript library="js" name="customscripts.js" />
+	<h:outputStylesheet library="css" name="mainstyle.css" />
+	<h:outputStylesheet library="css" name="bootstrap.css" />
 </h:head>
 <h:body>
-<f:metadata>    
-    <f:event type="preRenderView" listener="#{dynaFormController.startup()}"/>    
-</f:metadata>  
-	<div id="outBox">
-		<div id="scriptInterview">
+	<ui:composition template="../Layout/layout.xhtml">
+		<ui:define name="content">
+			<f:metadata>
+				<f:event type="preRenderView"
+					listener="#{dynaFormController.startup()}" />
+			</f:metadata>
+			<h:panelGroup layout="block" id="sintcontainer"
+				styleClass="container">
+				<h:panelGroup layout="block" class="page-header">
+					<h:panelGroup layout="block" class="row" id="titlerow">
+						<h:panelGroup layout="block" class="col-md-8">
+							<h1>Entrevista (referência: #{dynaFormController.interview.reference})</h1>
+						</h:panelGroup>
+						<h:panelGroup layout="block" class="col-md-offset-2 col-md-2">
+							<h:panelGroup layout="block" class="media">
+								<h:graphicImage styleClass="media-object" library="imgs"
+									name="logocritical.png" style="min-height: 50px; height: 50px;" />
+							</h:panelGroup>
+						</h:panelGroup>
+					</h:panelGroup>
+				</h:panelGroup>
+				<h:panelGroup layout="block" styleClass="col-md-12 text-center">
+					<h:messages id="editglobalmsgs" globalOnly="true"
+						styleClass="alert alert-info" style="list-style-type: none;" />
+				</h:panelGroup>
+				<h:form id="scriptGuide">
+					<ui:insert name="toolbar">
+						<ui:include src="scriptConstruct.xhtml" />
+					</ui:insert>
 
-			<h:outputText id="display" value="#{dynaFormController.title}" />
-			<p:separator />
-			<p></p>
-
-		</div>
-		<h:form id="scriptGuide">
-		<p:messages id="messages"  autoUpdate="true" closable="true" />
-			<ui:insert name="toolbar">
-				<ui:include src="scriptConstruct.xhtml" />
-			</ui:insert>
-
-		</h:form>
-	</div>
+				</h:form>
+			</h:panelGroup>
+		</ui:define>
+	</ui:composition>
 </h:body>
 </html>

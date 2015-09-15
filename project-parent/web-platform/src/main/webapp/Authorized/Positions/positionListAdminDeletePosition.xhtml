@@ -9,12 +9,16 @@
 	<p:confirmDialog header="Confirmação de eliminação"
 		message="Pretende eliminar esta posição?"
 		widgetVar="deletePositionDialog">
-		<p:commandButton value="Sim" type="submit"
-			action="#{editPosition.deletePosition}"
-			oncomplete="PF('deletePositionDialog').hide()"
-			update="toolbarForm:toolbarPosition :positionForm:gridPositions" />
-		<p:button value="Cancel"
-			onclick="PF('deletePositionDialog').hide(); return false;" />
+		<h:panelGroup layout="block" styleClass="row">
+			<h:panelGroup layout="block" styleClass="col-md-12 text-center">
+				<p:commandButton value="Eliminar" type="submit"
+					action="#{editPosition.deletePosition}"
+					oncomplete="PF('deletePositionDialog').hide()"
+					update="toolbarForm:toolbarPosition :positionForm:gridPositions :outBox" style="width:30%;" styleClass="btn btn-danger"/>
+				<p:button value="Cancelar"
+					onclick="PF('deletePositionDialog').hide(); return false;" style="width:30%;" styleClass="btn btn-default" />
+			</h:panelGroup>
+		</h:panelGroup>
 	</p:confirmDialog>
 </ui:composition>
 </html>

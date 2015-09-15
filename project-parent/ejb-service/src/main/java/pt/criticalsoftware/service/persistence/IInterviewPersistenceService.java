@@ -3,6 +3,7 @@ package pt.criticalsoftware.service.persistence;
 import java.time.LocalDate;
 import java.util.List;
 
+import pt.criticalsoftware.service.model.ICandidate;
 import pt.criticalsoftware.service.model.IInterview;
 import pt.criticalsoftware.service.model.IScript;
 import pt.criticalsoftware.service.model.IUser;
@@ -30,4 +31,6 @@ public interface IInterviewPersistenceService {
 	List<IUser> getAvailableInterviewers(Integer id);
 
 	List<IScript> getAvailableScripts(Integer id);
+
+	List<IInterview> getByCandidate(ICandidate candidate);
 }

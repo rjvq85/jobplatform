@@ -78,6 +78,11 @@ public class ScriptBusinessService implements IScriptBusinessService{
 	}
 	
 	@Override
+	public void deleteScript(IScript script) {
+		scriptPersistence.delete(script);
+	}
+	
+	@Override
 	public List<IScript> getAll() {
 		return scriptPersistence.getAllScripts();
 	}

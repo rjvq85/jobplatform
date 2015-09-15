@@ -9,49 +9,72 @@
 	<h:outputStylesheet library="css" name="positionListAdmin.css" />
 </h:head>
 <h:body>
-	<div id="newScript">
-		<h2>Novo Guião</h2>
-		<p></p>
-		<p:separator />
-		<h:form id="toolbarForm">
-			<p:messages id="messages" autoUpdate="true" closable="true" />
-			<!-- toolbar with buttons add, edit, and delete-->
-			<p:toolbar id="toolbarScript">
-				<p:toolbarGroup align="left">
-					<p:commandButton type="button" icon="ui-icon-circle-plus"
-						value="Nova Questão"
-						onclick="PF('dialogNewQuestion').show(); return false;">
-						<p:resetInput target="formNewQuestion:dialog-NewQuestion"></p:resetInput>
-					</p:commandButton>
-				</p:toolbarGroup>
-				
-			</p:toolbar>
-		</h:form>
+	<ui:composition template="../Layout/layout.xhtml">
+		<ui:define name="content">
+			<h:panelGroup layout="block" id="newScript">
+				<h:panelGroup layout="block" styleClass="container">
+					<h:panelGroup layout="block" class="page-header">
+						<h:panelGroup layout="block" class="row" id="titlerow">
+							<h:panelGroup layout="block" class="col-md-8">
+								<h1>Criação de Guião</h1>
+							</h:panelGroup>
+							<h:panelGroup layout="block" class="col-md-offset-2 col-md-2">
+								<h:panelGroup layout="block" class="media">
+									<h:graphicImage styleClass="media-object" library="imgs"
+										name="logocritical.png"
+										style="min-height: 50px; height: 50px;" />
+								</h:panelGroup>
+							</h:panelGroup>
+						</h:panelGroup>
+					</h:panelGroup>
+					<h:panelGroup layout="block" styleClass="col-md-12 text-center">
+						<h:messages id="editglobalmsgs" globalOnly="true"
+							styleClass="alert alert-info" style="list-style-type: none;" />
+					</h:panelGroup>
+
+					<h:form id="scriptNewForm">
+						<h:panelGroup layout="block" styleClass="container">
+							<ui:insert name="elements">
+								<ui:include src="scriptElements.xhtml" />
+							</ui:insert>
+							<br/>
+							<h:panelGroup layout="block" styleClass="row">
+								<h:panelGroup layout="block" styleClass="col-md-4">
+									<p:commandButton type="button" icon="ui-icon-circle-plus"
+										value="Nova Questão"
+										onclick="PF('dialogNewQuestion').show(); return false;"
+										process="@this">
+										<p:resetInput target="formNewQuestion:dialog-NewQuestion"></p:resetInput>
+									</p:commandButton>
+								</h:panelGroup>
+							</h:panelGroup>
+							<br/>
+							<h:panelGroup layout="block" styleClass="row">
+								<h:panelGroup layout="block" styleClass="col-md-12 text-center">
+									<p:commandButton value="Guardar" type="submit"
+										style="border-radius:0; width:10%;" action="#{newScript.createScript()}"
+										update=":scriptNewForm"	styleClass="btn btn-success" oncomplete="fadeoutMsg();">
+										<p:resetInput target="formNewQuestion:dialog-NewQuestion"></p:resetInput>
+									</p:commandButton>
+									<p:commandButton action="scriptMain.xhtml?faces-redirect=true"
+										value="Voltar" styleClass="btn btn-default"
+										style="border-radius:0;width:10%;" process="@this"></p:commandButton>
+								</h:panelGroup>
+							</h:panelGroup>
+						</h:panelGroup>
+					</h:form>
 
 
-		<h:form id="scriptNewForm">
-			<ui:insert name="elements">
-				<ui:include src="scriptElements.xhtml" />
-			</ui:insert>
-
-			<p></p>
-			<p:commandButton value="Guardar" type="submit"
-				style="width:100px; margin-right:auto; margin-left:10px; margin-top:15px;"
-				action="#{newScript.createScript()}" update=":scriptNewForm"
-				icon="ui-icon-disk">
-				<p:resetInput target="formNewQuestion:dialog-NewQuestion"></p:resetInput>
-			</p:commandButton>
-		</h:form>
 
 
-
-
-		<h:form id="formNewQuestion">
-			<ui:insert name="elements">
-				<ui:include src="scriptNewQuestion.xhtml" />
-			</ui:insert>
-		</h:form>
-	</div>
-
+					<h:form id="formNewQuestion">
+						<ui:insert name="elements">
+							<ui:include src="scriptNewQuestion.xhtml" />
+						</ui:insert>
+					</h:form>
+				</h:panelGroup>
+			</h:panelGroup>
+		</ui:define>
+	</ui:composition>
 </h:body>
 </html>

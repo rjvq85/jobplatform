@@ -12,10 +12,6 @@
 		widgetVar="dialogEditPosition" modal="true" resizable="false">
 		<h:panelGrid columns="2">
 
-			<p:outputLabel value="Código" for="positionReference" />
-			<p:inputText id="positionReference" requiredMessage="referência"
-				size="30" value="#{editPosition.reference}" />
-
 			<p:outputLabel value="Título" for="positionTitle" />
 			<p:inputText id="positionTitle" requiredMessage="título" size="30"
 				value="#{editPosition.title}" />
@@ -44,17 +40,21 @@
 			<p:inputText id="positionDescription" requiredMessage="descrição"
 				size="30" value="#{editPosition.description}" />
 		</h:panelGrid>
-		<p:button value="Cancel" type="button"
-			style="width:100px; margin-right:10px; margin-top:15px;"
-			onclick="PF('dialogEditPosition').hide(); return false; positionList.unselectAllRows();"
-			icon="ui-icon-cancel"></p:button>
+		<h:panelGroup layout="block" styleClass="row">
+			<h:panelGroup layout="block" styleClass="col-md-12 text-center">
+				<p:button value="Cancel" type="button" styleClass="btn btn-danger"
+					style="width:100px; margin-right:10px; margin-top:15px;border-radius:0;"
+					onclick="PF('dialogEditPosition').hide(); return false; positionList.unselectAllRows();"
+					icon="ui-icon-cancel"></p:button>
 
-		<p:commandButton value="Editar" type="submit"
-			style="width:100px; margin-right:auto; margin-left:10px; margin-top:15px;"
-			action="#{editPosition.updatePosition()}"
-			onclick="if (!args.validationFailed)PF('dialogEditPosition').hide(); positionList.unselectAllRows();"
-			update="positionForm:gridPositions :formEditPosition:dialog-EditPosition :toolbarForm:toolbarPosition"
-			icon="ui-icon-check"></p:commandButton>
+				<p:commandButton value="Editar" type="submit" styleClass="btn btn-success"
+					style="width:100px; margin-right:auto; margin-left:10px; margin-top:15px;border-radius:0;"
+					action="#{editPosition.updatePosition()}"
+					onclick="if (!args.validationFailed)PF('dialogEditPosition').hide(); fadeoutMsg(); positionList.unselectAllRows();"
+					update="positionForm:gridPositions :formEditPosition:dialog-EditPosition :toolbarForm:toolbarPosition"
+					icon="ui-icon-check"></p:commandButton>
+			</h:panelGroup>
+		</h:panelGroup>
 	</p:dialog>
 
 </ui:composition>

@@ -19,26 +19,29 @@
 
 			<p:outputLabel value="Tipo resposta" for="answerType" />
 			<p:selectOneMenu id="answerType" value="#{editScript.answerStr}"
-				required="true" filter="true" filterMatchMode="startsWith"
-				width="30">
-				<f:selectItem itemLabel="VERDADEIRO ou FALSO" itemValue="V/F" />
-				<f:selectItem itemLabel="1 a 5" itemValue="1/5" />
+				required="true" filter="true" filterMatchMode="startsWith" style="width:100%;">
+				<f:selectItem itemLabel="Verdadeiro ou Falso" itemValue="V/F" />
+				<f:selectItem itemLabel="De um a cinco" itemValue="1/5" />
 				<f:selectItem itemLabel="Resposta Livre" itemValue="Resposta Livre" />
 			</p:selectOneMenu>
 		</h:panelGrid>
 
-		<p:button value="Cancel" type="button"
-			style="width:100px; margin-left:90px; margin-top:15px;"
-			onclick="PF('dialogNewQuestion').hide(); return false;"
-			icon="ui-icon-cancel"></p:button>
+		<h:panelGroup layout="block" styleClass="row">
+			<h:panelGroup layout="block" styleClass="col-md-12 text-center">
+				<p:button value="Cancelar" type="button"
+					styleClass="btn btn-default" style="width:30%;border-radius:0;"
+					onclick="PF('dialogNewQuestion').hide(); return false;"
+					icon="ui-icon-cancel"></p:button>
 
-		<p:commandButton value="Criar" type="submit"
-			style="width:100px; margin-right:auto; margin-left:10px; margin-top:15px;"
-			action="#{editScript.createQuestion()}"
-			update=":scriptEditForm:scriptList :formNewQuestion:dialog-NewQuestion"
-			icon="ui-icon-check"></p:commandButton>
+				<p:commandButton value="Criar" type="submit"
+					styleClass="btn btn-success" style="width:30%;border-radius:0;"
+					action="#{editScript.createQuestion()}"
+					update=":scriptEditForm:scriptList :formNewQuestion:dialog-NewQuestion :editglobalmsgs"
+					icon="ui-icon-check"></p:commandButton>
+			</h:panelGroup>
+		</h:panelGroup>
 
 	</p:dialog>
-	
+
 </ui:composition>
 </html>

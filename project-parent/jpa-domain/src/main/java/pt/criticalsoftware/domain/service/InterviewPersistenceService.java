@@ -18,6 +18,7 @@ import pt.criticalsoftware.domain.proxies.InterviewProxy;
 import pt.criticalsoftware.domain.proxies.ScriptProxy;
 import pt.criticalsoftware.domain.proxies.UserProxy;
 import pt.criticalsoftware.domain.utils.GenerateReferenceValue;
+import pt.criticalsoftware.service.model.ICandidate;
 import pt.criticalsoftware.service.model.IInterview;
 import pt.criticalsoftware.service.model.IScript;
 import pt.criticalsoftware.service.model.IUser;
@@ -150,6 +151,18 @@ public class InterviewPersistenceService implements IInterviewPersistenceService
 			scripts.add(new ScriptProxy(script));
 		}
 		return scripts;
+	}
+
+	@Override
+	public List<IInterview> getByCandidate(ICandidate candidate) {
+		TypedQuery<InterviewEntity> query = em.createNamedQuery("Interview.byCandidate",InterviewEntity.class)
+				.setParameter("param", candidate.getId());
+		List<InterviewEntity> entities = query.getResultList();
+		List<IInterview> intervs = new ArrayList<>();
+		for (InterviewEntity entity : entities) {
+			intervs.add(new InterviewProxy(entity));
+		}
+		return intervs;
 	}
 
 }

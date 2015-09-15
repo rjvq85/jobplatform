@@ -7,7 +7,7 @@
 <ui:composition>
 	<p:dialog id="dialog-NewPosition" header="Adicionar Posição"
 		widgetVar="dialogNewPosition" modal="true" showEffect="blind"
-		resizable="false">
+		resizable="false" height="500" style="overflow-y: scroll;">
 		<h:form id="formNewPosition">
 			<h:panelGroup layout="block" id="newPosDiv">
 				<h:panelGrid columns="2">
@@ -64,7 +64,7 @@
 
 					<p:outputLabel value="Responsável" for="positionResponsable" />
 					<h:selectOneMenu id="positionResponsable"
-						value="#{newPosition.selectedResponsable}">
+						value="#{newPosition.selectedResponsable}" styleClass="btn btn-info" style="height:30px;">
 						<f:selectItems value="#{newPosition.responsables}" var="resp"
 							itemLabel="#{resp.firstName} #{resp.lastName}"
 							itemValue="#{resp.id}" />
@@ -78,8 +78,8 @@
 
 					<p:outputLabel value="Data Fecho" />
 					<p:calendar pattern="dd/MM/yyyy" mask="99.99.9999" navigator="true"
-						id="positionCloseDate" required="true" mindate="1/1/50" size="30"
-						value="#{newPosition.closeDate}" />
+						id="positionCloseDate" required="true" mindate="#{newPosition.currentDate()}" size="30"
+						value="#{newPosition.closeDate}"/>
 
 					<p:outputLabel value="Canais Divulgação" for="positionAdChannels" />
 					<p:selectManyCheckbox id="positionAdChannels" width="30"
@@ -88,13 +88,13 @@
 							itemLabel="#{channel}" itemValue="#{channel}" />
 					</p:selectManyCheckbox>
 				</h:panelGrid>
-				<p:button value="Cancel" type="button"
-					style="width:100px; margin-left:90px; margin-top:15px;"
+				<p:button value="Cancel" type="button" styleClass="btn btn-danger"
+					style="width:100px; margin-left:90px; margin-top:15px; border-radius:0;"
 					onclick="PF('dialogNewPosition').hide(); return false;"
 					icon="ui-icon-cancel"></p:button>
 
-				<p:commandButton id="createbtn" value="Criar" type="submit"
-					style="width:100px; margin-right:auto; margin-left:10px; margin-top:15px;"
+				<p:commandButton id="createbtn" value="Criar" type="submit" styleClass="btn btn-success"
+					style="width:100px; margin-right:auto; margin-left:10px; margin-top:15px; border-radius:0;"
 					action="#{newPosition.createPosition()}"
 					oncomplete="if (!args.validationFailed)PF('dialogNewPosition').hide()"
 					update=":positionForm:gridPositions :formNewPosition:newPosDiv"

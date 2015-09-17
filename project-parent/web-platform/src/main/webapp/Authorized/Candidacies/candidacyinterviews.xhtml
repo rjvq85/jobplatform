@@ -84,7 +84,7 @@
 									<p:column style="width:5%;">
 										<p:commandLink id="deleteButton"
 											action="#{candidacyInterviews.deleteInterview(interv)}"
-											update="lista" onclick="return confirm('Tem a certeza?');"
+											update="lista" onclick="if (!confirm('Tem a certeza?')) return false;"
 											oncomplete="window.location.replace(window.location.href);" process="@this">
 											<i class="glyphicon glyphicon-remove-circle"></i>
 										</p:commandLink>

@@ -78,7 +78,7 @@ public class CandidacyPersistenceService implements ICandidacyPersistenceService
 	}
 
 	@Override
-	public void assignCandidacy(ICandidacy cand) throws UniqueConstraintException {
+	public ICandidacy assignCandidacy(ICandidacy cand) throws UniqueConstraintException {
 		CandidacyEntity candidacy;
 		try {
 			candidacy = getEntity(cand);
@@ -89,9 +89,10 @@ public class CandidacyPersistenceService implements ICandidacyPersistenceService
 				throw new UniqueConstraintException("O candidato já tem uma candidatura associada a esta posição.");
 			em.persist(candidacy);
 			candidacy.setReference(GenerateReferenceValue.genReference("C", candidacy.getId()));
-			em.merge(candidacy);
+			return new CandidacyProxy(em.merge(candidacy));
 		} catch (IllegalStateException ies) {
 			// log
+			return null;
 		}
 
 	}

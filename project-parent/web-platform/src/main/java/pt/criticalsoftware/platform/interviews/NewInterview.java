@@ -14,6 +14,8 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpUtils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,6 +30,7 @@ import pt.criticalsoftware.service.model.IInterviewBuilder;
 import pt.criticalsoftware.service.model.IPosition;
 import pt.criticalsoftware.service.model.IScript;
 import pt.criticalsoftware.service.model.IUser;
+import pt.criticalsoftware.service.notifications.IMailSender;
 
 @Named
 @RequestScoped
@@ -54,6 +57,8 @@ public class NewInterview {
 	private IScriptBusinessService scriptBness;
 	@Inject
 	private CandidacyInterviews candInterview;
+	@EJB
+	private IMailSender mailSender;
 
 	public void schedule() {
 		try {
@@ -64,9 +69,15 @@ public class NewInterview {
 			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Entrevista agendada com sucesso", "");
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 			candInterview.addNewInterview(interview);
+			String path = getRequest().getScheme() + "://" + getRequest().getServerName() + ":" + getRequest().getServerPort() + getRequest().getContextPath();
+			logger.info(getRequest().getServerName());
+			logger.info(getRequest().getLocalAddr());
+			logger.info(getRequest().getRequestURL().toString());
+			mailSender.sendEmail(createdInterview, createdInterview.getInterviewers(), path);
 			clear();
 		} catch (Exception e) {
 			logger.error("Erro ao agendar entrevista\n" + e.getStackTrace().toString());
+			e.printStackTrace();
 			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao agendar entrevista", "");
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 			clear();
@@ -163,6 +174,14 @@ public class NewInterview {
 
 	public void setNewInterviewers(List<IUser> newInterviewers) {
 		this.newInterviewers = newInterviewers;
+	}
+	
+	private HttpServletRequest getRequest() {
+		return (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+	}
+	
+	public void setSomeCandidacy(ICandidacy candidacy) {
+		candInterview.setSelectedCandidacy(candidacy);
 	}
 
 }

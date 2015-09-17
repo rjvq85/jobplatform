@@ -8,6 +8,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
+import org.apache.commons.mail.EmailException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,10 +21,8 @@ import pt.criticalsoftware.service.persistence.IPositionPersistenceService;
 import pt.criticalsoftware.service.persistence.positions.TechnicalAreaType;
 import pt.criticalsoftware.service.persistence.states.PositionState;
 
-
 @Stateless
-public class PositionBusinessService implements IPositionBusinessService{
-	
+public class PositionBusinessService implements IPositionBusinessService {
 
 	private final Logger logger = LoggerFactory.getLogger(PositionBusinessService.class);
 	@EJB
@@ -31,7 +30,7 @@ public class PositionBusinessService implements IPositionBusinessService{
 
 	@EJB
 	private IPositionBuilder positionBuilder;
-	
+
 	@EJB
 	private IMailSender notif;
 
@@ -40,95 +39,71 @@ public class PositionBusinessService implements IPositionBusinessService{
 		return positionPersistence.getAllPositions();
 	}
 
-
-
 	@Override
-	public void verifyReference(String reference)
-			throws DuplicateReferenceException {
+	public void verifyReference(String reference) throws DuplicateReferenceException {
 		positionPersistence.verifyReference(reference);
 	}
 
-
-
 	@Override
-	public IPosition createPosition(LocalDate openDate, Date closeDate, String title, String locale, PositionState state,
-			String company, TechnicalAreaType technicalArea, String sla,
-			Integer vacancies, IUser responsable, String description,
-			Collection<String> adChannels)
-					throws DuplicateReferenceException {
+	public IPosition createPosition(LocalDate openDate, Date closeDate, String title, String locale,
+			PositionState state, String company, TechnicalAreaType technicalArea, String sla, Integer vacancies,
+			IUser responsable, String description, Collection<String> adChannels) throws DuplicateReferenceException {
 
-		IPosition position = positionBuilder.closeDate(closeDate)
-				.company(company).description(description)
-				.locale(locale).openDate(openDate).sla(sla)
-				.state(state).technicalArea(technicalArea)
-				.title(title).vacancies(vacancies).adChannels(adChannels).responsable(responsable).build();
+		IPosition position = positionBuilder.closeDate(closeDate).company(company).description(description)
+				.locale(locale).openDate(openDate).sla(sla).state(state).technicalArea(technicalArea).title(title)
+				.vacancies(vacancies).adChannels(adChannels).responsable(responsable).build();
 		position = positionPersistence.create(position);
-		try {
-			notif.sendEmail(position, responsable);
-		} catch (Exception e) {
-		}
-
 		return position;
 	}
-	
+
 	@Override
 	public IPosition createPosition(IPosition position) throws DuplicateReferenceException {
 		verifyReference(position.getReference());
 		logger.debug("Posição criada");
 		return positionPersistence.create(position);
 	}
-	
+
 	@Override
 	public void update(IPosition position) {
 		positionPersistence.update(position);
-		
+
 	}
-	
+
 	@Override
 	public void delete(IPosition position) {
 		positionPersistence.delete(position);
-		
+
 	}
 
 	@Override
-	public List<IPosition> getPositionsByWord(String positionWord,
-			String searchCode) {
+	public List<IPosition> getPositionsByWord(String positionWord, String searchCode) {
 		return positionPersistence.getPositionsByWord(positionWord, searchCode);
-		
+
 	}
-
-
 
 	@Override
 	public List<IPosition> getManagerPositions(Integer currentUserID) {
 		return positionPersistence.getManagerPositions(currentUserID);
 	}
-	
+
 	@Override
-	public List<IPosition> getPositionsByDate(String positionWord,Date date) {
+	public List<IPosition> getPositionsByDate(String positionWord, Date date) {
 		return positionPersistence.getPositionsByDate(positionWord, date);
 	}
 
-
-
 	@Override
-	public List<IPosition> getPositionsByKeyWords(String positionWord,
-			String searchCode) {
+	public List<IPosition> getPositionsByKeyWords(String positionWord, String searchCode) {
 		return positionPersistence.getPositionsByKeyWords(positionWord, searchCode);
 	}
 
-
-
 	@Override
-	public List<IPosition> getPositionsByOpenDate(String positionWord,
-			LocalDate openDate) {
+	public List<IPosition> getPositionsByOpenDate(String positionWord, LocalDate openDate) {
 		return positionPersistence.getPositionsByOpenDate(positionWord, openDate);
 	}
 
 	@Override
-	public List<IPosition> getPositionsByLocaleAndArea(String locale,
-			String technicalAreaStr) {
-		return positionPersistence.getPositionsByLocaleAndArea(locale,technicalAreaStr);
+	public List<IPosition> getPositionsByLocaleAndArea(String locale, String technicalAreaStr) {
+		return positionPersistence.getPositionsByLocaleAndArea(locale, technicalAreaStr);
 	}
 
 	@Override
@@ -150,7 +125,10 @@ public class PositionBusinessService implements IPositionBusinessService{
 	public IPosition getPositionById(Integer positionId) {
 		return positionPersistence.find(positionId);
 	}
-	
-	
+
+	@Override
+	public List<IPosition> getOpenPositions() {
+		return positionPersistence.getAllOpenPositions();
+	}
 
 }

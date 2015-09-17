@@ -25,6 +25,7 @@ import pt.criticalsoftware.service.model.ICandidacyBuilder;
 import pt.criticalsoftware.service.model.ICandidate;
 import pt.criticalsoftware.service.model.ICandidateBuilder;
 import pt.criticalsoftware.service.model.IPosition;
+import pt.criticalsoftware.service.notifications.IMailSender;
 import pt.criticalsoftware.service.persistence.states.CandidacyState;
 
 @Named
@@ -67,6 +68,8 @@ public class NewCandidacy {
 	private IPositionBusinessService positionBusiness;
 	@Inject
 	private FileUpload upload;
+	@EJB
+	private IMailSender mailSender;
 
 	public void create() {
 
@@ -79,6 +82,7 @@ public class NewCandidacy {
 			ICandidacy icandidacy = candidacy.state(CandidacyState.SUBMETIDA).candidate(icandidate).position(position)
 					.build();
 			business.createCandidacy(icandidacy);
+			if (null != icandidacy.getPositionCandidacy().getId()) mailSender.sendEmail(icandidacy, icandidacy.getPositionCandidacy().getResponsable(), 1);
 			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Candidatura submetida com sucesso!",
 					"");
 			FacesContext.getCurrentInstance().addMessage(null, message);

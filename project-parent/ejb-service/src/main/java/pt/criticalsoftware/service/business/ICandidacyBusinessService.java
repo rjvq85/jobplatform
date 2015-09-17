@@ -16,7 +16,7 @@ public interface ICandidacyBusinessService {
 
 	List<ICandidacy> getSearchedCandidaciesAdmin(String param);
 
-	void assignCandidacy(ICandidacy cand) throws UniqueConstraintException;
+	ICandidacy assignCandidacy(ICandidacy cand) throws UniqueConstraintException;
 
 	List<ICandidacy> getSearchedDatesCandidaciesAdmin(LocalDate date);
 

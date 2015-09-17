@@ -19,11 +19,10 @@
 		<ui:define name="content">
 			<h:panelGroup layout="block" styleClass="container" id="container">
 				<h:panelGroup layout="block"
-					styleClass="alert col-md-offset-4 col-md-4 text-center">
-					<h:messages id="messages" styleClass="list-group alert alert-info" globalOnly="true"
-						infostyleClass="alert alert-success"
-						errorstyleClass="alert alert-danger"
-						style="list-style-type: none;" />
+					styleClass="col-md-offset-4 col-md-4 text-center">
+					<h:messages id="editglobalmsgs" globalOnly="true"
+						infoClass="alert alert-success" errorClass="alert alert-danger"
+						style="list-style-type: none; margin-top:30px;" />
 				</h:panelGroup>
 				<h:panelGroup layout="block" styleClass="row spacer"></h:panelGroup>
 				<h:panelGroup layout="block" styleClass="panel panel-default">
@@ -57,7 +56,8 @@
 											<f:selectItem itemLabel="Seleccione uma fonte" itemValue=""
 												noSelectionOption="true" />
 											<f:selectItems value="#{assignCandidacy.allSources}"
-												var="fonte" itemValue="#{fonte}" itemLabel="#{fonte.description}"/>
+												var="fonte" itemValue="#{fonte}"
+												itemLabel="#{fonte.description}" />
 										</h:selectOneMenu>
 									</h:panelGroup>
 								</h:panelGroup>
@@ -85,7 +85,7 @@
 									<h:panelGroup layout="block" styleClass="form-group">
 										<h:inputTextarea id="carta" value="#{assignCandidacy.letter}"
 											a:placeholder="Carta de motivação..."
-											styleClass="form-control" a:rows="10"/>
+											styleClass="form-control" a:rows="10" />
 									</h:panelGroup>
 								</h:panelGroup>
 							</h:panelGroup>
@@ -95,7 +95,8 @@
 									styleClass="col-md-offset-8 col-md-4 text-right">
 									<h:commandButton action="#{assignCandidacy.assignCandidacy()}"
 										value="Submeter" styleClass="btn btn-success">
-										<f:ajax execute="inputform" render=":container :bottomform" />
+										<f:ajax execute="inputform"
+											render=":container :bottomform :editglobalmsgs" />
 									</h:commandButton>
 								</h:panelGroup>
 							</h:panelGroup>
@@ -119,6 +120,13 @@
 									</h:commandButton>
 								</h:panelGroup>
 							</h:panelGroup>
+							<p:ajaxStatus onstart="PF('statusDialog').show()"
+								onsuccess="PF('statusDialog').hide(); fadeoutMsg();" />
+							<p:dialog id="loadingDialog" widgetVar="statusDialog"
+								modal="false" draggable="false" closable="false"
+								resizable="false" showHeader="false">
+								<p:graphicImage library="imgs" name="ajax-loader.gif" />
+							</p:dialog>
 						</h:form>
 					</h:panelGroup>
 				</h:panelGroup>

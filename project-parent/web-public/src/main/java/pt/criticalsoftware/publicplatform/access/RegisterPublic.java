@@ -14,7 +14,7 @@ import javax.servlet.http.Part;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import pt.criticalsoftware.publicplatform.access.utils.FileUpload;
+import pt.criticalsoftware.publicplatform.access.utils.FileUploadPublic;
 import pt.criticalsoftware.service.business.ICandidacyBusinessService;
 import pt.criticalsoftware.service.exceptions.DuplicateCandidateException;
 import pt.criticalsoftware.service.model.ICandidacy;
@@ -25,11 +25,11 @@ import pt.criticalsoftware.service.persistence.states.CandidacyState;
 
 @Named
 @ViewScoped
-public class Register implements Serializable {
+public class RegisterPublic implements Serializable {
 
 	private static final long serialVersionUID = 4827931867506530824L;
 
-	private static final Logger logger = LoggerFactory.getLogger(Register.class);
+	private static final Logger logger = LoggerFactory.getLogger(RegisterPublic.class);
 
 	@EJB
 	private ICandidacyBuilder candidacyBuilder;
@@ -38,9 +38,9 @@ public class Register implements Serializable {
 	@EJB
 	private ICandidacyBusinessService candidacyBness;
 	@Inject
-	private FileUpload fileUpload;
+	private FileUploadPublic fileUpload;
 	@Inject
-	private Login login;
+	private LoginPublic login;
 
 	private String firstName;
 	private String lastName;

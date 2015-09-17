@@ -5,9 +5,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import javax.resource.spi.IllegalStateException;
 
 import pt.criticalsoftware.domain.entities.CandidateEntity;
 import pt.criticalsoftware.domain.proxies.CandidateProxy;
+import pt.criticalsoftware.domain.proxies.IEntityAware;
 import pt.criticalsoftware.service.model.ICandidate;
 import pt.criticalsoftware.service.persistence.ICandidatePersistenceService;
 
@@ -33,6 +35,25 @@ public class CandidatePersistenceService implements ICandidatePersistenceService
 		TypedQuery<CandidateEntity> query = em.createNamedQuery("Candidate.findById",CandidateEntity.class)
 				.setParameter("candidateId", id);
 		return new CandidateProxy(query.getSingleResult());
+	}
+
+	@Override
+	public ICandidate create(ICandidate candidate) {
+		try {
+			CandidateEntity entity = getEntity(candidate);
+			return new CandidateProxy(em.merge(entity));
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	@SuppressWarnings("unchecked")
+	private CandidateEntity getEntity(ICandidate cand) throws IllegalStateException {
+		if (cand instanceof IEntityAware<?>) {
+			return ((IEntityAware<CandidateEntity>) cand).getEntity();
+		}
+		throw new IllegalStateException();
 	}
 
 }

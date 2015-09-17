@@ -26,6 +26,7 @@ import pt.criticalsoftware.service.business.IUserBusinessService;
 import pt.criticalsoftware.service.exceptions.DuplicateReferenceException;
 import pt.criticalsoftware.service.model.IPosition;
 import pt.criticalsoftware.service.model.IUser;
+import pt.criticalsoftware.service.notifications.IMailSender;
 import pt.criticalsoftware.service.persistence.positions.TechnicalAreaType;
 import pt.criticalsoftware.service.persistence.roles.Role;
 import pt.criticalsoftware.service.persistence.states.PositionState;
@@ -36,6 +37,8 @@ public class NewPosition {
 
 	@EJB
 	private IPositionBusinessService positionService;
+	@EJB
+	private IMailSender mailSender;
 
 	@EJB
 	private IUserBusinessService userService;
@@ -236,7 +239,7 @@ public class NewPosition {
 			IPosition newPosition = positionService.createPosition(this.openDate, this.closeDate, this.title,
 					this.locale, this.state, this.company, this.technicalArea, this.sla, this.vacancies,
 					this.responsable, this.description, this.adChannels);
-			if (null == newPosition) throw new Exception();
+			mailSender.sendEmail(newPosition, newPosition.getResponsable());
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(
 					"A posição " + newPosition.getReference() + " " + this.title + " foi criada com sucesso"));
 		} catch (Exception e) {
@@ -292,6 +295,38 @@ public class NewPosition {
 	public void setSelectedResponsable(String selectedResponsable) {
 		this.selectedResponsable = selectedResponsable;
 		setResponsable(selectedResponsable);
+	}
+
+	public PositionState getState() {
+		return state;
+	}
+
+	public void setState(PositionState state) {
+		this.state = state;
+	}
+
+	public TechnicalAreaType getTechnicalArea() {
+		return technicalArea;
+	}
+
+	public void setTechnicalArea(TechnicalAreaType technicalArea) {
+		this.technicalArea = technicalArea;
+	}
+
+	public void setOpenDate(LocalDate openDate) {
+		this.openDate = openDate;
+	}
+
+	public void setChannels(List<String> channels) {
+		this.channels = channels;
+	}
+
+	public Collection<String> getAdChannels() {
+		return adChannels;
+	}
+
+	public void setAdChannels(Collection<String> adChannels) {
+		this.adChannels = adChannels;
 	}
 
 }

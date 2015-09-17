@@ -11,6 +11,7 @@ import pt.criticalsoftware.service.exceptions.DuplicateCandidateException;
 import pt.criticalsoftware.service.exceptions.UniqueConstraintException;
 import pt.criticalsoftware.service.model.ICandidacy;
 import pt.criticalsoftware.service.model.IInterview;
+import pt.criticalsoftware.service.notifications.IMailSender;
 import pt.criticalsoftware.service.persistence.ICandidacyPersistenceService;
 
 @Stateful
@@ -18,6 +19,9 @@ public class CandidacyBusinessService implements ICandidacyBusinessService {
 	
 	@EJB
 	private ICandidacyPersistenceService persistence;
+	
+	@EJB
+	private IMailSender notif;
 
 	@Override
 	public List<ICandidacy> getAllCandidacies() {
@@ -52,8 +56,9 @@ public class CandidacyBusinessService implements ICandidacyBusinessService {
 	}
 	
 	@Override
-	public void assignCandidacy(ICandidacy cand) throws UniqueConstraintException {
-		persistence.assignCandidacy(cand);
+	public ICandidacy assignCandidacy(ICandidacy cand) throws UniqueConstraintException {
+		ICandidacy assigned = persistence.assignCandidacy(cand);
+		return assigned;
 	}
 
 	@Override

@@ -11,10 +11,10 @@ import java.io.Serializable;
 
 @Named
 @RequestScoped
-public class FileUpload implements Serializable {
+public class FileUploadPublic implements Serializable {
+	
 
-	private static final long serialVersionUID = 1L;
-
+	private static final long serialVersionUID = 9164322367643334448L;
 	private String path;
 	private Part file;
 

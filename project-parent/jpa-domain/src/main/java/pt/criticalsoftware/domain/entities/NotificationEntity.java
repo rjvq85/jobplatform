@@ -9,10 +9,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="notificacoes")
+@NamedQueries({
+	@NamedQuery(name="Notification.getAll",query="SELECT n FROM NotificationEntity n")
+})
 public class NotificationEntity {
 
 	@Id

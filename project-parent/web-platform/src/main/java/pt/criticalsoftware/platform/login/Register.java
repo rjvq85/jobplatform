@@ -1,5 +1,7 @@
 package pt.criticalsoftware.platform.login;
 
+import java.io.Serializable;
+
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
@@ -16,8 +18,10 @@ import pt.criticalsoftware.service.persistence.roles.Role;
 
 @Named
 @RequestScoped
-public class Register {
+public class Register implements Serializable {
 	
+	private static final long serialVersionUID = 1L;
+
 	private final Logger logger = LoggerFactory.getLogger(Register.class);
 
 	@EJB

@@ -111,14 +111,14 @@
 										rendered="#{userROLE eq 'ADMIN'}">
 										<h:commandLink
 											action="#{candidacyListView.goToInterviews(cand)}"
-											value="Ver Entrevistas" />
+											value="Ver Entrevistas" rendered="#{cand.positionCandidacy != 'Espontânea'}"/>
 									</p:column>
 									<p:column style="width:5%;"
 										rendered="#{not empty candidacyListView.candidacies and userROLE eq 'ADMIN'}">
 										<p:commandLink id="deleteButton"
 											action="#{candidacyListView.delete(cand)}"
-											rendered="#{cand.positionCandidacy != 'Espontânea'}"
-											update="lista" onclick="return confirm('Tem a certeza?');"
+											rendered="#{cand.positionCandidacy.id gt 0 and cand.state != 'FECHADA'}"
+											update="lista" onclick="if (!confirm('Tem a certeza?')) return false;"
 											oncomplete="window.location.replace(window.location.href);">
 											<i class="glyphicon glyphicon-remove-circle"></i>
 										</p:commandLink>

@@ -39,4 +39,6 @@ public interface IPositionPersistenceService {
 
 	List<IPosition> getPositionsByLast();
 
+	List<IPosition> getAllOpenPositions();
+
 }

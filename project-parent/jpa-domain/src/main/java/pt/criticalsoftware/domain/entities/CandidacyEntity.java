@@ -39,7 +39,7 @@ public class CandidacyEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
-	
+
 	@Column(name = "referencia")
 	private String reference;
 
@@ -57,13 +57,13 @@ public class CandidacyEntity {
 	@Column(name = "estado_candidatura", nullable = false)
 	private CandidacyState state;
 
-	@ManyToOne(cascade = CascadeType.PERSIST)
+	@ManyToOne(cascade = CascadeType.MERGE)
 	private CandidateEntity candidate;
 
 	@ManyToOne
 	private PositionEntity positionCandidacy;
 
-	@OneToMany(mappedBy = "candidacy", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "candidacy", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
 	private List<InterviewEntity> interviews;
 
 	public CandidacyEntity() {
@@ -145,7 +145,6 @@ public class CandidacyEntity {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
-
 
 	@Override
 	public boolean equals(Object obj) {

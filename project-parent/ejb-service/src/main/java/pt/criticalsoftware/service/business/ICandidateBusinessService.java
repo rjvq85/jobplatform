@@ -8,4 +8,6 @@ public interface ICandidateBusinessService {
 	
 	ICandidate getCandidateById(Integer id);
 
+	ICandidate addCandidate(ICandidate candidate);
+
 }

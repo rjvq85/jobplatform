@@ -3,8 +3,10 @@ package pt.criticalsoftware.service.notifications;
 
 import org.apache.commons.mail.Email;
 import org.apache.commons.mail.EmailException;
+import org.apache.commons.mail.HtmlEmail;
 import org.apache.commons.mail.SimpleEmail;
 
+import pt.criticalsoftware.service.model.IUser;
 import pt.criticalsoftware.service.persistence.utils.PasswordSecurity;
 
 public class MailProperties {
@@ -89,6 +91,11 @@ public class MailProperties {
 	
 	public void setEmail(Email email) {
 		this.email = email;
+	}
+
+	public MailProperties setReceivers(String[] addresses) throws EmailException {
+		email.addTo(addresses);
+		return this;
 	}
 	
 	

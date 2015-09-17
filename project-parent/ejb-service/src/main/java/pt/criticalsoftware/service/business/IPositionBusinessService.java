@@ -46,5 +46,7 @@ public interface IPositionBusinessService {
 	IPosition createPosition(LocalDate openDate, Date closeDate, String title, String locale, PositionState state,
 			String company, TechnicalAreaType technicalArea, String sla, Integer vacancies, IUser responsable,
 			String description, Collection<String> adChannels) throws DuplicateReferenceException;
+	
+	List<IPosition> getOpenPositions();
 
 }

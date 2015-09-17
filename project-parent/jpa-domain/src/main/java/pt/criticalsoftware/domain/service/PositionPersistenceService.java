@@ -71,8 +71,8 @@ public class PositionPersistenceService implements IPositionPersistenceService {
 			PositionEntity entity = getEntity(position);
 			em.persist(entity);
 			entity.setReference(GenerateReferenceValue.genReference("P", entity.getId()));
-			em.merge(entity);
-			return new PositionProxy(entity);
+			PositionEntity mergedPosition = em.merge(entity);
+			return new PositionProxy(mergedPosition);
 		} catch (IllegalStateException e) {
 			e.printStackTrace();
 			return null;
@@ -431,5 +431,14 @@ public class PositionPersistenceService implements IPositionPersistenceService {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	@Override
+	public List<IPosition> getAllOpenPositions() {
+		TypedQuery<PositionEntity> query = em.createNamedQuery("Position.getAllOpen",PositionEntity.class);
+		List<PositionEntity> entities = query.getResultList();
+		List<IPosition> positions = new ArrayList<>();
+		entities.stream().forEach(entity -> positions.add(new PositionProxy(entity)));
+		return positions;
 	}
 }

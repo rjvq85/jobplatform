@@ -21,5 +21,10 @@ public class CandidateBusinessService implements ICandidateBusinessService {
 	public ICandidate getCandidateById(Integer id) {
 		return persistence.findById(id);
 	}
+	
+	@Override
+	public ICandidate addCandidate(ICandidate candidate) {
+		return persistence.create(candidate);
+	}
 
 }

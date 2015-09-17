@@ -14,7 +14,7 @@ import pt.criticalsoftware.service.model.ICandidate;
 
 @Named
 @RequestScoped
-public class Login {
+public class LoginPublic {
 
 	private String username;
 	private String password;

@@ -8,4 +8,6 @@ public interface ICandidatePersistenceService {
 
 	ICandidate findById(Integer id);
 
+	ICandidate create(ICandidate candidate);
+
 }

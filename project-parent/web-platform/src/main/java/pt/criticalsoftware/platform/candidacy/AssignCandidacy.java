@@ -4,12 +4,9 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.ejb.EJB;
-import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import javax.faces.view.ViewScoped;
-import javax.inject.Inject;
 import javax.inject.Named;
 
 import pt.criticalsoftware.service.business.ICandidacyBusinessService;
@@ -20,6 +17,7 @@ import pt.criticalsoftware.service.model.ICandidacy;
 import pt.criticalsoftware.service.model.ICandidacyBuilder;
 import pt.criticalsoftware.service.model.ICandidate;
 import pt.criticalsoftware.service.model.IPosition;
+import pt.criticalsoftware.service.notifications.IMailSender;
 import pt.criticalsoftware.service.persistence.states.CandidacyState;
 import pt.criticalsoftware.service.sources.CandidacySource;
 
@@ -40,7 +38,7 @@ public class AssignCandidacy implements Serializable {
 	private CandidacySource source;
 	private String selectedPosition;
 	
-	@Inject
+	@EJB
 	private ICandidacyBuilder candBuilder;
 	@EJB
 	private ICandidacyBusinessService business;
@@ -48,6 +46,8 @@ public class AssignCandidacy implements Serializable {
 	private ICandidateBusinessService candidateBness;
 	@EJB
 	private IPositionBusinessService posBness;
+	@EJB
+	private IMailSender mailSender;
 	
 	public String assignCandidacy() {
 		defineCandidate(username);
@@ -59,7 +59,10 @@ public class AssignCandidacy implements Serializable {
 				.state(CandidacyState.SUBMETIDA)
 				.build();
 		try {
-			business.assignCandidacy(candidacy);
+			ICandidacy assignedCandidacy = business.assignCandidacy(candidacy);
+			
+			// Notifications
+			mailSender.sendEmail(assignedCandidacy, assignedCandidacy.getPositionCandidacy().getResponsable(), 1);
 			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Candidatura submetida com sucesso!",
 					"");
 			FacesContext.getCurrentInstance().addMessage(null, message);
@@ -150,8 +153,4 @@ public class AssignCandidacy implements Serializable {
 		return "assigncandidacy?face-redirect=true";
 	}
 	
-	
-	
-	
-
 }

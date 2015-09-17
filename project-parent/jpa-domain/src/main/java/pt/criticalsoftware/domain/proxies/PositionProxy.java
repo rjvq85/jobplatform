@@ -162,7 +162,7 @@ public class PositionProxy implements IEntityAware<PositionEntity>, IPosition {
 
 	@Override
 	public IUser getResponsable() {
-		return (IUser) position.getResponsable();
+		return new UserProxy(position.getResponsable());
 	}
 
 	@SuppressWarnings("unchecked")

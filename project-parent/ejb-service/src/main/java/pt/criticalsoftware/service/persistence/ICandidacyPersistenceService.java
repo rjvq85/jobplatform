@@ -16,7 +16,7 @@ public interface ICandidacyPersistenceService {
 
 	List<ICandidacy> searchAdminCandidacies(String param);
 
-	void assignCandidacy(ICandidacy cand) throws UniqueConstraintException;
+	ICandidacy assignCandidacy(ICandidacy cand) throws UniqueConstraintException;
 
 	List<ICandidacy> searchAdminCandidaciesDate(LocalDate date);
 

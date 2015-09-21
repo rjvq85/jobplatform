@@ -63,7 +63,12 @@ public class PositionListView implements Serializable{
 			setPlaceholder("AAAA-MM-dd");
 	}
 	public List<IPosition> showPositions() {
+		if (isAdmin()) { 
 		return positionService.getAllPositions();
+		} else {
+			return positionService.getManagerPositions(getUserID());
+		}
+		
 	}
 	public void searchAll(){
 		this.positions=getPositions();
@@ -128,6 +133,12 @@ public class PositionListView implements Serializable{
 	private Boolean isAdmin() {
 		HttpServletRequest req = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
 		return (Boolean) req.isUserInRole("ADMIN");
+	}
+	
+	private Integer getUserID() {
+		FacesContext faces = FacesContext.getCurrentInstance();
+		HttpServletRequest request = (HttpServletRequest) faces.getExternalContext().getRequest();
+		return (Integer) request.getSession().getAttribute("userID");
 	}
 
 }

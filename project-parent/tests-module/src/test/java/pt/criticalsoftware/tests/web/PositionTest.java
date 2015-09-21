@@ -193,74 +193,74 @@ public class PositionTest {
 //		assertEquals("Nova Posição",notifText);
 	}
 	
-	@Test
+	@Ignore
 	public void createInterview() {
 		
-		// E-mail
-		IEmail newMail = mailBuilder.active(true).hostname("smtp.gmail.com").password("emiliaricardo").smtpPort(465).sslOnConnect(true).startTLS(false).username("pfinal.aor@gmail.com").build();
-		mailBness.addSettings(newMail);
-		// Responsable
-		IUser user = uBuilder.email("ricardojvquirino@gmail.com").firstName("PN").lastName("LN").password("1234").role(Role.ADMIN)
-				.username("g3stor").build();
-		IUser user2 = uBuilder.email("pfinal.aor@gmail.com").firstName("PN").lastName("LN").password("1234").role(Role.ENTREVISTADOR)
-				.username("entr3vistador").build();
-		try {
-			IUser responsable = uBness.createUser(user);
-			uBness.createUser(user2);
-			newpos.setResponsable(responsable);
-		} catch (DuplicateEmailException | DuplicateUsernameException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		String cDateStr = "01-12-2015";
-		Date cDate;
-		try {
-			cDate = new SimpleDateFormat("dd-MM-yyyy").parse(cDateStr);
-			newpos.setCloseDate(cDate);
-			newInterv.setDate(cDate);
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		newpos.setTitle("Nova posição");
-		newpos.setLocale("Porto");
-		newpos.setCompany("Critical");
-		newpos.setDescription("Bla bla");
-		newpos.setState(PositionState.ABERTA);
-		newpos.setTechnicalArea(TechnicalAreaType.INTEGRATION);
-		newpos.setSla("1semna");
-		newpos.setVacancies(1);
-		newpos.setAdChannels(new ArrayList<String>());
-		newpos.createPosition();
-		IPosition pos = posBness.getPositionsByLocale("Porto").get(0);
-		// Candidate
-		ICandidate candidate = candidateBuilder.address("abc").country("abc").course("abc").cv("abc").degree("abc").email("abc").firstName("abc").lastName("abc").mobile(123)
-				.password("abc").phone(123).school("abc").town("abc").username("abc").build();
-		candidateBness.addCandidate(candidate);
-		ICandidate newcandidate = candidateBness.getCandidateByUsername(candidate.getUsername());
-		//Candidacy
-		assign.setLetter("abc");
-		assign.setPosition(pos);
-		assign.setSource(CandidacySource.CRITICAL);
-		assign.setUsername(newcandidate.getUsername());
-		assign.assignCandidacy();
-		ICandidacy icand = assign.getAssignedCandidacy();
-		List<IUser> interviewers = new ArrayList<>();
-		interviewers.add(user);
-		interviewers.add(user2);
-		IInterview interv1ew = interviewBuilder.date(LocalDate.now()).interviewers(interviewers).position(pos).candidacy(icand).build();
-		interviewBness.newInterview(interv1ew);
-		IInterview interview = interviewBness.getAllInterviews().get(0);
-		interview.setFeedback("lolol");
-		manageInterview.updateInterview(interview);
-		
-		System.out.println("\n\n\n\n# " + interview.getFeedback() + "#\n\n\n\n");
-		
-		IInterview ntrview = interviewBness.getAllInterviews().get(0);
-		
-		String fb = ntrview.getFeedback();
-		
-		assertEquals("lolol",fb);
+//		// E-mail
+//		IEmail newMail = mailBuilder.active(true).hostname("smtp.gmail.com").password("emiliaricardo").smtpPort(465).sslOnConnect(true).startTLS(false).username("pfinal.aor@gmail.com").build();
+//		mailBness.addSettings(newMail);
+//		// Responsable
+//		IUser user = uBuilder.email("ricardojvquirino@gmail.com").firstName("PN").lastName("LN").password("1234").role(Role.ADMIN)
+//				.username("g3stor").build();
+//		IUser user2 = uBuilder.email("pfinal.aor@gmail.com").firstName("PN").lastName("LN").password("1234").role(Role.ENTREVISTADOR)
+//				.username("entr3vistador").build();
+//		try {
+//			IUser responsable = uBness.createUser(user);
+//			uBness.createUser(user2);
+//			newpos.setResponsable(responsable);
+//		} catch (DuplicateEmailException | DuplicateUsernameException e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
+//		String cDateStr = "01-12-2015";
+//		Date cDate;
+//		try {
+//			cDate = new SimpleDateFormat("dd-MM-yyyy").parse(cDateStr);
+//			newpos.setCloseDate(cDate);
+//			newInterv.setDate(cDate);
+//		} catch (ParseException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		newpos.setTitle("Nova posição");
+//		newpos.setLocale("Porto");
+//		newpos.setCompany("Critical");
+//		newpos.setDescription("Bla bla");
+//		newpos.setState(PositionState.ABERTA);
+//		newpos.setTechnicalArea(TechnicalAreaType.INTEGRATION);
+//		newpos.setSla("1semna");
+//		newpos.setVacancies(1);
+//		newpos.setAdChannels(new ArrayList<String>());
+//		newpos.createPosition();
+//		IPosition pos = posBness.getPositionsByLocale("Porto").get(0);
+//		// Candidate
+//		ICandidate candidate = candidateBuilder.address("abc").country("abc").course("abc").cv("abc").degree("abc").email("abc").firstName("abc").lastName("abc").mobile(123)
+//				.password("abc").phone(123).school("abc").town("abc").username("abc").build();
+//		candidateBness.addCandidate(candidate);
+//		ICandidate newcandidate = candidateBness.getCandidateByUsername(candidate.getUsername());
+//		//Candidacy
+//		assign.setLetter("abc");
+//		assign.setPosition(pos);
+//		assign.setSource(CandidacySource.CRITICAL);
+//		assign.setUsername(newcandidate.getUsername());
+//		assign.assignCandidacy();
+//		ICandidacy icand = assign.getAssignedCandidacy();
+//		List<IUser> interviewers = new ArrayList<>();
+//		interviewers.add(user);
+//		interviewers.add(user2);
+//		IInterview interv1ew = interviewBuilder.date(LocalDate.now()).interviewers(interviewers).position(pos).candidacy(icand).build();
+//		interviewBness.newInterview(interv1ew);
+//		IInterview interview = interviewBness.getAllInterviews().get(0);
+//		interview.setFeedback("lolol");
+//		manageInterview.updateInterview(interview);
+//		
+//		System.out.println("\n\n\n\n# " + interview.getFeedback() + "#\n\n\n\n");
+//		
+//		IInterview ntrview = interviewBness.getAllInterviews().get(0);
+//		
+//		String fb = ntrview.getFeedback();
+//		
+//		assertEquals("lolol",fb);
 		
 	}
 

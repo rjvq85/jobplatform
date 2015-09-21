@@ -47,6 +47,8 @@ public class CandidacyListView {
 	private CandidacyState newState;
 	
 	private LocalDate isNewDate;
+	
+	private Boolean spontaneous;
 
 	public CandidacyListView() {
 	}
@@ -224,6 +226,27 @@ public class CandidacyListView {
 
 	public void setIsNewDate(LocalDate isNewDate) {
 		this.isNewDate = isNewDate;
+	}
+
+	public Boolean getSpontaneous() {
+		return spontaneous;
+	}
+
+	public void setSpontaneous(Boolean spontaneous) {
+		this.spontaneous = spontaneous;
+	}
+	
+	public void candidacyFilter() {
+		if (spontaneous) {
+			List<ICandidacy> spontaneousCandidacies = new ArrayList<>();
+			for (ICandidacy candidacy : candidacies) {
+				if (null == candidacy.getPositionCandidacy().getTitle()) spontaneousCandidacies.add(candidacy);
+			}
+			candidacies = spontaneousCandidacies;
+		} else {
+			candidacies = null;
+			getCandidacies();
+		}
 	}
 
 }

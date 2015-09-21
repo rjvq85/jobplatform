@@ -1,11 +1,23 @@
 package pt.criticalsoftware.platform.admin;
 
+import java.io.IOException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
+import javax.faces.application.FacesMessage.Severity;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
+import org.apache.commons.net.smtp.AuthenticatingSMTPClient;
+import org.apache.commons.net.smtp.AuthenticatingSMTPClient.AUTH_METHOD;
 import org.primefaces.context.RequestContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,21 +47,24 @@ public class MailSettingsWeb {
 	private Boolean testResult;
 
 	public void newSettings() {
+		RequestContext request = RequestContext.getCurrentInstance();
 		try {
-			IEmail newSettings = builder.hostname(hostname).smtpPort(smtpPort).username(username).password(password)
-					.sslOnConnect(sslOnConnect).startTLS(startTLS).active(active).build();
-			business.addSettings(newSettings);
-			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Novas definições guardadas com sucesso.",
-					null);
-			FacesContext.getCurrentInstance().addMessage(null, msg);
-			RequestContext request = RequestContext.getCurrentInstance();
-			request.addCallbackParam("saved", true);
+			if (testSettings()) {
+				IEmail newSettings = builder.hostname(hostname).smtpPort(smtpPort).username(username).password(password)
+						.sslOnConnect(sslOnConnect).startTLS(startTLS).active(active).build();
+				business.addSettings(newSettings);
+				FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
+						"Novas definições guardadas com sucesso.", null);
+				FacesContext.getCurrentInstance().addMessage(null, msg);
+				request.addCallbackParam("saved", true);
+			} else {
+				request.addCallbackParam("saved", false);
+			}
 		} catch (Exception e) {
 			logger.error("Erro ao tentar guardar novas definições de e-mail");
 			e.printStackTrace();
 			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao guardar novas definições", null);
 			FacesContext.getCurrentInstance().addMessage(null, msg);
-			RequestContext request = RequestContext.getCurrentInstance();
 			request.addCallbackParam("saved", false);
 		}
 	}
@@ -126,6 +141,56 @@ public class MailSettingsWeb {
 
 	public void setTestResult(Boolean testResult) {
 		this.testResult = testResult;
+	}
+
+	private boolean testSettings() {
+		FacesMessage msg = new FacesMessage();
+		AuthenticatingSMTPClient client = new AuthenticatingSMTPClient("TLS", false);
+		ExecutorService executor = Executors.newSingleThreadExecutor();
+		Future<?> future = executor.submit(new Runnable() {
+
+			@Override
+			public void run() {
+				try {
+					client.connect(hostname);
+					client.login(hostname);
+					if (client.execTLS()) {
+						if (client.auth(AUTH_METHOD.LOGIN, username, password)) {
+							logger.info("Configurações do mail correctas");
+							msg.setSeverity(FacesMessage.SEVERITY_INFO);
+							msg.setSummary("Sucesso");
+							msg.setDetail("As configurações foram guardadas.");
+						} else {
+							msg.setSeverity(FacesMessage.SEVERITY_ERROR);
+							msg.setSummary("Erro");
+							msg.setDetail("Credenciais erradas.");
+							Thread.sleep(6000);
+						}
+					} else {
+						msg.setSeverity(FacesMessage.SEVERITY_ERROR);
+						msg.setSummary("Erro");
+						msg.setDetail("Problema em verificar 'hostname: "+hostname+"'");
+						Thread.sleep(6000);
+					}
+				} catch (IOException | InvalidKeyException | NoSuchAlgorithmException | InvalidKeySpecException e) {
+					logger.error("Timeout: erro ao verificar propriedades de e-mail.");
+				} catch (InterruptedException e) {
+					logger.error("Timeout: erro ao verificar propriedades de e-mail.");
+				}
+			}
+		});
+
+		try {
+			future.get(5, TimeUnit.SECONDS);
+			FacesContext.getCurrentInstance().addMessage(null, msg);
+			future.cancel(true);
+			executor.shutdown();
+			return true;
+		} catch (Exception e) {
+			logger.error("Timeout: erro ao verificar propriedades de e-mail.");
+			FacesContext.getCurrentInstance().addMessage(null, msg);
+			return false;
+		}
 	}
 
 }

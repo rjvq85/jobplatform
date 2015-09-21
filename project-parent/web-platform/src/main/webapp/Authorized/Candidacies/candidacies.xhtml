@@ -63,7 +63,20 @@
 								</h5>
 							</h:panelGroup>
 						</h:panelGroup>
-						<h:panelGroup layout="block" class="row spacer"></h:panelGroup>
+						<h:panelGroup layout="block" styleClass="row spacer"></h:panelGroup>
+						<h:panelGroup layout="block" styleClass="row">
+							<h:panelGroup layout="block" styleClass="col-md-6">
+								<h:form prependId="false" id="spontForm">
+									<h:selectBooleanCheckbox
+										value="#{candidacyListView.spontaneous}" style="margin-right: 10px;"/> Apenas candidaturas espontâneas
+									<h:commandButton
+										action="#{candidacyListView.candidacyFilter()}" value="OK" styleClass="btn btn-default">
+										<f:ajax render=":lista" execute="spontForm" />
+									</h:commandButton>
+								</h:form>
+							</h:panelGroup>
+						</h:panelGroup>
+						<h:panelGroup layout="block" styleClass="row spacer"></h:panelGroup>
 						<h:form prependId="false" id="listform">
 							<h:panelGroup layout="block" styleClass="table-responsive">
 								<p:dataTable id="lista"
@@ -83,9 +96,11 @@
 									</p:column>
 									<p:column headerText="Candidato"
 										sortBy="#{cand.candidate.firstName}">
-										<h:outputLink value="#{request.contextPath}/Authorized/Candidates/candidateprofile.xhtml">
-											<f:param name="candidato" value="#{cand.candidate.id}"/>
-											<h:outputText value="#{cand.candidate.firstName} #{cand.candidate.lastName}" />
+										<h:outputLink
+											value="#{request.contextPath}/Authorized/Candidates/candidateprofile.xhtml">
+											<f:param name="candidato" value="#{cand.candidate.id}" />
+											<h:outputText
+												value="#{cand.candidate.firstName} #{cand.candidate.lastName}" />
 										</h:outputLink>
 									</p:column>
 									<p:column headerText="Data da Candidatura"
@@ -97,7 +112,7 @@
 										<p:commandLink
 											action="#{candidacyListView.chooseSelectedCandidacy(cand)}"
 											value="#{cand.state.name}"
-											oncomplete="PF('stateWidget').show()" update="stateDialog" />
+											oncomplete="PF('stateWidget').show()" update="stateDialog" disabled="#{cand.state eq 'REJEITADA' or cand.state eq 'FECHADA'}"/>
 									</p:column>
 									<p:column headerText="Posição">
 										<h:outputText value="#{cand.positionCandidacy.reference}"
@@ -111,14 +126,16 @@
 										rendered="#{userROLE eq 'ADMIN'}">
 										<h:commandLink
 											action="#{candidacyListView.goToInterviews(cand)}"
-											value="Ver Entrevistas" rendered="#{cand.positionCandidacy != 'Espontânea'}"/>
+											value="Ver Entrevistas"
+											rendered="#{cand.positionCandidacy != 'Espontânea'}" />
 									</p:column>
 									<p:column style="width:5%;"
 										rendered="#{not empty candidacyListView.candidacies and userROLE eq 'ADMIN'}">
 										<p:commandLink id="deleteButton"
 											action="#{candidacyListView.delete(cand)}"
 											rendered="#{cand.positionCandidacy.id gt 0 and cand.state != 'FECHADA'}"
-											update="lista" onclick="if (!confirm('Tem a certeza?')) return false;"
+											update="lista"
+											onclick="if (!confirm('Tem a certeza?')) return false;"
 											oncomplete="window.location.replace(window.location.href);">
 											<i class="glyphicon glyphicon-remove-circle"></i>
 										</p:commandLink>

@@ -21,6 +21,7 @@
 <h:body>
 	<ui:composition>
 		<h:form prependId="false" id="emailForm">
+		<p:growl id="growlmsg" autoUpdate="true" life="3000" globalOnly="true" showDetail="true" showSummary="true"/>
 			<p:dialog id="mailDialog" widgetVar="mailWidget"
 				header="Definições de E-mail (Notificações)" modal="true"
 				draggable="false" resizable="false" hideEffect="puff">
@@ -46,7 +47,8 @@
 					<h:panelGroup layout="block" styleClass="spacer" />
 					<h:panelGroup layout="block" styleClass="row">
 						<h:panelGroup layout="block" styleClass="col-md-offset-2 col-md-4">
-							<label for="emailUsername">Username: <h:message for="emailUsername"
+							<label for="emailUsername">Username: <h:message
+									for="emailUsername"
 									style="color: red !important; font-weight: 200 !important;" /></label>
 							<h:inputText styleClass="form-control" id="emailUsername"
 								value="#{mailSettingsWeb.username}"
@@ -54,7 +56,8 @@
 								requiredMessage="Campo obrigatório" />
 						</h:panelGroup>
 						<h:panelGroup layout="block" styleClass="col-md-4">
-							<label for="emailPassword">Password: <h:message for="emailPassword"
+							<label for="emailPassword">Password: <h:message
+									for="emailPassword"
 									style="color: red !important; font-weight: 200 !important;" /></label>
 							<h:inputSecret styleClass="form-control" id="emailPassword"
 								value="#{mailSettingsWeb.password}"
@@ -66,9 +69,9 @@
 					<h:panelGroup layout="block" styleClass="row">
 						<h:panelGroup layout="block" styleClass="col-md-offset-2 col-md-4">
 							<h:selectBooleanCheckbox id="sslconnect"
-								value="#{mailSettingsWeb.sslOnConnect}" style="margin-right: 10px;"/>
-							<label for="sslconnect">SSL
-								on Connect</label>
+								value="#{mailSettingsWeb.sslOnConnect}"
+								style="margin-right: 10px;" />
+							<label for="sslconnect">SSL on Connect</label>
 						</h:panelGroup>
 					</h:panelGroup>
 					<h:panelGroup layout="block" styleClass="row">
@@ -82,8 +85,7 @@
 						<h:panelGroup layout="block" styleClass="col-md-offset-2 col-md-4">
 							<h:selectBooleanCheckbox value="#{mailSettingsWeb.active}"
 								id="primary" style="margin-right: 10px;" />
-							<label for="primary">Tornar
-								definições activas</label>
+							<label for="primary">Tornar definições activas</label>
 						</h:panelGroup>
 					</h:panelGroup>
 					<br />
@@ -122,6 +124,13 @@
         		}
     		}
 			</script>
+			<p:ajaxStatus onstart="PF('statusDialog').show()"
+				onsuccess="PF('statusDialog').hide()" />
+			<p:dialog id="loading-Dialog" widgetVar="statusDialog" modal="false"
+				draggable="false" closable="false" resizable="false"
+				showHeader="false">
+				<p:graphicImage library="imgs" name="ajax-loader.gif" />
+			</p:dialog>
 		</h:form>
 	</ui:composition>
 </h:body>

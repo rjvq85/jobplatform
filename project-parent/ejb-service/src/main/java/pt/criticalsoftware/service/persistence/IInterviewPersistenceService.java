@@ -18,6 +18,8 @@ public interface IInterviewPersistenceService {
 
 	List<IInterview> getByDate(LocalDate date);
 	
+	List<IInterview> getInterviewsByDatePeriod(LocalDate dateInit,LocalDate dateFinal);	
+	
 	List<IInterview> getByDate(LocalDate date, Object id);
 	
 	List<IInterview> getByPosition();

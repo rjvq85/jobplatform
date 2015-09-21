@@ -23,6 +23,8 @@ public interface IPositionBusinessService {
 
 	List<IPosition> getPositionsByOpenDate(String positionWord, LocalDate openDate);
 
+	List<IPosition> getPositionsByOpenDateByPeriod(LocalDate dateInit,LocalDate dateFinal);
+	
 	void update(IPosition position);
 
 	void delete(IPosition position);

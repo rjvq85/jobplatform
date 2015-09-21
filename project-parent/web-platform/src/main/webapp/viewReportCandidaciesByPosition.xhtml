@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Candidaturas por Posição</title>
+</h:head>
+<h:body>
+	<h:form>
+		<p:messages id="messages" autoUpdate="true" closable="true" />
+
+		<p:outputLabel for="posit" value="Posição: " />
+		<p:selectOneMenu id="posit" value="#{reportCandidaciesByPosition.positionRef}">
+			<f:selectItems value="#{reportCandidaciesByPosition.positionsRef}" />
+		</p:selectOneMenu>
+
+		<p:commandButton value="Criar Relatório" type="submit"
+			style="margin-left:10px;margin-top:15px;"
+			action="#{reportCandidaciesByPosition.create()}" icon="ui-icon-document" />
+	</h:form>
+</h:body>
+</html>

@@ -324,6 +324,22 @@ public class PositionPersistenceService implements IPositionPersistenceService {
 		return proxies;
 
 	}
+	
+	public List<IPosition> getPositionsByOpenDateByPeriod(LocalDate dateInit,LocalDate dateFinal) {
+		TypedQuery<PositionEntity> query = null;
+		query = em.createNamedQuery("Position.getPositionsByOpenDateByPeriod", PositionEntity.class)
+				.setParameter("dateInit",dateInit)
+				.setParameter("dateFinal",dateFinal);
+
+		List<PositionEntity> entities = query.getResultList();
+		List<IPosition> proxies = new ArrayList<>();
+		for (PositionEntity pe : entities) {
+			PositionProxy positionProxy = new PositionProxy(pe);
+			proxies.add(positionProxy);
+		}
+		return proxies;
+
+	}
 
 	@Override
 	public List<IPosition> getPositionsByLocaleAndArea(String locale, String technicalAreaStr) {

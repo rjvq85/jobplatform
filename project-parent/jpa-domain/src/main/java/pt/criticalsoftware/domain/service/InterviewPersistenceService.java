@@ -165,4 +165,16 @@ public class InterviewPersistenceService implements IInterviewPersistenceService
 		return intervs;
 	}
 
+	public List<IInterview> getInterviewsByDatePeriod(LocalDate dateInit,
+			LocalDate dateFinal) {
+		TypedQuery<InterviewEntity> query = em.createNamedQuery("Interview.searchByPeriodDate", InterviewEntity.class)
+				.setParameter("initDate", dateInit)
+				.setParameter("finalDate", dateFinal);
+		List<IInterview> interviews = new ArrayList<>();
+		List<InterviewEntity> entities = query.getResultList();
+		for (InterviewEntity ie : entities) {
+			interviews.add(new InterviewProxy(ie));
+		}
+		return interviews;
+	}
 }

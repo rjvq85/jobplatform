@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Propostas apresentadas</title>
+</h:head>
+<h:body>
+	<h:form>
+		<p:dataTable id="tbl" var="position"
+			value="#{reportProposal.positions}" paginator="true"
+			paginatorPosition="bottom" rows="12" style="margin-bottom:20px">
+
+			<f:facet name="header">
+				<h:outputText value="Propostas apresentadas" />
+
+				<h:outputText value="De: " />
+				<h:outputText value="#{reportProposal.initDate}">
+					<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+				</h:outputText>
+				<h:outputText value=" a : " />
+				<h:outputText value="#{reportProposal.finalDate}">
+					<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+				</h:outputText>
+			</f:facet>
+
+			<p:column headerText="Data abertura">
+				<h:outputText value="#{position.openDate}" />
+			</p:column>
+
+			<p:column headerText="Empresa">
+				<h:outputText value="#{position.company} " />
+			</p:column>
+
+			<p:column headerText="área Técnica">
+				<h:outputText value="#{position.technicalArea.name}" />
+			</p:column>
+
+			<p:column headerText="Número de vagas">
+				<h:outputText value="#{position.vacancies}" />
+			</p:column>
+
+
+			<f:facet name="footer">
+				<h:outputText value="No total foram apresentadas: " />
+				<h:outputText
+					value="#{reportProposal.positions.size()}" />
+				<h:outputText value=" propostas." />
+			</f:facet>
+		</p:dataTable>
+		<p:spacer height="30" />
+		<p:panel position="center">
+			<h:commandLink id="pdf">
+				<p:graphicImage name="/imgs/pdf_icon.gif" with="32" height="32" />
+
+				<pe:exporter type="pdf" target="tbl" encoding="UTF-8"
+					fileName="Relatório por Posição" tableTitle="Relatório para propostas apresentadas"
+					orientation="Portrait " facetBackground="#F88017"
+					facetFontSize="14" facetFontColor="#0000ff" facetFontStyle="BOLD"
+					cellFontColor="#00ff00" cellFontSize="12" cellFontStyle="NORMAL" />
+			</h:commandLink>
+		</p:panel>
+	</h:form>
+</h:body>
+</html>

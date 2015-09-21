@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Candidatos Não Admitidos</title>
+
+</h:head>
+
+<h:body>
+
+	<h:form>
+		<p:chart type="line" value="#{reportNonAdmited.lineModel}"
+			style="width:500px;height:300px" widgetVar="chart" />
+
+		<p:commandButton type="button" value="Export" icon="ui-icon-extlink"
+			onclick="exportChart()" />
+
+		<p:dialog widgetVar="dlg" showEffect="fade" modal="true"
+			header="Salvar Gráfico" resizable="false">
+			<p:outputPanel id="output" layout="block"
+				style="width:500px;height:300px" />
+		</p:dialog>
+
+		<script type="text/javascript">
+			function exportChart() {
+   			 //export image
+   			 $('#output').empty().append(PF('chart').exportAsImage());
+ 
+    		//show the dialog
+    		PF('dlg').show();
+			}
+		</script>
+	</h:form>
+</h:body>
+</html>

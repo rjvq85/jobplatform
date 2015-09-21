@@ -27,6 +27,8 @@ public interface IPositionPersistenceService {
 	
 	List<IPosition> getPositionsByOpenDate(String positionWord, LocalDate opendate);
 
+	List<IPosition> getPositionsByOpenDateByPeriod(LocalDate dateInit,LocalDate dateFinal);
+	
 	IPosition find(Object id);
 
 	List<IPosition> getManagerPositions(Integer currentUserID);

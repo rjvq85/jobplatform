@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Resultados das Entrevistas</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</h:head>
+<h:body>
+	<h:form>
+
+		<p:dataTable id="tbl" var="interview"
+			value="#{reportInterviews.interviews}" paginator="true"
+			paginatorPosition="bottom" rows="12" style="margin-bottom:20px">
+
+			<f:facet name="header">
+				<h:outputText value="Resultado das entrevistas efectuadas " />
+				<h:outputText value="de: " />
+				<h:outputText value="#{reportInterviews.initDate}">
+					<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+				</h:outputText>
+				<h:outputText value=" a : " />
+				<h:outputText value="#{reportInterviews.finalDate}">
+					<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+				</h:outputText>
+			</f:facet>
+
+			<p:column headerText="Data da Entrevista">
+				<h:outputText value="#{interview.date}" />
+			</p:column>
+
+			<p:column headerText="Área da posição">
+				<h:outputText value="#{interview.position.technicalArea}" />
+			</p:column>
+
+			<p:column headerText="Nome do candidato">
+				<h:outputText value="#{interview.candidacy.candidate.firstName} +#{interview.candidacy.candidate.lastName} " />
+			</p:column>
+
+			
+			<f:facet name="footer">
+				<h:outputText value="No total foram efectuadas: " />
+				<h:outputText value="#{reportInterviews.interviews.size()}" />
+				<h:outputText value=" entrevistas." />
+			</f:facet>
+
+		</p:dataTable>
+
+		<p:spacer height="30" />
+		<p:panel position="center">
+			<h:commandLink id="pdf">
+				<p:graphicImage name="/imgs/pdf_icon.gif" with="32" height="32" />
+
+				<pe:exporter type="pdf" target="tbl" encoding="UTF-8"
+					fileName="Relatório das Entrevistas"
+					tableTitle="RelatórioEntrevistas"
+					orientation="Portrait " facetBackground="#F88017"
+					facetFontSize="14" facetFontColor="#0000ff" facetFontStyle="BOLD"
+					cellFontColor="#00ff00" cellFontSize="12" cellFontStyle="NORMAL" />
+			</h:commandLink>
+		</p:panel>
+	</h:form>
+</h:body>
+</html>

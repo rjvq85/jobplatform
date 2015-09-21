@@ -1,0 +1,33 @@
+body {
+	background-color: #80ffff;
+	color: #004080;
+}
+
+#header {
+	background: #000080;
+	color: #a8d3ff;
+}
+
+.panel {
+	border: 1px solid #a8d3ff;
+	background: #0080ff;
+}
+
+.panel h1 {
+	background: #dbedff;
+	border-bottom: solid 1px #a8d3ff;
+	color: #0080c0;
+}
+
+.odd {
+	background: #dbedff;
+}
+
+.even {
+	background: #f0f8ff;
+}
+
+.dataTable th {
+	background: #0080c0;
+	color: #a8d3ff;
+}

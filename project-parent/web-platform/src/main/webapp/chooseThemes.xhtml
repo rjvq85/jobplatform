@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<meta charset="utf-8" />
+	<h:outputStylesheet library="css" name="positionListAdmin.css" />
+</h:head>
+<h:body>
+	<h:form id="chooseText">
+
+		<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+			<p:outputLabel for="textChoose" value="Texto:" />
+			<p:selectOneMenu id="textChoose" value="#{textBean.selectedText}"
+				style="width:125px">
+				<p:ajax listener="#{textBean.onChange}"
+					update=":textpreView:preview" />
+				<f:selectItems value="#{textBean.texts}" var="tt" itemValue="#{tt}"/>
+			</p:selectOneMenu>
+		</h:panelGrid>
+		<h:commandButton value="Visualizar"  />
+	</h:form>
+	<h:form id="textpreView">
+		<p:panel id="preview">
+			<p:outputLabel for="textView" value="Visualizar texto" />
+			<br />
+			<h:outputText id="textView" value="#{textBean.optionText}" />
+		</p:panel>
+	</h:form>
+	<h:form id="new">
+		<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+			<p:outputLabel for="newText"
+				value="Introduzir Novo Texto de Apresentação da Empresa:" />
+			<p:inputTextarea id="newText" rows="10" cols="40"
+				value="#{textBean.newText}" />
+		</h:panelGrid>
+
+		<h:commandButton value="Aplicar" type="submit"
+			action="#{textBean.change()}" />
+	</h:form>
+	
+	<h:form>
+		<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+			<p:outputLabel for="themeChoose" value="Tema:" />
+			<p:selectOneMenu id="themeChoose" value="#{styleBean.theme}"
+				style="width:125px">
+				<f:selectItems value="#{styleBean.themes}" />
+			</p:selectOneMenu>
+		</h:panelGrid>
+
+		<h:commandButton value="Aplicar" />
+	</h:form>
+</h:body>
+</html>

@@ -16,10 +16,10 @@ import pt.criticalsoftware.service.persistence.ICandidacyPersistenceService;
 
 @Stateful
 public class CandidacyBusinessService implements ICandidacyBusinessService {
-	
+
 	@EJB
 	private ICandidacyPersistenceService persistence;
-	
+
 	@EJB
 	private IMailSender notif;
 
@@ -31,7 +31,7 @@ public class CandidacyBusinessService implements ICandidacyBusinessService {
 			return null;
 		}
 	}
-	
+
 	@Override
 	public List<ICandidacy> getSearchedCandidaciesAdmin(String param) {
 		try {
@@ -40,7 +40,7 @@ public class CandidacyBusinessService implements ICandidacyBusinessService {
 			return null;
 		}
 	}
-	
+
 	@Override
 	public List<ICandidacy> getSearchedDatesCandidaciesAdmin(LocalDate date) {
 		try {
@@ -54,7 +54,7 @@ public class CandidacyBusinessService implements ICandidacyBusinessService {
 	public ICandidacy createCandidacy(ICandidacy icandidacy) throws DuplicateCandidateException {
 		return persistence.newCandidacy(icandidacy);
 	}
-	
+
 	@Override
 	public ICandidacy assignCandidacy(ICandidacy cand) throws UniqueConstraintException {
 		ICandidacy assigned = persistence.assignCandidacy(cand);
@@ -99,11 +99,11 @@ public class CandidacyBusinessService implements ICandidacyBusinessService {
 	@Override
 	public void updateMultipleAccepted(List<ICandidacy> acceptedCandidacies) {
 		persistence.updateMultipleAccepted(acceptedCandidacies);
-		
-	public List<ICandidacy> getCandidaciesByDatePeriod(LocalDate initDate,
-			LocalDate finalDate) {
-		return persistence.getCandidaciesByDatePeriod(initDate,finalDate);
-		
+	}
+
+	public List<ICandidacy> getCandidaciesByDatePeriod(LocalDate initDate, LocalDate finalDate) {
+		return persistence.getCandidaciesByDatePeriod(initDate, finalDate);
+
 	}
 
 	@Override
@@ -112,9 +112,8 @@ public class CandidacyBusinessService implements ICandidacyBusinessService {
 	}
 
 	@Override
-	public List<ICandidacy> getCandidaciesSpontaneousByDatePeriod(
-			LocalDate initDate, LocalDate finalDate) {
-		return persistence.getCandidaciesSpontaneousByDatePeriod(initDate,finalDate);
+	public List<ICandidacy> getCandidaciesSpontaneousByDatePeriod(LocalDate initDate, LocalDate finalDate) {
+		return persistence.getCandidaciesSpontaneousByDatePeriod(initDate, finalDate);
 	}
-	
+
 }

@@ -16,22 +16,22 @@ import pt.criticalsoftware.service.model.IScript;
 import pt.criticalsoftware.service.model.IUser;
 
 public class InterviewProxy implements IEntityAware<InterviewEntity>, IInterview {
-	
+
 	private InterviewEntity interview;
-	
+
 	public InterviewProxy() {
 		this(null);
 	}
-	
+
 	public InterviewProxy(InterviewEntity entity) {
 		interview = entity != null ? entity : new InterviewEntity();
 	}
-	
+
 	@Override
 	public InterviewEntity getEntity() {
 		return interview;
 	}
-	
+
 	@Override
 	public LocalDate getDate() {
 		return interview.getDate();
@@ -85,12 +85,12 @@ public class InterviewProxy implements IEntityAware<InterviewEntity>, IInterview
 			interview.setScript(((IEntityAware<ScriptEntity>) script).getEntity());
 		}
 	}
-	
+
 	@Override
 	public IPosition getPosition() {
 		return new PositionProxy(interview.getPosition());
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setPosition(IPosition pos) {
@@ -98,25 +98,25 @@ public class InterviewProxy implements IEntityAware<InterviewEntity>, IInterview
 			interview.setPosition(((IEntityAware<PositionEntity>) pos).getEntity());
 		}
 	}
-	
+
 	@Override
 	public ICandidacy getCandidacy() {
 		return new CandidacyProxy(interview.getCandidacy());
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setCandidacy(ICandidacy cand) {
 		if (cand instanceof IEntityAware<?>) {
-			interview.setCandidacy(((IEntityAware<CandidacyEntity>)cand).getEntity());
+			interview.setCandidacy(((IEntityAware<CandidacyEntity>) cand).getEntity());
 		}
 	}
-	
+
 	@Override
 	public String getReference() {
 		return interview.getInterviewRef();
 	}
-	
+
 	@Override
 	public void setReference(String reference) {
 		interview.setInterviewRef(reference);
@@ -126,12 +126,29 @@ public class InterviewProxy implements IEntityAware<InterviewEntity>, IInterview
 	public Integer getId() {
 		return interview.getId();
 	}
-	
+
 	@Override
 	public String toString() {
 		return interview.getId().toString();
 	}
-	
+
+	@Override
+	public Integer getGlobalRating() {
+		return interview.getGlobalRating();
+	}
+
+	@Override
+	public void setGlobalRating(Integer globalRating) {
+		interview.setGlobalRating(globalRating);
+	}
+
+	@Override
+	public String getGlobalRatingString() {
+		String evaluation = (interview.getGlobalRating() > 0) ? "Positiva"
+				: (interview.getGlobalRating() < 0) ? "Negativa" : "Neutra";
+		return evaluation;
+	}
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public void addInterviewer(IUser interviewer) {
@@ -139,7 +156,7 @@ public class InterviewProxy implements IEntityAware<InterviewEntity>, IInterview
 			interview.getInterviewers().add(((IEntityAware<UserEntity>) interviewer).getEntity());
 		}
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public void deleteInterviewer(IUser interviewer) {

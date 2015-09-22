@@ -4,6 +4,12 @@ function fadeoutMsg() {
 	}, 2000);
 };
 
+function fadeoutMsgDlg() {
+	setTimeout(function() {
+		$('#editglobalmsgsdlg').fadeOut();
+	}, 2000);
+};
+
 // Check terms and conditions
 $(document).ready(
 	    function() {

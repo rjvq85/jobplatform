@@ -6,4 +6,28 @@
 	<application>
 		<message-bundle>CustomMsgs</message-bundle>
 	</application>
+	<navigation-rule>
+		<from-view-id>/jobsResult.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>positiondetail</from-outcome>
+			<to-view-id>/searchedPosition.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/searchedPosition.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>registeronposition</from-outcome>
+			<to-view-id>/register.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/searchedPosition.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>overdueposition</from-outcome>
+			<to-view-id>/jobs.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
 </faces-config>

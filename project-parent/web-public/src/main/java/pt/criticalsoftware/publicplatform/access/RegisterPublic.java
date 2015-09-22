@@ -66,6 +66,7 @@ public class RegisterPublic implements Serializable {
 								// guardado, e nesse caso este método devolve a
 								// página dessa candidatura, caso contrário,
 								// volta ao início
+		System.out.println("ENTROU PARA O REGISTO\n\n\n\n");
 		try {
 			fileUpload.setFile(file);
 			String filePath = fileUpload.fileUpload(username);

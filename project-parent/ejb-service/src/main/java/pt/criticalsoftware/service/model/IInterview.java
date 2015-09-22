@@ -3,7 +3,6 @@ package pt.criticalsoftware.service.model;
 import java.time.LocalDate;
 import java.util.List;
 
-
 public interface IInterview {
 
 	LocalDate getDate();
@@ -39,5 +38,11 @@ public interface IInterview {
 	String getReference();
 
 	void setReference(String reference);
+
+	Integer getGlobalRating();
+
+	void setGlobalRating(Integer globalRating);
+
+	String getGlobalRatingString();
 
 }

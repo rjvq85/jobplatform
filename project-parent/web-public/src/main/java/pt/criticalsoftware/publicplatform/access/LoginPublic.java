@@ -18,7 +18,7 @@ public class LoginPublic {
 
 	private String username;
 	private String password;
-	
+
 	@EJB
 	private ICandidateBusinessService business;
 
@@ -43,6 +43,7 @@ public class LoginPublic {
 	public String login() {
 		try {
 			getRequest().login(username, password);
+			setUserID();
 			getSession().setAttribute("userIsLogged", true);
 			getSession().setAttribute("usersName", getUsersName(username));
 			return AUTH_URL + "index.xhtml?faces-redirect=true";
@@ -71,12 +72,12 @@ public class LoginPublic {
 	private HttpSession getSession() {
 		return getRequest().getSession();
 	}
-	
+
 	private String getUsersName(String username) {
 		ICandidate candidate = business.getCandidateByUsername(username);
 		return (candidate.getFirstName() + " " + candidate.getLastName());
 	}
-	
+
 	private RequestContext getRequestContext() {
 		return RequestContext.getCurrentInstance();
 	}
@@ -86,18 +87,25 @@ public class LoginPublic {
 			getRequest().login(username, password);
 			getSession().setAttribute("userIsLogged", true);
 			getSession().setAttribute("usersName", getUsersName(username));
+			setUserID();
 		} catch (Exception e) {
 		}
 	}
-	
+
 	public void loginDialog() {
 		try {
 			getRequest().login(username, password);
 			getSession().setAttribute("userIsLogged", true);
 			getRequestContext().addCallbackParam("loggedIn", true);
 			getSession().setAttribute("usersName", getUsersName(username));
+			setUserID();
 		} catch (Exception e) {
 		}
+	}
+	
+	private void setUserID() {
+		Integer userid = business.getCandidateByUsername(username).getId();
+		getSession().setAttribute("userId", userid);
 	}
 
 }

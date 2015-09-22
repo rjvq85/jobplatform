@@ -45,6 +45,19 @@
 					</pe:dynaFormControl>
 
 					<f:facet name="buttonBar">
+						<h:panelGroup layout="block" styleClass="spacer" />
+						<h:panelGroup layout="block" styleClass="row ribbon both_ribbon" style="background-color:firebrick;">
+							<h:panelGroup layout="block" styleClass="col-md-12 text-center">
+								<h4>Avaliação Global da Entrevista</h4>
+								<br />
+								<p:selectOneRadio value="#{scriptInterview.interviewRating}"
+									required="true" style="margin-left:auto;margin-right:auto;">
+									<f:selectItem itemLabel="Positiva" itemValue="1" />
+									<f:selectItem itemLabel="Negativa" itemValue="-1" />
+								</p:selectOneRadio>
+							</h:panelGroup>
+						</h:panelGroup>
+						<hr/>
 						<p:commandButton value="Guardar"
 							action="#{scriptInterview.save()}" process="dynaForm"
 							update=":scriptGuide:dynaFormGroup :editglobalmsgs"

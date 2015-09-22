@@ -34,6 +34,11 @@
 		<p:column headerText="Área Técnica">
 			<p:outputLabel value="#{job.technicalArea}"></p:outputLabel>
 		</p:column>
+		<p:column headerText="Detalhes">
+			<p:link value="Ver" outcome="positiondetail">
+				<f:param name="posicao" value="#{job.id}"></f:param>
+			</p:link>
+		</p:column>
 	</p:dataTable>
 </ui:composition>
 </html>

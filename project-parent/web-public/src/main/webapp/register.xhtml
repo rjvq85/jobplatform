@@ -41,8 +41,9 @@
 								<h:panelGroup layout="block" styleClass="row">
 									<h:panelGroup layout="block" styleClass="col-md-7">
 										<h:panelGroup layout="block" styleClass="input-group">
-											<h:inputText value="#{registerPublic.firstName}" id="firstname"
-												type="text" styleClass="form-control firstinput"
+											<h:inputText value="#{registerPublic.firstName}"
+												id="firstname" type="text"
+												styleClass="form-control firstinput"
 												a:placeholder="Primeiro Nome" required="true"
 												requiredMessage="Campo obrigatório" />
 											<span class="input-group-addon firstspan"><span
@@ -280,7 +281,8 @@
 									<h:panelGroup layout="block" styleClass="col-md-2">
 										<span class="form-control file-input btn btn-danger btn-file"
 											style="border-top-right-radius: 0; border-bottom-right-radius: 0;">Curriculum
-											Vitae<h:inputFile id="ficheiro" value="#{registerPublic.file}"
+											Vitae<h:inputFile id="ficheiro"
+												value="#{registerPublic.file}"
 												validator="pt.criticalsoftware.publicplatform.validators.FileValidator"
 												styleClass="form-control btn btn-info" required="true"
 												requiredMessage="Obrigatório">
@@ -321,9 +323,9 @@
 									style="padding-left: 0px; padding-right: 0px;">
 									<h:panelGroup layout="block" styleClass="alert alert-danger"
 										style="background-color: white !important;box-shadow: 0px 4px 13px -2px rgba(102,102,102,0.75);font-size: 14px !important;text-shadow: none !important;color: #2829!important;border-color: 1px solid black !important;width: 100% !important;font-size: 12px; font-weight: 500;border-top-left-radius: 0px !important;border-top-right-radius: 0px !important;">
-										<h:selectBooleanCheckbox id="termsbox"
-											value="#{registerPublic.readTerms}">
-											<p:ajax execute="termsbox" update="rbtn" event="change" />
+										<h:message for="termsbox" />
+										<h:selectBooleanCheckbox id="termsbox" required="true"
+											requiredMessage="*">
 										</h:selectBooleanCheckbox> Aceito os termos propostos
 								</h:panelGroup>
 								</h:panelGroup>
@@ -334,12 +336,12 @@
 					<h:panelGroup layout="block" styleClass="row text-center">
 						<h:panelGroup layout="block" styleClass="col-md-12 text-center">
 							<h:commandButton id="rbtn" action="#{registerPublic.register()}"
-								value="Submeter" styleClass="btn btn-info registerbtns"
-								disabled="#{!register.readTerms}" onclick="fadeoutMsg();">
+								value="Submeter" styleClass="btn btn-info registerbtns" onclick="fadeoutMsg();">
 								<f:ajax render=":registerpage" execute="@form :registerform" />
 							</h:commandButton>
 							<h:commandButton id="cbtn" action="#{searchedPosition.goOn()}"
-								value="Cancelar" styleClass="btn btn-default registerbtns cancelbtn">
+								value="Cancelar"
+								styleClass="btn btn-default registerbtns cancelbtn">
 								<f:ajax execute="cbtn" />
 							</h:commandButton>
 						</h:panelGroup>

@@ -38,6 +38,8 @@ public class ScriptInterview implements Serializable {
 	@EJB
 	private IInterviewBusinessService intervBness;
 
+	private Integer interviewRating;
+
 	private List<IQuestion> questions;
 
 	private List<AnswerScript> answers;
@@ -77,6 +79,7 @@ public class ScriptInterview implements Serializable {
 			// persist
 			String feedbackToString = xmlParser.asString(scriptFeedbacks);
 			interview.setFeedback(feedbackToString);
+			interview.setGlobalRating(newRating(interview));
 			intervBness.updateInterview(interview);
 			logger.debug("Feedback criado para a entrevista com referência: " + interview.getReference());
 			FacesContext context = FacesContext.getCurrentInstance();
@@ -95,5 +98,19 @@ public class ScriptInterview implements Serializable {
 		HttpServletRequest req = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
 				.getRequest();
 		return req.getSession();
+	}
+
+	public Integer getInterviewRating() {
+		return interviewRating;
+	}
+
+	public void setInterviewRating(Integer interviewRating) {
+		this.interviewRating = interviewRating;
+	}
+
+	private Integer newRating(IInterview interview) {
+		Integer oldRating = interview.getGlobalRating();
+		Integer newRating = oldRating + interviewRating;
+		return newRating;
 	}
 }

@@ -31,7 +31,7 @@ import pt.criticalsoftware.service.persistence.utils.LocalDatePersistenceConvert
 		@NamedQuery(name = "Interview.findByInterviewer", query = "SELECT i FROM InterviewEntity i JOIN i.interviewers u WHERE u.id = :param"),
 		@NamedQuery(name = "Interview.availableInterviewers", query = "SELECT u FROM UserEntity u WHERE u NOT IN (SELECT DISTINCT elements(i.interviewers) FROM InterviewEntity i WHERE i.id = :param)"),
 		@NamedQuery(name = "Interview.availableScripts", query = "SELECT s FROM ScriptEntity s WHERE s NOT IN (SELECT i.script FROM InterviewEntity i WHERE i.id = :param)"),
-		@NamedQuery(name="Interview.byCandidate", query="SELECT i FROM InterviewEntity i WHERE i.candidacy.candidate.id = :param AND i.feedback IS NOT EMPTY")})
+		@NamedQuery(name = "Interview.byCandidate", query = "SELECT i FROM InterviewEntity i WHERE i.candidacy.candidate.id = :param AND i.feedback IS NOT EMPTY") })
 public class InterviewEntity {
 
 	@Id
@@ -45,7 +45,7 @@ public class InterviewEntity {
 	@Column(name = "data_entrevista", nullable = false)
 	private LocalDate date;
 
-	@Column(name = "feedback",columnDefinition="TEXT")
+	@Column(name = "feedback", columnDefinition = "TEXT")
 	private String feedback;
 
 	@ManyToMany(fetch = FetchType.EAGER)
@@ -62,6 +62,9 @@ public class InterviewEntity {
 
 	@ManyToOne(optional = false)
 	private CandidacyEntity candidacy;
+
+	@Column(name = "avaliacao_global")
+	private Integer globalRating = 0;
 
 	public InterviewEntity() {
 
@@ -119,6 +122,14 @@ public class InterviewEntity {
 		this.candidacy = candidacy;
 	}
 
+	public String getInterviewRef() {
+		return interviewRef;
+	}
+
+	public void setInterviewRef(String interviewRef) {
+		this.interviewRef = interviewRef;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -144,12 +155,12 @@ public class InterviewEntity {
 		return true;
 	}
 
-	public String getInterviewRef() {
-		return interviewRef;
+	public Integer getGlobalRating() {
+		return globalRating;
 	}
 
-	public void setInterviewRef(String interviewRef) {
-		this.interviewRef = interviewRef;
+	public void setGlobalRating(Integer globalRating) {
+		this.globalRating = globalRating;
 	}
 
 }

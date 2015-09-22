@@ -18,8 +18,7 @@
 	<ui:composition template="/Layout/layout.xhtml">
 		<ui:define name="content">
 			<f:metadata>
-				<f:viewParam name="ref"
-					value="#{searchedPosition.positionId}"></f:viewParam>
+				<f:viewParam name="posicao" value="#{searchedPosition.positionId}"></f:viewParam>
 				<f:viewAction action="#{searchedPosition.getPosition()}"></f:viewAction>
 			</f:metadata>
 			<h:panelGroup layout="block" class="container" id="container">
@@ -29,7 +28,9 @@
 						<h:panelGroup layout="block" class="page-header">
 							<h:panelGroup layout="block" class="row" id="titlerow">
 								<h:panelGroup layout="block" class="col-md-8">
-									<h1>Posição: #{searchedPosition.selectedPosition.reference} - #{searchedPosition.selectedPosition.title}</h1>
+									<h1>Posição:
+										#{searchedPosition.selectedPosition.reference} -
+										#{searchedPosition.selectedPosition.title}</h1>
 								</h:panelGroup>
 								<h:panelGroup layout="block" class="col-md-offset-2 col-md-2">
 									<h:panelGroup layout="block" class="media">
@@ -40,16 +41,113 @@
 								</h:panelGroup>
 							</h:panelGroup>
 						</h:panelGroup>
+						<h:messages id="editglobalmsgs" globalOnly="true"
+							infoClass="alert alert-info" errorClass="alert alert-danger"
+							warnClass="alert alert-danger" style="list-style-type: none;" />
+						<h:panelGroup layout="block" styleClass="spacer" />
+						<h:panelGroup layout="block" styleClass="row">
+							<h:panelGroup layout="block" styleClass="col-md-12">
+								<h3>Detalhes da Posição:</h3>
+							</h:panelGroup>
+						</h:panelGroup>
+						<h:panelGroup layout="block" styleClass="row">
+							<h:panelGroup layout="block" styleClass="col-md-6">
+								<p>Título: #{searchedPosition.selectedPosition.title}</p>
+								<p>Descrição:
+									#{searchedPosition.selectedPosition.description}</p>
+								<p>Localização: #{searchedPosition.selectedPosition.locale}</p>
+								<p>Data de abertura:
+									#{searchedPosition.selectedPosition.openDate}</p>
+								<p>
+									<strong>Data de encerramento:
+										#{searchedPosition.selectedPosition.closeDate}</strong>
+								</p>
+							</h:panelGroup>
+							<h:panelGroup layout="block" styleClass="col-md-6">
+								<p>Empresa: #{searchedPosition.selectedPosition.company}</p>
+								<p>Área Técnica:
+									#{searchedPosition.selectedPosition.technicalArea.name}</p>
+								<p>Número de vagas:
+									#{searchedPosition.selectedPosition.vacancies}</p>
+								<p>Estado actual da Candidatura:
+									#{searchedPosition.selectedPosition.state.name}</p>
+							</h:panelGroup>
+						</h:panelGroup>
+					</h:panelGroup>
+					<br />
+					<hr />
+					<h:panelGroup layout="block" id="applydiv"
+						rendered="#{not searchedPosition.isOverdue()}">
+						<br />
+						<h:form id="searchpositionform" prependId="false">
+							<h:panelGroup layout="block" styleClass="row">
+								<h:panelGroup layout="block" styleClass="col-md-12 text-center">
+									<h:panelGroup layout="block" id="logged"
+										rendered="#{userIsLogged}">
+										<h:commandLink action="submitcandidacy"
+											value="Candidatar-me a esta posição"
+											styleClass="btn btn-info" style="width:20%;"
+											rendered="#{not searchedPosition.alreadyCandidate()}">
+											<p:ajax update=":newCandidacyForm" process="@this"
+												oncomplete="PF('newCandidacyWidget').show(); return false;"></p:ajax>
+											<p:resetInput target=":newCandidacyForm"></p:resetInput>
+										</h:commandLink>
+										<h:panelGroup layout="block"
+											rendered="#{searchedPosition.alreadyCandidate()}">
+											<h3>Já se candidatou a esta posição.</h3>
+										</h:panelGroup>
+									</h:panelGroup>
+									<h:panelGroup layout="block" id="notlogged"
+										rendered="#{not userIsLogged}">
+										<h:commandLink action="dologin" value="Login"
+											styleClass="btn btn-info"
+											style="width:20%; border-radius:0; margin:10px;">
+											<p:ajax update=":loginform" process="@this"
+												oncomplete="PF('loginWidget').show(); return false;"></p:ajax>
+											<p:resetInput target=":loginform"></p:resetInput>
+										</h:commandLink>
+										<h:commandButton action="registeronposition" value="Registar"
+											styleClass="btn btn-primary"
+											style="width:20%; border-radius:0; margin:10px;">
+										</h:commandButton>
+									</h:panelGroup>
+								</h:panelGroup>
+							</h:panelGroup>
+						</h:form>
+					</h:panelGroup>
+					<h:panelGroup layout="block" id="overduediv"
+						rendered="#{searchedPosition.isOverdue()}">
+						<h:panelGroup layout="block" styleClass="col-md-12 text-center">
+							<br />
+							<h3>O prazo para candidaturas a esta posição encerrou no dia
+								#{searchedPosition.closingTime}</h3>
+							<h:form prependId="false">
+								<h:commandButton action="overdueposition"
+									value="Ir para o ínicio" styleClass="btn btn-default"
+									style="width:20%; border-radius:0; margin:10px;"></h:commandButton>
+							</h:form>
+						</h:panelGroup>
 					</h:panelGroup>
 				</h:panelGroup>
 				<h:panelGroup layout="block" id="posnotfound"
 					rendered="#{empty searchedPosition.selectedPosition}">
 					<h:panelGroup layout="block" styleClass="jumbotron">
 						<h1>Não encontrado!</h1>
-						<p>A posição que procura não foi encontrada. Esta poderá já não existir.</p>
+						<p>A posição que procura não foi encontrada. Esta poderá já
+							não existir.</p>
 					</h:panelGroup>
 				</h:panelGroup>
 			</h:panelGroup>
+			<h:form id="newCandidacyForm" prependId="false">
+				<ui:insert name="NewCandidacy">
+					<ui:include src="newcandidacydlg.xhtml" />
+				</ui:insert>
+			</h:form>
+			<h:form id="loginform" prependId="false">
+				<ui:insert name="LoginDialog">
+					<ui:include src="logindlg.xhtml" />
+				</ui:insert>
+			</h:form>
 		</ui:define>
 	</ui:composition>
 </h:body>

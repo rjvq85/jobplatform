@@ -45,6 +45,15 @@
 		<p:column headerText="Área Técnica">
 			<p:outputLabel value="#{position.technicalArea}"></p:outputLabel>
 		</p:column>
+		<p:column headerText="Detalhes">
+			<p:commandLink value="Ver"
+				action="#{acceptedCandidacies.viewPosition(position)}"
+				rendered="#{position.state ne 'FECHADA'}" />
+			<h:link value="Ver" outcome="viewclosedposition"
+				rendered="#{position.state eq 'FECHADA'}">
+				<f:param name="posicao" value="#{position.id}" />
+			</h:link>
+		</p:column>
 	</p:dataTable>
 </ui:composition>
 </html>

@@ -10,21 +10,72 @@
 		<from-view-id>/Authorized/Interviews/myinterviews.xhtml</from-view-id>
 		<navigation-case>
 			<from-outcome>scriptInterview</from-outcome>
-			<to-view-id>/Authorized/Scripts/scriptInterview.xhtml?faces-redirect=true</to-view-id>
+			<to-view-id>/Authorized/Scripts/scriptInterview.xhtml</to-view-id>
+			<redirect />
 		</navigation-case>
 	</navigation-rule>
 	<navigation-rule>
 		<from-view-id>/Authorized/Scripts/scriptInterview.xhtml</from-view-id>
 		<navigation-case>
 			<from-outcome>feedbackSuccess</from-outcome>
-			<to-view-id>/Authorized/Interviews/myinterviews.xhtml?faces-redirect=true</to-view-id>
+			<to-view-id>/Authorized/Interviews/myinterviews.xhtml</to-view-id>
+			<redirect />
 		</navigation-case>
 	</navigation-rule>
 	<navigation-rule>
 		<from-view-id>/Authorized/Scripts/scriptInterview.xhtml</from-view-id>
 		<navigation-case>
 			<from-outcome>feedbackCancel</from-outcome>
-			<to-view-id>/Authorized/Interviews/myinterviews.xhtml?faces-redirect=true</to-view-id>
+			<to-view-id>/Authorized/Interviews/myinterviews.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/Authorized/Positions/acceptedcandidacies.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>positionclosed</from-outcome>
+			<to-view-id>/Authorized/Positions/rejectedreasons.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/Authorized/Positions/acceptedcandidacies.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/Authorized/Positions/positionListAdminMain.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/Authorized/Positions/positionListAdminMain.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>viewposition</from-outcome>
+			<to-view-id>/Authorized/Positions/acceptedcandidacies.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/Authorized/Positions/rejectedreasons.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>savedreasons</from-outcome>
+			<to-view-id>/Authorized/Positions/positionListAdminMain.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/Authorized/Positions/positionListAdminMain.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>viewclosedposition</from-outcome>
+			<to-view-id>/Authorized/Positions/closedposition.xhtml</to-view-id>
+			<redirect/>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/Authorized/Positions/closedposition.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>goBack</from-outcome>
+			<to-view-id>/Authorized/Positions/positionListAdminMain.xhtml</to-view-id>
+			<redirect />
 		</navigation-case>
 	</navigation-rule>
 </faces-config>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+<h:head>
+	<meta charset="utf-8" />
+	<h:outputScript library="js" name="jquery-2.1.4.min.js" />
+	<h:outputScript library="js" name="bootstrap.js" />
+	<h:outputScript library="js" name="tablepagination.js" />
+	<h:outputStylesheet library="css" name="mainstyle.css" />
+	<h:outputStylesheet library="css" name="bootstrap.css" />
+	<title>Plataforma de Emprego - Administrador</title>
+</h:head>
+<h:body>
+	<ui:composition template="../Layout/layout.xhtml">
+		<ui:define name="content">
+			<f:metadata>
+				<f:viewParam name="posicao" value="#{closedPosition.positionId}"></f:viewParam>
+				<f:viewAction action="#{closedPosition.searchPosition()}"></f:viewAction>
+			</f:metadata>
+			<h:panelGroup layout="block" class="container" id="container">
+				<p:growl id="rejectedGrowl" life="3000" />
+				<h:panelGroup id="candList" layout="block">
+					<h:panelGroup layout="block" class="title" id="title">
+						<h:panelGroup layout="block" class="page-header">
+							<h:panelGroup layout="block" class="row" id="titlerow">
+								<h:panelGroup layout="block" class="col-md-8">
+									<h1>Posição com referência:
+										#{closedPosition.position.reference}</h1>
+								</h:panelGroup>
+								<h:panelGroup layout="block" class="col-md-offset-2 col-md-2">
+									<h:panelGroup layout="block" class="media">
+										<h:graphicImage styleClass="media-object" library="imgs"
+											name="logocritical.png"
+											style="min-height: 50px; height: 50px;" />
+									</h:panelGroup>
+								</h:panelGroup>
+							</h:panelGroup>
+						</h:panelGroup>
+						<h:panelGroup layout="block" styleClass="spacer" />
+						<h:panelGroup layout="block" styleClass="row">
+							<h:panelGroup layout="block" styleClass="col-md-12">
+								<h3>Detalhes da Posição:</h3>
+							</h:panelGroup>
+						</h:panelGroup>
+						<h:panelGroup layout="block" styleClass="row">
+							<h:panelGroup layout="block" styleClass="col-md-6">
+								<p>Título: #{closedPosition.position.title}</p>
+								<p>Descrição: #{closedPosition.position.description}</p>
+								<p>Localização: #{closedPosition.position.locale}</p>
+								<p>Data de abertura: #{closedPosition.position.openDate}</p>
+								<p>Data de encerramento:
+									#{closedPosition.position.closeDate}</p>
+							</h:panelGroup>
+							<h:panelGroup layout="block" styleClass="col-md-6">
+								<p>Empresa: #{closedPosition.position.company}</p>
+								<p>Área Técnica:
+									#{closedPosition.position.technicalArea.name}</p>
+								<p>Número de vagas: #{closedPosition.position.vacancies}</p>
+								<p>Responsável:
+									#{closedPosition.position.responsable.firstName}
+									#{closedPosition.position.responsable.lastName}</p>
+							</h:panelGroup>
+						</h:panelGroup>
+						<h:panelGroup layout="block" styleClass="row">
+							<h:panelGroup layout="block" styleClass="col-md-6">
+								<h3>Candidato(s) seleccionado(s)</h3>
+								<ui:repeat var="c" value="#{closedPosition.candidacies}">
+									<address>
+										<strong>Nome: #{c.candidate.firstName}
+											#{c.candidate.lastName}</strong><br /> Curso(s):
+										#{c.candidate.course}<br /> Escola(s):
+										#{c.candidate.university}
+									</address>
+									<hr />
+								</ui:repeat>
+							</h:panelGroup>
+						</h:panelGroup>
+						<h:panelGroup layout="block" styleClass="spacer" />
+						<h:panelGroup layout="block" styleClass="row">
+							<h:panelGroup layout="block" styleClass="col-md-12 text-center">
+								<h:form prependId="false">
+									<h:commandButton action="goBack" value="Voltar"
+										styleClass="btn btn-info" style="border-radius:0;" />
+								</h:form>
+							</h:panelGroup>
+						</h:panelGroup>
+					</h:panelGroup>
+				</h:panelGroup>
+			</h:panelGroup>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

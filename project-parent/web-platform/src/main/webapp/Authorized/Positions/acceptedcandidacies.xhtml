@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+<h:head>
+	<meta charset="utf-8" />
+	<h:outputScript library="js" name="jquery-2.1.4.min.js" />
+	<h:outputScript library="js" name="bootstrap.js" />
+	<h:outputScript library="js" name="tablepagination.js" />
+	<h:outputStylesheet library="css" name="mainstyle.css" />
+	<h:outputStylesheet library="css" name="bootstrap.css" />
+	<title>Plataforma de Emprego - Administrador</title>
+</h:head>
+<h:body>
+	<ui:composition template="../Layout/layout.xhtml">
+		<ui:define name="content">
+			<h:panelGroup layout="block" class="container" id="container">
+				<h:panelGroup id="candList" layout="block">
+					<h:panelGroup layout="block" class="title" id="title">
+						<h:panelGroup layout="block" class="page-header">
+							<h:panelGroup layout="block" class="row" id="titlerow">
+								<h:panelGroup layout="block" class="col-md-8">
+									<h1>Escolha de Candidatos para a Posição</h1>
+								</h:panelGroup>
+								<h:panelGroup layout="block" class="col-md-offset-2 col-md-2">
+									<h:panelGroup layout="block" class="media">
+										<h:graphicImage styleClass="media-object" library="imgs"
+											name="logocritical.png"
+											style="min-height: 50px; height: 50px;" />
+									</h:panelGroup>
+								</h:panelGroup>
+							</h:panelGroup>
+						</h:panelGroup>
+						<h:panelGroup layout="block" styleClass="col-md-12 text-center">
+							<h:messages id="editglobalmsgs" globalOnly="true"
+								infoClass="alert alert-info" errorClass="alert alert-danger"
+								warnClass="alert alert-danger" style="list-style-type: none;" />
+						</h:panelGroup>
+						<h:panelGroup layout="block" id="chooseAccpt"
+							rendered="#{acceptedCandidacies.stillAvailable() and not acceptedCandidacies.noMoreCandidacies()}">
+							<h:form prependId="false" id="accptCandForm">
+								<h:panelGroup layout="block" class="row">
+									<h:message for="acceptedCandidacies" />
+									<p:selectManyCheckbox id="acceptedCandidacies"
+										value="#{acceptedCandidacies.acceptedCandidacies}"
+										converter="#{candidacyConverter}">
+										<f:selectItems value="#{acceptedCandidacies.candidaciesList}"
+											var="cand"
+											itemLabel="#{cand.candidate.firstName} #{cand.candidate.lastName} (#{cand.candidate.email})"
+											itemValue="#{cand}"></f:selectItems>
+									</p:selectManyCheckbox>
+								</h:panelGroup>
+								<h:panelGroup layout="block" styleClass="row spacer"></h:panelGroup>
+								<h:commandButton action="#{acceptedCandidacies.save()}"
+									value="Escolher" styleClass="btn btn-success"
+									style="border-radius:0;">
+									<p:ajax update=":container" process=":accptCandForm"
+										oncomplete="fadeoutMsg();" />
+								</h:commandButton>
+							</h:form>
+						</h:panelGroup>
+						<h:panelGroup layout="block" id="chooseAccptTwo"
+							rendered="#{not acceptedCandidacies.stillAvailable()}">
+							<h:panelGroup layout="block" styleClass="row">
+								<h:panelGroup layout="block" styleClass="col-md-12 text-center">
+									<h3>As vagas disponíveis para esta posição foram todas
+										preenchidas. Clique em 'Fechar Posição' para concluir.</h3>
+								</h:panelGroup>
+							</h:panelGroup>
+						</h:panelGroup>
+						<h:panelGroup layout="block" styleClass="spacer" />
+						<h:panelGroup layout="block" id="chooseAccptThree"
+							rendered="#{acceptedCandidacies.stillAvailable() and acceptedCandidacies.noMoreCandidacies()}">
+							<h:panelGroup layout="block" styleClass="row">
+								<h:panelGroup layout="block" styleClass="col-md-12 text-center">
+									<h3>Apesar da posição ainda ter vagass em aberto já não há
+										mais candidatos para preencher tais vagas. Clique em 'Fechar
+										Posição' para concluir.</h3>
+								</h:panelGroup>
+							</h:panelGroup>
+						</h:panelGroup>
+						<h:panelGroup layout="block" styleClass="spacer" />
+						<h:panelGroup layout="block" class="row">
+							<h:panelGroup layout="block" class="col-md-12 text-center">
+								<h:form prependId="false" id="closePositionForm">
+									<h:commandButton id="closebtn"
+										action="#{acceptedCandidacies.close()}" value="Fechar Posição"
+										styleClass="btn btn-info"
+										style="border-radius:0; margin: 1px; width: 15%;" />
+									<h:panelGroup layout="block" id="popoverData" styleClass="btn"
+										a:data-content="Esta posição não tem qualquer candidato seleccionado!"
+										a:rel="popover" a:data-placement="bottom"
+										a:data-original-title="Aviso" a:data-trigger="hover"
+										rendered="#{empty acceptedCandidacies.acceptedCandidacies}" style="position:absolute; left: 41%; top:60%;"></h:panelGroup>
+									<h:commandButton action="cancel" value="Cancelar"
+										styleClass="btn btn-default"
+										style="border-radius:0; margin: 1px; width: 15%;" />
+								</h:form>
+							</h:panelGroup>
+						</h:panelGroup>
+					</h:panelGroup>
+				</h:panelGroup>
+			</h:panelGroup>
+			<script>
+			$('#closebtn').hover(function(e) {
+			    $('#popoverData').trigger(e.type);
+			});
+			$('#popoverData').popover();
+			</script>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

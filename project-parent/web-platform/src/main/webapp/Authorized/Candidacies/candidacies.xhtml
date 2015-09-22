@@ -68,9 +68,11 @@
 							<h:panelGroup layout="block" styleClass="col-md-6">
 								<h:form prependId="false" id="spontForm">
 									<h:selectBooleanCheckbox
-										value="#{candidacyListView.spontaneous}" style="margin-right: 10px;"/> Apenas candidaturas espontâneas
+										value="#{candidacyListView.spontaneous}"
+										style="margin-right: 10px;" /> Apenas candidaturas espontâneas
 									<h:commandButton
-										action="#{candidacyListView.candidacyFilter()}" value="OK" styleClass="btn btn-default">
+										action="#{candidacyListView.candidacyFilter()}" value="OK"
+										styleClass="btn btn-default">
 										<f:ajax render=":lista" execute="spontForm" />
 									</h:commandButton>
 								</h:form>
@@ -112,7 +114,8 @@
 										<p:commandLink
 											action="#{candidacyListView.chooseSelectedCandidacy(cand)}"
 											value="#{cand.state.name}"
-											oncomplete="PF('stateWidget').show()" update="stateDialog" disabled="#{cand.state eq 'REJEITADA' or cand.state eq 'FECHADA'}"/>
+											oncomplete="PF('stateWidget').show()" update="stateDialog"
+											disabled="#{cand.state eq 'REJEITADA' or cand.state eq 'FECHADA'}" />
 									</p:column>
 									<p:column headerText="Posição">
 										<h:outputText value="#{cand.positionCandidacy.reference}"
@@ -133,7 +136,7 @@
 										rendered="#{not empty candidacyListView.candidacies and userROLE eq 'ADMIN'}">
 										<p:commandLink id="deleteButton"
 											action="#{candidacyListView.delete(cand)}"
-											rendered="#{cand.positionCandidacy.id gt 0 and cand.state != 'FECHADA'}"
+											rendered="#{(cand.positionCandidacy.id gt 0 and cand.state != 'FECHADA') or (cand.positionCandidacy.id gt 0 and cand.state != 'REJEITADA')}"
 											update="lista"
 											onclick="if (!confirm('Tem a certeza?')) return false;"
 											oncomplete="window.location.replace(window.location.href);">

@@ -30,4 +30,10 @@ public interface ICandidacyPersistenceService {
 
 	List<IInterview> getInterviews(Integer id);
 
+	ICandidacy find(int id);
+
+	void updateMultipleRejected(List<ICandidacy> rejectedCandidacies);
+
+	void updateMultipleAccepted(List<ICandidacy> acceptedCandidacies);
+
 }

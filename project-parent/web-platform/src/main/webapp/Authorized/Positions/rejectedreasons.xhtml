@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+<h:head>
+	<meta charset="utf-8" />
+	<h:outputScript library="js" name="jquery-2.1.4.min.js" />
+	<h:outputScript library="js" name="bootstrap.js" />
+	<h:outputScript library="js" name="tablepagination.js" />
+	<h:outputStylesheet library="css" name="mainstyle.css" />
+	<h:outputStylesheet library="css" name="bootstrap.css" />
+	<title>Plataforma de Emprego - Administrador</title>
+</h:head>
+<h:body>
+	<ui:composition template="../Layout/layout.xhtml">
+		<ui:define name="content">
+			<h:panelGroup layout="block" class="container" id="container">
+				<p:growl id="rejectedGrowl" life="3000" />
+				<h:panelGroup id="candList" layout="block">
+					<h:panelGroup layout="block" class="title" id="title">
+						<h:panelGroup layout="block" class="page-header">
+							<h:panelGroup layout="block" class="row" id="titlerow">
+								<h:panelGroup layout="block" class="col-md-8">
+									<h1>Escolha de Candidatos para a Posição</h1>
+								</h:panelGroup>
+								<h:panelGroup layout="block" class="col-md-offset-2 col-md-2">
+									<h:panelGroup layout="block" class="media">
+										<h:graphicImage styleClass="media-object" library="imgs"
+											name="logocritical.png"
+											style="min-height: 50px; height: 50px;" />
+									</h:panelGroup>
+								</h:panelGroup>
+							</h:panelGroup>
+						</h:panelGroup>
+						<h:panelGroup layout="block" class="spacer" />
+						<h:message for="rejectedCandidacies" style="list-style:none;"
+							styleClass="alert alert-danger" />
+						<h:panelGroup layout="block" class="spacer" />
+						<h:form prependId="false" id="reasonCandForm">
+							<h:panelGroup layout="block" class="row">
+								<h:panelGroup layout="block" class="col-md-12 text-center">
+									<p:dataTable value="#{acceptedCandidacies.rejectedCandidacies}"
+										var="cand" tableStyleClass="table-condensed newlabeled"
+										emptyMessage="Sem candidatos rejeitados"
+										styleClass="text-center" paginator="true"
+										paginatorPosition="bottom"
+										paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+										rowsPerPageTemplate="5,10,15" rows="5">
+										<p:column headerText="Candidato">
+											<h:outputText
+												value="#{cand.candidate.firstName} #{cand.candidate.lastName} (#{cand.candidate.email})" />
+										</p:column>
+										<p:column headerText="Motivo de Rejeição">
+											<p:selectOneMenu id="rejectedCandidacies"
+												value="#{cand.rejectionReason}" required="true"
+												requiredMessage="Seleccione um motivo para TODOS os candidatos rejeitados.">
+												<f:selectItem itemValue="" noSelectionOption="true"
+													itemLabel="Seleccione um motivo" />
+												<f:selectItems value="#{acceptedCandidacies.reasons}"
+													var="r" itemLabel="#{r.explanation}" itemValue="#{r}"></f:selectItems>
+											</p:selectOneMenu>
+										</p:column>
+									</p:dataTable>
+								</h:panelGroup>
+							</h:panelGroup>
+							<h:panelGroup layout="block" styleClass="row spacer"></h:panelGroup>
+							<h:panelGroup layout="block" styleClass="row">
+								<h:panelGroup layout="block" styleClass="col-md-12 text-center">
+									<h:commandButton action="#{acceptedCandidacies.saveReasons()}"
+										value="Guardar" styleClass="btn btn-success" style="width:15%; border-radius:0;">
+										<p:ajax update=":container :rejectedGrowl"
+											process=":reasonCandForm" oncomplete="fadeoutMsg();" />
+									</h:commandButton>
+								</h:panelGroup>
+							</h:panelGroup>
+						</h:form>
+					</h:panelGroup>
+				</h:panelGroup>
+			</h:panelGroup>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

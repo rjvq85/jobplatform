@@ -3,6 +3,7 @@ package pt.criticalsoftware.service.model;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 import pt.criticalsoftware.service.persistence.positions.TechnicalAreaType;
 import pt.criticalsoftware.service.persistence.states.PositionState;
@@ -62,5 +63,13 @@ public interface IPosition {
 	IUser getResponsable();
 
 	void setResponsable(IUser responsable);
+
+	List<ICandidacy> getAcceptedCandidacies();
+
+	void setAcceptedCandidacies(List<ICandidacy> acceptedCandidacies);
+
+	List<ICandidacy> getCandidacies();
+
+	void setCandidacies(List<ICandidacy> candidacies);
 
 }

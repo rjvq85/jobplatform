@@ -12,6 +12,7 @@ import pt.criticalsoftware.service.model.ICandidacy;
 import pt.criticalsoftware.service.model.ICandidate;
 import pt.criticalsoftware.service.model.IInterview;
 import pt.criticalsoftware.service.model.IPosition;
+import pt.criticalsoftware.service.persistence.candidacy.Reason;
 import pt.criticalsoftware.service.persistence.states.CandidacyState;
 
 public class CandidacyProxy implements ICandidacy, IEntityAware<CandidacyEntity> {
@@ -102,12 +103,12 @@ public class CandidacyProxy implements ICandidacy, IEntityAware<CandidacyEntity>
 			candidacy.setPositionCandidacy(((IEntityAware<PositionEntity>) position).getEntity());
 		}
 	}
-	
+
 	@Override
 	public void setReference(String ref) {
 		candidacy.setReference(ref);
 	}
-	
+
 	@Override
 	public String getReference() {
 		return candidacy.getReference();
@@ -122,6 +123,16 @@ public class CandidacyProxy implements ICandidacy, IEntityAware<CandidacyEntity>
 		return interviews;
 	}
 
+	@Override
+	public Reason getRejectionReason() {
+		return candidacy.getRejectionReason();
+	}
+
+	@Override
+	public void setRejectionReason(Reason rejectionReason) {
+		this.candidacy.setRejectionReason(rejectionReason);
+	}
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setInterviews(List<IInterview> interviews) {
@@ -131,6 +142,22 @@ public class CandidacyProxy implements ICandidacy, IEntityAware<CandidacyEntity>
 				interviewsEnt.add(((IEntityAware<InterviewEntity>) interview).getEntity());
 			}
 		}
+	}
+	
+	@Override
+	public boolean equals(Object other) {
+		return (other != null && getClass() == other.getClass() && candidacy.getId() != null)
+				? candidacy.getId().equals(((CandidacyProxy) other).getId()) : (other == this);
+	}
+
+	@Override
+	public int hashCode() {
+		return (candidacy.getId() != null) ? (getClass().hashCode() + candidacy.getId().hashCode()) : super.hashCode();
+	}
+	
+	@Override
+	public String toString() {
+		return String.valueOf(getId());
 	}
 
 }

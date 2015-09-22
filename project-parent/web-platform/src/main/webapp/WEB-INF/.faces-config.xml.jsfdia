@@ -5,19 +5,17 @@
   <PROCESS-ITEM ID="rules:#Authorized#Scripts#scriptInterview.xhtml:0"
    NAME="item" PATH="/Authorized/Scripts/scriptInterview.xhtml" model-entity="JSFProcessItem">
    <PROCESS-ITEM-OUTPUT
-    ID="feedbackSuccess::#Authorized#Interviews#myinterviews.xhtml?faces-redirect=true"
-    NAME="output"
-    PATH="/Authorized/Interviews/myinterviews.xhtml?faces-redirect=true"
-    TARGET="rules:#Authorized#Interviews#myinterviews.xhtml?faces-redirect=true"
+    ID="feedbackSuccess::#Authorized#Interviews#myinterviews.xhtml"
+    NAME="output" PATH="/Authorized/Interviews/myinterviews.xhtml"
+    TARGET="rules:#Authorized#Interviews#myinterviews.xhtml"
     TITLE="feedbackSuccess" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
   <PROCESS-ITEM ID="rules:#Authorized#Scripts#scriptInterview.xhtml:1"
    NAME="item1" PATH="/Authorized/Scripts/scriptInterview.xhtml" model-entity="JSFProcessItem">
    <PROCESS-ITEM-OUTPUT
-    ID="feedbackCancel::#Authorized#Interviews#myinterviews.xhtml?faces-redirect=true"
-    NAME="output"
-    PATH="/Authorized/Interviews/myinterviews.xhtml?faces-redirect=true"
-    TARGET="rules:#Authorized#Interviews#myinterviews.xhtml?faces-redirect=true"
+    ID="feedbackCancel::#Authorized#Interviews#myinterviews.xhtml"
+    NAME="output" PATH="/Authorized/Interviews/myinterviews.xhtml"
+    TARGET="rules:#Authorized#Interviews#myinterviews.xhtml"
     TITLE="feedbackCancel" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
  </PROCESS-ITEM>
@@ -26,19 +24,81 @@
   <PROCESS-ITEM ID="rules:#Authorized#Interviews#myinterviews.xhtml:0"
    NAME="item" PATH="/Authorized/Interviews/myinterviews.xhtml" model-entity="JSFProcessItem">
    <PROCESS-ITEM-OUTPUT
-    ID="scriptInterview::#Authorized#Scripts#scriptInterview.xhtml?faces-redirect=true"
-    NAME="output"
-    PATH="/Authorized/Scripts/scriptInterview.xhtml?faces-redirect=true"
-    TARGET="rules:#Authorized#Scripts#scriptInterview.xhtml?faces-redirect=true"
+    ID="scriptInterview::#Authorized#Scripts#scriptInterview.xhtml"
+    NAME="output" PATH="/Authorized/Scripts/scriptInterview.xhtml"
+    TARGET="rules:#Authorized#Scripts#scriptInterview.xhtml"
     TITLE="scriptInterview" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
  </PROCESS-ITEM>
  <PROCESS-ITEM
-  NAME="rules:#Authorized#Scripts#scriptInterview.xhtml?faces-redirect=true"
-  PATH="/Authorized/Scripts/scriptInterview.xhtml?faces-redirect=true"
-  SHAPE="240,145,0,0" model-entity="JSFProcessGroup"/>
+  NAME="rules:#Authorized#Positions#acceptedcandidacies.xhtml"
+  PATH="/Authorized/Positions/acceptedcandidacies.xhtml"
+  SHAPE="240,289,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM
+   ID="rules:#Authorized#Positions#acceptedcandidacies.xhtml:0"
+   NAME="item" PATH="/Authorized/Positions/acceptedcandidacies.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="positionclosed::#Authorized#Positions#rejectedreasons.xhtml"
+    NAME="output" PATH="/Authorized/Positions/rejectedreasons.xhtml"
+    TARGET="rules:#Authorized#Positions#rejectedreasons.xhtml"
+    TITLE="positionclosed" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+  <PROCESS-ITEM
+   ID="rules:#Authorized#Positions#acceptedcandidacies.xhtml:1"
+   NAME="item1" PATH="/Authorized/Positions/acceptedcandidacies.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="cancel::#Authorized#Positions#positionListAdminMain.xhtml"
+    NAME="output"
+    PATH="/Authorized/Positions/positionListAdminMain.xhtml"
+    TARGET="rules:#Authorized#Positions#positionListAdminMain.xhtml"
+    TITLE="cancel" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
  <PROCESS-ITEM
-  NAME="rules:#Authorized#Interviews#myinterviews.xhtml?faces-redirect=true"
-  PATH="/Authorized/Interviews/myinterviews.xhtml?faces-redirect=true"
-  SHAPE="448,17,0,0" model-entity="JSFProcessGroup"/>
+  NAME="rules:#Authorized#Positions#positionListAdminMain.xhtml"
+  PATH="/Authorized/Positions/positionListAdminMain.xhtml"
+  SHAPE="32,385,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM
+   ID="rules:#Authorized#Positions#positionListAdminMain.xhtml:0"
+   NAME="item" PATH="/Authorized/Positions/positionListAdminMain.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="viewposition::#Authorized#Positions#acceptedcandidacies.xhtml"
+    NAME="output" PATH="/Authorized/Positions/acceptedcandidacies.xhtml"
+    TARGET="rules:#Authorized#Positions#acceptedcandidacies.xhtml"
+    TITLE="viewposition" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+  <PROCESS-ITEM
+   ID="rules:#Authorized#Positions#positionListAdminMain.xhtml:1"
+   NAME="item1" PATH="/Authorized/Positions/positionListAdminMain.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="viewclosedposition::#Authorized#Positions#closedposition.xhtml"
+    NAME="output" PATH="/Authorized/Positions/closedposition.xhtml"
+    TARGET="rules:#Authorized#Positions#closedposition.xhtml"
+    TITLE="viewclosedposition" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#Authorized#Positions#rejectedreasons.xhtml"
+  PATH="/Authorized/Positions/rejectedreasons.xhtml" SHAPE="448,273,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#Authorized#Positions#rejectedreasons.xhtml:0"
+   NAME="item" PATH="/Authorized/Positions/rejectedreasons.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="savedreasons::#Authorized#Positions#positionListAdminMain.xhtml"
+    NAME="output"
+    PATH="/Authorized/Positions/positionListAdminMain.xhtml"
+    TARGET="rules:#Authorized#Positions#positionListAdminMain.xhtml"
+    TITLE="savedreasons" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#Authorized#Positions#closedposition.xhtml"
+  PATH="/Authorized/Positions/closedposition.xhtml" SHAPE="256,401,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#Authorized#Positions#closedposition.xhtml:0"
+   NAME="item" PATH="/Authorized/Positions/closedposition.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="goBack::#Authorized#Positions#positionListAdminMain.xhtml"
+    NAME="output"
+    PATH="/Authorized/Positions/positionListAdminMain.xhtml"
+    TARGET="rules:#Authorized#Positions#positionListAdminMain.xhtml"
+    TITLE="goBack" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
 </PROCESS>

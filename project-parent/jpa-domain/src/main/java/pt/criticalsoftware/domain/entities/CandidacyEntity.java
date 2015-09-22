@@ -20,6 +20,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import pt.criticalsoftware.service.persistence.candidacy.Reason;
 import pt.criticalsoftware.service.persistence.states.CandidacyState;
 import pt.criticalsoftware.service.persistence.utils.LocalDatePersistenceConverter;
 
@@ -56,6 +57,10 @@ public class CandidacyEntity {
 	@Enumerated(EnumType.STRING)
 	@Column(name = "estado_candidatura", nullable = false)
 	private CandidacyState state;
+	
+	@Enumerated(EnumType.STRING)
+	@Column(name = "motivo_rejeicao")
+	private Reason rejectionReason;
 
 	@ManyToOne(cascade = CascadeType.MERGE)
 	private CandidateEntity candidate;
@@ -138,6 +143,14 @@ public class CandidacyEntity {
 		this.reference = reference;
 	}
 
+	public Reason getRejectionReason() {
+		return rejectionReason;
+	}
+
+	public void setRejectionReason(Reason rejectionReason) {
+		this.rejectionReason = rejectionReason;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -162,5 +175,6 @@ public class CandidacyEntity {
 			return false;
 		return true;
 	}
+
 
 }

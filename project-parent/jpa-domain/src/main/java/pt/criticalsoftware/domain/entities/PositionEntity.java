@@ -10,6 +10,7 @@ import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -20,7 +21,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.Future;
 
 import pt.criticalsoftware.service.persistence.positions.TechnicalAreaType;
 import pt.criticalsoftware.service.persistence.states.PositionState;
@@ -95,8 +95,11 @@ public class PositionEntity {
 	@OneToMany(mappedBy = "position")
 	private Collection<InterviewEntity> interviews;
 
-	@OneToMany(mappedBy = "positionCandidacy")
+	@OneToMany(mappedBy = "positionCandidacy", fetch = FetchType.EAGER)
 	private Collection<CandidacyEntity> candidacy;
+	
+	@OneToMany(fetch = FetchType.EAGER)
+	private Collection<CandidacyEntity> acceptedCandidacies;
 
 	public PositionEntity() {
 	}
@@ -225,6 +228,14 @@ public class PositionEntity {
 		return id;
 	}
 
+	public Collection<CandidacyEntity> getAcceptedCandidacies() {
+		return acceptedCandidacies;
+	}
+
+	public void setAcceptedCandidacies(Collection<CandidacyEntity> acceptedCandidacies) {
+		this.acceptedCandidacies = acceptedCandidacies;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -249,5 +260,6 @@ public class PositionEntity {
 			return false;
 		return true;
 	}
+
 
 }

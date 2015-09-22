@@ -29,5 +29,11 @@ public interface ICandidacyBusinessService {
 	void deleteCandidacy(ICandidacy candidacy);
 
 	List<IInterview> getCandidacyInterviews(Integer integer);
+
+	ICandidacy getCandidacyById(int id);
+
+	void updateMultipleRejected(List<ICandidacy> rejectedCandidacies);
+
+	void updateMultipleAccepted(List<ICandidacy> acceptedCandidacies);
 	
 }

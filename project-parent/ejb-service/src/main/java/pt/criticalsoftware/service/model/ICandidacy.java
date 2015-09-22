@@ -3,6 +3,7 @@ package pt.criticalsoftware.service.model;
 import java.time.LocalDate;
 import java.util.List;
 
+import pt.criticalsoftware.service.persistence.candidacy.Reason;
 import pt.criticalsoftware.service.persistence.states.CandidacyState;
 
 public interface ICandidacy {
@@ -40,5 +41,9 @@ public interface ICandidacy {
 	void setReference(String ref);
 
 	String getReference();
+
+	Reason getRejectionReason();
+
+	void setRejectionReason(Reason rejectionReason);
 
 }

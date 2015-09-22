@@ -37,7 +37,7 @@
 							<h:selectOneMenu styleClass="form-control btn-info" id="states"
 								value="#{candidacyListView.newState}" style="height:34px;">
 								<f:selectItems value="#{candidacyListView.allStates}" var="st"
-									itemValue="#{st}" itemLabel="#{st.name}" />
+									itemValue="#{st}" itemLabel="#{st.name}" itemDisabled="#{st eq 'FECHADA' or st eq 'REJEITADA'}"/>
 							</h:selectOneMenu>
 						</h:panelGroup>
 					</h:panelGroup>

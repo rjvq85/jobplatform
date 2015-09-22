@@ -356,6 +356,10 @@ td > label {
 	margin-top: -1px !important;
 }
 
+.ui-selectonemenu-trigger {
+	width: auto !important;
+}
+
 /* Growl */
 
 .ui-growl {

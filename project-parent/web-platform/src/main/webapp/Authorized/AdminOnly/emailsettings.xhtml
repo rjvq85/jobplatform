@@ -21,7 +21,7 @@
 <h:body>
 	<ui:composition>
 		<h:form prependId="false" id="emailForm">
-		<p:growl id="growlmsg" autoUpdate="true" life="3000" globalOnly="true" showDetail="true" showSummary="true"/>
+		<p:growl id="growlmsg" life="3000" globalOnly="true" showDetail="true" showSummary="true"/>
 			<p:dialog id="mailDialog" widgetVar="mailWidget"
 				header="Definições de E-mail (Notificações)" modal="true"
 				draggable="false" resizable="false" hideEffect="puff">
@@ -96,7 +96,7 @@
 								style="border-radius:0 !important; margin-right: 5px !important;"
 								value="Confirmar">
 								<p:ajax oncomplete="handleLoginRequest(xhr, status, args)"
-									update="ctnr" process="emailForm" />
+									update="ctnr growlmsg" process="emailForm" />
 							</h:commandButton>
 							<h:commandButton action="#{mailSettingsWeb.clear()}"
 								styleClass="btn btn-default"

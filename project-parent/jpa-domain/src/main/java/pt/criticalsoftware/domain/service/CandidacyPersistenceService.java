@@ -19,6 +19,7 @@ import pt.criticalsoftware.service.exceptions.UniqueConstraintException;
 import pt.criticalsoftware.service.model.ICandidacy;
 import pt.criticalsoftware.service.model.IInterview;
 import pt.criticalsoftware.service.persistence.ICandidacyPersistenceService;
+import pt.criticalsoftware.service.persistence.states.CandidacyState;
 
 @Stateless
 public class CandidacyPersistenceService implements ICandidacyPersistenceService {
@@ -160,6 +161,30 @@ public class CandidacyPersistenceService implements ICandidacyPersistenceService
 		for (InterviewEntity ie : entities)
 			intervs.add(new InterviewProxy(ie));
 		return intervs;
+	}
+
+	@Override
+	public ICandidacy find(int id) {
+		CandidacyEntity entity = em.find(CandidacyEntity.class, id);
+		return new CandidacyProxy(entity);
+	}
+
+	@Override
+	public void updateMultipleRejected(List<ICandidacy> rejectedCandidacies) {
+		for (ICandidacy candidacy:rejectedCandidacies) {
+			candidacy.setState(CandidacyState.REJEITADA);
+			CandidacyEntity entity = getEntity(candidacy);
+			em.merge(entity);
+		}
+	}
+
+	@Override
+	public void updateMultipleAccepted(List<ICandidacy> acceptedCandidacies) {
+		for (ICandidacy candidacy:acceptedCandidacies) {
+			candidacy.setState(CandidacyState.FECHADA);
+			CandidacyEntity entity = getEntity(candidacy);
+			em.merge(entity);
+		}
 	}
 
 }

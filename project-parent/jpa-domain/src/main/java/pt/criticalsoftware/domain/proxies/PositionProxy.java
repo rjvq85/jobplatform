@@ -1,28 +1,32 @@
 package pt.criticalsoftware.domain.proxies;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
+import pt.criticalsoftware.domain.entities.CandidacyEntity;
 import pt.criticalsoftware.domain.entities.PositionEntity;
 import pt.criticalsoftware.domain.entities.UserEntity;
+import pt.criticalsoftware.service.model.ICandidacy;
 import pt.criticalsoftware.service.model.IPosition;
 import pt.criticalsoftware.service.model.IUser;
 import pt.criticalsoftware.service.persistence.positions.TechnicalAreaType;
 import pt.criticalsoftware.service.persistence.states.PositionState;
 
 public class PositionProxy implements IEntityAware<PositionEntity>, IPosition {
-	
+
 	private PositionEntity position;
-	
+
 	public PositionProxy() {
 		this(null);
 	}
-	
+
 	public PositionProxy(PositionEntity entity) {
 		this.position = entity != null ? entity : new PositionEntity();
 	}
-	
+
 	@Override
 	public PositionEntity getEntity() {
 		return this.position;
@@ -36,36 +40,36 @@ public class PositionProxy implements IEntityAware<PositionEntity>, IPosition {
 	@Override
 	public void setOpenDate(LocalDate openDate) {
 		position.setOpenDate(openDate);
-		
+
 	}
 
 	@Override
 	public LocalDate getOpenDate() {
 		return position.getOpenDate();
-		
+
 	}
 
 	@Override
 	public void setCloseDate(Date closeDate) {
 		position.setCloseDate(closeDate);
-		
+
 	}
 
 	@Override
 	public Date getCloseDate() {
 		return position.getCloseDate();
-		
+
 	}
 
 	@Override
 	public String getReference() {
-		return position.getReference() ;
+		return position.getReference();
 	}
 
 	@Override
 	public void setReference(String reference) {
 		position.setReference(reference);
-		
+
 	}
 
 	@Override
@@ -76,7 +80,7 @@ public class PositionProxy implements IEntityAware<PositionEntity>, IPosition {
 	@Override
 	public void setTitle(String title) {
 		position.setTitle(title);
-		
+
 	}
 
 	@Override
@@ -157,7 +161,7 @@ public class PositionProxy implements IEntityAware<PositionEntity>, IPosition {
 	@Override
 	public void setAdChannels(Collection<String> adChannels) {
 		position.setAdChannels(adChannels);
-		
+
 	}
 
 	@Override
@@ -165,17 +169,60 @@ public class PositionProxy implements IEntityAware<PositionEntity>, IPosition {
 		return new UserProxy(position.getResponsable());
 	}
 
+	@Override
+	public List<ICandidacy> getAcceptedCandidacies() {
+		List<ICandidacy> candidacies = new ArrayList<>();
+		for (CandidacyEntity ce : position.getAcceptedCandidacies()) {
+			candidacies.add(new CandidacyProxy(ce));
+		}
+		return candidacies;
+	}
+
+	@Override
+	@SuppressWarnings("unchecked")
+	public void setAcceptedCandidacies(List<ICandidacy> acceptedCandidacies) {
+		List<CandidacyEntity> entities = new ArrayList<>();
+		for (ICandidacy candidacy : acceptedCandidacies) {
+			if (candidacy instanceof IEntityAware<?>) {
+				entities.add(((IEntityAware<CandidacyEntity>) candidacy).getEntity());
+			}
+		}
+		position.setAcceptedCandidacies(entities);
+	}
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setResponsable(IUser responsable) {
 		if (responsable instanceof IEntityAware<?>) {
-			position.setResponsable(((IEntityAware<UserEntity>)responsable).getEntity());
+			position.setResponsable(((IEntityAware<UserEntity>) responsable).getEntity());
 		}
 	}
-	
+
+	@Override
+	public List<ICandidacy> getCandidacies() {
+		List<ICandidacy> candidacies = new ArrayList<>();
+		for (CandidacyEntity ce : position.getCandidacy()) {
+			candidacies.add(new CandidacyProxy(ce));
+		}
+		return candidacies;
+	}
+
+	@Override
+	@SuppressWarnings("unchecked")
+	public void setCandidacies(List<ICandidacy> candidacies) {
+		List<CandidacyEntity> entities = new ArrayList<>();
+		for (ICandidacy candidacy : candidacies) {
+			if (candidacy instanceof IEntityAware<?>) {
+				entities.add(((IEntityAware<CandidacyEntity>) candidacy).getEntity());
+			}
+		}
+		position.setCandidacy(entities);
+	}
+
 	@Override
 	public String toString() {
-		if (null == position.getId()) return "Espontânea";
+		if (null == position.getId())
+			return "Espontânea";
 		return position.getId().toString();
 	}
 

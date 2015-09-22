@@ -85,5 +85,20 @@ public class CandidacyBusinessService implements ICandidacyBusinessService {
 	public List<IInterview> getCandidacyInterviews(Integer id) {
 		return persistence.getInterviews(id);
 	}
+
+	@Override
+	public ICandidacy getCandidacyById(int id) {
+		return persistence.find(id);
+	}
+
+	@Override
+	public void updateMultipleRejected(List<ICandidacy> rejectedCandidacies) {
+		persistence.updateMultipleRejected(rejectedCandidacies);
+	}
+
+	@Override
+	public void updateMultipleAccepted(List<ICandidacy> acceptedCandidacies) {
+		persistence.updateMultipleAccepted(acceptedCandidacies);
+	}
 	
 }

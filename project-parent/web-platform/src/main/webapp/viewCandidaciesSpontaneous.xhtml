@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Candidaturas Espontâneas</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</h:head>
+<h:body>
+	<h:form>
+
+		<p:dataTable id="tbl" var="candidacie"
+			value="#{reportCandidaciesByTime.candidacies}" paginator="true"
+			paginatorPosition="bottom" rows="12" style="margin-bottom:20px">
+
+			<f:facet name="header">
+				<h:outputText value="Candidaturas espontâneas" />
+				
+				<h:outputText value="De: " />
+				<h:outputText value="#{reportCandidaciesByTime.initDate}">
+					<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+				</h:outputText>
+				<h:outputText value=" a : " />
+				<h:outputText value="#{reportCandidaciesByTime.finalDate}">
+					<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+				</h:outputText>
+			</f:facet>
+
+			<p:column headerText="Data da Candidatura">
+				<h:outputText value="#{candidacie.date}" />
+			</p:column>
+
+			<p:column headerText="Nome do Candidato">
+				<h:outputText value="#{candidacie.candidate.firstName}" />
+			</p:column>
+
+			<p:column headerText="Referência da Candidatura">
+				<h:outputText value="#{candidacie.reference}" />
+			</p:column>
+
+			<f:facet name="footer">
+				<h:outputText value="No total foram efectuadas: " />
+				<h:outputText value="#{reportCandidaciesByTime.candidacies.size()}" />
+				<h:outputText value=" candidaturas espontâneas." />
+			</f:facet>
+
+		</p:dataTable>
+
+		<p:spacer height="30" />
+		<p:panel position="center">
+			<h:commandLink id="pdf">
+				<p:graphicImage name="/imgs/pdf_icon.gif" with="32" height="32" />
+
+				<pe:exporter type="pdf" target="tbl" encoding="UTF-8"
+					fileName="Relatório por Candidaturas Espontâneas"
+					tableTitle="RelatórioCandidatosPorPeríodoTempo"
+					orientation="Portrait " facetBackground="#F88017"
+					facetFontSize="14" facetFontColor="#0000ff" facetFontStyle="BOLD"
+					cellFontColor="#00ff00" cellFontSize="12" cellFontStyle="NORMAL" />
+			</h:commandLink>
+		</p:panel>
+	</h:form>
+</h:body>
+</html>

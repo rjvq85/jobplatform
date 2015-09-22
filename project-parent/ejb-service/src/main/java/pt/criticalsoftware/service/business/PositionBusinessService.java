@@ -130,5 +130,10 @@ public class PositionBusinessService implements IPositionBusinessService {
 	public List<IPosition> getOpenPositions() {
 		return positionPersistence.getAllOpenPositions();
 	}
-
+	
+	@Override
+	public List<IPosition> getPositionsByOpenDateByPeriod(LocalDate dateInit,
+			LocalDate dateFinal) {
+		return positionPersistence.getPositionsByOpenDateByPeriod(dateInit, dateFinal);
+	}
 }

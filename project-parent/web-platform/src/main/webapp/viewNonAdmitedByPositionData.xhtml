@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Candidatos Não admitidos Por Posição</title>
+
+</h:head>
+
+<h:body>
+
+	<h:form id="chartPanel">
+		<p:panel>
+			<p:chart type="line" value="#{reportNonAdmited.lineModel}"
+				style="width:500px;height:300px" widgetVar="chart" />
+
+			<p:commandButton type="button" value="Export" icon="ui-icon-extlink"
+				onclick="exportChart()" />
+
+			<p:dialog widgetVar="dlg" showEffect="fade" modal="true"
+				header="Salvar Gráfico" resizable="false">
+				<p:outputPanel id="output" layout="block"
+					style="width:500px;height:300px" />
+			</p:dialog>
+			<script type="text/javascript">
+			function exportChart() {
+   			 //export image
+   			 $('#output').empty().append(PF('chart').exportAsImage());
+ 
+    		//show the dialog
+    		PF('dlg').show();
+			}
+			</script>
+
+		</p:panel>
+	</h:form>
+
+	<p:spacer height="30" />
+
+	<h:form id="tableData">
+		<p:panel>
+			<p:dataTable id="tbl" var="candidacie"
+				value="#{reportNonAdmited.candidacies}" paginator="true"
+				paginatorPosition="bottom" rows="12" style="margin-bottom:20px">
+
+				<f:facet name="header">
+					<h:outputText value="Candidaturas rejeitadas para a posição: " />
+					<h:outputText value="#{reportNonAdmited.positionRef}" />
+				</f:facet>
+				<p:column headerText="Data Candidatura">
+					<h:outputText value="#{candidacie.date}" />
+				</p:column>
+
+				<p:column headerText="Nome Candidato">
+					<h:outputText
+						value="#{candidacie.candidate.firstName} + #{candidacie.candidate.lastName} " />
+				</p:column>
+
+				<p:column headerText="Habilitações">
+					<h:outputText value="#{candidacie.candidate.country}" />
+				</p:column>
+				<f:facet name="footer">
+					<h:outputText value="No total foram efectuadas: " />
+					<h:outputText value="#{reportNonAdmited.candidacies.size()}" />
+					<h:outputText value=" candidaturas." />
+				</f:facet>
+			</p:dataTable>
+		</p:panel>
+		<p:spacer height="30" />
+		<p:panel position="center">
+			<h:commandLink id="pdf">
+				<p:graphicImage name="/imgs/pdf_icon.gif" with="32" height="32" />
+
+				<pe:exporter type="pdf" target="tbl" encoding="UTF-8"
+					fileName="Relatório por Posição" tableTitle="Relatório por Posição"
+					orientation="Portrait " facetBackground="#F88017"
+					facetFontSize="14" facetFontColor="#0000ff" facetFontStyle="BOLD"
+					cellFontColor="#00ff00" cellFontSize="12" cellFontStyle="NORMAL" />
+			</h:commandLink>
+		</p:panel>
+	</h:form>
+
+
+
+</h:body>
+</html>

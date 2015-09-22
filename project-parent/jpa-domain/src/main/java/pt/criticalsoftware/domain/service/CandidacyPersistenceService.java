@@ -44,8 +44,8 @@ public class CandidacyPersistenceService implements ICandidacyPersistenceService
 			if ((Long) em.createNamedQuery("Candidate.findDuplicateByUsername")
 					.setParameter("param", icandidacy.getCandidate().getUsername().toUpperCase()).getSingleResult() < 1
 					&& (Long) em.createNamedQuery("Candidate.findDuplicateByEmail")
-							.setParameter("param", icandidacy.getCandidate().getEmail().toUpperCase())
-							.getSingleResult() < 1) {
+					.setParameter("param", icandidacy.getCandidate().getEmail().toUpperCase())
+					.getSingleResult() < 1) {
 				CandidacyEntity entity = getEntity(icandidacy);
 				em.persist(entity);
 				entity.setReference(GenerateReferenceValue.genReference("C", entity.getId()));
@@ -161,6 +161,49 @@ public class CandidacyPersistenceService implements ICandidacyPersistenceService
 		for (InterviewEntity ie : entities)
 			intervs.add(new InterviewProxy(ie));
 		return intervs;
+	}
+	@Override
+	public List<ICandidacy> getCandidaciesByDatePeriod(LocalDate initDate,
+			LocalDate finalDate) {
+
+		List<ICandidacy> candidacies = new ArrayList<>();
+		TypedQuery<CandidacyEntity> query = em.createNamedQuery("Candidacy.searchByPeriodDate", CandidacyEntity.class)
+				.setParameter("initDate", initDate)
+				.setParameter("finalDate", finalDate);
+		List<CandidacyEntity> entities = query.getResultList();
+		for (CandidacyEntity c : entities) {
+			candidacies.add(new CandidacyProxy(c));
+		}
+		return candidacies;
+
+	}
+
+	@Override
+	public List<ICandidacy> getCandidaciesByPosition(Integer positionID) {
+		List<ICandidacy> candidacies = new ArrayList<>();
+		TypedQuery<CandidacyEntity> query = em.createNamedQuery("Candidacy.searchByPosition", CandidacyEntity.class)
+				.setParameter("positionID", positionID);
+		List<CandidacyEntity> entities = query.getResultList();
+		for (CandidacyEntity c : entities) {
+			candidacies.add(new CandidacyProxy(c));
+		}
+		return candidacies;
+	}
+
+	@Override
+	public List<ICandidacy> getCandidaciesSpontaneousByDatePeriod(
+			LocalDate initDate, LocalDate finalDate) {
+
+		List<ICandidacy> candidacies = new ArrayList<>();
+		TypedQuery<CandidacyEntity> query = em.createNamedQuery("Candidacy.searchBySpontaneousPeriodDate", CandidacyEntity.class)
+				.setParameter("initDate", initDate)
+				.setParameter("finalDate", finalDate).setParameter("null", null);
+
+		List<CandidacyEntity> entities = query.getResultList();
+		for (CandidacyEntity c : entities) {
+			candidacies.add(new CandidacyProxy(c));
+		}
+		return candidacies;
 	}
 
 	@Override

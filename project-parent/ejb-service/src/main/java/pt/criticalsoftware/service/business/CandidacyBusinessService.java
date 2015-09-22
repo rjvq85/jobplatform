@@ -99,6 +99,22 @@ public class CandidacyBusinessService implements ICandidacyBusinessService {
 	@Override
 	public void updateMultipleAccepted(List<ICandidacy> acceptedCandidacies) {
 		persistence.updateMultipleAccepted(acceptedCandidacies);
+		
+	public List<ICandidacy> getCandidaciesByDatePeriod(LocalDate initDate,
+			LocalDate finalDate) {
+		return persistence.getCandidaciesByDatePeriod(initDate,finalDate);
+		
+	}
+
+	@Override
+	public List<ICandidacy> getCandidaciesByPosition(Integer positionID) {
+		return persistence.getCandidaciesByPosition(positionID);
+	}
+
+	@Override
+	public List<ICandidacy> getCandidaciesSpontaneousByDatePeriod(
+			LocalDate initDate, LocalDate finalDate) {
+		return persistence.getCandidaciesSpontaneousByDatePeriod(initDate,finalDate);
 	}
 	
 }

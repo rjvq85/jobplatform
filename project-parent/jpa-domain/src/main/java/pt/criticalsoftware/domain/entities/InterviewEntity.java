@@ -26,6 +26,7 @@ import pt.criticalsoftware.service.persistence.utils.LocalDatePersistenceConvert
 
 @NamedQueries({ @NamedQuery(name = "Interview.findAll", query = "select p from InterviewEntity p "),
 		@NamedQuery(name = "Interview.findByDate", query = "SELECT i from InterviewEntity i WHERE i.date = :param "),
+		@NamedQuery(name = "Interview.searchByPeriodDate", query = "SELECT c FROM InterviewEntity c WHERE c.date >= :initDate AND c.date <= :finalDate"),
 		@NamedQuery(name = "Interview.findById", query = "select p from InterviewEntity p where p.id = :interviewId "),
 		@NamedQuery(name = "Interview.findByInterviewer", query = "SELECT i FROM InterviewEntity i JOIN i.interviewers u WHERE u.id = :param"),
 		@NamedQuery(name = "Interview.availableInterviewers", query = "SELECT u FROM UserEntity u WHERE u NOT IN (SELECT DISTINCT elements(i.interviewers) FROM InterviewEntity i WHERE i.id = :param)"),

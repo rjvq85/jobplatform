@@ -1,47 +1,68 @@
 package pt.criticalsoftware.platform.report;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.annotation.PostConstruct;
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
+import org.primefaces.context.RequestContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+
+import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
+
 @Named
-@RequestScoped
-public class report {
+@SessionScoped
+public class Report implements Serializable {
 
-		private String[] selectedOptions;
-	    private List<String> options;
-	     
-	    @PostConstruct
-	    public void init() {
-	    	options = new ArrayList<String>();
-	    	options.add("Candidatos por período");
-	    	options.add("Candidatos por posição");
-	    	options.add("Candidaturas espôntaneas");
-	    	options.add("Candidatos rejeitados");
-	    	options.add("Resultados de entrevista");
-	    	options.add("Propostas apresentadas");
-	    	options.add("Tempo médio para primeira entrevista");
-	    	options.add("Tempo médio para primeira contratação");
-	    }
+	private static final long serialVersionUID = -7606230052846867853L;
 
-		public String[] getSelectedOptions() {
-			return selectedOptions;
-		}
+	private final Logger logger = LoggerFactory.getLogger(Report.class);
 
-		public void setSelectedOptions(String[] selectedOptions) {
-			this.selectedOptions = selectedOptions;
-		}
+	private void dialogShow(String dialogName){
+		Map<String,Object> options = new HashMap<String, Object>();
+		options.put("modal", true);
+		options.put("draggable", false);
+		options.put("resizable", true);
+		options.put("contentHeight", 690);
+		options.put("contentWith", 690);
+		RequestContext.getCurrentInstance().openDialog(dialogName, options, null);
+	}
 
-		public List<String> getOptions() {
-			return options;
-		}
+	public void reportByTime(){
+		dialogShow("viewReportCandidaciesByTime");
+	}
 
-		public void setOptions(List<String> options) {
-			this.options = options;
-		}
-	    
-	    
+	public void reportByPosition(){
+		dialogShow("viewReportCandidaciesByPosition");
+	}
+
+	public void reportCandidacie(){
+		dialogShow("viewReportCandidaciesSpontaneous");
+	}
+
+	public void reportNonAdmited(){
+		dialogShow("viewReportNonAdmited");
+
+	}	
+	public void reportInterviews(){
+		dialogShow("viewReportInterviews");
+
+	}
+
+	public void reportProposal(){
+		dialogShow("viewReportProposal");
+
+	}	
+
+	public void reportFirstInterview(){
+		dialogShow("viewReportFirstInterview");
+
+	}
+
+	public void reportFirstHiring(){
+		dialogShow("viewReportFirstHiring");
+
+	}
+
 }

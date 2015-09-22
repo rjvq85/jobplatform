@@ -24,11 +24,17 @@ public interface ICandidacyPersistenceService {
 
 	List<ICandidacy> searchManagerCandidaciesDate(LocalDate localDate, Integer id);
 
+	List<ICandidacy> getCandidaciesByDatePeriod(LocalDate initDate,LocalDate finalDate );
+
+	List<ICandidacy> getCandidaciesSpontaneousByDatePeriod(LocalDate initDate,LocalDate finalDate );
+	
 	ICandidacy update(ICandidacy entity);
 
 	void delete(ICandidacy candidacy);
 
 	List<IInterview> getInterviews(Integer id);
+	
+	List<ICandidacy> getCandidaciesByPosition(Integer positionID);
 
 	ICandidacy find(int id);
 

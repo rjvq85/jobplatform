@@ -14,10 +14,10 @@ import pt.criticalsoftware.service.persistence.IInterviewPersistenceService;
 
 @Stateless
 public class InterviewBusinessService implements IInterviewBusinessService {
-	
+
 	@EJB
 	private IInterviewPersistenceService persistence;
-	
+
 	@Override
 	public List<IInterview> getAllInterviews() {
 		return persistence.getAll();
@@ -64,9 +64,15 @@ public class InterviewBusinessService implements IInterviewBusinessService {
 	}
 
 	@Override
+	public List<IInterview> getInterviewsByDatePeriod(LocalDate dateInit,
+			LocalDate dateFinal) {	
+	return persistence.getInterviewsByDatePeriod(dateInit,dateFinal);
+	}
+	
+	@Override
 	public List<IInterview> getInterviewsByCandidate(ICandidate candidate) {
 		return persistence.getByCandidate(candidate);
 	}
-	
 
-}
+
+	}

@@ -15,6 +15,8 @@ public interface IInterviewBusinessService {
 	List<IInterview> getInterviewsByInterviewer(Integer id);
 
 	List<IInterview> getInterviewsByDate(LocalDate date);
+	
+	List<IInterview> getInterviewsByDatePeriod(LocalDate dateInit,LocalDate dateFinal);
 
 	List<IInterview> getInterviewsByDateAndInterviewer(LocalDate date, Object currentUserID);
 

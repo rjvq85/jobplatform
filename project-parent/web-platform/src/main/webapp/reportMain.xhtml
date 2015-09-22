@@ -14,11 +14,26 @@
 		<h2>Relatórios</h2>
 		<p></p>
 		<p:separator />
-		<p:selectManyCheckbox id="grid" value="#{report.selectedOptions}"
-			layout="grid" columns="1">
-			<f:selectItems value="#{report.options}" var="option"
-				itemLabel="#{option}" itemValue="#{option}" />
-		</p:selectManyCheckbox>
+		
+			<h:form id="reportForm">
+				<p:panel id="reportPanel">
+					<h:commandLink action="#{report.reportByTime()}" value="Candidatos por período de tempo" />
+					<br />
+					<h:commandLink action="#{report.reportByPosition()}" value="Candidatos por posição" />
+					<br />
+					<h:commandLink action="#{report.reportCandidacie()}" value="Candidaturas espontâneas" />
+					<br />
+					<h:commandLink action="#{report.reportNonAdmited()}" value="Candidatos rejeitados" />
+					<br />
+					<h:commandLink action="#{report.reportInterviews()}" value="Resultados das Entrevistas" />
+					<br />
+					<h:commandLink action="#{report.reportProposal()}" value="Propostas apresentadas" />
+					<br />
+					<h:commandLink action="#{report.reportFirstInterview()}" value="Tempo médio para primeira entrevista" />
+					<br />
+					<h:commandLink action="#{report.reportFirstHiring()}" value="Tempo médio para primeira contratação" />
+				</p:panel>
+			</h:form>
 	</div>
 </h:body>
 </html>

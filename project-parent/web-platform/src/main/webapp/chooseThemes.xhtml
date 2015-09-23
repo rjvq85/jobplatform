@@ -10,26 +10,28 @@
 
 		<div id="outBox">
 			<h:form id="chooseText">
-				<h:panelGrid columns="1" cellpadding="5">
-					<p:panel>
-						<h2>Texto de Apresentação da Empresa</h2>
-						<h:panelGrid columns="2" style="margin-bottom:10px"
-							cellpadding="5">
-							<p:outputLabel for="textChoose" value="Texto:" />
-							<p:selectOneMenu id="textChoose" value="#{textBean.selectedText}"
-								onchange="submit()" valueChangeListener="#{textBean.onChange}"
-								update="preview" style="width:125px">
-								<f:selectItems value="#{textBean.texts}" />
-							</p:selectOneMenu>
-						</h:panelGrid>
-					</p:panel>
-					<p:panel>
-						<h3>Visualizar texto</h3>
-						<p:panel id="preview">
-							<h:outputText id="textView" value="#{textBean.optionText}" />
+				<p:panel>
+					<h2>Texto de Apresentação da Empresa</h2>
+					<h:panelGrid columns="1" cellpadding="5">
+						<p:panel>
+							<h:panelGrid columns="2" cellpadding="5">
+								<p:outputLabel for="textChoose" value="Texto:" />
+								<p:selectOneMenu id="textChoose"
+									value="#{textBean.selectedText}" onchange="submit()"
+									valueChangeListener="#{textBean.onChange}" update="preview"
+									style="width:125px">
+									<f:selectItems value="#{textBean.texts}" />
+								</p:selectOneMenu>
+							</h:panelGrid>
 						</p:panel>
-					</p:panel>
-				</h:panelGrid>
+						<p:panel>
+							<h3>Visualizar texto</h3>
+							<p:panel id="preview">
+								<h:outputText id="textView" value="#{textBean.optionText}" />
+							</p:panel>
+						</p:panel>
+					</h:panelGrid>
+				</p:panel>
 			</h:form>
 			<h:form id="new">
 				<p:panel>
@@ -38,7 +40,7 @@
 							cellpadding="5">
 							<p:outputLabel for="newText"
 								value="Introduzir Novo Texto de Apresentação da Empresa:" />
-							<p:inputTextarea id="newText" rows="10" cols="40"
+							<p:inputTextarea id="newText" rows="5" cols="100"
 								value="#{textBean.newText}" />
 							<h:commandButton value="Ver" />
 						</h:panelGrid>
@@ -48,34 +50,28 @@
 			<h:form>
 				<p:panel>
 					<h2>Logotipo da Empresa</h2>
-					<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+					<h:panelGrid columns="3" style="margin-bottom:10px" cellpadding="5">
+						<p:outputLabel for="logoChoose" value="Logotipo:" />
+						<p:selectOneMenu id="logoChoose" value="#{styleBean.selectedLogo}"
+							onchange="submit()" valueChangeListener="#{textBean.onChange}"
+							update="preview" style="width:125px">
+							<f:selectItem itemLabel="Logo Cor" itemValue="logocritical" />
+							<f:selectItem itemLabel="Logo Preto/Branco"
+								itemValue="logocriticalbw" />
 
-						<h:panelGrid columns="2" style="margin-bottom:10px"
-							cellpadding="5">
-							<p:outputLabel for="logoChoose" value="Logotipo:" />
-							<p:selectOneMenu id="logoChoose"
-								value="#{styleBean.selectedLogo}" onchange="submit()"
-								valueChangeListener="#{textBean.onChange}" update="preview"
-								style="width:125px">
-								<f:selectItem itemLabel="Logo Cor" itemValue="logocritical" />
-								<f:selectItem itemLabel="Logo Preto/Branco"
-									itemValue="logocriticalbw" />
+							<p:ajax listener="#{styleBean.onChange}" update="logoId" />
+						</p:selectOneMenu>
 
-								<p:ajax listener="#{styleBean.onChange}" update="logoId" />
-							</p:selectOneMenu>
-
-							<h:graphicImage id="logoId"
-								styleClass="media-object media-maxheight fade-box"
-								library="imgs" name="#{styleBean.logoName}" />
-						</h:panelGrid>
-
+						<h:graphicImage id="logoId"
+							styleClass="media-object media-maxheight fade-box" library="imgs"
+							name="#{styleBean.logoName}" />
 					</h:panelGrid>
 				</p:panel>
 			</h:form>
 			<h:form>
 				<p:panel>
-					<h:panelGrid columns="1" style="margin-bottom:10px" cellpadding="5">
-						<h2>Cores de Fundo</h2>
+					<h2>Cores de Fundo</h2>
+					<h:panelGrid columns="3" cellpadding="5">
 						<h:panelGrid columns="2" style="margin-bottom:10px"
 							cellpadding="5">
 							<p:outputLabel for="themeChoose" value="Tema:" />

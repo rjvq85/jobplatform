@@ -4,38 +4,17 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:fc="http://java.sun.com/jsf/composite/fluttercode/component"
 	template="/WEB-INF/templates/template.xhtml">
 	<ui:define name="content">
 
-		<h:form>
-			<fc:presentationText>
-				<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
-					<p:outputLabel for="textChoose" value="Tema:" />
-					<p:selectOneMenu id="textChoose" value="#{textBean.selectedText}"
-						style="width:125px">
-						<f:selectItems value="#{textBean.texts}" />
-					</p:selectOneMenu>
-				</h:panelGrid>
-			</fc:presentationText>
-			<h:commandButton value="Aplicar" />
-		</h:form>
-		<h:form>
-			<fc:property>
-				<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
-					<p:outputLabel for="themeChoose" value="Tema:" />
-					<p:selectOneMenu id="themeChoose" value="#{styleBean.theme}"
-						style="width:125px">
-						<f:selectItems value="#{styleBean.themes}" />
-					</p:selectOneMenu>
-				</h:panelGrid>
-			</fc:property>
-			<h:commandButton value="Aplicar" />
-		</h:form>
-
 		<div id="outBox">
+		<h:graphicImage styleClass="media-object media-maxheight fade-box"
+				library="imgs" name="#{textBean.logoName}"/>
+			<p:panel>
+				<h:outputText value="#{textBean.selectedText}" />
+			</p:panel>
+			
 			<p:panel id="searchJobs">
-				<h:outputText value="#{textBean.optionText}" />
 				<h:form id="searchAreaAndLocale">
 					<p:panel id="searchPanel">
 						<h3 style="text-transform: uppercase; text-align: left;">Pesquisar

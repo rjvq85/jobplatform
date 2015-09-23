@@ -6,10 +6,13 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.ejb.EJB;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.enterprise.inject.Produces;
 import javax.inject.Named;
+
+import pt.criticalsoftware.service.business.IStyleBusinessService;
 
 @Named("styleBean")
 @SessionScoped
@@ -17,17 +20,19 @@ public class StyleBean implements Serializable {
 
 	private static final long serialVersionUID = -6536114841871506611L;
 
+	@EJB
+	IStyleBusinessService business;
+	
 	private String theme;
 
 	private Map<String, String> themeMap;
 
 	public StyleBean() {
-		//use a LinkedHashMap to retain order
+		
 		themeMap = new LinkedHashMap<String, String>();
-		// optionally read this list from a database
-
+		themeMap.put("Default", "jobs.css");
 		themeMap.put("Blue", "blue.css");
-		themeMap.put("Green", "green.css");
+		themeMap.put("Red", "red.css");
 	}
 	public Map<String, String> getThemeMap() {
 		return themeMap;
@@ -47,7 +52,11 @@ public class StyleBean implements Serializable {
 
 
 	public String getThemeCss() {
-		return themeMap.get(getTheme());
+		if(business.getSelectedTheme()==null)
+			return themeMap.get("Default");
+		else
+			return themeMap.get(business.getSelectedTheme());
+	
 	}
 
 

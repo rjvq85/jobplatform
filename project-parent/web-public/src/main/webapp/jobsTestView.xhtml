@@ -8,15 +8,15 @@
 	<ui:define name="content">
 
 		<div id="outBox">
-		<h:graphicImage styleClass="media-object media-maxheight fade-box"
-				library="imgs" name="#{textBean.logoName}"/>
+			<h:graphicImage styleClass="media-object media-maxheight fade-box"
+				library="imgs" name="#{textBean.logoName}" />
 			<p:panel>
 				<h:outputText value="#{textBean.selectedText}" />
 			</p:panel>
-			
-			<p:panel id="searchJobs">
+
+			<p:panelGrid  id="searchJobs" columns="2">
 				<h:form id="searchAreaAndLocale">
-					<p:panel id="searchPanel">
+					<div id="searchPanel">
 						<h3 style="text-transform: uppercase; text-align: left;">Pesquisar
 							Ofertas</h3>
 						<p:selectOneMenu id="jobTechnicalArea" required="true"
@@ -46,18 +46,15 @@
 						<p:commandButton type="submit" icon="ui-icon-search"
 							style="float:center; margin-top:24px;margin-left: 10px;"
 							action="#{jobs.search()}" />
-					</p:panel>
-				</h:form>
-				<h:form id="searchByRecentJobs">
-					<h:commandLink action="#{jobs.findByLast()}" value="Mais Recentes" />
+					</div>
 				</h:form>
 				<h:form id="candidady">
-					<p:panel id="candidacyPanel">
+					<div id="candidacyPanel">
 						<h3 style="text-transform: uppercase; text-align: left;">Candidaturas
 							Espontâneas</h3>
 						<br></br>
-						<a class="bigbutton" style="text-align: left; display: block;"
-							href="showJobs.html">
+						<a class="bigbutton" style="text-align: left; display: block; " 
+								href="showJobs.html">
 							<p>Na Critical acreditamos que as pessoas são o alicerce do
 								nosso sucesso pelo que pretendemos captar, reter e desenvolver
 								profissionais de excelência. A nossa Política de Gestão de RH
@@ -69,9 +66,13 @@
 							<p>Se partilhas o nosso entusiasmo pelas novas tecnologias
 								junta-te a nós.</p>
 						</a>
-					</p:panel>
+					</div>
 				</h:form>
-			</p:panel>
+			</p:panelGrid>
+			
+			<h:form id="searchByRecentJobs">
+				<h:commandLink action="#{jobs.findByLast()}" value="Mais Recentes" />
+			</h:form>
 
 			<p:panelGrid id="panelSearch" columns="2">
 				<h:form id="searchByLocale">

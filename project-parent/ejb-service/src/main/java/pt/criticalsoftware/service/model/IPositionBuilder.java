@@ -17,7 +17,7 @@ public interface IPositionBuilder {
 	IPositionBuilder state(PositionState state);
 	IPositionBuilder company(String company);
 	IPositionBuilder technicalArea(TechnicalAreaType technicalArea);
-	IPositionBuilder sla(String sla);
+	IPositionBuilder sla(Integer sla);
 	IPositionBuilder vacancies(Integer vacancies);
 	IPositionBuilder description(String description);
 	IPositionBuilder adChannels(Collection<String> adChannels);

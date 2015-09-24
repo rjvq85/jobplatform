@@ -74,7 +74,7 @@ public class PositionBuilder implements IPositionBuilder {
 	}
 
 	@Override
-	public IPositionBuilder sla(String sla) {
+	public IPositionBuilder sla(Integer sla) {
 		position.setSla(sla);		
 		return this;
 	}

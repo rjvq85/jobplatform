@@ -40,9 +40,9 @@ public interface IPosition {
 
 	void setTechnicalArea(TechnicalAreaType technicalArea);
 
-	String getSla();
+	Integer getSla();
 
-	void setSla(String sla);
+	void setSla(Integer sla);
 
 	String getDescription();
 

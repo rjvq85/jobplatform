@@ -78,7 +78,7 @@ public class PositionEntity {
 	private TechnicalAreaType technicalArea;
 
 	@Column(name = "sla", nullable = false)
-	private String sla;
+	private Integer sla;
 
 	@Column(name = "vagas", nullable = false)
 	private Integer vacancies;
@@ -169,11 +169,11 @@ public class PositionEntity {
 		this.technicalArea = technicalArea;
 	}
 
-	public String getSla() {
+	public Integer getSla() {
 		return sla;
 	}
 
-	public void setSla(String sla) {
+	public void setSla(Integer sla) {
 		this.sla = sla;
 	}
 

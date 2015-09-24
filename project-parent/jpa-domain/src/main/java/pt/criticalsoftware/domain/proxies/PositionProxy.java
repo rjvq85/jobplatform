@@ -114,12 +114,12 @@ public class PositionProxy implements IEntityAware<PositionEntity>, IPosition {
 	}
 
 	@Override
-	public String getSla() {
+	public Integer getSla() {
 		return position.getSla();
 	}
 
 	@Override
-	public void setSla(String sla) {
+	public void setSla(Integer sla) {
 		position.setSla(sla);
 	}
 

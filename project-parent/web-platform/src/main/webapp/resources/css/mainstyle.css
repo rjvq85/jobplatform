@@ -300,6 +300,10 @@ btnhovercolor.hover {
 	background-color: white !important;
 }
 
+.table-noheader th {
+	display: none;
+}
+
 /* Botões */
 .bbtn {
 	background-image: none !important;

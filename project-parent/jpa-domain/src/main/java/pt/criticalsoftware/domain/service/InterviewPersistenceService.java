@@ -177,4 +177,9 @@ public class InterviewPersistenceService implements IInterviewPersistenceService
 		}
 		return interviews;
 	}
+
+	@Override
+	public IInterview find(Integer id) {
+		return new InterviewProxy(em.find(InterviewEntity.class, id));
+	}
 }

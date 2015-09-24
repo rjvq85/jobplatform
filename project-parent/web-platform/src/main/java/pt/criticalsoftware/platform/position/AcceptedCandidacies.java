@@ -1,7 +1,7 @@
 package pt.criticalsoftware.platform.position;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -62,6 +62,7 @@ public class AcceptedCandidacies implements Serializable {
 		if (availableVacancies >= acceptedCandidacies.size()) {
 			position.setAcceptedCandidacies(acceptedCandidacies);
 			bness.update(position);
+			setHiringDate(acceptedCandidacies);
 			candidacyBness.updateMultipleAccepted(acceptedCandidacies);
 			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Candidatos guardados.", null);
 			FacesContext.getCurrentInstance().addMessage(null, msg);
@@ -144,6 +145,10 @@ public class AcceptedCandidacies implements Serializable {
 	
 	public Reason[] getReasons() {
 		return Reason.values();
+	}
+	
+	private void setHiringDate(List<ICandidacy> candidacies) {
+		candidacies.stream().forEach(candidacy -> candidacy.setHiringDate(LocalDate.now()));
 	}
 
 }

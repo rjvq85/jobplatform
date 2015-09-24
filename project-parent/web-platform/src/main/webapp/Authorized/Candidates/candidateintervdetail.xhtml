@@ -18,12 +18,28 @@
 	<ui:composition template="../Layout/layout.xhtml">
 		<ui:define name="content">
 			<h:panelGroup layout="block" class="container" id="container">
-				<p:dataTable value="#{interviewDetail.feedbacks}" var="fb">
-					<p:column>
-						<h:outputText value="#{fb.key}" />
+				<p:dataTable value="#{interviewDetail.interviewers}"
+					tableStyleClass="table-condensed newlabeled"
+					emptyMessage="Sem entrevistas..." styleClass="text-center" var="i" style="margin-top:5%;">
+					<p:column headerText="Entrevistador">
+						<h:outputText value="#{i.interviewer}" />
 					</p:column>
-					<p:column>
-						<h:outputText value="#{fb.value}" />
+					<p:column headerText="Questões" styleClass="table-noheader">
+						<p:dataTable value="#{i.questions}" var="q">
+							<p:column>
+								<h:outputText value="#{q}" />
+							</p:column>
+						</p:dataTable>
+					</p:column>
+					<p:column headerText="Respostas">
+						<p:dataTable value="#{i.answers}" var="a" styleClass="table-noheader">
+							<p:column>
+								<h:outputText value="#{a}" />
+							</p:column>
+						</p:dataTable>
+					</p:column>
+					<p:column headerText="Avaliação Final">
+						<h:outputText value="#{i.finalComment}" />
 					</p:column>
 				</p:dataTable>
 			</h:panelGroup>

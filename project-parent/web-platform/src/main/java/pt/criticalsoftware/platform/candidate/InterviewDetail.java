@@ -8,7 +8,6 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.ejb.EJB;
-import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import pt.criticalsoftware.service.business.IUserBusinessService;
@@ -21,7 +20,7 @@ import pt.criticalsoftware.service.scriptxml.XMLParser;
 @Named
 @SessionScoped
 public class InterviewDetail implements Serializable {
-	
+
 	/**
 	 * 
 	 */
@@ -29,15 +28,18 @@ public class InterviewDetail implements Serializable {
 
 	@EJB
 	private IUserBusinessService userBness;
-	
+
+	private List<InterviewerSet> interviewers;
+
 	private IInterview interview;
-	private Map<String,String> feedback;
+	private Map<String, String> feedback;
 
 	public IInterview getInterview() {
 		return interview;
 	}
 
 	public void setInterview(IInterview interview) {
+		interviewers = new ArrayList<>();
 		System.out.println("\n\n DEFINIU A ENTREVISTA: " + interview.getReference() + "\n\n");
 		this.interview = interview;
 		feedback = (null != feedback) ? feedback : new HashMap<>();
@@ -46,12 +48,15 @@ public class InterviewDetail implements Serializable {
 			ScriptListXML feedbacks = (ScriptListXML) parser.asXML(interview.getFeedback());
 			for (Map.Entry<Integer, ScriptXML> fb : feedbacks.getScripts().entrySet()) {
 				IUser u = userBness.getUserByID(fb.getKey());
-				StringBuilder sb = new StringBuilder();
+				String uName = u.getFirstName() + " " + u.getLastName();
+				InterviewerSet set = new InterviewerSet();
+				set.setInterviewer(uName);
 				for (Map.Entry<String, String> mEntry : fb.getValue().getQuestionsAndAnswers().entrySet()) {
-					sb.append("P: " + mEntry.getKey() + "\nR: " + mEntry.getValue() + "\n");
+					set.getQuestions().add(mEntry.getKey());
+					set.getAnswers().add(mEntry.getValue());
+					set.setFinalComment(fb.getValue().getFinalComment());
 				}
-				sb.append("\nAvaliação Final: " + fb.getValue().getFinalComment());
-				feedback.put(u.getFirstName() + " " + u.getLastName(), sb.toString());
+				interviewers.add(set);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -66,14 +71,66 @@ public class InterviewDetail implements Serializable {
 	public void setFeedback(Map<String, String> feedback) {
 		this.feedback = feedback;
 	}
-	
+
 	public List<Map.Entry<String, String>> getFeedbacks() {
 		Set<Map.Entry<String, String>> result = feedback.entrySet();
 		return new ArrayList<>(result);
 	}
-	
-	
-	
-	
+
+	public List<InterviewerSet> getInterviewers() {
+		return interviewers;
+	}
+
+	public void setInterviewers(List<InterviewerSet> interviewers) {
+		this.interviewers = interviewers;
+	}
+
+	public class InterviewerSet {
+		private String interviewer;
+		private List<String> questions;
+		private List<String> answers;
+		private String finalComment;
+
+		public InterviewerSet() {
+			interviewer = "";
+			questions = new ArrayList<>();
+			answers = new ArrayList<>();
+			finalComment = "";
+		}
+
+		public String getInterviewer() {
+			return interviewer;
+		}
+
+		public void setInterviewer(String interviewer) {
+			this.interviewer = interviewer;
+		}
+
+		public List<String> getQuestions() {
+			return questions;
+		}
+
+		public void setQuestions(List<String> questions) {
+			this.questions = questions;
+		}
+
+		public List<String> getAnswers() {
+			return answers;
+		}
+
+		public void setAnswers(List<String> answers) {
+			this.answers = answers;
+		}
+
+		public String getFinalComment() {
+			return finalComment;
+		}
+
+		public void setFinalComment(String finalComment) {
+			this.finalComment = finalComment;
+		}
+
+	}
+
 
 }

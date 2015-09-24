@@ -143,7 +143,7 @@ public class CandidacyProxy implements ICandidacy, IEntityAware<CandidacyEntity>
 			}
 		}
 	}
-	
+
 	@Override
 	public boolean equals(Object other) {
 		return (other != null && getClass() == other.getClass() && candidacy.getId() != null)
@@ -154,10 +154,20 @@ public class CandidacyProxy implements ICandidacy, IEntityAware<CandidacyEntity>
 	public int hashCode() {
 		return (candidacy.getId() != null) ? (getClass().hashCode() + candidacy.getId().hashCode()) : super.hashCode();
 	}
-	
+
 	@Override
 	public String toString() {
 		return String.valueOf(getId());
+	}
+
+	@Override
+	public LocalDate getHiringDate() {
+		return candidacy.getHiringDate();
+	}
+
+	@Override
+	public void setHiringDate(LocalDate hiringDate) {
+		candidacy.setHiringDate(hiringDate);
 	}
 
 }

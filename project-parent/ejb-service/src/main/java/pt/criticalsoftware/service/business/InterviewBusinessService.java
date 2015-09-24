@@ -74,5 +74,10 @@ public class InterviewBusinessService implements IInterviewBusinessService {
 		return persistence.getByCandidate(candidate);
 	}
 
+	@Override
+	public IInterview getInterviewsById(Integer id) {
+		return persistence.find(id);
+	}
+
 
 	}

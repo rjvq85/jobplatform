@@ -32,5 +32,7 @@ public interface IInterviewBusinessService {
 
 	List<IInterview> getInterviewsByCandidate(ICandidate candidate);
 
+	IInterview getInterviewsById(Integer id);
+
 
 }

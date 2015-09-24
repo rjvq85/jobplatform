@@ -6,8 +6,9 @@ import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 
 import pt.criticalsoftware.rest.resources.Candidate;
+import pt.criticalsoftware.rest.resources.Interview;
 
-@ApplicationPath("/api")
+@ApplicationPath("/v1")
 public class RestApplication extends Application {
 	
 	
@@ -22,6 +23,7 @@ public class RestApplication extends Application {
 	private void addRestResourceClasses(Set<Class<?>> resources) {
 		// resources.add(Users.class);
 		resources.add(Candidate.class);
+		resources.add(Interview.class);
 	}
 
 

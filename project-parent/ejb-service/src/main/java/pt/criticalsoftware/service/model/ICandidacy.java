@@ -46,4 +46,8 @@ public interface ICandidacy {
 
 	void setRejectionReason(Reason rejectionReason);
 
+	LocalDate getHiringDate();
+
+	void setHiringDate(LocalDate hiringDate);
+
 }

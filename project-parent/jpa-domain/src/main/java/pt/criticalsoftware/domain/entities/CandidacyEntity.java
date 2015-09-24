@@ -56,6 +56,10 @@ public class CandidacyEntity {
 	@Convert(converter = LocalDatePersistenceConverter.class)
 	@Column(name = "data_candidatura")
 	private LocalDate date;
+	
+	@Convert(converter = LocalDatePersistenceConverter.class)
+	@Column(name = "data_contratacao")
+	private LocalDate hiringDate;
 
 	@Enumerated(EnumType.STRING)
 	@Column(name = "estado_candidatura", nullable = false)
@@ -177,6 +181,14 @@ public class CandidacyEntity {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+
+	public LocalDate getHiringDate() {
+		return hiringDate;
+	}
+
+	public void setHiringDate(LocalDate hiringDate) {
+		this.hiringDate = hiringDate;
 	}
 
 

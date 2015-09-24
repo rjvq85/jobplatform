@@ -35,4 +35,6 @@ public interface IInterviewPersistenceService {
 	List<IScript> getAvailableScripts(Integer id);
 
 	List<IInterview> getByCandidate(ICandidate candidate);
+
+	IInterview find(Integer id);
 }

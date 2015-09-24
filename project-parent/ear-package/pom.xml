@@ -81,7 +81,7 @@
 						<webModule>
 							<groupId>pt.criticalsoftware.jobs.platform</groupId>
 							<artifactId>ws-rest</artifactId>
-							<contextRoot>/rest</contextRoot>
+							<contextRoot>/api</contextRoot>
 						</webModule>
 					</modules>
 				</configuration>

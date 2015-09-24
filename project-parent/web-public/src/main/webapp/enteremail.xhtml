@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+<h:head>
+	<meta charset="utf-8" />
+	<h:outputScript library="js" name="jquery-2.1.4.min.js" />
+	<h:outputScript library="js" name="bootstrap.js" />
+	<h:outputScript library="js" name="tablepagination.js" />
+	<h:outputStylesheet library="css" name="register.css" />
+	<h:outputStylesheet library="css" name="bootstrap.css" />
+	<title>Registo de Candidato</title>
+</h:head>
+<h:body>
+	<h:panelGroup layout="block" styleClass="container">
+		<h:panelGroup layout="block" styleClass="jumbotron">
+			<h1>Não se lembra da password?</h1>
+			<p>Introduza o e-mail utilizado para registo no nosso site e
+				poderá criar uma password nova.</p>
+			<h:panelGroup layout="block" styleClass="container" id="container">
+				<h:form prependId="false" id="sendemailform">
+					<h:panelGroup layout="block" styleClass="row">
+						<h:panelGroup layout="block" styleClass="col-md-offset-4 col-md-4 text-center">
+							<h:inputText value="#{resetPassword.originalEmail}"
+								a:placeholder="E-mail" styleClass="form-control" style="border-radius:0;"/>
+						</h:panelGroup>
+					</h:panelGroup>
+					<h:panelGroup layout="block" styleClass="spacer"/>
+					<h:panelGroup layout="block" styleClass="row">
+						<h:panelGroup layout="block" styleClass="col-md-offset-4 col-md-4 text-center">
+							<h:commandButton action="#{resetPassword.sendEmail()}"
+								value="Confirmar" styleClass="btn btn-success" style="border-radius:0; width:100%;">
+								<p:ajax update=":container" process="sendemailform"></p:ajax>
+							</h:commandButton>
+						</h:panelGroup>
+					</h:panelGroup>
+					<h:panelGroup layout="block" styleClass="row">
+						<h:panelGroup layout="block" styleClass="col-md-12 text-center">
+							<h:messages id="editglobalmsgs" globalOnly="true"
+								infoClass="alert alert-success" fatalClass="alert errormsg"
+								errorClass="alert errormsg" warnClass="alert errormsg"
+								style="list-style-type: none; border-radius:0px !important;" />
+						</h:panelGroup>
+					</h:panelGroup>
+				</h:form>
+			</h:panelGroup>
+		</h:panelGroup>
+	</h:panelGroup>
+</h:body>
+</html>

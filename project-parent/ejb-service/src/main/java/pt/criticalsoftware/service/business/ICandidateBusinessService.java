@@ -10,4 +10,10 @@ public interface ICandidateBusinessService {
 
 	ICandidate addCandidate(ICandidate candidate);
 
+	ICandidate getCandidateByEmail(String email);
+
+	void updateCandidate(ICandidate candidate);
+
+	void updatePassword(String password, ICandidate candidate);
+
 }

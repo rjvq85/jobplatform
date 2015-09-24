@@ -10,4 +10,8 @@ public interface ICandidatePersistenceService {
 
 	ICandidate create(ICandidate candidate);
 
+	ICandidate findByEmail(String email);
+
+	void update(ICandidate candidate);
+
 }

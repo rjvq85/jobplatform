@@ -19,4 +19,6 @@ public interface IMailSender {
 
 	void sendEmail(IInterview createdInterview, List<IUser> interviewers, String path);
 
+	void sendResetPasswordEmail(String path, String email, String token) throws EmailException;
+
 }

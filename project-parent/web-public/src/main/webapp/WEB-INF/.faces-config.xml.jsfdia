@@ -28,4 +28,37 @@
   SHAPE="448,17,0,0" model-entity="JSFProcessGroup"/>
  <PROCESS-ITEM NAME="rules:#jobs.xhtml" PATH="/jobs.xhtml"
   SHAPE="464,161,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#confirmreset.xhtml"
+  PATH="/confirmreset.xhtml" SHAPE="240,209,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#confirmreset.xhtml:0" NAME="item"
+   PATH="/confirmreset.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="afterreset::#jobs.xhtml" NAME="output"
+    PATH="/jobs.xhtml" TARGET="rules:#jobs.xhtml" TITLE="afterreset" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#resetpassword.xhtml"
+  PATH="/resetpassword.xhtml" SHAPE="32,161,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#resetpassword.xhtml:0" NAME="item"
+   PATH="/resetpassword.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="passwordreset::#confirmreset.xhtml"
+    NAME="output" PATH="/confirmreset.xhtml"
+    TARGET="rules:#confirmreset.xhtml" TITLE="passwordreset" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+  <PROCESS-ITEM ID="rules:#resetpassword.xhtml:1" NAME="item1"
+   PATH="/resetpassword.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="invalidtoken::#jobs.xhtml" NAME="output"
+    PATH="/jobs.xhtml" TARGET="rules:#jobs.xhtml" TITLE="invalidtoken" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#logindlg.xhtml" PATH="/logindlg.xhtml"
+  SHAPE="32,273,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#logindlg.xhtml:0" NAME="item"
+   PATH="/logindlg.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="forgotpassword::#enteremail.xhtml"
+    NAME="output" PATH="/enteremail.xhtml"
+    TARGET="rules:#enteremail.xhtml" TITLE="forgotpassword" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#enteremail.xhtml" PATH="/enteremail.xhtml"
+  SHAPE="240,289,0,0" model-entity="JSFProcessGroup"/>
 </PROCESS>

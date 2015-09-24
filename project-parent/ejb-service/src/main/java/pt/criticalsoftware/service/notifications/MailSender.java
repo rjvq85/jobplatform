@@ -134,7 +134,6 @@ public class MailSender implements IMailSender {
 
 	@Override
 	public void sendEmail(IInterview createdInterview, List<IUser> interviewers, String path) {
-		logger.warn("ENTROU PARA ENVIAR MAIL DA ENTREVISTA");
 		String[] addresses = new String[interviewers.size()];
 		for (int i = 0; i < addresses.length; i++) {
 			addresses[i] = interviewers.get(i).getEmail();
@@ -166,6 +165,25 @@ public class MailSender implements IMailSender {
 			return null;
 		}
 	}
+	
+	@Override
+	public void sendResetPasswordEmail(String path, String email, String token) {
+		try {
+			this.email.addTo(email);
+			String subject = "Alterar password da conta";
+			String msg = "Foi feito um pedido para alterar a password para a conta associada a este e-mail.\n"
+					+ "Se não fez este pedido, por favor ignore este e-mail.\n"
+					+ "\nCaso contrário, clique neste link: " + path + "/resetpassword.xhtml?token=" + token + "\n\n"
+							+ "Obrigado.";
+			this.email.setSubject(subject);
+			this.email.setMsg(msg);
+			this.email.send();
+		} catch (EmailException e) {
+			logger.error("Erro ao enviar notificação por e-mail: Password Reset - "
+					+ email);
+			e.printStackTrace();
+		}
+	}
 
 	private Email setDetails(String subject, String receiver, String msg) {
 		return mailProp.setSubject(subject).setReceiver(receiver).setMsg(msg).getEmail();
@@ -181,6 +199,7 @@ public class MailSender implements IMailSender {
 			this.description = d;
 		}
 
+		@SuppressWarnings("unused")
 		public String getDescription() {
 			return description;
 		}

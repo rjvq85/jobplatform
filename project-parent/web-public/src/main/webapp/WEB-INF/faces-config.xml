@@ -30,4 +30,36 @@
 			<redirect />
 		</navigation-case>
 	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/confirmreset.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>afterreset</from-outcome>
+			<to-view-id>/jobs.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/resetpassword.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>passwordreset</from-outcome>
+			<to-view-id>/confirmreset.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/resetpassword.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>invalidtoken</from-outcome>
+			<to-view-id>/jobs.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/logindlg.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>forgotpassword</from-outcome>
+			<to-view-id>/enteremail.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
 </faces-config>

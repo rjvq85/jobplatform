@@ -1,5 +1,7 @@
 package pt.criticalsoftware.domain.service;
 
+import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -38,6 +40,17 @@ public class CandidatePersistenceService implements ICandidatePersistenceService
 	}
 
 	@Override
+	public ICandidate findByEmail(String email) {
+		TypedQuery<CandidateEntity> query = em.createNamedQuery("Candidate.findByEmail",CandidateEntity.class)
+				.setParameter("param", email);
+		List<CandidateEntity> candidates = query.getResultList();
+		if (candidates.size() == 1) {
+			return new CandidateProxy(candidates.get(0));
+		}
+		return null;
+	}
+
+	@Override
 	public ICandidate create(ICandidate candidate) {
 		try {
 			CandidateEntity entity = getEntity(candidate);
@@ -55,5 +68,17 @@ public class CandidatePersistenceService implements ICandidatePersistenceService
 		}
 		throw new IllegalStateException();
 	}
+
+	@Override
+	public void update(ICandidate candidate) {
+		CandidateEntity entity;
+		try {
+			entity = getEntity(candidate);
+			em.merge(entity);
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		}
+	}
+
 
 }

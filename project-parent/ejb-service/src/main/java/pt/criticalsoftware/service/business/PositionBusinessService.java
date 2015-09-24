@@ -46,7 +46,7 @@ public class PositionBusinessService implements IPositionBusinessService {
 
 	@Override
 	public IPosition createPosition(LocalDate openDate, Date closeDate, String title, String locale,
-			PositionState state, String company, TechnicalAreaType technicalArea, String sla, Integer vacancies,
+			PositionState state, String company, TechnicalAreaType technicalArea, Integer sla, Integer vacancies,
 			IUser responsable, String description, Collection<String> adChannels) throws DuplicateReferenceException {
 
 		IPosition position = positionBuilder.closeDate(closeDate).company(company).description(description)

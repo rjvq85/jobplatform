@@ -54,7 +54,8 @@ public class NewPosition {
 	private String company;
 	private String technicalAreaStr;
 	private TechnicalAreaType technicalArea;
-	private String sla;
+
+	private Integer sla;
 	private Integer vacancies;
 	private String responsableName;
 	private IUser responsable;
@@ -112,7 +113,14 @@ public class NewPosition {
 		this.openDate = LocalDate.now();
 	}
 
+	public void onChange(){
+		closeDate=currentDate(sla);
+	}
 	public Date getCloseDate() {
+		//		if(sla==null)
+		//		return closeDate;
+		//		else
+		//			return closeDate=currentDate(sla);
 		return closeDate;
 	}
 
@@ -177,14 +185,14 @@ public class NewPosition {
 			this.technicalArea = TechnicalAreaType.INTEGRATION;
 	}
 
-	public String getSla() {
+
+	public Integer getSla() {
 		return sla;
 	}
 
-	public void setSla(String sla) {
+	public void setSla(Integer sla) {
 		this.sla = sla;
 	}
-
 	public Integer getVacancies() {
 		return vacancies;
 	}
@@ -235,7 +243,6 @@ public class NewPosition {
 	public void createPosition() {
 		try {
 			setOpenDate();
-			logger.info("Id" + this.responsable.getId());
 			IPosition newPosition = positionService.createPosition(this.openDate, this.closeDate, this.title,
 					this.locale, this.state, this.company, this.technicalArea, this.sla, this.vacancies,
 					this.responsable, this.description, this.adChannels);
@@ -248,27 +255,37 @@ public class NewPosition {
 			FacesContext.getCurrentInstance().addMessage(null, message);
 		}
 	}
-	
+
 	public void doNothing() {
 		//
 	}
-	
+
 	private void clear() {
-		  openDate = null;
-		  closeDate = null;
-		  title = null;
-		  locale = null;
-		  state = null;
-		  stateStr = null;
-		  company = null;
-		  technicalAreaStr = null;
-		  technicalArea = null;
-		  sla = null;
-		  vacancies = null;
-		  description = null;
-		  selectedResponsable = null;
+		openDate = null;
+		closeDate = null;
+		title = null;
+		locale = null;
+		state = null;
+		stateStr = null;
+		company = null;
+		technicalAreaStr = null;
+		technicalArea = null;
+		sla = null;
+		vacancies = null;
+		description = null;
+		selectedResponsable = null;
 	}
-	
+
+	public Date currentDate(Integer sla) {
+		try {
+			String lDate = LocalDate.now().plusDays(sla).format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+			DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+			return df.parse(lDate);
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 	public Date currentDate() {
 		try {
 			String lDate = LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
@@ -279,7 +296,6 @@ public class NewPosition {
 			return null;
 		}
 	}
-
 	public List<IUser> getResponsables() {
 		return (null == responsables) ? userService.getAllUsersByRole(Role.GESTOR) : responsables;
 	}

@@ -15,7 +15,7 @@ public class PositionDTO {
 	private PositionState state;
 	private String company;
 	private String technicalArea;
-	private String sla;
+	private Integer sla;
 	private Integer vacancies;
 	private String description;
 	
@@ -73,10 +73,10 @@ public class PositionDTO {
 	public void setTechnicalArea(String technicalArea) {
 		this.technicalArea = technicalArea;
 	}
-	public String getSla() {
+	public Integer getSla() {
 		return sla;
 	}
-	public void setSla(String sla) {
+	public void setSla(Integer sla) {
 		this.sla = sla;
 	}
 	public Integer getVacancies() {

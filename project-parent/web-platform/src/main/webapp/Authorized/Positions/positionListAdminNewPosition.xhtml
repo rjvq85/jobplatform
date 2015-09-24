@@ -47,10 +47,18 @@
 						<f:selectItem itemLabel="Integration" itemValue="Integration" />
 					</p:selectOneMenu>
 
-					<p:outputLabel value="SLA" for="positionSla" />
-					<p:inputText id="positionSla" required="true" requiredMessage="SLA"
-						size="30" value="#{newPosition.sla}" />
+					<p:outputLabel value="SLA(número de dias para fechar a vaga)"
+						for="positionSla" />
+					<p:spinner id="positionSla" value="#{newPosition.sla}"
+						required="true" min="1" max="200">
+						<p:ajax listener="#{newPosition.onChange}"
+							update="positionCloseDate" />
+					</p:spinner>
 
+					<p:outputLabel value="Data Fecho" />
+					<p:calendar pattern="dd/MM/yyyy" mask="99.99.9999" disabled="true"
+						id="positionCloseDate" mindate="#{newPosition.currentDate()}"
+						size="30" value="#{newPosition.closeDate}" />
 
 					<p:outputLabel value="Número de vagas" for="positionVacancies" />
 					<p:spinner id="positionVacancies" value="#{newPosition.vacancies}"
@@ -64,7 +72,8 @@
 
 					<p:outputLabel value="Responsável" for="positionResponsable" />
 					<h:selectOneMenu id="positionResponsable"
-						value="#{newPosition.selectedResponsable}" styleClass="btn btn-info" style="height:30px;">
+						value="#{newPosition.selectedResponsable}"
+						styleClass="btn btn-info" style="height:30px;">
 						<f:selectItems value="#{newPosition.responsables}" var="resp"
 							itemLabel="#{resp.firstName} #{resp.lastName}"
 							itemValue="#{resp.id}" />
@@ -74,12 +83,6 @@
 					<p:inputText id="positionDescription" required="true"
 						requiredMessage="descrição" size="30"
 						value="#{newPosition.description}" />
-
-
-					<p:outputLabel value="Data Fecho" />
-					<p:calendar pattern="dd/MM/yyyy" mask="99.99.9999" navigator="true"
-						id="positionCloseDate" required="true" mindate="#{newPosition.currentDate()}" size="30"
-						value="#{newPosition.closeDate}"/>
 
 					<p:outputLabel value="Canais Divulgação" for="positionAdChannels" />
 					<p:selectManyCheckbox id="positionAdChannels" width="30"
@@ -93,7 +96,8 @@
 					onclick="PF('dialogNewPosition').hide(); return false;"
 					icon="ui-icon-cancel"></p:button>
 
-				<p:commandButton id="createbtn" value="Criar" type="submit" styleClass="btn btn-success"
+				<p:commandButton id="createbtn" value="Criar" type="submit"
+					styleClass="btn btn-success"
 					style="width:100px; margin-right:auto; margin-left:10px; margin-top:15px; border-radius:0;"
 					action="#{newPosition.createPosition()}"
 					oncomplete="if (!args.validationFailed)PF('dialogNewPosition').hide()"

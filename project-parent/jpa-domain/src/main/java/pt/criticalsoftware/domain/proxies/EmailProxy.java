@@ -1,20 +1,21 @@
 package pt.criticalsoftware.domain.proxies;
 
+
 import pt.criticalsoftware.domain.entities.EmailEntity;
 import pt.criticalsoftware.service.model.IEmail;
 
 public class EmailProxy implements IEntityAware<EmailEntity>, IEmail {
-	
+
 	private EmailEntity email;
-	
+
 	public EmailProxy() {
 		this(null);
 	}
-	
+
 	public EmailProxy(EmailEntity entity) {
 		email = (null != entity) ? entity : new EmailEntity();
 	}
-	
+
 	@Override
 	public String getHostName() {
 		return email.getHostName();
@@ -84,7 +85,7 @@ public class EmailProxy implements IEntityAware<EmailEntity>, IEmail {
 	public EmailEntity getEntity() {
 		return email;
 	}
-	
+
 	@Override
 	public Boolean getActive() {
 		return email.getActive();
@@ -94,21 +95,21 @@ public class EmailProxy implements IEntityAware<EmailEntity>, IEmail {
 	public void setActive(Boolean active) {
 		email.setActive(active);
 	}
-	
-	@Override
-    public boolean equals(Object other) {
-        return (other != null && getClass() == other.getClass() && email.getId() != null)
-            ? email.getId().equals(((EmailProxy) other).getId())
-            : (other == this);
-    }
 
-    @Override
-    public int hashCode() {
-        return (email.getId() != null) 
-            ? (getClass().hashCode() + email.getId().hashCode())
-            : super.hashCode();
-    }
-	
-	
+	@Override
+	public boolean equals(Object other) {
+		return (other != null && getClass() == other.getClass() && email.getId() != null)
+				? email.getId().equals(((EmailProxy) other).getId()) : (other == this);
+	}
+
+	@Override
+	public int hashCode() {
+		return (email.getId() != null) ? (getClass().hashCode() + email.getId().hashCode()) : super.hashCode();
+	}
+
+	@Override
+	public String toString() {
+		return String.valueOf(getId());
+	}
 
 }

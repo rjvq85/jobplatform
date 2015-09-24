@@ -1,7 +1,5 @@
 package pt.criticalsoftware.publicplatform.access;
 
-import java.time.LocalDate;
-
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
@@ -33,7 +31,7 @@ public class ResetPassword {
 	private String password;
 	private String email;
 	private String originalEmail;
-
+	private IToken itoken;
 	private String token;
 
 	public String getToken() {
@@ -52,16 +50,13 @@ public class ResetPassword {
 		this.password = password;
 	}
 
-	public void defineCandidate() {
-		IToken tk = tokenBness.getToken(token);
-		if (null != tk.getExpiringDate()) {
-			if (LocalDate.now().isBefore(tk.getExpiringDate())) {
-				email = tk.getEmail();
-				candidate = candidateBness.getCandidateByEmail(email);
-			}
-		} else {
-			candidate = null;
-		}
+	public String defineCandidate() {
+		itoken = tokenBness.getToken(token);
+		if (null != itoken) {
+			email = itoken.getEmail();
+			candidate = candidateBness.getCandidateByEmail(email);
+			return null;
+		} else return "tokenerror.xhtml?faces-redirect=true";
 	}
 
 	public String reset() {
@@ -124,7 +119,8 @@ public class ResetPassword {
 		IToken tk = tokenBness.getToken(token);
 		if (null == tk) {
 			return false;
-		} else return true;
+		} else
+			return true;
 	}
 
 	private String getPath() {
@@ -141,6 +137,14 @@ public class ResetPassword {
 
 	public void setCandidate(ICandidate candidate) {
 		this.candidate = candidate;
+	}
+
+	public IToken getItoken() {
+		return itoken;
+	}
+
+	public void setItoken(IToken itoken) {
+		this.itoken = itoken;
 	}
 
 }

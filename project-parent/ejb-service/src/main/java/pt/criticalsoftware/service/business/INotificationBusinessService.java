@@ -13,4 +13,6 @@ public interface INotificationBusinessService {
 
 	void createNotification(String description, List<IUser> interviewers, String text);
 
+	INotification getNotification(int id);
+
 }

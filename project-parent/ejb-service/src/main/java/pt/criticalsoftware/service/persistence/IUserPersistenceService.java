@@ -26,6 +26,8 @@ public interface IUserPersistenceService {
 	List<IUser> getAll();
 
 	void delete(IUser user);
+
+	void update(IUser user);
 		
 
 }

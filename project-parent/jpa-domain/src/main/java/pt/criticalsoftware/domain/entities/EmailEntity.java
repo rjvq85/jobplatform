@@ -12,7 +12,9 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "email")
 @NamedQueries({ @NamedQuery(name = "Email.getActive", query = "SELECT e FROM EmailEntity e WHERE e.active is TRUE"),
-		@NamedQuery(name = "Email.areActive", query = "SELECT COUNT(e) FROM EmailEntity e WHERE e.active is TRUE") })
+		@NamedQuery(name = "Email.areActive", query = "SELECT COUNT(e) FROM EmailEntity e WHERE e.active is TRUE"),
+		@NamedQuery(name = "Email.getAll", query = "SELECT e FROM EmailEntity e"),
+		@NamedQuery(name = "Email.getInactive", query = "SELECT e FROM EmailEntity e WHERE e.active is FALSE") })
 public class EmailEntity {
 
 	@Id

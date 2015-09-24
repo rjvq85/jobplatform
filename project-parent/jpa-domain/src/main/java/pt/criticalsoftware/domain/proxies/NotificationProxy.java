@@ -71,5 +71,10 @@ public class NotificationProxy implements IEntityAware<NotificationEntity>, INot
 	public Integer getId() {
 		return notification.getId();
 	}
+	
+	@Override
+	public String toString() {
+		return String.valueOf(getId());
+	}
 
 }

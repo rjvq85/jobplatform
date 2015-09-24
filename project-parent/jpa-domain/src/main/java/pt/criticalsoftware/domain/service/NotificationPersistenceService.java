@@ -61,4 +61,9 @@ public class NotificationPersistenceService implements INotificationPersistenceS
 		return notifications;
 	}
 
+	@Override
+	public INotification findById(int id) {
+		return new NotificationProxy(em.find(NotificationEntity.class, id));
+	}
+
 }

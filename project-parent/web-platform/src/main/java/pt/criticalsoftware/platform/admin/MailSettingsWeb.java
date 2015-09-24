@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -12,7 +13,6 @@ import java.util.concurrent.TimeUnit;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
-import javax.faces.application.FacesMessage.Severity;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
@@ -23,6 +23,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import pt.criticalsoftware.service.business.IEmailBusinessService;
+import pt.criticalsoftware.service.business.INotificationBusinessService;
 import pt.criticalsoftware.service.model.IEmail;
 import pt.criticalsoftware.service.model.IEmailBuilder;
 
@@ -36,6 +37,8 @@ public class MailSettingsWeb {
 	private IEmailBusinessService business;
 	@EJB
 	private IEmailBuilder builder;
+	@EJB
+	private INotificationBusinessService notifBness;
 
 	private String hostname;
 	private Integer smtpPort;
@@ -45,6 +48,10 @@ public class MailSettingsWeb {
 	private Boolean startTLS;
 	private Boolean active;
 	private Boolean testResult;
+
+	private List<IEmail> existingSettings;
+	private IEmail selectedEmailSettings;
+	private IEmail activeSettings;
 
 	public void newSettings() {
 		RequestContext request = RequestContext.getCurrentInstance();
@@ -66,6 +73,19 @@ public class MailSettingsWeb {
 			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao guardar novas definições", null);
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 			request.addCallbackParam("saved", false);
+		}
+	}
+	
+	public void chooseSettings() {
+		try {
+			selectedEmailSettings.setActive(true);
+			business.updateSettings(selectedEmailSettings);
+			RequestContext.getCurrentInstance().addCallbackParam("chosen", true);
+		} catch (Exception e) {
+			e.printStackTrace();
+			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR,"Ocorreu um erro.",null);
+			FacesContext.getCurrentInstance().addMessage(null, msg);
+			RequestContext.getCurrentInstance().addCallbackParam("chosen", false);
 		}
 	}
 
@@ -169,7 +189,7 @@ public class MailSettingsWeb {
 					} else {
 						msg.setSeverity(FacesMessage.SEVERITY_ERROR);
 						msg.setSummary("Erro");
-						msg.setDetail("Problema em verificar 'hostname: "+hostname+"'");
+						msg.setDetail("Problema em verificar 'hostname: " + hostname + "'");
 						Thread.sleep(6000);
 					}
 				} catch (IOException | InvalidKeyException | NoSuchAlgorithmException | InvalidKeySpecException e) {
@@ -191,6 +211,30 @@ public class MailSettingsWeb {
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 			return false;
 		}
+	}
+
+	public List<IEmail> getExistingSettings() {
+		return business.getInactive();
+	}
+
+	public void setExistingSettings(List<IEmail> existingSettings) {
+		this.existingSettings = existingSettings;
+	}
+
+	public IEmail getSelectedEmailSettings() {
+		return selectedEmailSettings;
+	}
+
+	public void setSelectedEmailSettings(IEmail selectedEmailSettings) {
+		this.selectedEmailSettings = selectedEmailSettings;
+	}
+
+	public IEmail getActiveSettings() {
+		return business.getActive();
+	}
+
+	public void setActiveSettings(IEmail activeSettings) {
+		this.activeSettings = activeSettings;
 	}
 
 }

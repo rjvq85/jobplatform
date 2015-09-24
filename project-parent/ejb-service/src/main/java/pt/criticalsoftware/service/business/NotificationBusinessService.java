@@ -37,4 +37,9 @@ public class NotificationBusinessService implements INotificationBusinessService
 				.add(builder.date().receptor(interviewer).situation(description).text(text).build()));
 	}
 
+	@Override
+	public INotification getNotification(int id) {
+		return persistence.findById(id);
+	}
+
 }

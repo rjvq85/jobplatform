@@ -51,8 +51,6 @@ public class CandidateBusinessService implements ICandidateBusinessService {
 			byte byteData[] = md.digest();
 			byte[] data2 = Base64.encode(byteData);
 			String securedPassword = new String(data2);
-			System.out.println(password);
-			System.out.println(candidate);
 			candidate.setPassword(securedPassword);
 			updateCandidate(candidate);
 		} catch (NoSuchAlgorithmException e) {

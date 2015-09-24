@@ -25,5 +25,7 @@ public interface IUserBusinessService {
 
 	void delUser(IUser user);
 
+	void changePassword(String newPassword, IUser user);
+
 
 }

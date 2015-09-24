@@ -1,6 +1,5 @@
 package pt.criticalsoftware.service.model;
 
-import java.util.AbstractMap.SimpleEntry;
 
 public interface IEmail {
 

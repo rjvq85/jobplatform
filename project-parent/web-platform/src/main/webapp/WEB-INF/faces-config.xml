@@ -83,4 +83,12 @@
 			<redirect />
 		</navigation-case>
 	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/Authorized/Users/userprofileerror.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>usererror</from-outcome>
+			<to-view-id>/Authorized/index.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
 </faces-config>

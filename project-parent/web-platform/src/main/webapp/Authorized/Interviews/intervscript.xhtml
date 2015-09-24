@@ -23,21 +23,20 @@
 			header="Adicionar/Alterar Guião">
 			<h:panelGroup layout="block" styleClass="container-small">
 				<h:panelGroup layout="block" styleClass="row">
-					<h:panelGroup layout="block" styleClass="col-md-offset-3 col-md-6 text-center">
+					<h:panelGroup layout="block"
+						styleClass="col-md-offset-3 col-md-6 text-center">
 						<h:panelGroup id="iscptformgroup" layout="block"
 							styleClass="form-group">
 							<h:message for="iscpt" />
 							<h:panelGroup layout="block" styleClass="form-group">
 								<h:selectOneMenu styleClass="form-control btn-success"
-									id="iscpt"
+									style="height:40px;" id="iscpt"
 									value="#{interviewListView.newScript}"
-									converter="#{scriptConverter}" style="height:40px;">
-									<f:selectItem
-										itemLabel="Seleccione um dos guiões disponíveis"
+									converter="#{scriptConverter}">
+									<f:selectItem itemLabel="Seleccione um dos guiões disponíveis"
 										itemDisabled="true" noSelectionOption="true" />
-									<f:selectItems
-										value="#{interviewListView.availableScripts}" var="s"
-										itemValue="#{s}" itemLabel="S#{s.id} - #{s.title}" />
+									<f:selectItems value="#{interviewListView.availableScripts}"
+										var="s" itemValue="#{s}" itemLabel="S#{s.id} - #{s.title}" />
 								</h:selectOneMenu>
 							</h:panelGroup>
 						</h:panelGroup>

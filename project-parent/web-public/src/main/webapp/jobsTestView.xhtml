@@ -4,40 +4,19 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:fc="http://java.sun.com/jsf/composite/fluttercode/component"
 	template="/WEB-INF/templates/template.xhtml">
 	<ui:define name="content">
 
-		<h:form>
-			<fc:presentationText>
-				<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
-					<p:outputLabel for="textChoose" value="Tema:" />
-					<p:selectOneMenu id="textChoose" value="#{textBean.selectedText}"
-						style="width:125px">
-						<f:selectItems value="#{textBean.texts}" />
-					</p:selectOneMenu>
-				</h:panelGrid>
-			</fc:presentationText>
-			<h:commandButton value="Aplicar" />
-		</h:form>
-		<h:form>
-			<fc:property>
-				<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
-					<p:outputLabel for="themeChoose" value="Tema:" />
-					<p:selectOneMenu id="themeChoose" value="#{styleBean.theme}"
-						style="width:125px">
-						<f:selectItems value="#{styleBean.themes}" />
-					</p:selectOneMenu>
-				</h:panelGrid>
-			</fc:property>
-			<h:commandButton value="Aplicar" />
-		</h:form>
-
 		<div id="outBox">
-			<p:panel id="searchJobs">
-				<h:outputText value="#{textBean.optionText}" />
+			<h:graphicImage styleClass="media-object media-maxheight fade-box"
+				library="imgs" name="#{textBean.logoName}" />
+			<p:panel>
+				<h:outputText value="#{textBean.selectedText}" />
+			</p:panel>
+
+			<p:panelGrid  id="searchJobs" columns="2">
 				<h:form id="searchAreaAndLocale">
-					<p:panel id="searchPanel">
+					<div id="searchPanel">
 						<h3 style="text-transform: uppercase; text-align: left;">Pesquisar
 							Ofertas</h3>
 						<p:selectOneMenu id="jobTechnicalArea" required="true"
@@ -67,18 +46,15 @@
 						<p:commandButton type="submit" icon="ui-icon-search"
 							style="float:center; margin-top:24px;margin-left: 10px;"
 							action="#{jobs.search()}" />
-					</p:panel>
-				</h:form>
-				<h:form id="searchByRecentJobs">
-					<h:commandLink action="#{jobs.findByLast()}" value="Mais Recentes" />
+					</div>
 				</h:form>
 				<h:form id="candidady">
-					<p:panel id="candidacyPanel">
+					<div id="candidacyPanel">
 						<h3 style="text-transform: uppercase; text-align: left;">Candidaturas
 							Espontâneas</h3>
 						<br></br>
-						<a class="bigbutton" style="text-align: left; display: block;"
-							href="showJobs.html">
+						<a class="bigbutton" style="text-align: left; display: block; " 
+								href="showJobs.html">
 							<p>Na Critical acreditamos que as pessoas são o alicerce do
 								nosso sucesso pelo que pretendemos captar, reter e desenvolver
 								profissionais de excelência. A nossa Política de Gestão de RH
@@ -90,9 +66,13 @@
 							<p>Se partilhas o nosso entusiasmo pelas novas tecnologias
 								junta-te a nós.</p>
 						</a>
-					</p:panel>
+					</div>
 				</h:form>
-			</p:panel>
+			</p:panelGrid>
+			
+			<h:form id="searchByRecentJobs">
+				<h:commandLink action="#{jobs.findByLast()}" value="Mais Recentes" />
+			</h:form>
 
 			<p:panelGrid id="panelSearch" columns="2">
 				<h:form id="searchByLocale">

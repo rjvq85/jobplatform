@@ -1,57 +1,100 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/template.xhtml">
+	<ui:define name="content">
 
-<h:head>
-	<meta charset="utf-8" />
-	<h:outputStylesheet library="css" name="positionListAdmin.css" />
-</h:head>
-<h:body>
-	<h:form id="chooseText">
 
-		<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
-			<p:outputLabel for="textChoose" value="Texto:" />
-			<p:selectOneMenu id="textChoose" value="#{textBean.selectedText}"
-				style="width:125px">
-				<p:ajax listener="#{textBean.onChange}"
-					update=":textpreView:preview" />
-				<f:selectItems value="#{textBean.texts}" var="tt" itemValue="#{tt}"/>
-			</p:selectOneMenu>
-		</h:panelGrid>
-		<h:commandButton value="Visualizar"  />
-	</h:form>
-	<h:form id="textpreView">
-		<p:panel id="preview">
-			<p:outputLabel for="textView" value="Visualizar texto" />
-			<br />
-			<h:outputText id="textView" value="#{textBean.optionText}" />
-		</p:panel>
-	</h:form>
-	<h:form id="new">
-		<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
-			<p:outputLabel for="newText"
-				value="Introduzir Novo Texto de Apresentação da Empresa:" />
-			<p:inputTextarea id="newText" rows="10" cols="40"
-				value="#{textBean.newText}" />
-		</h:panelGrid>
+		<div id="outBox">
+			<h:form id="chooseText">
+				<p:panel>
+					<h2>Texto de Apresentação da Empresa</h2>
+					<h:panelGrid columns="1" cellpadding="5">
+						<p:panel>
+							<h:panelGrid columns="2" cellpadding="5">
+								<p:outputLabel for="textChoose" value="Texto:" />
+								<p:selectOneMenu id="textChoose"
+									value="#{textBean.selectedText}" onchange="submit()"
+									valueChangeListener="#{textBean.onChange}" update="preview"
+									style="width:125px">
+									<f:selectItems value="#{textBean.texts}" />
+								</p:selectOneMenu>
+							</h:panelGrid>
+						</p:panel>
+						<p:panel>
+							<h3>Visualizar texto</h3>
+							<p:panel id="preview">
+								<h:outputText id="textView" value="#{textBean.optionText}" />
+							</p:panel>
+						</p:panel>
+					</h:panelGrid>
+				</p:panel>
+			</h:form>
+			<h:form id="new">
+				<p:panel>
+					<h:panelGrid columns="1" cellpadding="5">
+						<h:panelGrid columns="1" style="margin-bottom:10px"
+							cellpadding="5">
+							<p:outputLabel for="newText"
+								value="Introduzir Novo Texto de Apresentação da Empresa:" />
+							<p:inputTextarea id="newText" rows="5" cols="100"
+								value="#{textBean.newText}" />
+							<h:commandButton value="Ver" />
+						</h:panelGrid>
+					</h:panelGrid>
+				</p:panel>
+			</h:form>
+			<h:form>
+				<p:panel>
+					<h2>Logotipo da Empresa</h2>
+					<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
 
-		<h:commandButton value="Aplicar" type="submit"
-			action="#{textBean.change()}" />
-	</h:form>
-	
-	<h:form>
-		<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
-			<p:outputLabel for="themeChoose" value="Tema:" />
-			<p:selectOneMenu id="themeChoose" value="#{styleBean.theme}"
-				style="width:125px">
-				<f:selectItems value="#{styleBean.themes}" />
-			</p:selectOneMenu>
-		</h:panelGrid>
+						<h:panelGrid columns="2" style="margin-bottom:10px"
+							cellpadding="5">
+							<p:outputLabel for="logoChoose" value="Logotipo:" />
+							<p:selectOneMenu id="logoChoose"
+								value="#{styleBean.selectedLogo}" onchange="submit()"
+								valueChangeListener="#{textBean.onChange}" update="preview"
+								style="width:125px">
+								<f:selectItem itemLabel="Logo Cor" itemValue="logocritical" />
+								<f:selectItem itemLabel="Logo Preto/Branco"
+									itemValue="logocriticalbw" />
 
-		<h:commandButton value="Aplicar" />
-	</h:form>
-</h:body>
-</html>
+								<p:ajax listener="#{styleBean.onChange}" update="logoId" />
+							</p:selectOneMenu>
+
+							<h:graphicImage id="logoId"
+								styleClass="media-object media-maxheight fade-box"
+								library="imgs" name="#{styleBean.logoName}" />
+						</h:panelGrid>
+
+					</h:panelGrid>
+				</p:panel>
+			</h:form>
+			<h:form>
+				<p:panel>
+					<h2>Cores de Fundo</h2>
+					<h:panelGrid columns="3" cellpadding="5">
+						<h:panelGrid columns="2" style="margin-bottom:10px"
+							cellpadding="5">
+							<p:outputLabel for="themeChoose" value="Tema:" />
+							<p:selectOneMenu id="themeChoose" value="#{styleBean.theme}"
+								style="width:125px">
+								<f:selectItems value="#{styleBean.themes}" />
+							</p:selectOneMenu>
+						</h:panelGrid>
+						<h:commandButton value="Visualizar" />
+					</h:panelGrid>
+					<p:commandButton value="Guardar Alterações" type="submit"
+						style="width:100px; margin-right:auto; margin-left:10px; margin-top:15px;"
+						action="#{styleBean.persistThemes()}" icon="ui-icon-check">
+					</p:commandButton>
+				</p:panel>
+			</h:form>
+
+		</div>
+	</ui:define>
+</ui:composition>

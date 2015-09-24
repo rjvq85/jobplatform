@@ -1,39 +1,39 @@
 package pt.criticalsoftware.platform.style;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
-import javax.ejb.EJB;
-import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.SessionScoped;
+import javax.faces.event.ValueChangeEvent;
 import javax.inject.Named;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import pt.criticalsoftware.service.style.TextEJB;
+import java.io.Serializable;
 
 @Named
-@ApplicationScoped
-public class TextBean {
+@SessionScoped
+public class TextBean implements Serializable {
+
+	private static final long serialVersionUID = -753572470570461422L;
 
 	private final Logger logger = LoggerFactory.getLogger(TextBean.class);
 
-	@EJB
-	TextEJB ejbText;
+	
 
 	private String defaultText;
 	private String selectedText, optionText;
 	private List<String> texts;
-	//all the Texts to show on the web page
 	private List<String> textsComplete;
 	private String newText;
 	private boolean change=false;;
-
+	private boolean newTextChoose=false;
 
 	public TextBean() {
 
 		this.selectedText=this.defaultText;
-
 		texts=new ArrayList <String>();
 		texts.add("text1");
 		texts.add("text2");
@@ -69,17 +69,26 @@ public class TextBean {
 	}
 
 	public void setNewText(String newText) {
-		String name="text"+texts.size();
-		texts.add(name);
-		textsComplete.add(newText);	
+		int size=texts.size()+1;
+		String name="text"+size;
+		this.texts.add(name);
+		this.textsComplete.add(newText);	
+		this.newTextChoose=true;
+		this.selectedText=name;
+		this.optionText=newText;
+	}
+	public List<String> getTextsComplete() {
+		return textsComplete;
 	}
 
+	public void setTextsComplete(List<String> textsComplete) {
+		this.textsComplete = textsComplete;
+	}
 	public String getNewText() {
 		return newText;
 	}
 
 	public String getOptionText() {
-		logger.info("mudou?" +this.change);
 		if (this.change){
 			int ind=0;
 			int i;
@@ -89,7 +98,7 @@ public class TextBean {
 			this.optionText=this.textsComplete.get(ind);
 			this.change=false;
 		}
-		logger.info("get e o teto é "+ this.optionText);
+
 		return this.optionText;
 	}
 
@@ -118,31 +127,18 @@ public class TextBean {
 	}
 
 	public void setSelectedText(String selectedText) {
-
 		int ind=0;
 		int i;
 		for(i=0; i<texts.size(); i++ )
 			if (texts.get(i).equals(selectedText))
 				ind=i;
-
 		this.optionText=this.textsComplete.get(ind);
 	}
 
 
-	public void onChange(){
-		change=true;
-		logger.info("O teto seleccionado é" +this.selectedText);
-		int ind=0;
-		int i;
-		for(i=0; i<texts.size(); i++ )
-			if (texts.get(i).equals(selectedText))
-				ind=i;
-		this.optionText=textsComplete.get(ind);
-		setOptionText(this.optionText);
+	public void onChange(ValueChangeEvent e){
+		this.selectedText=e.getNewValue().toString();;
 
 	}
-	public void change(){
-		logger.info("Entrou no change ");
-		ejbText.setSelectedText(this.selectedText);
-	}
+
 }

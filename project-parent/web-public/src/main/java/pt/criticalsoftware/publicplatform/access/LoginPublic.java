@@ -57,7 +57,7 @@ public class LoginPublic {
 			getRequest().logout();
 			getSession().removeAttribute("userIsLogged");
 			getSession().invalidate();
-			return "login.xhtml?faces-redirect=true";
+			return "jobs.xhtml?faces-redirect=true";
 		} catch (Exception e) {
 			// log
 			return null;

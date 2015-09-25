@@ -11,7 +11,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import pt.criticalsoftware.service.business.IScriptBusinessService;
-import pt.criticalsoftware.service.model.IPosition;
 import pt.criticalsoftware.service.model.IScript;
 
 @Named
@@ -41,6 +40,7 @@ public class ScriptListView implements Serializable{
 		else if(scriptWord.equalsIgnoreCase("Referência"))
 			this.scripts= scriptService.getScriptsByReference(searchCode);
 		this.searchBoolean=true;
+		logger.debug("Pesquisa de guiões");
 	}
 
 	public String getScriptWord() {

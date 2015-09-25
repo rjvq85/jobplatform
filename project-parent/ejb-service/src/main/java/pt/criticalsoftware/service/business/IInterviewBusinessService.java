@@ -34,5 +34,15 @@ public interface IInterviewBusinessService {
 
 	IInterview getInterviewsById(Integer id);
 
+	List<IInterview> getScheduledInterviews();
+
+	Long countInterviewsPerScript(Integer scriptId);
+
+	List<IInterview> getByScript(Integer id);
+
+	void updateMultiple(List<IInterview> interviews);
+
+	List<IInterview> getDoneByCandidate(Integer candidateId);
+
 
 }

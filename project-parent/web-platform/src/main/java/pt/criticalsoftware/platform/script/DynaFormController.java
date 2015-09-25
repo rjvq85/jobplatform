@@ -8,11 +8,15 @@ import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
+import pt.criticalsoftware.service.business.ICandidacyBusinessService;
+import pt.criticalsoftware.service.business.ICandidateBusinessService;
 import pt.criticalsoftware.service.business.IQuestionBusinessService;
 import pt.criticalsoftware.service.business.IScriptBusinessService;
+import pt.criticalsoftware.service.model.ICandidate;
 import pt.criticalsoftware.service.model.IInterview;
 import pt.criticalsoftware.service.model.IQuestion;
 import pt.criticalsoftware.service.model.IScript;
+import pt.criticalsoftware.service.persistence.states.CandidacyState;
 
 import org.primefaces.extensions.model.dynaform.DynaFormControl;
 import org.primefaces.extensions.model.dynaform.DynaFormLabel;
@@ -37,6 +41,8 @@ public class DynaFormController implements Serializable {
 	private IScriptBusinessService scriptService;
 	@EJB
 	private IQuestionBusinessService questionService;
+	@EJB
+	private ICandidacyBusinessService candidacyBness;
 	private DynaFormModel model;
 	private String title;
 
@@ -130,6 +136,10 @@ public class DynaFormController implements Serializable {
 	}
 
 	public void setInterview(IInterview interview) {
+		if (interview.getDoneNumber() == 0) {
+			interview.getCandidacy().setState(CandidacyState.EM_ENTREVISTA);
+			candidacyBness.updateEntity(interview.getCandidacy());
+		}
 		this.interview = interview;
 	}
 

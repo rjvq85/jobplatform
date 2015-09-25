@@ -16,9 +16,12 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import pt.criticalsoftware.service.business.ICandidacyBusinessService;
 import pt.criticalsoftware.service.business.IInterviewBusinessService;
 import pt.criticalsoftware.service.model.IInterview;
 import pt.criticalsoftware.service.model.IQuestion;
+import pt.criticalsoftware.service.persistence.states.CandidacyState;
+import pt.criticalsoftware.service.persistence.states.InterviewState;
 import pt.criticalsoftware.service.scriptxml.ScriptListXML;
 import pt.criticalsoftware.service.scriptxml.ScriptXML;
 import pt.criticalsoftware.service.scriptxml.XMLParser;
@@ -37,6 +40,8 @@ public class ScriptInterview implements Serializable {
 	DynaFormController dyna;
 	@EJB
 	private IInterviewBusinessService intervBness;
+	@EJB
+	private ICandidacyBusinessService candidacyBness;
 
 	private Integer interviewRating;
 
@@ -80,6 +85,12 @@ public class ScriptInterview implements Serializable {
 			String feedbackToString = xmlParser.asString(scriptFeedbacks);
 			interview.setFeedback(feedbackToString);
 			interview.setGlobalRating(newRating(interview));
+			if (interview.getInterviewers().size() - 1 == interview.getDoneNumber()) {
+				interview.setInterviewState(InterviewState.DONE);
+				interview.getCandidacy().setState(CandidacyState.EM_NEGOCIACAO);
+				candidacyBness.updateEntity(interview.getCandidacy());
+			}
+			interview.setDoneNumber(interview.getDoneNumber() + 1);
 			intervBness.updateInterview(interview);
 			logger.debug("Feedback criado para a entrevista com referência: " + interview.getReference());
 			FacesContext context = FacesContext.getCurrentInstance();

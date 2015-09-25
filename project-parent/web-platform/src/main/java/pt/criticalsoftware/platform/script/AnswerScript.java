@@ -1,17 +1,13 @@
 package pt.criticalsoftware.platform.script;
 
 import javax.enterprise.context.SessionScoped;
-import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import pt.criticalsoftware.service.model.IQuestion;
-
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+
 @Named
 @SessionScoped
 public class AnswerScript implements Serializable {
@@ -25,7 +21,7 @@ public class AnswerScript implements Serializable {
 	}
 
 	public AnswerScript(String answer) {
-		this.answer=answer;
+		this.answer = answer;
 	}
 
 	public String getAnswer() {
@@ -34,7 +30,7 @@ public class AnswerScript implements Serializable {
 
 	public void setAnswer(String answer) {
 		logger.info("Set the answer");
-		this.answer=answer;
+		this.answer = answer;
 	}
 
 }

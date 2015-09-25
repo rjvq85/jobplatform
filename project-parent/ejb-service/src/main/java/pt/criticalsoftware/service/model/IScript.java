@@ -1,6 +1,7 @@
 package pt.criticalsoftware.service.model;
 
 import java.util.Collection;
+import java.util.List;
 
 import pt.criticalsoftware.service.persistence.questions.Question;
 
@@ -20,6 +21,10 @@ public interface IScript {
 	void setQuestions(Collection<IQuestion> questions);
 
 	Collection<IQuestion> getQuestions();
+
+	List<IInterview> getInterviews();
+
+	void setInterviews(List<IInterview> interviews);
 
 	
 }

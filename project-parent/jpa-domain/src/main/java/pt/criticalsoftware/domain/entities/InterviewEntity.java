@@ -6,6 +6,8 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,7 +20,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-
+import pt.criticalsoftware.service.persistence.states.InterviewState;
 import pt.criticalsoftware.service.persistence.utils.LocalDatePersistenceConverter;
 
 @Entity
@@ -31,7 +33,12 @@ import pt.criticalsoftware.service.persistence.utils.LocalDatePersistenceConvert
 		@NamedQuery(name = "Interview.findByInterviewer", query = "SELECT i FROM InterviewEntity i JOIN i.interviewers u WHERE u.id = :param"),
 		@NamedQuery(name = "Interview.availableInterviewers", query = "SELECT u FROM UserEntity u WHERE u NOT IN (SELECT DISTINCT elements(i.interviewers) FROM InterviewEntity i WHERE i.id = :param)"),
 		@NamedQuery(name = "Interview.availableScripts", query = "SELECT s FROM ScriptEntity s WHERE s NOT IN (SELECT i.script FROM InterviewEntity i WHERE i.id = :param)"),
-		@NamedQuery(name = "Interview.byCandidate", query = "SELECT i FROM InterviewEntity i WHERE i.candidacy.candidate.id = :param AND i.feedback IS NOT EMPTY") })
+		@NamedQuery(name = "Interview.byCandidate", query = "SELECT i FROM InterviewEntity i WHERE i.candidacy.candidate.id = :param AND i.feedback IS NOT EMPTY"),
+		@NamedQuery(name = "Interview.allScheduled", query = "SELECT i FROM InterviewEntity i WHERE i.interviewState LIKE 'SCHEDULED'"),
+		@NamedQuery(name = "Interview.getScheduledScript", query = "SELECT COUNT(i) FROM InterviewEntity i WHERE i.interviewState LIKE 'SCHEDULED' AND i.script.id = :param"),
+		@NamedQuery(name = "Interview.getByScript", query = "SELECT i FROM InterviewEntity i WHERE i.interviewState LIKE 'DONE' AND i.script.id = :param"),
+		@NamedQuery(name = "Interview.doneInterviews", query = "SELECT i FROM InterviewEntity i WHERE i.interviewState LIKE 'DONE'"),
+		@NamedQuery(name = "Interview.doneInterviewsByCandidate", query = "SELECT i FROM InterviewEntity i WHERE i.interviewState LIKE 'DONE' and i.candidacy.candidate.id = :param")})
 public class InterviewEntity {
 
 	@Id
@@ -65,6 +72,13 @@ public class InterviewEntity {
 
 	@Column(name = "avaliacao_global")
 	private Integer globalRating = 0;
+
+	@Column(name = "estado_entrevista", nullable = false)
+	@Enumerated(EnumType.STRING)
+	private InterviewState interviewState;
+
+	@Column(name = "entrevistadores_realizaram")
+	private Integer doneNumber = 0;
 
 	public InterviewEntity() {
 
@@ -161,6 +175,22 @@ public class InterviewEntity {
 
 	public void setGlobalRating(Integer globalRating) {
 		this.globalRating = globalRating;
+	}
+
+	public InterviewState getInterviewState() {
+		return interviewState;
+	}
+
+	public void setInterviewState(InterviewState interviewState) {
+		this.interviewState = interviewState;
+	}
+
+	public Integer getDoneNumber() {
+		return doneNumber;
+	}
+
+	public void setDoneNumber(Integer doneNumber) {
+		this.doneNumber = doneNumber;
 	}
 
 }

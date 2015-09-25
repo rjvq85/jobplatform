@@ -3,6 +3,8 @@ package pt.criticalsoftware.service.model;
 import java.time.LocalDate;
 import java.util.List;
 
+import pt.criticalsoftware.service.persistence.states.InterviewState;
+
 public interface IInterview {
 
 	LocalDate getDate();
@@ -44,5 +46,13 @@ public interface IInterview {
 	void setGlobalRating(Integer globalRating);
 
 	String getGlobalRatingString();
+
+	InterviewState getInterviewState();
+
+	void setInterviewState(InterviewState interviewState);
+
+	Integer getDoneNumber();
+
+	void setDoneNumber(Integer doneNumber);
 
 }

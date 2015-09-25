@@ -14,6 +14,7 @@ import pt.criticalsoftware.service.model.IInterview;
 import pt.criticalsoftware.service.model.IPosition;
 import pt.criticalsoftware.service.model.IScript;
 import pt.criticalsoftware.service.model.IUser;
+import pt.criticalsoftware.service.persistence.states.InterviewState;
 
 public class InterviewProxy implements IEntityAware<InterviewEntity>, IInterview {
 
@@ -147,6 +148,26 @@ public class InterviewProxy implements IEntityAware<InterviewEntity>, IInterview
 		String evaluation = (interview.getGlobalRating() > 0) ? "Positiva"
 				: (interview.getGlobalRating() < 0) ? "Negativa" : "Neutra";
 		return evaluation;
+	}
+
+	@Override
+	public InterviewState getInterviewState() {
+		return interview.getInterviewState();
+	}
+
+	@Override
+	public void setInterviewState(InterviewState interviewState) {
+		interview.setInterviewState(interviewState);
+	}
+	
+	@Override
+	public Integer getDoneNumber() {
+		return interview.getDoneNumber();
+	}
+
+	@Override
+	public void setDoneNumber(Integer doneNumber) {
+		interview.setDoneNumber(doneNumber);
 	}
 
 	@SuppressWarnings("unchecked")

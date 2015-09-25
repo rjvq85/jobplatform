@@ -23,11 +23,6 @@
 					<f:setPropertyActionListener value="#{editPosition.editPosition}"
 						target="#{editPosition.editPosition}" />
 				</p:commandButton>
-				<!-- Delete position dialog-->
-				<p:commandButton type="button" icon="ui-icon-trash"
-					disabled="#{editPosition.editPosition==null}"
-					onclick="PF('deletePositionDialog').show(); return false;">
-				</p:commandButton>
 			</p:toolbarGroup>
 			<!-- search menu -->
 			<p:toolbarGroup align="right">

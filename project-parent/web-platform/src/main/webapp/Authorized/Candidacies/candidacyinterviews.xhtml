@@ -47,8 +47,9 @@
 						<h:panelGroup layout="block" class="row spacer"></h:panelGroup>
 						<h:form prependId="false" id="listform">
 							<h:panelGroup layout="block" styleClass="table-responsive">
-								<p:dataTable id="lista" tableStyleClass="table-condensed newlabeled"
-									var="interv" value="#{candidacyInterviews.existingInterviews}"
+								<p:dataTable id="lista"
+									tableStyleClass="table-condensed newlabeled" var="interv"
+									value="#{candidacyInterviews.existingInterviews}"
 									emptyMessage="Sem entrevistas agendadas."
 									styleClass="text-center" paginator="true"
 									paginatorPosition="bottom"
@@ -56,6 +57,10 @@
 									rowsPerPageTemplate="5,10,15" rows="5">
 									<p:column headerText="Referência">
 										<h:outputText value="#{interv.reference}" />
+									</p:column>
+									<p:column headerText="Estado"
+										sortBy="#{interv.interviewState.description}">
+										<h:outputText value="#{interv.interviewState.description}" />
 									</p:column>
 									<p:column headerText="Data da Entrevista"
 										sortBy="#{interv.date}">
@@ -78,21 +83,23 @@
 										<h:outputText value="#{interv.candidacy.candidate}" />
 									</p:column>
 									<p:column headerText="Posição">
-										<h:outputText
-											value="#{interv.position.reference}" />
+										<h:outputText value="#{interv.position.reference}" />
 									</p:column>
 									<p:column style="width:5%;">
 										<p:commandLink id="deleteButton"
 											action="#{candidacyInterviews.deleteInterview(interv)}"
-											update="lista" onclick="if (!confirm('Tem a certeza?')) return false;"
-											oncomplete="window.location.replace(window.location.href);" process="@this">
+											update="lista"
+											onclick="if (!confirm('Tem a certeza?')) return false;"
+											oncomplete="window.location.replace(window.location.href);"
+											process="@this">
 											<i class="glyphicon glyphicon-remove-circle"></i>
 										</p:commandLink>
 									</p:column>
 								</p:dataTable>
 							</h:panelGroup>
 						</h:form>
-						<h:panelGroup layout="block" class="page-header" rendered="#{candidacyInterviews.selectedCandidacy.positionCandidacy != 'Espontânea'}">
+						<h:panelGroup layout="block" class="page-header"
+							rendered="#{candidacyInterviews.selectedCandidacy.positionCandidacy != 'Espontânea'}">
 							<h:panelGroup layout="block" class="row">
 								<h:panelGroup layout="block" class="col-md-5">
 									<h:form prependId="false" id="addform">

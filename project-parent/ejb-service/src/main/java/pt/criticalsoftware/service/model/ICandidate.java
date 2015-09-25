@@ -61,5 +61,7 @@ public interface ICandidate {
 	void setCv(String cv);
 
 	Integer getId();
+	
+	String  getDegreeString();	
 
 }

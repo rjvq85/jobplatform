@@ -117,10 +117,6 @@ public class NewPosition {
 		closeDate=currentDate(sla);
 	}
 	public Date getCloseDate() {
-		//		if(sla==null)
-		//		return closeDate;
-		//		else
-		//			return closeDate=currentDate(sla);
 		return closeDate;
 	}
 

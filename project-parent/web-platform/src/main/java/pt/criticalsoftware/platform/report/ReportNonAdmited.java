@@ -1,8 +1,12 @@
 package pt.criticalsoftware.platform.report;
 
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -89,7 +93,19 @@ public class ReportNonAdmited implements Serializable {
 	}
 
 	public Date getInitDate() {
-		return initDate;
+		if (initDate!=null){
+			LocalDate date = initDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();	
+			try {
+				String lDate = date.plusDays(1).format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+				DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+				return df.parse(lDate);
+			} catch (ParseException e) {
+				e.printStackTrace();
+				return null;
+			}
+		}else{
+			return initDate;
+		}
 	}
 
 	public void setInitDate(Date initDate) {
@@ -97,8 +113,21 @@ public class ReportNonAdmited implements Serializable {
 	}
 
 	public Date getFinalDate() {
-		return finalDate;
+		if (finalDate!=null){
+			LocalDate date = finalDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();	
+			try {
+				String lDate = date.plusDays(1).format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+				DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+				return df.parse(lDate);
+			} catch (ParseException e) {
+				e.printStackTrace();
+				return null;
+			}
+		}else{
+			return finalDate;
+		}
 	}
+
 
 	public void setFinalDate(Date finalDate) {
 		this.finalDate = finalDate;
@@ -143,15 +172,12 @@ public class ReportNonAdmited implements Serializable {
 		}
 		else {
 			if (dataType.equals("position")){
-				createLineModels();
-				//this.candidacies=business.getNonAdmitedCandidaciesByDatePeriodAndPosition(dateInit,dateFinal, this.positionID);	
+				this.candidacies=business.getNonAdmitedCandidaciesByDatePeriodAndPosition(dateInit,dateFinal, this.positionID);
 				return "viewNonAdmitedByPositionData.xhtml?faces-redirect=true";
 			}
-			else if (dataType.equals("all")){
-				createLineModels();
-				//this.candidacies=business.getNonAdmitedCandidaciesByDatePeriod(dateInit,dateFinal);	
-
-				return "viewReportNonAdmitedAllData.xhtml?faces-redirect=true";
+			else if (dataType.equals("all")){				
+				this.candidacies=business.getNonAdmitedCandidaciesByDatePeriod(dateInit,dateFinal);	
+				return "viewNonAdmitedAllData.xhtml?faces-redirect=true";
 			}
 		}
 		return "viewReportNonAdmited.xhtml?faces-redirect=true";
@@ -169,10 +195,13 @@ public class ReportNonAdmited implements Serializable {
 	private LineChartModel lineModel;
 
 	public LineChartModel getLineModel() {
+		logger.info("entrou no crate");
+		createLineModels();
 		return lineModel;
 	}
 
 	private void createLineModels() {
+
 		lineModel = initLinearModel();
 
 		if(dataType.equals("all"))
@@ -180,12 +209,18 @@ public class ReportNonAdmited implements Serializable {
 		else
 			lineModel.setTitle("Candidatos Rejeitados para a Posição: " + this.positionRef);
 
+
 		lineModel.setAnimate(true);
-		lineModel.setLegendPosition("e");
+		lineModel.setLegendPosition("se");
 		Axis yAxis = lineModel.getAxis(AxisType.Y);
 		yAxis.setMin(0);
-		//		int max=this.candidacies.size()+this.candidacies.size()/10+1;
-		int max=20;
+		int max;
+		if(this.candidacies.size()>=1){
+			max=this.candidacies.size()+this.candidacies.size()/10+1;
+
+		}
+		else max=100;
+
 		yAxis.setMax(max);
 
 		lineModel.getAxes().put(AxisType.X, new CategoryAxis("Motivos"));
@@ -198,30 +233,27 @@ public class ReportNonAdmited implements Serializable {
 
 	private LineChartModel initLinearModel() {
 		LineChartModel model = new LineChartModel();
-
 		LineChartSeries series = new LineChartSeries();
-		series.set("Motivo1",6 );
-		series.set("Motivo2", 2);
-		series.set("Motivo3",3 );
-		series.set("Motivo4", 8);
-		series.set("Motivo5", 4);
-		int aux1=0,aux2=0,aux3=0,aux4=0,aux5=0;
-		//		for(ICandidacy c:this.candidacies)
-		//			if(c.getReason.equals("Motivo1"))
-		//				aux1++;
-		//			else if(c.getReason.equals("Motivo2"))
-		//				aux2++;
-		//			else if(c.getReason.equals("Motivo3"))
-		//				aux3++;
-		//			else if(c.getReason.equals("Motivo4"))
-		//				aux4++;
-		//			else if(c.getReason.equals("Motivo5"))
-		//				aux5++;
-		//		series.set("Motivo1",aux1 );
-		//		series.set("Motivo2", aux2);
-		//		series.set("Motivo3",aux3 );
-		//		series.set("Motivo4", aux4);
-		//		series.set("Motivo5", aux5);
+		int aux1=0,aux2=0,aux3=0,aux4=0;
+		if (this.candidacies.size()>=1){
+			for(ICandidacy c:this.candidacies)
+				if(c.getRejectionReason().equals("PROFILE"))
+					aux1++;
+				else if(c.getRejectionReason().equals("UNAVAILABILITY"))
+					aux2++;
+				else if(c.getRejectionReason().equals("INTERVIEW"))
+					aux3++;
+				else if(c.getRejectionReason().equals("OTHER"))
+					aux4++;
+		}
+		else{
+			aux1=30;aux2=20;
+			aux3=70;aux4=40;
+		}
+		series.set("Não se enquadra",aux1);
+		series.set("Sem disponibilidade",aux2);
+		series.set("Não correspondeu",aux3);
+		series.set("Outra(s)", aux4);
 		model.addSeries(series);
 		return model;
 	}

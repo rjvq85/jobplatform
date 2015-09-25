@@ -31,5 +31,6 @@ public interface ICandidateBuilder {
 	ICandidateBuilder school(String school);
 
 	ICandidateBuilder cv(String cvPath);
+	
 
 }

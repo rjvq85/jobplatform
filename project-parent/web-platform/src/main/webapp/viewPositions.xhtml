@@ -8,9 +8,45 @@
 
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<title>Propostas apresentadas</title>
 </h:head>
 <h:body>
+	<h:panelGrid columns="2" columnClasses="left,right" style="width:100%">
+
+		<p:chart type="pie" model="#{reportProposal.lineModel}"
+			widgetVar="chart1" style="width:500px;height:250px" />
+		<p:commandButton type="button" value="Export" icon="ui-icon-extlink"
+			onclick="exportChart1()" />
+
+		<p:chart type="pie" model="#{reportProposal.lineModel2}"
+			widgetVar="chart" style="width:500px;height:250px" />
+
+		<p:commandButton type="button" value="Export" icon="ui-icon-extlink"
+			onclick="exportChart()" />
+
+		<p:dialog widgetVar="dlg" showEffect="fade" modal="true"
+			header="Salvar Gráfico" resizable="false">
+			<p:outputPanel id="output" layout="block"
+				style="width:500px;height:300px" />
+		</p:dialog>
+		<script type="text/javascript">
+			function exportChart() {
+   			 //export image
+   			 $('#output').empty().append(PF('chart').exportAsImage());
+ 
+    		//show the dialog
+    		PF('dlg').show();
+			}
+			function exportChart1() {
+   			 //export image
+   			 $('#output').empty().append(PF('chart1').exportAsImage());
+ 
+    		//show the dialog
+    		PF('dlg').show();
+			}
+			</script>
+
+	</h:panelGrid>
+
 	<h:form>
 		<p:dataTable id="tbl" var="position"
 			value="#{reportProposal.positions}" paginator="true"
@@ -19,11 +55,11 @@
 			<f:facet name="header">
 				<h:outputText value="Propostas apresentadas" />
 
-				<h:outputText value="De: " />
+				<h:outputText value=" de " />
 				<h:outputText value="#{reportProposal.initDate}">
 					<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
 				</h:outputText>
-				<h:outputText value=" a : " />
+				<h:outputText value=" a " />
 				<h:outputText value="#{reportProposal.finalDate}">
 					<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
 				</h:outputText>
@@ -37,19 +73,19 @@
 				<h:outputText value="#{position.company} " />
 			</p:column>
 
-			<p:column headerText="área Técnica">
+			<p:column headerText="Area Tecnica">
 				<h:outputText value="#{position.technicalArea.name}" />
 			</p:column>
-
-			<p:column headerText="Número de vagas">
+			<p:column headerText="Localizacao">
+				<h:outputText value="#{position.locale} " />
+			</p:column>
+			<p:column headerText="Numero de vagas">
 				<h:outputText value="#{position.vacancies}" />
 			</p:column>
 
-
 			<f:facet name="footer">
 				<h:outputText value="No total foram apresentadas: " />
-				<h:outputText
-					value="#{reportProposal.positions.size()}" />
+				<h:outputText value="#{reportProposal.positions.size()}" />
 				<h:outputText value=" propostas." />
 			</f:facet>
 		</p:dataTable>
@@ -59,10 +95,13 @@
 				<p:graphicImage name="/imgs/pdf_icon.gif" with="32" height="32" />
 
 				<pe:exporter type="pdf" target="tbl" encoding="UTF-8"
-					fileName="Relatório por Posição" tableTitle="Relatório para propostas apresentadas"
-					orientation="Portrait " facetBackground="#F88017"
-					facetFontSize="14" facetFontColor="#0000ff" facetFontStyle="BOLD"
-					cellFontColor="#00ff00" cellFontSize="12" cellFontStyle="NORMAL" />
+					fileName="RelatorioPropostasApresentadas"
+					preProcessor="#{reportCandidaciesByTime.preProcessPDF}"
+					tableTitle="Propostas Apresentadas Por Intervalo De Tempo"
+					orientation="Portrait " facetBackground="#A50D12"
+					facetFontSize="14" facetFontColor="#FFFFFF" facetFontStyle="BOLD"
+					cellFontColor="#303030" cellFontSize="12" cellFontStyle="NORMAL" />
+
 			</h:commandLink>
 		</p:panel>
 	</h:form>

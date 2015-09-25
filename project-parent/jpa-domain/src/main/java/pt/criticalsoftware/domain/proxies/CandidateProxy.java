@@ -175,9 +175,15 @@ public class CandidateProxy implements ICandidate, IEntityAware<CandidateEntity>
 	public String toString() {
 		return candidate.getFirstName() + " " + candidate.getLastName();
 	}
-	
-	
-	
+
+	@Override
+	public String getDegreeString() {
+		String dg="";
+		for (String c:candidate.getDegree())
+			dg+=c+ ",";
+		return dg;
+	}
+		
 	
 
 }

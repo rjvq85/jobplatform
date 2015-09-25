@@ -7,7 +7,6 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <h:head>
-	<title>Tempo Médio para a Primeira Entrevista</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </h:head>
 <h:body>
@@ -19,11 +18,11 @@
 
 			<f:facet name="header">
 				<h:outputText value="Candidaturas efectuadas " />
-				<h:outputText value="de: " />
+				<h:outputText value="de " />
 				<h:outputText value="#{reportInterviewAverage.initDate}">
 					<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
 				</h:outputText>
-				<h:outputText value=" a : " />
+				<h:outputText value=" a " />
 				<h:outputText value="#{reportInterviewAverage.finalDate}">
 					<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
 				</h:outputText>
@@ -44,24 +43,27 @@
 			</p:column>
 
 			<f:facet name="footer">
-				<h:outputText value="O tempo médio para a primeira entrevista é de: " />
+				<h:outputText
+					value="O tempo médio para a primeira entrevista é de: " />
 				<h:outputText value="#{reportInterviewAverage.averageTime}" />
 				<h:outputText value=" dias." />
 			</f:facet>
 
 		</p:dataTable>
 
-		<p:spacer height="30" />
+		<p:spacer height="10" />
 		<p:panel position="center">
 			<h:commandLink id="pdf">
 				<p:graphicImage name="/imgs/pdf_icon.gif" with="32" height="32" />
 
 				<pe:exporter type="pdf" target="tbl" encoding="UTF-8"
-					fileName="Relatório das Entrevistas"
-					tableTitle="RelatórioEntrevistas" orientation="Portrait "
-					facetBackground="#F88017" facetFontSize="14"
-					facetFontColor="#0000ff" facetFontStyle="BOLD"
-					cellFontColor="#00ff00" cellFontSize="12" cellFontStyle="NORMAL" />
+					fileName="RelatorioTempoMedioEntrevistas"
+					preProcessor="#{reportCandidaciesByTime.preProcessPDF}"
+					tableTitle="Propostas Apresentadas Por Intervalo De Tempo"
+					orientation="Portrait " facetBackground="#A50D12"
+					facetFontSize="14" facetFontColor="#FFFFFF" facetFontStyle="BOLD"
+					cellFontColor="#303030" cellFontSize="12" cellFontStyle="NORMAL" />
+
 			</h:commandLink>
 		</p:panel>
 	</h:form>

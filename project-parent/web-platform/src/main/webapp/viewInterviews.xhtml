@@ -11,19 +11,41 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </h:head>
 <h:body>
-	<h:form>
 
+	<p:panel>
+		<p:chart type="pie" model="#{reportInterviews.lineModel}"
+			widgetVar="chart" style="width:500px;height:300px" />
+		<p:commandButton type="button" value="Export" icon="ui-icon-extlink"
+			onclick="exportChart()" />
+
+		<p:dialog widgetVar="dlg" showEffect="fade" modal="true"
+			header="Salvar Imagem" resizable="false">
+			<p:outputPanel id="output" layout="block"
+				style="width:500px;height:350px" />
+		</p:dialog>
+
+		<script type="text/javascript">
+function exportChart() {
+    //export image
+    $('#printForm\\:output').empty().append(PF('chart').exportAsImage());
+ 
+}
+</script>
+	</p:panel>
+
+	<p:spacer height="10" />
+	<h:form>
 		<p:dataTable id="tbl" var="interview"
 			value="#{reportInterviews.interviews}" paginator="true"
 			paginatorPosition="bottom" rows="12" style="margin-bottom:20px">
 
 			<f:facet name="header">
 				<h:outputText value="Resultado das entrevistas efectuadas " />
-				<h:outputText value="de: " />
+				<h:outputText value="de " />
 				<h:outputText value="#{reportInterviews.initDate}">
 					<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
 				</h:outputText>
-				<h:outputText value=" a : " />
+				<h:outputText value=" a " />
 				<h:outputText value="#{reportInterviews.finalDate}">
 					<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
 				</h:outputText>
@@ -38,10 +60,15 @@
 			</p:column>
 
 			<p:column headerText="Nome do candidato">
-				<h:outputText value="#{interview.candidacy.candidate.firstName} +#{interview.candidacy.candidate.lastName} " />
+				<h:outputText
+					value="#{interview.candidacy.candidate.firstName} +#{interview.candidacy.candidate.lastName} " />
 			</p:column>
 
-			
+			<p:column headerText="Resultado da Entrevista">
+				<h:outputText value="#{interview.globalRating} " />
+			</p:column>
+
+
 			<f:facet name="footer">
 				<h:outputText value="No total foram efectuadas: " />
 				<h:outputText value="#{reportInterviews.interviews.size()}" />
@@ -50,17 +77,18 @@
 
 		</p:dataTable>
 
-		<p:spacer height="30" />
+		<p:spacer height="10" />
 		<p:panel position="center">
 			<h:commandLink id="pdf">
 				<p:graphicImage name="/imgs/pdf_icon.gif" with="32" height="32" />
-
 				<pe:exporter type="pdf" target="tbl" encoding="UTF-8"
-					fileName="Relatório das Entrevistas"
-					tableTitle="RelatórioEntrevistas"
-					orientation="Portrait " facetBackground="#F88017"
-					facetFontSize="14" facetFontColor="#0000ff" facetFontStyle="BOLD"
-					cellFontColor="#00ff00" cellFontSize="12" cellFontStyle="NORMAL" />
+					fileName="RelatorioEntrevistas"
+					preProcessor="#{reportCandidaciesByTime.preProcessPDF}"
+					tableTitle="Entrevistas Realizadas Por Intervalo De Tempo"
+					orientation="Portrait " facetBackground="#A50D12"
+					facetFontSize="14" facetFontColor="#FFFFFF" facetFontStyle="BOLD"
+					cellFontColor="#303030" cellFontSize="12" cellFontStyle="NORMAL" />
+
 			</h:commandLink>
 		</p:panel>
 	</h:form>

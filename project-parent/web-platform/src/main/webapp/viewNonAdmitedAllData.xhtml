@@ -3,6 +3,7 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:pe="http://primefaces.org/ui/extensions"
 	xmlns:p="http://primefaces.org/ui">
 
 <h:head>
@@ -11,29 +12,90 @@
 </h:head>
 
 <h:body>
+	
+		<p:panel>
+			<p:chart type="line" model="#{reportNonAdmited.lineModel}"
+				widgetVar="chart" style="width:550px;height:300px" />
+			<p:commandButton type="button" value="Export" icon="ui-icon-extlink"
+				onclick="exportChart()" />
 
-	<h:form>
-		<p:chart type="line" value="#{reportNonAdmited.lineModel}"
-			style="width:500px;height:300px" widgetVar="chart" />
+			<p:dialog widgetVar="dlg" showEffect="fade" modal="true"
+				header="Salvar Imagem" resizable="false">
+				<p:outputPanel id="output" layout="block"
+					style="width:500px;height:300px" />
+			</p:dialog>
 
-		<p:commandButton type="button" value="Export" icon="ui-icon-extlink"
-			onclick="exportChart()" />
-
-		<p:dialog widgetVar="dlg" showEffect="fade" modal="true"
-			header="Salvar Gráfico" resizable="false">
-			<p:outputPanel id="output" layout="block"
-				style="width:500px;height:300px" />
-		</p:dialog>
-
-		<script type="text/javascript">
-			function exportChart() {
-   			 //export image
-   			 $('#output').empty().append(PF('chart').exportAsImage());
+			<script type="text/javascript">
+function exportChart() {
+    //export image
+    $('#output').empty().append(PF('chart').exportAsImage());
  
-    		//show the dialog
-    		PF('dlg').show();
-			}
-		</script>
+    //show the dialog
+    PF('dlg').show();
+}
+</script>
+		</p:panel>
+	
+	<p:spacer height="10" />
+
+	<h:form id="tableData">
+		<p:panel>
+			<p:dataTable id="tbl" var="candidacie"
+				value="#{reportNonAdmited.candidacies}" paginator="true"
+				paginatorPosition="bottom" rows="12" style="margin-bottom:20px">
+
+				<f:facet name="header">
+					<f:facet name="header">
+						<h:outputText value="Candidaturas rejeitadas de " />
+						<h:outputText value="#{reportNonAdmited.initDate}">
+							<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+						</h:outputText>
+						<h:outputText value=" a " />
+						<h:outputText value="#{reportNonAdmited.finalDate}">
+							<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+						</h:outputText>
+					</f:facet>
+				</f:facet>
+				<p:column headerText="Data Candidatura">
+					<h:outputText value="#{candidacie.date}" />
+				</p:column>
+
+				<p:column headerText="Nome Candidato">
+					<h:outputText
+						value="#{candidacie.candidate.firstName} + #{candidacie.candidate.lastName} " />
+				</p:column>
+
+				<p:column headerText="Habilitacoes">
+					<h:outputText value="#{candidacie.candidate.degreeString}" />
+				</p:column>
+
+				<p:column headerText="Motivo">
+					<h:outputText value="#{candidacie.rejectionReason.toString()}" />
+				</p:column>
+
+				<f:facet name="footer">
+					<h:outputText value="No total foram rejeitadas " />
+					<h:outputText value="#{reportNonAdmited.candidacies.size()}" />
+					<h:outputText value=" candidaturas." />
+				</f:facet>
+			</p:dataTable>
+		</p:panel>
+		<p:spacer height="10" />
+		<p:panel position="center">
+			<h:commandLink id="pdf">
+				<p:graphicImage name="/imgs/pdf_icon.gif" with="32" height="32" />
+				<pe:exporter type="pdf" target="tbl" encoding="UTF-8"
+					fileName="RelatorioCandidatosRejeitados"
+					preProcessor="#{reportCandidaciesByTime.preProcessPDF}"
+					tableTitle="Resultados De Quantidade de Candidatos Rejeitados Por Intervalo De Tempo"
+					orientation="Portrait " facetBackground="#A50D12"
+					facetFontSize="14" facetFontColor="#FFFFFF" facetFontStyle="BOLD"
+					cellFontColor="#303030" cellFontSize="12" cellFontStyle="NORMAL" />
+
+			</h:commandLink>
+		</p:panel>
 	</h:form>
+
+
 </h:body>
 </html>

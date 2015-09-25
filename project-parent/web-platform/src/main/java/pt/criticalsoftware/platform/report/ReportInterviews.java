@@ -7,12 +7,26 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
+import org.primefaces.model.chart.Axis;
+import org.primefaces.model.chart.AxisType;
+import org.primefaces.model.chart.CategoryAxis;
+import org.primefaces.model.chart.LineChartModel;
+import org.primefaces.model.chart.LineChartSeries;
+import org.primefaces.model.chart.PieChartModel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import pt.criticalsoftware.service.business.IInterviewBusinessService;
+import pt.criticalsoftware.service.model.ICandidacy;
 import pt.criticalsoftware.service.model.IInterview;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -22,11 +36,13 @@ import java.util.List;
 public class ReportInterviews implements Serializable {
 
 	private static final long serialVersionUID = 8200933112738188590L;
+	private final Logger logger = LoggerFactory.getLogger(ReportInterviews.class);
+
 	@EJB
 	private IInterviewBusinessService business;
 	private List<IInterview> interviews;
 	private Date initDate, finalDate;
-	
+
 	public ReportInterviews() {
 		interviews=new ArrayList<IInterview>();
 	}
@@ -39,8 +55,21 @@ public class ReportInterviews implements Serializable {
 		this.interviews = interviews;
 	}
 
+	
 	public Date getInitDate() {
-		return initDate;
+		if (initDate!=null){
+			LocalDate date = initDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();	
+			try {
+				String lDate = date.plusDays(1).format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+				DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+				return df.parse(lDate);
+			} catch (ParseException e) {
+				e.printStackTrace();
+				return null;
+			}
+		}else{
+			return initDate;
+		}
 	}
 
 	public void setInitDate(Date initDate) {
@@ -48,13 +77,25 @@ public class ReportInterviews implements Serializable {
 	}
 
 	public Date getFinalDate() {
-		return finalDate;
+		if (finalDate!=null){
+			LocalDate date = finalDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();	
+			try {
+				String lDate = date.plusDays(1).format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+				DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+				return df.parse(lDate);
+			} catch (ParseException e) {
+				e.printStackTrace();
+				return null;
+			}
+		}else{
+			return finalDate;
+		}
 	}
 
 	public void setFinalDate(Date finalDate) {
 		this.finalDate = finalDate;
 	}
-	
+
 	public String create(){
 		LocalDate dateInit = this.initDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 		LocalDate dateFinal = this.finalDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
@@ -63,13 +104,53 @@ public class ReportInterviews implements Serializable {
 			FacesContext context = FacesContext.getCurrentInstance();
 			context.getExternalContext().getFlash().setKeepMessages(true);
 			context.addMessage(null, message);		
-		
+
 			return "viewReportInterviews.xhtml?faces-redirect=true";
 		}
 		else {
 			this.interviews=business.getInterviewsByDatePeriod(dateInit,dateFinal);	
 			return "viewInterviews.xhtml?faces-redirect=true";
 		}
+	}
+
+	//	Chart
+	private PieChartModel lineModel;
+
+	public PieChartModel getLineModel() {
+		createLineModels();
+		return lineModel;
+	}
+
+	private void createLineModels() {
+		lineModel = initLinearModel();
+		lineModel.setTitle("Resultados das Entrevistas");
+		lineModel.setLegendPosition("se");
+		lineModel.setFill(false);
+		lineModel.setShowDataLabels(true);
+		lineModel.setDiameter(150);
+	}
+
+	private PieChartModel initLinearModel() {
+		PieChartModel model = new PieChartModel();
+		int auxP=0,auxN=0,auxI=0;
+		if (this.interviews.size()>=1){
+			for(IInterview c:this.interviews)
+				if (c.getGlobalRating()>0)
+					auxP++;
+				else if (c.getGlobalRating()<0)
+					auxN++;
+				else
+					auxI++;
+		}
+		else{
+			auxP=10;auxN=20;
+			auxI=70;
+		}
+		model.set("Positivo",auxP);
+		model.set("Sem disponibilidade",auxN);
+		model.set("Não correspondeu",auxI);
+
+		return model;
 	}
 }
 

@@ -28,6 +28,11 @@ public interface ICandidacyPersistenceService {
 
 	List<ICandidacy> getCandidaciesSpontaneousByDatePeriod(LocalDate initDate,LocalDate finalDate );
 	
+	List<ICandidacy> getNonAdmitedCandidaciesByDatePeriodAndPosition(LocalDate dateInit,LocalDate dateFinal,
+			Integer positionID);
+	
+	List<ICandidacy> getNonAdmitedCandidaciesByDatePeriod(LocalDate dateInit,LocalDate dateFinal);
+	
 	ICandidacy update(ICandidacy entity);
 
 	void delete(ICandidacy candidacy);

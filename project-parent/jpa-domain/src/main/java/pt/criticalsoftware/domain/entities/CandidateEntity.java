@@ -84,6 +84,7 @@ public class CandidateEntity {
 
 	}
 
+
 	public String getUsername() {
 		return username;
 	}

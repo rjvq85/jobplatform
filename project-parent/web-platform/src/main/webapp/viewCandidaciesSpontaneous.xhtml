@@ -18,13 +18,13 @@
 			paginatorPosition="bottom" rows="12" style="margin-bottom:20px">
 
 			<f:facet name="header">
-				<h:outputText value="Candidaturas espontâneas" />
+				<h:outputText value="Candidaturas espontaneas " />
 				
-				<h:outputText value="De: " />
+				<h:outputText value="de " />
 				<h:outputText value="#{reportCandidaciesByTime.initDate}">
 					<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
 				</h:outputText>
-				<h:outputText value=" a : " />
+				<h:outputText value=" a " />
 				<h:outputText value="#{reportCandidaciesByTime.finalDate}">
 					<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
 				</h:outputText>
@@ -35,17 +35,17 @@
 			</p:column>
 
 			<p:column headerText="Nome do Candidato">
-				<h:outputText value="#{candidacie.candidate.firstName}" />
+				<h:outputText value="#{candidacie.candidate.firstName} + #{candidacie.candidate.lastName}" />
 			</p:column>
 
-			<p:column headerText="Referência da Candidatura">
-				<h:outputText value="#{candidacie.reference}" />
+			<p:column headerText="Habilitacoes do candidato">
+				<h:outputText value="#{candidacie.candidate.degreeString}" />
 			</p:column>
 
 			<f:facet name="footer">
 				<h:outputText value="No total foram efectuadas: " />
 				<h:outputText value="#{reportCandidaciesByTime.candidacies.size()}" />
-				<h:outputText value=" candidaturas espontâneas." />
+				<h:outputText value=" candidaturas espontaneas." />
 			</f:facet>
 
 		</p:dataTable>
@@ -55,12 +55,14 @@
 			<h:commandLink id="pdf">
 				<p:graphicImage name="/imgs/pdf_icon.gif" with="32" height="32" />
 
-				<pe:exporter type="pdf" target="tbl" encoding="UTF-8"
-					fileName="Relatório por Candidaturas Espontâneas"
-					tableTitle="RelatórioCandidatosPorPeríodoTempo"
-					orientation="Portrait " facetBackground="#F88017"
-					facetFontSize="14" facetFontColor="#0000ff" facetFontStyle="BOLD"
-					cellFontColor="#00ff00" cellFontSize="12" cellFontStyle="NORMAL" />
+<pe:exporter type="pdf" target="tbl" encoding="UTF-8"
+					fileName="RelatoriodeCAndidaturasEspontaneas"
+					preProcessor="#{reportCandidaciesByTime.preProcessPDF}"
+					tableTitle="Resultados De Quantidade de Candidaturas Espontaneas Por Intervalo De Tempo"
+					orientation="Portrait " facetBackground="#A50D12"
+					facetFontSize="14" facetFontColor="#FFFFFF" facetFontStyle="BOLD"
+					cellFontColor="#303030" cellFontSize="12" cellFontStyle="NORMAL" />
+				
 			</h:commandLink>
 		</p:panel>
 	</h:form>

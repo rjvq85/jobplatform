@@ -116,4 +116,18 @@ public class CandidacyBusinessService implements ICandidacyBusinessService {
 		return persistence.getCandidaciesSpontaneousByDatePeriod(initDate, finalDate);
 	}
 
+	@Override
+	public List<ICandidacy> getNonAdmitedCandidaciesByDatePeriodAndPosition(
+			LocalDate dateInit, LocalDate dateFinal, Integer positionID) {
+	
+		return persistence.getNonAdmitedCandidaciesByDatePeriodAndPosition(dateInit,dateFinal,
+				positionID);
+	}
+
+	@Override
+	public List<ICandidacy> getNonAdmitedCandidaciesByDatePeriod(
+			LocalDate dateInit, LocalDate dateFinal) {
+		return persistence.getNonAdmitedCandidaciesByDatePeriod(dateInit,dateFinal);
+	}
+
 }

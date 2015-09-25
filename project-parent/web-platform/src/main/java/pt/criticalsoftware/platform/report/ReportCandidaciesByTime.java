@@ -1,8 +1,12 @@
 package pt.criticalsoftware.platform.report;
 
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -26,8 +30,11 @@ import java.io.Serializable;
 import com.lowagie.text.BadElementException;
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
+import com.lowagie.text.Font;
 import com.lowagie.text.Image;
 import com.lowagie.text.PageSize;
+import com.lowagie.text.Phrase;
+import com.lowagie.text.pdf.BaseFont;
 
 import java.io.File;
 import java.io.IOException;
@@ -39,6 +46,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletContext;
+import javax.swing.text.DateFormatter;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
@@ -64,7 +72,19 @@ public class ReportCandidaciesByTime implements Serializable {
 	}
 
 	public Date getInitDate() {
-		return initDate;
+		if (initDate!=null){
+			LocalDate date = initDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();	
+			try {
+				String lDate = date.plusDays(1).format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+				DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+				return df.parse(lDate);
+			} catch (ParseException e) {
+				e.printStackTrace();
+				return null;
+			}
+		}else{
+			return initDate;
+		}
 	}
 
 	public void setInitDate(Date initDate) {
@@ -72,7 +92,19 @@ public class ReportCandidaciesByTime implements Serializable {
 	}
 
 	public Date getFinalDate() {
-		return finalDate;
+		if (finalDate!=null){
+			LocalDate date = finalDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();	
+			try {
+				String lDate = date.plusDays(1).format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+				DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+				return df.parse(lDate);
+			} catch (ParseException e) {
+				e.printStackTrace();
+				return null;
+			}
+		}else{
+			return finalDate;
+		}
 	}
 
 	public void setFinalDate(Date finalDate) {
@@ -94,13 +126,13 @@ public class ReportCandidaciesByTime implements Serializable {
 			FacesContext context = FacesContext.getCurrentInstance();
 			context.getExternalContext().getFlash().setKeepMessages(true);
 			context.addMessage(null, message);		
-		
+
 			return "viewReportCandidaciesByTime.xhtml?faces-redirect=true";
 		}
 		else {
 			this.candidacies=business.getCandidaciesByDatePeriod(dateInit,dateFinal);
 			logger.info("A tabela foi criada com tamanho" + candidacies.size());
-			
+
 			return "viewCandidacies.xhtml?faces-redirect=true";
 		}
 	}
@@ -123,5 +155,22 @@ public class ReportCandidaciesByTime implements Serializable {
 			return "viewCandidaciesSpontaneous.xhtml?faces-redirect=true";
 		}
 	}
-	
+
+	public void preProcessPDF(Object document) throws IOException, BadElementException, DocumentException {
+
+		Document pdf = (Document) document;
+		pdf.open();
+		pdf.setPageSize(PageSize.A4);
+		BaseFont bf_helv = BaseFont.createFont(BaseFont.HELVETICA, "Cp1252", false);
+		Font headerFont = new Font(bf_helv, 12);
+
+		ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
+		String logo = servletContext.getRealPath("") + File.separator + "resources"
+				+ ""   + File.separator + "imgs" + File.separator + "criticalIcon.jpg";
+		pdf.add(Image.getInstance(logo));
+		Phrase phrase = new Phrase(12, "\n", headerFont);
+		phrase.add("\n Critical Software Relatórios \n \n");
+		pdf.add(phrase);
+	}
+
 }

@@ -13,80 +13,250 @@
 </h:head>
 <h:body>
 	<ui:composition>
-		<h:form prependId="false" id="navform">
-			<h:panelGroup layout="block" style="margin-bottom: 20px;">
-				<nav class="navbar navbar-red navbar-fixed-top">
-					<div class="container">
-						<!-- Brand and toggle get grouped for better mobile display -->
-						<div class="navbar-header">
-							<button type="button" class="navbar-toggle collapsed"
-								data-toggle="collapse"
-								data-target="#bs-example-navbar-collapse-1"
-								aria-expanded="false">
-								<span class="sr-only">Toggle navigation</span> <span
-									class="icon-bar"></span> <span class="icon-bar"></span> <span
-									class="icon-bar"></span>
-							</button>
-							<a href="#{request.contextPath}/Authorized/index.xhtml"
-								class="navbar-brand">Início</a>
-						</div>
-						<!-- Collect the nav links, forms, and other content for toggling -->
-						<div class="collapse navbar-collapse"
-							id="bs-example-navbar-collapse-1">
-							<ul class="nav navbar-nav">
-								<!-- Botões como Candidaturas, Posições, Entrevistas, etc... -->
-								<li><h:link value="Posições"
-										outcome="/Authorized/Positions/positionListAdminMain?faces-redirect=true"
-										disabled="false" /></li>
-								<li><h:link value="Candidaturas"
-										outcome="/Authorized/Candidacies/candidacies?faces-redirect=true"
-										disabled="false" /></li>
-								<li><h:link value="Candidatos"
-										outcome="/Authorized/Candidates/candidates?faces-redirect=true"
-										disabled="false" /></li>
-								<h:panelGroup layout="block" rendered="#{userROLE eq 'ADMIN'}">
-									<li><h:link value="Entrevistas"
-											outcome="/Authorized/Interviews/interviews?faces-redirect=true"
-											disabled="false" /></li>
-								</h:panelGroup>
-								<h:panelGroup layout="block" rendered="#{userROLE eq 'ADMIN'}">
-									<li><h:link value="Relatórios"
-											outcome="/Authorized/Reports/reports?faces-redirect=true"
-											disabled="false" /></li>
-								</h:panelGroup>
-								<h:panelGroup layout="block" rendered="#{userROLE eq 'ADMIN'}">
-									<li><h:link value="Guiões"
-											outcome="/Authorized/Scripts/scripts?faces-redirect=true"
-											disabled="false" /></li>
-								</h:panelGroup>
-							</ul>
-							<ul class="nav navbar-nav navbar-right">
-								<li class="dropdown"><h:link value="#{userNAME}"
-										outcome="#" styleClass="dropdown-toggle"
-										a:data-toggle="dropdown" a:role="button"
-										a:aria-haspopup="true" a:aria-expanded="false"
-										disabled="false">
-										<span class="caret"></span>
-									</h:link>
-									<ul class="dropdown-menu">
-										<li><a href="#">Perfil</a></li>
-										<li><a href="#">Password</a></li>
-										<li role="separator" class="divider"></li>
-										<li><a href="#{request.contextPath}/Authorized/Interviews/myinterviews.xhtml">As minhas Entrevistas</a></li>
-										<h:panelGroup layout="block" rendered="#{userROLE eq 'ADMIN'}">
-											<li role="separator" class="divider"></li>
-											<li><a href="#">Gestão Utilizadores</a></li>
-										</h:panelGroup>
-									</ul></li>
-								<li><h:commandLink action="#{loginPublic.logout()}"
-										value="Logout" /></li>
-							</ul>
-						</div>
-						<!-- /.navbar-collapse -->
+		<h:panelGroup id="header-bar" layout="block"
+			style="margin-bottom: 20px;">
+			<nav class="navbar navbar-red navbar-fixed-top">
+				<div class="container">
+					<!-- Brand and toggle get grouped for better mobile display -->
+					<div class="navbar-header">
+						<button type="button" class="navbar-toggle collapsed"
+							data-toggle="collapse"
+							data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+							<span class="sr-only">Toggle navigation</span> <span
+								class="icon-bar"></span> <span class="icon-bar"></span> <span
+								class="icon-bar"></span>
+						</button>
+						<a href="#{request.contextPath}/jobs.xhtml" class="navbar-brand">Início</a>
 					</div>
-					<!-- /.container-fluid -->
-				</nav>
-			</h:panelGroup>
+					<!-- Collect the nav links, forms, and other content for toggling -->
+					<div class="collapse navbar-collapse"
+						id="bs-example-navbar-collapse-1">
+						<h:form id="toolbarForm">
+							<ul class="nav navbar-nav navbar-right">
+								<li><h:link value="Registar"
+										outcome="register?faces-redirect=true"
+										rendered="#{not userIsLogged}"></h:link></li>
+								<li><h:commandLink action="dospontaneous"
+										value="Candidatura Espontânea"
+										rendered="#{userIsLogged and not spontaneousStatus.hasSpontCandidacy()}">
+										<p:ajax update=":spontform" process="@this"
+											oncomplete="PF('spontWidget').show(); return false;"></p:ajax>
+										<p:resetInput target=":spontform"></p:resetInput>
+									</h:commandLink></li>
+								<!-- Account edit -->
+								<li><p:commandButton id="dropbutton"
+										value="#{jobs.countName}" type="button" icon="ui-icon-person"
+										style="color:white !important;background-color:firebrick !important; border-radius:0 !important; margin-top:15%;"
+										rendered="#{userIsLogged}" /></li>
+								<p:menu overlay="true" trigger="dropbutton" my="right top"
+									at="right bottom">
+									<p:submenu label="Dados Utilizador">
+										<p:menuitem value="Alterar Email" icon="ui-icon-pencil"
+											title="Editar dados" oncomplete="PF('editUserDialog').show()"
+											process="@this" />
+
+										<p:menuitem value="Alterar Password" icon="ui-icon-key"
+											title="Editar Password"
+											oncomplete="PF('editPassDialog').show()" process="@this">
+											<p:resetInput target="frmEditPass:formEditPass" />
+										</p:menuitem>
+
+										<p:menuitem value="Ver Candidaturas" icon="ui-icon-key"
+											title="Ver Candidaturas"
+											oncomplete="PF('viewCandidacies').show()" process="@this">
+
+										</p:menuitem>
+
+										<p:menuitem value="Actualizar CV" icon="ui-icon-key"
+											title="Actualizar CV" oncomplete="PF('editCVDialog').show()"
+											process="@this">
+										</p:menuitem>
+
+										<p:menuitem value="Mais informações" icon="ui-icon-plus"
+											title="Mais informações"
+											oncomplete="PF('addInfoWidget').show()" process="@this">
+										</p:menuitem>
+
+										<p:menuitem value="Encerrar conta" icon="ui-icon-closethick"
+											onclick="PF('deleteAccountDialog').show(); return false;" />
+									</p:submenu>
+								</p:menu>
+								<li><p:commandButton value="Logout" icon="ui-icon-power"
+										action="#{loginPublic.logout()}" ajax="false"
+										style="color:white !important;background-color:firebrick !important; border-radius:0 !important; margin-top:10%;"
+										rendered="#{userIsLogged}" /></li>
+								<li><p:commandButton value="Login" icon="ui-icon-power"
+										action="#"
+										style="color:white !important;background-color:firebrick !important; border-radius:0 !important; margin-top:10%;"
+										rendered="#{not userIsLogged}"
+										oncomplete="PF('loginWidget').show();" /></li>
+							</ul>
+						</h:form>
+						<!-- dialog edit info -->
+						<h:form id="frmEditData">
+							<p:dialog header="Edit Info" widgetVar="editUserDialog"
+								showEffect="explode" hideEffect="explode" id="formEditUserData"
+								resizable="false" modal="true" closeOnEscape="true">
+								<h:panelGrid columns="1" id="painel-dialogEdit">
+									<p:outputLabel for="email" value="E-mail:" />
+									<p:inputText id="email" required="true" label="email" size="30"
+										requiredMessage="Campo de email obrigatório"
+										validatorMessage="Formato de email inválido"
+										value="#{jobs.userMail}">
+										<f:validateRegex
+											pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+									</p:inputText>
+
+								</h:panelGrid>
+								<p:button value="Cancel"
+									style=" margin-right:10px; margin-top:10px;"
+									onclick="PF('editUserDialog').hide(); return false;" />
+
+								<p:commandButton value="Save" id="botao-editar"
+									style=" margin-left:10px;margin-top:10px;"
+									action="#{jobs.editData()}"
+									oncomplete="if (!args.validationFailed)PF('editUserDialog').hide()" />
+							</p:dialog>
+						</h:form>
+
+						<!-- DIALOG Edit PASSWORD -->
+						<h:form id="frmEditPass">
+							<p:dialog header="Edit Password" widgetVar="editPassDialog"
+								showEffect="explode" hideEffect="explode" id="formEditPass"
+								style="height: 200px; width: 400px;" resizable="false"
+								modal="true" closeOnEscape="true">
+								<h:panelGrid columns="2" id="painel-dialogEditPass">
+									<p:messages id="messages" showDetail="true" autoUpdate="true" />
+									<h:outputLabel for="pwd1" value="Nova Password" />
+
+									<p:password id="pwd1" value="#{jobs.password}" match="pwd2"
+										label="Password" required="true"
+										validatorMessage="Mín: 8 carac.">
+										<f:validateLength minimum="8" />
+									</p:password>
+									<h:outputLabel for="pwd2" value="Confirmar Password" />
+									<p:password id="pwd2" label="Password" required="true"
+										validatorMessage="Mín: 8 carac.">
+										<f:validateLength minimum="8" />
+									</p:password>
+								</h:panelGrid>
+								<p:button value="Cancel"
+									style=" margin-right:10px; margin-top:10px;"
+									onclick="PF('editPassDialog').hide(); return false;" />
+								<p:commandButton value="Save" type="submit"
+									style="margin-left:10px;margin-top:10px;"
+									action="#{jobs.editPass()}"
+									oncomplete="if (!args.validationFailed)PF('editPassDialog').hide()" />
+							</p:dialog>
+						</h:form>
+						<!--Candidacies List -->
+						<h:form id="for-cand">
+							<p:dialog header="As Minhas Candidaturas"
+								widgetVar="viewCandidacies" showEffect="explode"
+								hideEffect="explode" id="formEditPass" resizable="false"
+								modal="true" closeOnEscape="true">
+								<p:dataTable id="tbl" var="candidacie"
+									value="#{jobs.candidacies}" paginator="true"
+									paginatorPosition="bottom" rows="12" style="margin-bottom:20px">
+
+									<p:column headerText="Data Candidatura">
+										<h:outputText value="#{candidacie.date}" />
+									</p:column>
+									<p:column headerText="Área da Posição">
+										<h:outputText
+											value="#{candidacie.positionCandidacy.technicalArea.toString()}" />
+									</p:column>
+									<p:column headerText="Local">
+										<h:outputText value="#{candidacie.positionCandidacy.locale}" />
+									</p:column>
+									<p:column headerText="Estado da Candidatura">
+										<h:outputText value="#{candidacie.state}" />
+									</p:column>
+								</p:dataTable>
+								<p:button value="Sair"
+									onclick="PF('viewCandidacies').hide(); return false;" />
+
+							</p:dialog>
+						</h:form>
+						<!-- Delete account -->
+						<h:form id="form-delete">
+							<p:confirmDialog header="Confirmação de eliminação"
+								message="Tem a certeza que pretende eliminar a conta?"
+								showEffect="explode" hideEffect="explode"
+								widgetVar="deleteAccountDialog">
+								<p:commandButton value="Sim" action="#{jobs.deleteAccount()}"
+									oncomplete="PF('deleteAccountDialog').hide()">
+									<p:ajax update="header-bar :positionForm:gridPositions" />
+								</p:commandButton>
+								<p:button value="Não"
+									onclick="PF('deleteAccountDialog').hide(); return false;" />
+							</p:confirmDialog>
+						</h:form>
+
+						<!-- Edit CV -->
+						<h:form id="formCV" enctype="multipart/form-data">
+							<p:dialog header="Atualizar CV" widgetVar="editCVDialog"
+								showEffect="explode" hideEffect="explode" id="formEditPass"
+								resizable="false" modal="true" closeOnEscape="true"
+								style="height: 200px; width: 400px;">
+
+								<h:panelGroup layout="block" styleClass="row no-gutter"
+									style="padding-left:15px; margin-top: 0px; top: 15px;">
+									<h:panelGroup layout="block" styleClass="col-md-2">
+										<span class="form-control file-input btn btn-danger btn-file"
+											style="border-top-right-radius: 0; border-bottom-right-radius: 0;">
+											CV<h:inputFile id="ficheiro" value="#{jobs.file}"
+												validator="pt.criticalsoftware.publicplatform.validators.FileValidator"
+												styleClass="form-control btn btn-info" required="true"
+												requiredMessage="Obrigatório">
+												<f:ajax event="change" render="filename" />
+											</h:inputFile>
+										</span>
+									</h:panelGroup>
+									<h:panelGroup layout="block" styleClass="col-md-4">
+										<h:outputText id="filename"
+											value="#{jobs.file.submittedFileName.toUpperCase()}"
+											styleClass="form-control text-right well-sm"
+											style="border-radius:0px;" />
+									</h:panelGroup>
+									<h:panelGroup layout="block" styleClass="col-md-1"
+										style="width:5%;">
+										<span class="input-group-addon"
+											style="border-bottom-right-radius: 5px; border-top-right-radius: 5px; padding-left: 13px; padding-right: 13px; padding-top: 9px; padding-bottom: 9px;"><span
+											class="glyphicon glyphicon-asterisk"></span></span>
+									</h:panelGroup>
+									<h:panelGroup layout="block" styleClass="col-md-5">
+										<h:message for="ficheiro" styleClass="label label-info"
+											style="border-radius: 0px; font-weight: 400; padding-left: 10px !important; padding-right: 10px !important; margin-left:40px;" />
+									</h:panelGroup>
+								</h:panelGroup>
+
+								<p:commandButton value="Gravar" id="botao-editar" ajax="false"
+									type="submit" style=" margin-left:10px;margin-top:40px;"
+									action="#{jobs.newCV()}" onclick="PF('editCVDialog').hide()" />
+
+							</p:dialog>
+						</h:form>
+					</div>
+					<!-- /.navbar-collapse -->
+				</div>
+				<!-- /.container-fluid -->
+			</nav>
+		</h:panelGroup>
+		<h:form id="loginform" prependId="false">
+			<ui:insert name="LoginDialog">
+				<ui:include src="/logindlg.xhtml" />
+			</ui:insert>
+		</h:form>
+		<h:form id="addinfoform" prependId="false">
+			<ui:insert name="AdditionalInformationDialog">
+				<ui:include src="/additionalinfodlg.xhtml" />
+			</ui:insert>
+		</h:form>
+		<h:form id="spontform" prependId="false">
+			<ui:insert name="SpontDialog">
+				<ui:include src="/spontdlg.xhtml" />
+			</ui:insert>
 		</h:form>
 	</ui:composition>
 </h:body>

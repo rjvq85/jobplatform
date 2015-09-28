@@ -276,6 +276,21 @@
 											style="border-radius: 0px; font-weight: 400; padding-left: 10px !important; padding-right: 10px !important;" />
 									</h:panelGroup>
 								</h:panelGroup>
+								<h:panelGroup layout="block" styleClass="row">
+									<h:panelGroup layout="block" styleClass="col-md-7">
+										<h:panelGroup layout="block" styleClass="input-group"
+											style="color:white; margin-top:15px;">
+											<h:selectBooleanCheckbox
+												value="#{registerPublic.spontaneous}" id="spontCandidacy" />
+											<label for="spontCandidacy" style="margin-left: 10px;">Candidatura
+												Espontânea</label>
+										</h:panelGroup>
+									</h:panelGroup>
+									<h:panelGroup layout="block" styleClass="col-md-5">
+										<h:message for="school" styleClass="label label-info"
+											style="border-radius: 0px; font-weight: 400; padding-left: 10px !important; padding-right: 10px !important;" />
+									</h:panelGroup>
+								</h:panelGroup>
 								<h:panelGroup layout="block" styleClass="row no-gutter"
 									style="padding-left:15px; margin-top: 0px; top: 15px;">
 									<h:panelGroup layout="block" styleClass="col-md-2">
@@ -333,10 +348,12 @@
 						</h:panelGroup>
 					</h:panelGroup>
 					<br />
+					<hr />
 					<h:panelGroup layout="block" styleClass="row text-center">
 						<h:panelGroup layout="block" styleClass="col-md-12 text-center">
 							<h:commandButton id="rbtn" action="#{registerPublic.register()}"
-								value="Submeter" styleClass="btn btn-info registerbtns" onclick="fadeoutMsg();">
+								value="Submeter" styleClass="btn btn-info registerbtns"
+								onclick="fadeoutMsg();">
 								<f:ajax render=":registerpage" execute="@form :registerform" />
 							</h:commandButton>
 							<h:commandButton id="cbtn" action="#{searchedPosition.goOn()}"

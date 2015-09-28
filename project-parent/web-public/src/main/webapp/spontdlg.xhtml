@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+<h:head>
+	<meta charset="utf-8" />
+	<h:outputScript name="jquery/jquery.js" library="primefaces" />
+	<h:outputScript library="js" name="bootstrap.js" />
+	<h:outputScript library="js" name="bootstrap-select.js" />
+	<h:outputScript library="js" name="customscripts.js" />
+	<h:outputStylesheet library="css" name="mainstyle.css" />
+	<h:outputStylesheet library="css" name="bootstrap.css" />
+</h:head>
+<h:body>
+	<ui:composition>
+		<p:dialog id="spontDialog" widgetVar="spontWidget"
+			header="Candidatura Espontânea" modal="true" resizable="false">
+			<h:panelGroup id="spontcontainer" layout="block"
+				styleClass="container-small">
+				<br />
+				<h:panelGroup layout="block" class="row">
+					<h:panelGroup layout="block" class="col-md-12">
+						<h3>Ao realizar uma candidatura espontânea, o seu perfil vai
+							ficar guardado nos nossos registos e poderá, no futuro ser
+							associado a novas posições, pelos nossos gestores.</h3>
+					</h:panelGroup>
+				</h:panelGroup>
+				<hr />
+				<h:panelGroup layout="block" class="row">
+					<h:panelGroup layout="block" class="col-md-12">
+						<h:panelGroup layout="block" class="col-md-offset-3 col-md-6">
+							<h:commandButton
+								action="#{spontaneousStatus.createSpontaneous()}" value="Criar"
+								styleClass="btn btn-info" style="width: 45%; border-radius: 0;">
+							</h:commandButton>
+							<h:commandButton action="#" value="Cancelar"
+								onclick="PF('spontWidget').hide(); return false;"
+								styleClass="btn btn-default pull-right"
+								style="width: 45%; border-radius: 0;" />
+						</h:panelGroup>
+					</h:panelGroup>
+				</h:panelGroup>
+			</h:panelGroup>
+		</p:dialog>
+	</ui:composition>
+</h:body>
+</html>

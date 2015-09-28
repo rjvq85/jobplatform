@@ -49,7 +49,7 @@ public class LoginPublic implements Serializable {
 			setUserID();
 			getSession().setAttribute("userIsLogged", true);
 			getSession().setAttribute("usersName", getUsersName(username));
-			return AUTH_URL + "index.xhtml?faces-redirect=true";
+			return AUTH_URL + "jobs.xhtml?faces-redirect=true";
 		} catch (Exception e) {
 			return "loginerror";
 		}
@@ -102,7 +102,9 @@ public class LoginPublic implements Serializable {
 			getRequestContext().addCallbackParam("loggedIn", true);
 			getSession().setAttribute("usersName", getUsersName(username));
 			setUserID();
+			RequestContext.getCurrentInstance().addCallbackParam("loggedIn", true);
 		} catch (Exception e) {
+			RequestContext.getCurrentInstance().addCallbackParam("loggedIn", false);
 		}
 	}
 	

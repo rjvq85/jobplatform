@@ -38,7 +38,8 @@ import pt.criticalsoftware.service.persistence.utils.LocalDatePersistenceConvert
 		@NamedQuery(name = "Candidacy.searchNonAdmitedCandidaciesByDatePeriodAndPosition", query = "SELECT c FROM CandidacyEntity c WHERE c.positionCandidacy.id = :positionID AND c.date >= :initDate AND c.date <= :finalDate"),
 		@NamedQuery(name = "Candidacy.searchNonAdmitedCandidaciesByDatePeriod", query = "SELECT c FROM CandidacyEntity c WHERE c.date >= :initDate AND c.date <= :finalDate"),
 		@NamedQuery(name = "Candidacy.manager", query = "SELECT c FROM CandidacyEntity c WHERE c.positionCandidacy.responsable.id = :param"),
-		@NamedQuery(name = "Candidacy.interviews", query = "SELECT elements(c.interviews) FROM CandidacyEntity as c WHERE c.id = :param") })
+		@NamedQuery(name = "Candidacy.interviews", query = "SELECT elements(c.interviews) FROM CandidacyEntity as c WHERE c.id = :param"),
+		@NamedQuery(name = "Candidacy.spontaneousByCandidate", query = "SELECT COUNT(c) FROM CandidacyEntity c WHERE c.positionCandidacy = NULL AND c.candidate.id = :param") })
 
 public class CandidacyEntity {
 
@@ -58,7 +59,7 @@ public class CandidacyEntity {
 	@Convert(converter = LocalDatePersistenceConverter.class)
 	@Column(name = "data_candidatura")
 	private LocalDate date;
-	
+
 	@Convert(converter = LocalDatePersistenceConverter.class)
 	@Column(name = "data_contratacao")
 	private LocalDate hiringDate;
@@ -66,7 +67,7 @@ public class CandidacyEntity {
 	@Enumerated(EnumType.STRING)
 	@Column(name = "estado_candidatura", nullable = false)
 	private CandidacyState state;
-	
+
 	@Enumerated(EnumType.STRING)
 	@Column(name = "motivo_rejeicao")
 	private Reason rejectionReason;
@@ -192,6 +193,5 @@ public class CandidacyEntity {
 	public void setHiringDate(LocalDate hiringDate) {
 		this.hiringDate = hiringDate;
 	}
-
 
 }

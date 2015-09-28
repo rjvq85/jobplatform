@@ -7,7 +7,7 @@
 
 <ui:composition>
 	<!-- Positions list -->
-	<p:dataTable id="gridPositions" var="job" value="#{jobs.jobs}"
+	<p:dataTable id="gridPositions" var="job" emptyMessage="Sem resultados..." value="#{jobs.jobs}"
 		selectionMode="single" selection="#{jobs.selectedJob}"
 		widgetVar="jobsList" rowKey="#{job.id}" paginator="true"
 		paginatorPosition="bottom" rows="15"

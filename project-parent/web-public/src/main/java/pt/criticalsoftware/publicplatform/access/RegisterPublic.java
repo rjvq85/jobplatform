@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 
 import pt.criticalsoftware.publicplatform.access.utils.FileUploadPublic;
 import pt.criticalsoftware.service.business.ICandidacyBusinessService;
+import pt.criticalsoftware.service.business.ICandidateBusinessService;
 import pt.criticalsoftware.service.exceptions.DuplicateCandidateException;
 import pt.criticalsoftware.service.model.ICandidacy;
 import pt.criticalsoftware.service.model.ICandidacyBuilder;
@@ -37,6 +38,8 @@ public class RegisterPublic implements Serializable {
 	private ICandidateBuilder candidateBuilder;
 	@EJB
 	private ICandidacyBusinessService candidacyBness;
+	@EJB
+	private ICandidateBusinessService candidateBness;
 	@Inject
 	private FileUploadPublic fileUpload;
 	@Inject
@@ -58,7 +61,8 @@ public class RegisterPublic implements Serializable {
 	private String cv;
 	private CandidacyState state;
 	private Part file;
-	
+	private Boolean spontaneous;
+
 	private boolean readTerms = false;
 
 	public String register() { // Se chegar a esta página vindo de uma posição
@@ -66,17 +70,19 @@ public class RegisterPublic implements Serializable {
 								// guardado, e nesse caso este método devolve a
 								// página dessa candidatura, caso contrário,
 								// volta ao início
-		System.out.println("ENTROU PARA O REGISTO\n\n\n\n");
 		try {
 			fileUpload.setFile(file);
 			String filePath = fileUpload.fileUpload(username);
 			ICandidate icandidate = candidateBuilder.address(address).country(country).course(course).degree(degree)
 					.email(email).firstName(firstName).lastName(lastName).mobile(mobile).password(password).phone(phone)
 					.school(school).town(city).username(username).cv(filePath).build();
-			ICandidacy icandidacy = candidacyBuilder.state(CandidacyState.SUBMETIDA).candidate(icandidate).build();
-			candidacyBness.createCandidacy(icandidacy);
-			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Registo efectuado com sucesso!",
-					"");
+			if (spontaneous) {
+				ICandidacy icandidacy = candidacyBuilder.state(CandidacyState.SUBMETIDA).candidate(icandidate).build();
+				candidacyBness.createCandidacy(icandidacy);
+			} else {
+				candidateBness.addCandidate(icandidate);
+			}
+			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Registo efectuado com sucesso!", "");
 			FacesContext.getCurrentInstance().addMessage(null, message);
 			FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
 			login.setUsername(username);
@@ -277,6 +283,14 @@ public class RegisterPublic implements Serializable {
 
 	public void setReadTerms(boolean readTerms) {
 		this.readTerms = readTerms;
+	}
+
+	public Boolean getSpontaneous() {
+		return spontaneous;
+	}
+
+	public void setSpontaneous(Boolean spontaneous) {
+		this.spontaneous = spontaneous;
 	}
 
 }

@@ -17,66 +17,68 @@
 </h:head>
 <h:body>
 	<ui:composition>
-		<p:dialog id="loginDialog" widgetVar="loginWidget" header="Login" modal="true" resizable="false">
-			<h:panelGroup id="logincontainer" layout="block"
+		<p:dialog id="addInfoDialog" widgetVar="addInfoWidget"
+			header="Informação Adicional" modal="true" resizable="false">
+			<h:panelGroup id="addinfocontainer" layout="block"
 				styleClass="container-small">
-				<br/>
+				<br />
 				<h:panelGroup layout="block" class="row">
 					<h:panelGroup layout="block" class="col-md-12">
 						<h:panelGroup layout="block" class="col-md-offset-3 col-md-6">
-							<label for="un">Username: </label>
-							<h:inputText value="#{loginPublic.username}"
-								a:placeholder="Introduza o seu nome de utilizador" id="un"
+							<label for="newcourse">Curso: </label>
+							<h:inputText value="#{additionalInformation.course}"
+								a:placeholder="Novo curso" id="newcourse"
 								styleClass="input-group" style="width:100%;" />
 						</h:panelGroup>
 					</h:panelGroup>
 				</h:panelGroup>
-				<br/>
+				<br />
 				<h:panelGroup layout="block" class="row">
 					<h:panelGroup layout="block" class="col-md-12">
 						<h:panelGroup layout="block" class="col-md-offset-3 col-md-6">
-							<label for="pw">Password: </label>
-							<h:inputSecret value="#{loginPublic.password}"
-								a:placeholder="Introduza a sua password" id="pw"
-								styleClass="input-group" style="width:100%;" />
+							<label for="newdegree">Grau: </label>
+							<h:inputText value="#{additionalInformation.degree}"
+								a:placeholder="Grau" id="newdegree" styleClass="input-group"
+								style="width:100%;" />
 						</h:panelGroup>
 					</h:panelGroup>
 				</h:panelGroup>
-				<br/>
+				<br />
 				<h:panelGroup layout="block" class="row">
 					<h:panelGroup layout="block" class="col-md-12">
 						<h:panelGroup layout="block" class="col-md-offset-3 col-md-6">
-							<h:commandButton action="#{loginPublic.loginDialog()}" value="Login"
-								styleClass="btn btn-info" style="width: 45%; border-radius: 0;">
-								<p:ajax oncomplete="handleLoginRequest(xhr, status, args)" update=":container" process="loginform"/>
+							<label for="newschool">Escola/Universidade: </label>
+							<h:inputText value="#{additionalInformation.school}"
+								a:placeholder="Escola" id="newschool" styleClass="input-group"
+								style="width:100%;" />
+						</h:panelGroup>
+					</h:panelGroup>
+				</h:panelGroup>
+				<br />
+				<h:panelGroup layout="block" class="row">
+					<h:panelGroup layout="block" class="col-md-12">
+						<h:panelGroup layout="block" class="col-md-offset-3 col-md-6">
+							<h:commandButton action="#{additionalInformation.update()}"
+								value="Actualizar" styleClass="btn btn-info"
+								style="width: 45%; border-radius: 0;">
+								<p:ajax oncomplete="handleUpdateRequest(xhr, status, args)"
+									update=":container" process="addinfoform" />
 							</h:commandButton>
 							<h:commandButton action="#" value="Cancelar"
-								onclick="PF('loginWidget').hide(); return false;"
+								onclick="PF('addInfoWidget').hide(); return false;"
 								styleClass="btn btn-default pull-right"
-								style="width: 45%; border-radius: 0;"/>
-						</h:panelGroup>
-					</h:panelGroup>
-				</h:panelGroup>
-				<h:panelGroup layout="block" class="row">
-					<h:panelGroup layout="block" class="col-md-12">
-						<h:panelGroup layout="block"
-							class="col-md-offset-3 col-md-6 text-center">
-							<h:commandLink action="enteremail.xhtml?faces-redirect=true"
-								value="Esqueceu-se da password? Anule, e
-								receba uma nova."
-								styleClass="small" />
+								style="width: 45%; border-radius: 0;" />
 						</h:panelGroup>
 					</h:panelGroup>
 				</h:panelGroup>
 			</h:panelGroup>
 		</p:dialog>
 		<script type="text/javascript">
-    		function handleLoginRequest(xhr, status, args) {
-        		if(!args.loggedIn) {
-            		PF('loginWidget').jq.effect("shake", {times:5}, 100);
+    		function handleUpdateRequest(xhr, status, args) {
+        		if(!args.updated) {
+            		PF('addInfoWidget').jq.effect("shake", {times:5}, 100);
         		} else {
-            		PF('loginWidget').hide();
-            		location.reload();
+            		PF('addInfoWidget').hide();
         		}
     		}
 		</script>

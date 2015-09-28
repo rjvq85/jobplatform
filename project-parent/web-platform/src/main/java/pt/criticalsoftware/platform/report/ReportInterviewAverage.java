@@ -180,7 +180,7 @@ public class ReportInterviewAverage implements Serializable{
 					//date2 is the hiring date  
 					
 					//---------------------ALTERAR AQUI A DATA DE CONTRATAÇÃO QUE É A SEGUNDA DATA------------------------
-					LocalDate date2=c.getInterviews().get(0).getDate();
+					LocalDate date2=c.getHiringDate();
 					Period betweenDates = Period.between(date1, date2);
 					int diffInDays = betweenDates.getDays();
 					int diffInMonths = betweenDates.getMonths();

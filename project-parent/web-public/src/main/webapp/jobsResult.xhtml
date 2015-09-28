@@ -7,6 +7,9 @@
 
 <h:head>
 	<meta charset="utf-8" />
+	<h:outputStylesheet library="css" name="register.css" />
+	<h:outputStylesheet library="css" name="mainstyle.css" />
+	<h:outputStylesheet library="css" name="bootstrap.css" />
 	<h:outputStylesheet library="css" name="jobs.css" />
 </h:head>
 
@@ -16,11 +19,11 @@
 		<h:outputText id="resultSearch" value="#{jobs.searchParam}" />
 		<p></p>
 		<p:separator />
-		<h:form id="toolbarForm">
+	
 			<ui:insert name="toolbar">
 				<ui:include src="userToolbar.xhtml" />
 			</ui:insert>
-		</h:form>
+	
 		<h:form id="positionForm">
 			<ui:insert name="positionsList">
 				<ui:include src="jobsList.xhtml" />

@@ -58,4 +58,22 @@ public class CandidateBusinessService implements ICandidateBusinessService {
 		}
 	}
 
+	@Override
+	public void updateEmail(String email, ICandidate candidate) {
+		persistence.updateEmail(email, candidate);
+		
+	}
+
+	@Override
+	public void updateCV(String filePath, ICandidate candidate) {
+		persistence.updateCV(filePath, candidate);
+		
+	}
+
+	@Override
+	public void deleteUser(ICandidate candidate) {
+		persistence.deleteUser(candidate);
+		
+	}
+
 }

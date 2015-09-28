@@ -23,7 +23,12 @@ public interface ICandidacyBusinessService {
 	List<ICandidacy> getCandidaciesByDatePeriod(LocalDate initDate,LocalDate finalDate );
 
 	List<ICandidacy> getCandidaciesSpontaneousByDatePeriod(LocalDate initDate,LocalDate finalDate );
-
+	
+	List<ICandidacy> getNonAdmitedCandidaciesByDatePeriodAndPosition(LocalDate dateInit,LocalDate dateFinal,
+			Integer positionID);
+	
+	List<ICandidacy> getNonAdmitedCandidaciesByDatePeriod(LocalDate dateInit,LocalDate dateFinal);
+	
 	List<ICandidacy> getManagerCandidacies(Integer id);
 
 	List<ICandidacy> getSearchedDatesCandidaciesManager(LocalDate date, Integer currentUserID);

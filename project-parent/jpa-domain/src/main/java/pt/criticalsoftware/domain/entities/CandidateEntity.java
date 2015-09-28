@@ -78,7 +78,7 @@ public class CandidateEntity {
 
 	@Column(name = "cv", unique = true)
 	private String cv;
-
+	
 	@Column(name = "linkedin_connections")
 	private Integer linkedInConnections;
 
@@ -93,13 +93,14 @@ public class CandidateEntity {
 
 	@Column(name = "linkedin_summary")
 	private String linkedInSummary;
-
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "candidate")
+	
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "candidate", cascade=CascadeType.REMOVE)
 	private Collection<CandidacyEntity> candidacies;
 
 	public CandidateEntity() {
 
 	}
+
 
 	public String getUsername() {
 		return username;

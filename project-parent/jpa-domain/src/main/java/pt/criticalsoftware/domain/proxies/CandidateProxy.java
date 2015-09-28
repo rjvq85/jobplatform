@@ -10,6 +10,7 @@ import javax.xml.bind.annotation.XmlTransient;
 import com.sun.syndication.io.impl.Base64;
 
 import pt.criticalsoftware.domain.entities.CandidateEntity;
+import pt.criticalsoftware.service.model.ICandidacy;
 import pt.criticalsoftware.service.model.ICandidate;
 
 public class CandidateProxy implements ICandidate, IEntityAware<CandidateEntity> {
@@ -228,6 +229,15 @@ public class CandidateProxy implements ICandidate, IEntityAware<CandidateEntity>
 	@Override
 	public void setLinkedInSummary(String linkedInSummary) {
 		candidate.setLinkedInSummary(linkedInSummary);
+	}
+
+
+	@Override
+	public String getDegreeString() {
+		String dg="";
+		for (String c:candidate.getDegree())
+			dg+=c+ ",";
+		return dg;
 	}
 
 }

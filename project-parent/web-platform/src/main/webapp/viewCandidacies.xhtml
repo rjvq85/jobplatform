@@ -18,12 +18,12 @@
 			paginatorPosition="bottom" rows="12" style="margin-bottom:20px">
 
 			<f:facet name="header">
-				<h:outputText value="Candidaturas por período de tempo" />
-				<h:outputText value="De: " />
+				<h:outputText value="Candidaturas por intervalo de tempo " />
+				<h:outputText value="de " />
 				<h:outputText value="#{reportCandidaciesByTime.initDate}">
 					<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
 				</h:outputText>
-				<h:outputText value=" a : " />
+				<h:outputText value=" a " />
 				<h:outputText value="#{reportCandidaciesByTime.finalDate}">
 					<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
 				</h:outputText>
@@ -37,11 +37,11 @@
 				<h:outputText value="#{candidacie.candidate.firstName}" />
 			</p:column>
 
-			<p:column headerText="Referência da Candidatura">
+			<p:column headerText="Referencia da Candidatura">
 				<h:outputText value="#{candidacie.reference}" />
 			</p:column>
 
-			<p:column headerText="Referência da Posição">
+			<p:column headerText="Referencia da Posicao">
 				<h:outputText value="#{candidacie.positionCandidacy.reference}" />
 			</p:column>
 			<f:facet name="footer">
@@ -56,13 +56,15 @@
 		<p:panel position="center">
 			<h:commandLink id="pdf">
 				<p:graphicImage name="/imgs/pdf_icon.gif" with="32" height="32" />
-
+				
 				<pe:exporter type="pdf" target="tbl" encoding="UTF-8"
-					fileName="Relatório por Candidatos"
-					tableTitle="RelatórioCandidatosPorPeríodoTempo"
-					orientation="Portrait " facetBackground="#F88017"
-					facetFontSize="14" facetFontColor="#0000ff" facetFontStyle="BOLD"
-					cellFontColor="#00ff00" cellFontSize="12" cellFontStyle="NORMAL" />
+					fileName="RelatorioporCandidatos"
+					preProcessor="#{reportCandidaciesByTime.preProcessPDF}"
+					tableTitle="Resultados De Quantidade de Candidatos Por Intervalo De Tempo"
+					orientation="Portrait " facetBackground="#A50D12"
+					facetFontSize="14" facetFontColor="#FFFFFF" facetFontStyle="BOLD"
+					cellFontColor="#303030" cellFontSize="12" cellFontStyle="NORMAL" />
+
 			</h:commandLink>
 		</p:panel>
 	</h:form>

@@ -15,5 +15,11 @@ public interface ICandidateBusinessService {
 	void updateCandidate(ICandidate candidate);
 
 	void updatePassword(String password, ICandidate candidate);
+	
+	void updateEmail(String email, ICandidate candidate);
+	
+	void updateCV(String filePath, ICandidate candidate);
+	
+	void deleteUser(ICandidate candidate);
 
 }

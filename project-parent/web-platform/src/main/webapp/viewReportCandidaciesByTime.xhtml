@@ -14,14 +14,16 @@
 		<h4>Seleccionar o período de tempo</h4>
 		<h:outputLabel value="De" />
 		<p:calendar value="#{reportCandidaciesByTime.initDate}" locale="de"
-			navigator="true" pattern="yyyy-MMM-dd" />
+			navigator="true" pattern="dd-MMM-yyyy" />
 		<h:outputLabel value="a" />
 		<p:calendar value="#{reportCandidaciesByTime.finalDate}" locale="de"
-			navigator="true" pattern="yyyy-MMM-dd" />
+			navigator="true" pattern="dd-MMM-yyyy" />
+		<br />
+		<br />
+		<br />
 		<br />
 		<p:commandButton value="Criar Relatório" type="submit"
 			style="margin-left:10px;margin-top:15px;"
-			
 			action="#{reportCandidaciesByTime.create()}" icon="ui-icon-document" />
 	</h:form>
 </h:body>

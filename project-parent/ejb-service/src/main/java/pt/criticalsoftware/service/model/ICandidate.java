@@ -61,6 +61,10 @@ public interface ICandidate {
 	void setCv(String cv);
 
 	Integer getId();
+	
+	String  getDegreeString();	
+	
+//	Collection<ICandidacy> getCandidacies();
 
 	void setLinkedInSummary(String linkedInSummary);
 

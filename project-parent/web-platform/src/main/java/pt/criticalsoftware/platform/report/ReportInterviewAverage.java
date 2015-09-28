@@ -2,10 +2,14 @@ package pt.criticalsoftware.platform.report;
 
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -48,14 +52,41 @@ public class ReportInterviewAverage implements Serializable{
 		this.candidacies = candidacies;
 	}
 	public Date getInitDate() {
-		return initDate;
+		if (initDate!=null){
+			LocalDate date = initDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();	
+			try {
+				String lDate = date.plusDays(1).format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+				DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+				return df.parse(lDate);
+			} catch (ParseException e) {
+				e.printStackTrace();
+				return null;
+			}
+		}else{
+			return initDate;
+		}
 	}
+
 	public void setInitDate(Date initDate) {
 		this.initDate = initDate;
 	}
+
 	public Date getFinalDate() {
-		return finalDate;
+		if (finalDate!=null){
+			LocalDate date = finalDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();	
+			try {
+				String lDate = date.plusDays(1).format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+				DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+				return df.parse(lDate);
+			} catch (ParseException e) {
+				e.printStackTrace();
+				return null;
+			}
+		}else{
+			return finalDate;
+		}
 	}
+
 	public void setFinalDate(Date finalDate) {
 		this.finalDate = finalDate;
 	}
@@ -69,6 +100,7 @@ public class ReportInterviewAverage implements Serializable{
 	public String create(){
 		LocalDate dateInit = this.initDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 		LocalDate dateFinal = this.finalDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		logger.info("as datas são" + dateInit+ "data final" +dateFinal );
 		if (dateInit.isAfter(dateFinal)){
 			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Data inicial superior à data final!!Por favor introduzir novas datas.", "");
 			FacesContext context = FacesContext.getCurrentInstance();
@@ -117,7 +149,10 @@ public class ReportInterviewAverage implements Serializable{
 					}
 					totalDays+=dif;
 				}
+			if (this.candidacies.size()>=1)
 			this.averageTime=totalDays/this.candidacies.size();
+			else 
+				this.averageTime=0;
 			return "viewInterviewsAverage.xhtml?faces-redirect=true";
 		}
 	}
@@ -174,7 +209,10 @@ public class ReportInterviewAverage implements Serializable{
 					}
 					totalDays+=dif;
 				}
-			this.averageTime=totalDays/this.candidacies.size();
+			if (this.candidacies.size()>=1)
+				this.averageTime=totalDays/this.candidacies.size();
+				else 
+					this.averageTime=0;
 			return "viewInterviewsAverage.xhtml?faces-redirect=true";
 		}
 	}

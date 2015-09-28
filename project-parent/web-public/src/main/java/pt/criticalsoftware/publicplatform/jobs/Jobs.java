@@ -1,10 +1,14 @@
 package pt.criticalsoftware.publicplatform.jobs;
+import javax.servlet.http.Part;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.primefaces.event.SelectEvent;
@@ -12,9 +16,17 @@ import org.primefaces.event.UnselectEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import pt.criticalsoftware.publicplatform.access.LoginPublic;
+import pt.criticalsoftware.publicplatform.access.utils.FileUploadPublic;
+import pt.criticalsoftware.service.business.ICandidacyBusinessService;
+import pt.criticalsoftware.service.business.ICandidateBusinessService;
 import pt.criticalsoftware.service.business.IPositionBusinessService;
+import pt.criticalsoftware.service.model.ICandidacy;
+import pt.criticalsoftware.service.model.ICandidate;
 import pt.criticalsoftware.service.model.IPosition;
+import pt.criticalsoftware.service.model.IUser;
 
+import java.io.IOException;
 import java.io.Serializable;
 
 @Named
@@ -28,8 +40,20 @@ public class Jobs implements Serializable {
 	private String locale, technicalAreaStr, searchParam, jobWord, searchWord;
 	private List<String> items;
 
+	@Inject
+	LoginPublic log;
+
+	@Inject
+	private FileUploadPublic fileUpload;
+
 	@EJB
 	private IPositionBusinessService positionService;
+
+	@EJB
+	private ICandidateBusinessService business;
+
+	@EJB
+	private ICandidacyBusinessService businessCand;
 
 	public Jobs() {
 		this.locale="";
@@ -39,6 +63,7 @@ public class Jobs implements Serializable {
 		jobWord="";
 		items= new ArrayList<String>();
 		this.items.add("----????----");
+		this.candidacies=new ArrayList<ICandidacy>();
 	}
 
 	public String getSearchWord() {
@@ -88,15 +113,24 @@ public class Jobs implements Serializable {
 	public void setJobs(List<IPosition> jobs) {
 		this.jobs = jobs;
 	}
+	
+	private List<IPosition> removeClosedPos(List<IPosition> jobs){
+		
+		for(IPosition p:jobs)
+			if (p.getState().equals("FECHADA"))
+				jobs.remove(p);
+		return jobs;
+	}
+	
 	public void searchToolbar(){
-		logger.info("entrou no searchToolbar com os valores " + this.jobWord +" " +	this.searchWord);
 		if (this.jobWord.equals("Área Técnica")){
 			this.jobs=positionService.getPositionsByTechnicalArea(this.searchWord);
+			this.jobs=removeClosedPos(this.jobs);
 
 		} else if (this.jobWord.equals("Localizacao")){
 			this.jobs=positionService.getPositionsByLocale(this.searchWord);
+			this.jobs=removeClosedPos(this.jobs);
 		}
-		logger.info("O tamanho da lista de pesquisa é " + this.jobs.size());
 		this.jobWord="";
 		this.searchWord="";
 		this.items=new ArrayList<String>();
@@ -108,6 +142,7 @@ public class Jobs implements Serializable {
 		this.searchParam="Resultados por Localização e Área";
 		this.jobs=positionService.getPositionsByLocaleAndArea(this.locale,this.technicalAreaStr);
 		logger.info("A lista veio com tamanho " + jobs.size());
+		this.jobs=removeClosedPos(this.jobs);
 		return "jobsResult.html?faces-redirect=true";
 	}
 
@@ -115,6 +150,7 @@ public class Jobs implements Serializable {
 		logger.info("A area seleccionada foi pOrto"  );
 		this.searchParam="Resultados para 'Porto' ";
 		this.jobs=positionService.getPositionsByLocale("Porto");
+		this.jobs=removeClosedPos(this.jobs);
 		logger.info("lista do Porto" + jobs.size());
 		return "jobsResult.html?faces-redirect=true";
 	}
@@ -122,6 +158,7 @@ public class Jobs implements Serializable {
 		logger.info("A area seleccionada foi Lisboa"  );
 		this.searchParam="Resultados para 'Lisboa' ";
 		this.jobs=positionService.getPositionsByLocale("Lisboa");
+		this.jobs=removeClosedPos(this.jobs);
 		logger.info("lista do Lisboa" + jobs.size());
 		return "jobsResult.html?faces-redirect=true";
 	}
@@ -129,6 +166,7 @@ public class Jobs implements Serializable {
 		logger.info("A area seleccionada foi coimbra"  );
 		this.searchParam="Resultados para 'Coimbra' ";
 		this.jobs=positionService.getPositionsByLocale("Coimbra");
+		this.jobs=removeClosedPos(this.jobs);
 		logger.info("lista do Coimbra" + jobs.size());
 		return "jobsResult.html?faces-redirect=true";
 	}
@@ -136,6 +174,7 @@ public class Jobs implements Serializable {
 		logger.info("A area seleccionada foiNetDevelopment()" );
 		this.searchParam="Resultados para '.Net Development' ";
 		this.jobs=positionService.getPositionsByTechnicalArea(".Net Development");
+		this.jobs=removeClosedPos(this.jobs);
 		logger.info("lista da a´rea" + jobs.size());
 		return "jobsResult.html?faces-redirect=true";
 	}
@@ -143,6 +182,7 @@ public class Jobs implements Serializable {
 		logger.info("A area seleccionada foiSSPA()" );
 		this.searchParam="Resultados para 'SSPA' ";
 		this.jobs=positionService.getPositionsByTechnicalArea("SSPA");
+		this.jobs=removeClosedPos(this.jobs);
 		logger.info("lista da a´rea" + jobs.size());
 		return "jobsResult.html?faces-redirect=true";
 	}
@@ -158,6 +198,7 @@ public class Jobs implements Serializable {
 		logger.info("A area seleccionada foiSafety Critical()" );
 		this.searchParam="Resultados para 'Safety Critical' ";
 		this.jobs=positionService.getPositionsByTechnicalArea("Safety Critical");
+		this.jobs=removeClosedPos(this.jobs);
 		logger.info("lista da a´rea" + jobs.size());
 		return "jobsResult.html?faces-redirect=true";
 	}
@@ -165,6 +206,7 @@ public class Jobs implements Serializable {
 		logger.info("A area seleccionada foiProject Management()" );
 		this.searchParam="Resultados para 'Project Management' ";
 		this.jobs=positionService.getPositionsByTechnicalArea("Project Management");
+		this.jobs=removeClosedPos(this.jobs);
 		logger.info("lista da a´rea" + jobs.size());
 		return "jobsResult.html?faces-redirect=true";
 	}
@@ -173,6 +215,7 @@ public class Jobs implements Serializable {
 		logger.info("A area seleccionada foiIntegration()" );
 		this.searchParam="Resultados para 'Integration' ";
 		this.jobs=positionService.getPositionsByTechnicalArea("Integration");
+		this.jobs=removeClosedPos(this.jobs);
 		logger.info("lista da a´rea" + jobs.size());
 		return "jobsResult.html?faces-redirect=true";
 	}
@@ -181,6 +224,7 @@ public class Jobs implements Serializable {
 		logger.info("Mais recentes" );
 		this.searchParam="Ofertas Mais Recentes";
 		this.jobs=positionService.getPositionsByLast();
+		this.jobs=removeClosedPos(this.jobs);
 		return "jobsResult.html?faces-redirect=true";
 	}
 
@@ -220,8 +264,6 @@ public class Jobs implements Serializable {
 	}
 
 	public List<String> getItems() {
-		logger.info("Get items");
-		logger.info("Tamnho dos itmes no get" + this.items.size());
 		return this.items;
 	}
 
@@ -236,11 +278,7 @@ public class Jobs implements Serializable {
 		this.jobWord = jobWord;
 	}
 
-	//	metodos para se completarem
-	public void logout(){
-
-	}
-
+	//edit password
 	private String userName, userMail, password;
 
 	public String getPassword() {
@@ -266,13 +304,92 @@ public class Jobs implements Serializable {
 	public void setUserMail(String userMail) {
 		this.userMail = userMail;
 	}
+	//edit mail
 	public void editData(){
-
+		logedCandidate();
+		business.updateEmail(userMail, candidate);
 	}
+	private String countName="Conta";
+
+	public String getCountName() {
+
+		String username=log.getUsername();
+		if (username!=null)
+			return username;
+		else
+			return countName;
+	}
+
+	public void setCountName(String countName) {
+		this.countName = countName;
+	}
+
+	private ICandidate candidate;
 	public void editPass(){
+		logedCandidate();
+		business.updatePassword(password,candidate);	
+		password="";
+		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
+				"Password actualizada com sucesso.", "");
+		FacesContext.getCurrentInstance().addMessage(null, message);
 
 	}
-	public void deleteAccount(){
 
+	//	view candidacies
+	private List<ICandidacy> candidacies;
+
+	public List<ICandidacy> getCandidacies() {
+		logedCandidate();
+		String username=log.getUsername();
+		//		if (username!=null)
+		//			candidacies=candidate.
+		return candidacies;
+	}
+
+	public void setCandidacies(List<ICandidacy> candidacies) {
+		this.candidacies = candidacies;
+	}
+
+	public String deleteAccount(){
+		String username=log.getUsername();
+		this.candidate = business.getCandidateByUsername(username);
+		business.deleteUser(this.candidate);
+		log.logout();
+		return "jobsResult.html?faces-redirect=true";
+	}
+
+	private void logedCandidate() {
+		String username=log.getUsername();
+		this.candidate = business.getCandidateByUsername(username);
+
+	}
+
+	//	file upload
+	private Part file;
+
+	public Part getFile() {
+		logger.info("getfile");
+		return file;
+	}
+
+	public void setFile(Part file) {
+		logger.info("setfile");
+		this.file = file;
+	}
+	public void newCV(){
+	
+		String username=log.getUsername();
+		this.candidate = business.getCandidateByUsername(username);
+	
+		try {
+			fileUpload.setFile(file);
+			String filePath = fileUpload.fileUpload(username);
+			business.updateCV(filePath, this.candidate);
+		}catch (IOException e) {
+			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao fazer o envio do ficheiro",
+					"");
+			FacesContext.getCurrentInstance().addMessage(null, message);
+			e.printStackTrace();
+		}
 	}
 }

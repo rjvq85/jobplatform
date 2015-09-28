@@ -10,6 +10,7 @@ import javax.persistence.TypedQuery;
 import javax.resource.spi.IllegalStateException;
 
 import pt.criticalsoftware.domain.entities.CandidateEntity;
+import pt.criticalsoftware.domain.entities.PositionEntity;
 import pt.criticalsoftware.domain.proxies.CandidateProxy;
 import pt.criticalsoftware.domain.proxies.IEntityAware;
 import pt.criticalsoftware.service.model.ICandidate;
@@ -75,6 +76,46 @@ public class CandidatePersistenceService implements ICandidatePersistenceService
 		try {
 			entity = getEntity(candidate);
 			em.merge(entity);
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void updateEmail(String email, ICandidate candidate) {
+		CandidateEntity entity;
+		try {
+			entity = getEntity(candidate);
+			entity.setEmail(email);
+			em.merge(entity);
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void updateCV(String filePath, ICandidate candidate) {
+		CandidateEntity entity;
+		try {
+			entity = getEntity(candidate);
+			entity.setCv(filePath);;
+			em.merge(entity);
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		}
+	}
+	
+
+	@Override
+	public void deleteUser(ICandidate candidate) {
+		CandidateEntity entity;
+		try {
+			entity = getEntity(candidate);
+			CandidateEntity pos = em.find(CandidateEntity.class, entity.getId());
+			if (pos != null) {
+				em.remove(pos);
+			}
+			
 		} catch (IllegalStateException e) {
 			e.printStackTrace();
 		}

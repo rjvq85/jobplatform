@@ -35,6 +35,7 @@ import pt.criticalsoftware.service.persistence.utils.LocalDatePersistenceConvert
 		@NamedQuery(name = "Position.getPositionsByCompany", query = "SELECT u from PositionEntity u WHERE u.company = :company"),
 		@NamedQuery(name = "Position.getPositionsByTechnicalArea", query = "SELECT u FROM PositionEntity u WHERE u.technicalArea = :technicalArea"),
 		@NamedQuery(name = "Position.getPositionsByLocale", query = "SELECT u FROM PositionEntity u WHERE u.locale = :locale"),
+		@NamedQuery(name = "Position.getPositionsByLocaleAndArea", query = "SELECT u FROM PositionEntity u WHERE u.locale = :locale AND u.technicalArea = :technicalArea"),
 		@NamedQuery(name = "Position.getPositionsByDate", query = "SELECT u FROM PositionEntity u WHERE u.closeDate = :closeDate"),
 		@NamedQuery(name = "Position.getPositionsByOpenDate", query = "SELECT u FROM PositionEntity u WHERE u.openDate = :openDate"),
 		@NamedQuery(name = "Position.getPositionsByOpenDateByPeriod", query = "SELECT u FROM PositionEntity u WHERE u.openDate >= :dateInit AND u.openDate <= :dateFinal"),

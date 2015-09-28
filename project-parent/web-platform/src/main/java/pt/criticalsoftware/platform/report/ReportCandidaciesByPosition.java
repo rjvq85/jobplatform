@@ -4,13 +4,26 @@ package pt.criticalsoftware.platform.report;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
+import javax.servlet.ServletContext;
+
+import com.lowagie.text.BadElementException;
+import com.lowagie.text.Document;
+import com.lowagie.text.DocumentException;
+import com.lowagie.text.Font;
+import com.lowagie.text.Image;
+import com.lowagie.text.PageSize;
+import com.lowagie.text.Phrase;
+import com.lowagie.text.pdf.BaseFont;
 
 import pt.criticalsoftware.service.business.ICandidacyBusinessService;
 import pt.criticalsoftware.service.business.IPositionBusinessService;
 import pt.criticalsoftware.service.model.ICandidacy;
 import pt.criticalsoftware.service.model.IPosition;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -94,5 +107,30 @@ public class ReportCandidaciesByPosition implements Serializable {
 	public String create(){
 		this.candidacies=businessCandidacy.getCandidaciesByPosition(this.positionID);
 		return "viewCandidaciesPositions.xhtml?faces-redirect=true";
+	}
+	
+	public void preProcessPDF(Object document) throws IOException, BadElementException, DocumentException {
+
+		Document pdf = (Document) document;
+		pdf.open();
+		pdf.setPageSize(PageSize.A4);
+		BaseFont bf_helv = BaseFont.createFont(BaseFont.HELVETICA, "Cp1252", false);
+		Font headerFont = new Font(bf_helv, 12);
+
+		ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
+		String logo = servletContext.getRealPath("") + File.separator + "resources"
+				+ ""   + File.separator + "imgs" + File.separator + "criticalIcon.jpg";
+		pdf.add(Image.getInstance(logo));
+		Phrase phrase = new Phrase(12, "\n", headerFont);
+		phrase.add("\n Critical Software Relatórios \n \n");
+		pdf.add(phrase);
+	}
+	public void proProcessPDF(Object document){
+		Document pdf = (Document) document;
+
+//		if (pdf!=null)
+//			logger.info("TEM O DOCUMENTO");
+		//SENDATTACHMENTEMAIL(UTILIZADOR, CAMINHO)
+
 	}
 }

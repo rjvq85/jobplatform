@@ -12,32 +12,30 @@
 </h:head>
 
 <h:body>
-
-	<h:form id="chartPanel">
+	<h:form id="hform">
 		<p:panel>
-			<p:chart type="line" value="#{reportNonAdmited.lineModel}"
-				style="width:500px;height:300px" widgetVar="chart" />
+			<p:chart type="line" model="#{reportNonAdmited.lineModel}" widgetVar="chart"
+				style="width:550px;height:300px" />
 
-			<p:commandButton type="button" value="Export" icon="ui-icon-extlink"
-				onclick="exportChart()" />
+			<p:commandButton type="submit" value="Anexar ao relatório" icon="ui-icon-extlink"
+				onclick="exportChart();"
+				actionListener="#{reportNonAdmited.submittedBase64Str}" />
 
-			<p:dialog widgetVar="dlg" showEffect="fade" modal="true"
-				header="Salvar Gráfico" resizable="false">
-				<p:outputPanel id="output" layout="block"
-					style="width:500px;height:300px" />
-			</p:dialog>
+			<h:inputHidden id="b64" value="#{reportNonAdmited.base64Str}" />
+
 			<script type="text/javascript">
-			function exportChart() {
-   			 //export image
-   			 $('#output').empty().append(PF('chart').exportAsImage());
+function exportChart() {
+	 // exportAsImage() will return a base64 png encoded string
+     img = PF('chart').exportAsImage();
+     document.getElementById('hform:b64').value = img.src;
+     console.log(img.getAttribute("src"));
  
-    		//show the dialog
-    		PF('dlg').show();
-			}
-			</script>
-
+}
+</script>
 		</p:panel>
 	</h:form>
+
+
 
 	<p:spacer height="30" />
 
@@ -48,8 +46,16 @@
 				paginatorPosition="bottom" rows="12" style="margin-bottom:20px">
 
 				<f:facet name="header">
-					<h:outputText value="Candidaturas rejeitadas para a posição: " />
+					<h:outputText value="Candidaturas rejeitadas para a posicao  " />
 					<h:outputText value="#{reportNonAdmited.positionRef}" />
+					<h:outputText value=" de" />
+					<h:outputText value="#{reportNonAdmited.initDate}">
+						<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+					</h:outputText>
+					<h:outputText value=" a " />
+					<h:outputText value="#{reportNonAdmited.finalDate}">
+						<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+					</h:outputText>
 				</f:facet>
 				<p:column headerText="Data Candidatura">
 					<h:outputText value="#{candidacie.date}" />
@@ -60,11 +66,16 @@
 						value="#{candidacie.candidate.firstName} + #{candidacie.candidate.lastName} " />
 				</p:column>
 
-				<p:column headerText="Habilitações">
-					<h:outputText value="#{candidacie.candidate.country}" />
+				<p:column headerText="Habilitacoes">
+					<h:outputText value="#{candidacie.candidate.degreeString}" />
 				</p:column>
+
+				<p:column headerText="Motivo">
+					<h:outputText value="#{candidacie.rejectionReason.toString()}" />
+				</p:column>
+
 				<f:facet name="footer">
-					<h:outputText value="No total foram efectuadas: " />
+					<h:outputText value="No total foram rejeitadas " />
 					<h:outputText value="#{reportNonAdmited.candidacies.size()}" />
 					<h:outputText value=" candidaturas." />
 				</f:facet>
@@ -74,12 +85,13 @@
 		<p:panel position="center">
 			<h:commandLink id="pdf">
 				<p:graphicImage name="/imgs/pdf_icon.gif" with="32" height="32" />
-
 				<pe:exporter type="pdf" target="tbl" encoding="UTF-8"
-					fileName="Relatório por Posição" tableTitle="Relatório por Posição"
-					orientation="Portrait " facetBackground="#F88017"
-					facetFontSize="14" facetFontColor="#0000ff" facetFontStyle="BOLD"
-					cellFontColor="#00ff00" cellFontSize="12" cellFontStyle="NORMAL" />
+					fileName="RelatorioCandidatosRejeitadosPorPosicai"
+					preProcessor="#{reportNonAdmited.preProcessPDF}"
+					orientation="Portrait " facetBackground="#A50D12"
+					facetFontSize="14" facetFontColor="#FFFFFF" facetFontStyle="BOLD"
+					cellFontColor="#303030" cellFontSize="12" cellFontStyle="NORMAL" />
+
 			</h:commandLink>
 		</p:panel>
 	</h:form>

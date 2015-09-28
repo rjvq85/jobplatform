@@ -17,7 +17,7 @@
 			paginatorPosition="bottom" rows="12" style="margin-bottom:20px">
 
 			<f:facet name="header">
-				<h:outputText value="Candidaturas para a posição: " />
+				<h:outputText value="Candidaturas para a posicao " />
 				<h:outputText value="#{reportCandidaciesByPosition.positionRef}" />
 			</f:facet>
 			<p:column headerText="Data Candidatura">
@@ -29,12 +29,13 @@
 					value="#{candidacie.candidate.firstName} + #{candidacie.candidate.lastName} " />
 			</p:column>
 
-			<p:column headerText="Habilitações">
-				<h:outputText value="#{candidacie.candidate.country}" />
+			<p:column headerText="Habilitacoes">
+				<h:outputText value="#{candidacie.candidate.degreeString}" />
 			</p:column>
 			<f:facet name="footer">
 				<h:outputText value="No total foram efectuadas: " />
-				<h:outputText value="#{reportCandidaciesByPosition.candidacies.size()}" />
+				<h:outputText
+					value="#{reportCandidaciesByPosition.candidacies.size()}" />
 				<h:outputText value=" candidaturas." />
 			</f:facet>
 		</p:dataTable>
@@ -42,12 +43,13 @@
 		<p:panel position="center">
 			<h:commandLink id="pdf">
 				<p:graphicImage name="/imgs/pdf_icon.gif" with="32" height="32" />
-
 				<pe:exporter type="pdf" target="tbl" encoding="UTF-8"
-					fileName="Relatório por Posição" tableTitle="Relatório por Posição"
-					orientation="Portrait " facetBackground="#F88017"
-					facetFontSize="14" facetFontColor="#0000ff" facetFontStyle="BOLD"
-					cellFontColor="#00ff00" cellFontSize="12" cellFontStyle="NORMAL" />
+					fileName="RelatorioporPosicao"
+					preProcessor="#{reportCandidaciesByPosition.preProcessPDF}"
+					tableTitle="Resultados De Quantidade de Candidatos Por Posicao"
+					orientation="Portrait " facetBackground="#A50D12"
+					facetFontSize="14" facetFontColor="#FFFFFF" facetFontStyle="BOLD"
+					cellFontColor="#303030" cellFontSize="12" cellFontStyle="NORMAL" />
 			</h:commandLink>
 		</p:panel>
 	</h:form>

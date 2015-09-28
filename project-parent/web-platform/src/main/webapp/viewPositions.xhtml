@@ -8,9 +8,46 @@
 
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<title>Propostas apresentadas</title>
 </h:head>
 <h:body>
+	<h:form id="hform">
+		<p:panel>
+			<p:chart type="pie" model="#{reportProposal.lineModel2}"
+				widgetVar="chart" style="width:500px;height:250px" />
+			<h:inputHidden id="b64" value="#{reportProposal.base64Str}" />
+			<p:commandButton type="submit" value="Anexar ao relatório"
+				icon="ui-icon-extlink" onclick="exportChart();"
+				actionListener="#{reportProposal.submittedBase64Str}" />
+
+			<script type="text/javascript">
+			function exportChart() {
+				 // exportAsImage() will return a base64 png encoded string
+			     img = PF('chart').exportAsImage();
+			     document.getElementById('hform:b64').value = img.src;
+			     console.log(img.getAttribute("src"));
+			}
+			</script>
+		</p:panel>
+	</h:form>
+	<h:form id="hform1">
+		<p:panel>
+			<p:chart type="pie" model="#{reportProposal.lineModel}"
+				widgetVar="chart1" style="width:500px;height:250px" />
+			<p:commandButton type="submit" value="Anexar ao relatório"
+				icon="ui-icon-extlink" onclick="exportChart1();"
+				actionListener="#{reportProposal.submittedBase64Str1}" />
+			<h:inputHidden id="b641" value="#{reportProposal.base64Str1}" />
+			<script type="text/javascript">
+			function exportChart1() {
+				 // exportAsImage() will return a base64 png encoded string
+			     img = PF('chart1').exportAsImage();
+			     document.getElementById('hform1:b641').value = img.src;
+			     console.log(img.getAttribute("src"));
+			}
+			</script>
+
+		</p:panel>
+	</h:form>
 	<h:form>
 		<p:dataTable id="tbl" var="position"
 			value="#{reportProposal.positions}" paginator="true"
@@ -19,11 +56,11 @@
 			<f:facet name="header">
 				<h:outputText value="Propostas apresentadas" />
 
-				<h:outputText value="De: " />
+				<h:outputText value=" de " />
 				<h:outputText value="#{reportProposal.initDate}">
 					<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
 				</h:outputText>
-				<h:outputText value=" a : " />
+				<h:outputText value=" a " />
 				<h:outputText value="#{reportProposal.finalDate}">
 					<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
 				</h:outputText>
@@ -37,19 +74,19 @@
 				<h:outputText value="#{position.company} " />
 			</p:column>
 
-			<p:column headerText="área Técnica">
+			<p:column headerText="Area Tecnica">
 				<h:outputText value="#{position.technicalArea.name}" />
 			</p:column>
-
-			<p:column headerText="Número de vagas">
+			<p:column headerText="Localizacao">
+				<h:outputText value="#{position.locale} " />
+			</p:column>
+			<p:column headerText="Numero de vagas">
 				<h:outputText value="#{position.vacancies}" />
 			</p:column>
 
-
 			<f:facet name="footer">
 				<h:outputText value="No total foram apresentadas: " />
-				<h:outputText
-					value="#{reportProposal.positions.size()}" />
+				<h:outputText value="#{reportProposal.positions.size()}" />
 				<h:outputText value=" propostas." />
 			</f:facet>
 		</p:dataTable>
@@ -59,10 +96,13 @@
 				<p:graphicImage name="/imgs/pdf_icon.gif" with="32" height="32" />
 
 				<pe:exporter type="pdf" target="tbl" encoding="UTF-8"
-					fileName="Relatório por Posição" tableTitle="Relatório para propostas apresentadas"
-					orientation="Portrait " facetBackground="#F88017"
-					facetFontSize="14" facetFontColor="#0000ff" facetFontStyle="BOLD"
-					cellFontColor="#00ff00" cellFontSize="12" cellFontStyle="NORMAL" />
+					fileName="RelatorioPropostasApresentadas"
+					preProcessor="#{reportProposal.preProcessPDF}"
+					tableTitle="Propostas Apresentadas Por Intervalo De Tempo"
+					orientation="Portrait " facetBackground="#A50D12"
+					facetFontSize="14" facetFontColor="#FFFFFF" facetFontStyle="BOLD"
+					cellFontColor="#303030" cellFontSize="12" cellFontStyle="NORMAL" />
+
 			</h:commandLink>
 		</p:panel>
 	</h:form>

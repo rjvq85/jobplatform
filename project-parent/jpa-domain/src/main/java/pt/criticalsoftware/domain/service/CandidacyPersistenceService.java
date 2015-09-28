@@ -8,6 +8,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+
 import pt.criticalsoftware.domain.entities.CandidacyEntity;
 import pt.criticalsoftware.domain.entities.InterviewEntity;
 import pt.criticalsoftware.domain.proxies.CandidacyProxy;
@@ -228,6 +229,40 @@ public class CandidacyPersistenceService implements ICandidacyPersistenceService
 			CandidacyEntity entity = getEntity(candidacy);
 			em.merge(entity);
 		}
+	}
+
+	@Override
+	public List<ICandidacy> getNonAdmitedCandidaciesByDatePeriodAndPosition(
+			LocalDate dateInit, LocalDate dateFinal, Integer positionID) {
+
+		List<ICandidacy> candidacies = new ArrayList<>();
+		TypedQuery<CandidacyEntity> query = em.createNamedQuery("Candidacy.searchNonAdmitedCandidaciesByDatePeriodAndPosition", CandidacyEntity.class)
+				.setParameter("initDate", dateInit)
+				.setParameter("finalDate", dateFinal)
+				.setParameter("positionID", positionID);
+
+		List<CandidacyEntity> entities = query.getResultList();
+		for (CandidacyEntity c : entities) {
+			if (c.getState().equals("REJEITADA"))
+				candidacies.add(new CandidacyProxy(c));
+		}
+		return candidacies;
+	}
+
+	@Override
+	public List<ICandidacy> getNonAdmitedCandidaciesByDatePeriod(
+			LocalDate dateInit, LocalDate dateFinal) {
+		List<ICandidacy> candidacies = new ArrayList<>();
+		TypedQuery<CandidacyEntity> query = em.createNamedQuery("Candidacy.searchNonAdmitedCandidaciesByDatePeriod", CandidacyEntity.class)
+				.setParameter("initDate", dateInit)
+				.setParameter("finalDate", dateFinal);
+
+		List<CandidacyEntity> entities = query.getResultList();
+		for (CandidacyEntity c : entities) {
+			if (c.getState().equals("REJEITADA"))
+				candidacies.add(new CandidacyProxy(c));
+		}
+		return candidacies;
 	}
 
 }

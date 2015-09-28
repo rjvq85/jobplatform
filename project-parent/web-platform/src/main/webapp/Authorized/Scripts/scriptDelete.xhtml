@@ -6,19 +6,36 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <ui:composition>
-	<p:confirmDialog header="Confirmação de eliminação"
+	<p:confirmDialog id="deleteScriptConf"
+		header="Confirmação de eliminação"
 		message="Pretende eliminar este guião?" widgetVar="deleteScriptDialog">
 		<h:panelGroup layout="block" styleClass="row">
 			<h:panelGroup layout="block" styleClass="col-md-12 text-center">
+				<p:growl for="delscriptgrowl" autoUpdate="true" showDetail="true"></p:growl>
+			</h:panelGroup>
+		</h:panelGroup>
+		<h:panelGroup id="delscriptrow" layout="block" styleClass="row">
+			<h:panelGroup layout="block" styleClass="col-md-12 text-center">
 				<p:commandButton value="Apagar" type="submit"
 					action="#{editScript.deleteScript}"
-					oncomplete="PF('deleteScriptDialog').hide();fadeoutMsg();"
-					update="toolbarForm:toolbarScript :scriptForm:gridScripts :flashglobalmsgs"  style="width:30%;" styleClass="btn btn-danger">
-					</p:commandButton>
+					oncomplete="fadeoutMsgDeleteScript();handleDeleteRequest(xhr, status, args);"
+					update=":toolbarForm:toolbarScript :scriptForm:gridScripts :flashglobalmsgs"
+					style="width:30%;" styleClass="btn btn-danger">
+				</p:commandButton>
 				<p:button value="Cancelar"
-					onclick="PF('deleteScriptDialog').hide(); return false;"  style="width:30%;" styleClass="btn btn-default" />
+					onclick="PF('deleteScriptDialog').hide(); return false;"
+					style="width:30%;" styleClass="btn btn-default" />
 			</h:panelGroup>
 		</h:panelGroup>
 	</p:confirmDialog>
+	<script type="text/javascript">
+    		function handleDeleteRequest(xhr, status, args) {
+        		if(!args.safe) {
+            		PF('deleteScriptDialog').jq.effect("shake", {times:5}, 100);
+        		} else {
+            		PF('deleteScriptDialog').hide();
+        		}
+    		}
+		</script>
 </ui:composition>
 </html>

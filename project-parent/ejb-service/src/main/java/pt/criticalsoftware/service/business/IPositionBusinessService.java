@@ -51,4 +51,6 @@ public interface IPositionBusinessService {
 	
 	List<IPosition> getOpenPositions();
 
+	void setFirstHiring(IPosition position);
+
 }

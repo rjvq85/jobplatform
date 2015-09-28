@@ -199,6 +199,16 @@ public class PositionProxy implements IEntityAware<PositionEntity>, IPosition {
 	}
 
 	@Override
+	public LocalDate getFirstHire() {
+		return position.getFirstHire();
+	}
+
+	@Override
+	public void setFirstHire(LocalDate firstHire) {
+		position.setFirstHire(firstHire);
+	}
+
+	@Override
 	public List<ICandidacy> getCandidacies() {
 		List<ICandidacy> candidacies = new ArrayList<>();
 		for (CandidacyEntity ce : position.getCandidacy()) {

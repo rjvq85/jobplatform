@@ -37,4 +37,16 @@ public interface IInterviewPersistenceService {
 	List<IInterview> getByCandidate(ICandidate candidate);
 
 	IInterview find(Integer id);
+
+	List<IInterview> getScheduled();
+
+	Long getNumberWithScript(Integer id);
+
+	List<IInterview> findByScript(Integer id);
+
+	void updateMultiple(List<IInterview> interviews);
+
+	List<IInterview> getDone();
+
+	List<IInterview> getDoneInterviewsByCandidate(Integer candidateId);
 }

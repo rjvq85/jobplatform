@@ -8,7 +8,6 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
-import org.apache.commons.mail.EmailException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -130,10 +129,15 @@ public class PositionBusinessService implements IPositionBusinessService {
 	public List<IPosition> getOpenPositions() {
 		return positionPersistence.getAllOpenPositions();
 	}
-	
+
 	@Override
-	public List<IPosition> getPositionsByOpenDateByPeriod(LocalDate dateInit,
-			LocalDate dateFinal) {
+	public List<IPosition> getPositionsByOpenDateByPeriod(LocalDate dateInit, LocalDate dateFinal) {
 		return positionPersistence.getPositionsByOpenDateByPeriod(dateInit, dateFinal);
+	}
+
+	@Override
+	public void setFirstHiring(IPosition position) {
+		if (null == position.getFirstHire())
+			position.setFirstHire(LocalDate.now());
 	}
 }

@@ -87,9 +87,10 @@
 										<h:outputText value="#{i.position.reference}" />
 									</p:column>
 									<p:column headerText="Iniciar Entrevista">
+									<h:outputText value="Agendada" rendered="#{not myInterviews.isToday(i) and not myInterviews.doneInterview(i)}"/>
 										<p:commandLink id="beginterviewbutton"
 											action="scriptInterview"
-											rendered="#{myInterviews.isToday(i)}" ajax="false">
+											rendered="#{myInterviews.isToday(i) and i.interviewState ne 'DONE'}" ajax="false">
 											<f:setPropertyActionListener value="#{i}"
 												target="#{dynaFormController.interview}" />
 											<i class="glyphicon glyph-xl glyphicon-paste"></i>

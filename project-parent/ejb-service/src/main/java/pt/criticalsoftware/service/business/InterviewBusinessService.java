@@ -35,7 +35,7 @@ public class InterviewBusinessService implements IInterviewBusinessService {
 
 	@Override
 	public List<IInterview> getInterviewsByDateAndInterviewer(LocalDate date, Object currentUserID) {
-		return persistence.getByDate(date,currentUserID);
+		return persistence.getByDate(date, currentUserID);
 	}
 
 	@Override
@@ -64,11 +64,10 @@ public class InterviewBusinessService implements IInterviewBusinessService {
 	}
 
 	@Override
-	public List<IInterview> getInterviewsByDatePeriod(LocalDate dateInit,
-			LocalDate dateFinal) {	
-	return persistence.getInterviewsByDatePeriod(dateInit,dateFinal);
+	public List<IInterview> getInterviewsByDatePeriod(LocalDate dateInit, LocalDate dateFinal) {
+		return persistence.getInterviewsByDatePeriod(dateInit, dateFinal);
 	}
-	
+
 	@Override
 	public List<IInterview> getInterviewsByCandidate(ICandidate candidate) {
 		return persistence.getByCandidate(candidate);
@@ -78,6 +77,30 @@ public class InterviewBusinessService implements IInterviewBusinessService {
 	public IInterview getInterviewsById(Integer id) {
 		return persistence.find(id);
 	}
-
-
+	
+	@Override
+	public List<IInterview> getScheduledInterviews() {
+		return persistence.getScheduled();
 	}
+	
+	@Override
+	public Long countInterviewsPerScript(Integer scriptId) {
+		return persistence.getNumberWithScript(scriptId);
+	}
+
+	@Override
+	public List<IInterview> getByScript(Integer id) {
+		return persistence.findByScript(id);
+	}
+
+	@Override
+	public void updateMultiple(List<IInterview> interviews) {
+		persistence.updateMultiple(interviews);
+	}
+	
+	@Override
+	public List<IInterview> getDoneByCandidate(Integer candidateId) {
+		return persistence.getDoneInterviewsByCandidate(candidateId);
+	}
+
+}

@@ -11,6 +11,7 @@ import pt.criticalsoftware.service.model.IInterviewBuilder;
 import pt.criticalsoftware.service.model.IPosition;
 import pt.criticalsoftware.service.model.IScript;
 import pt.criticalsoftware.service.model.IUser;
+import pt.criticalsoftware.service.persistence.states.InterviewState;
 
 @Stateless
 public class InterviewBuilder implements IInterviewBuilder {
@@ -59,6 +60,7 @@ public class InterviewBuilder implements IInterviewBuilder {
 
 	@Override
 	public IInterview build() {
+		interview.setInterviewState(InterviewState.SCHEDULED);
 		return interview;
 	}
 

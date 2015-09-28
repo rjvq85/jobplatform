@@ -15,7 +15,6 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpUtils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,7 +26,6 @@ import pt.criticalsoftware.service.business.IUserBusinessService;
 import pt.criticalsoftware.service.model.ICandidacy;
 import pt.criticalsoftware.service.model.IInterview;
 import pt.criticalsoftware.service.model.IInterviewBuilder;
-import pt.criticalsoftware.service.model.IPosition;
 import pt.criticalsoftware.service.model.IScript;
 import pt.criticalsoftware.service.model.IUser;
 import pt.criticalsoftware.service.notifications.IMailSender;
@@ -69,7 +67,8 @@ public class NewInterview {
 			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Entrevista agendada com sucesso", "");
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 			candInterview.addNewInterview(interview);
-			String path = getRequest().getScheme() + "://" + getRequest().getServerName() + ":" + getRequest().getServerPort() + getRequest().getContextPath();
+			String path = getRequest().getScheme() + "://" + getRequest().getServerName() + ":"
+					+ getRequest().getServerPort() + getRequest().getContextPath();
 			mailSender.sendEmail(createdInterview, createdInterview.getInterviewers(), path);
 			clear();
 		} catch (Exception e) {
@@ -80,7 +79,7 @@ public class NewInterview {
 			clear();
 		}
 	}
-	
+
 	private void clear() {
 		date = null;
 		feedback = null;
@@ -172,11 +171,11 @@ public class NewInterview {
 	public void setNewInterviewers(List<IUser> newInterviewers) {
 		this.newInterviewers = newInterviewers;
 	}
-	
+
 	private HttpServletRequest getRequest() {
 		return (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
 	}
-	
+
 	public void setSomeCandidacy(ICandidacy candidacy) {
 		candInterview.setSelectedCandidacy(candidacy);
 	}

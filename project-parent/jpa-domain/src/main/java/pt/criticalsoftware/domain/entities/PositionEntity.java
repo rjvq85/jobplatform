@@ -102,6 +102,10 @@ public class PositionEntity {
 	
 	@OneToMany(fetch = FetchType.EAGER)
 	private Collection<CandidacyEntity> acceptedCandidacies;
+	
+	@Convert(converter = LocalDatePersistenceConverter.class)
+	@Column(name = "data_contratacao")
+	private LocalDate firstHire;
 
 	public PositionEntity() {
 	}
@@ -238,6 +242,14 @@ public class PositionEntity {
 		this.acceptedCandidacies = acceptedCandidacies;
 	}
 
+	public LocalDate getFirstHire() {
+		return firstHire;
+	}
+
+	public void setFirstHire(LocalDate firstHire) {
+		this.firstHire = firstHire;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -262,6 +274,7 @@ public class PositionEntity {
 			return false;
 		return true;
 	}
+
 
 
 }

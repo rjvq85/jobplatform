@@ -72,4 +72,8 @@ public interface IPosition {
 
 	void setCandidacies(List<ICandidacy> candidacies);
 
+	LocalDate getFirstHire();
+
+	void setFirstHire(LocalDate firstHire);
+
 }

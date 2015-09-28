@@ -48,6 +48,12 @@ function fadeoutMsg() {
 	}, 2000);
 };
 
+function fadeoutMsgDeleteScript() {
+	setTimeout(function() {
+		$('.delscriptmsgs').fadeOut();
+	}, 2000);
+};
+
 function redirect() {
 	setTimeout(function() {
 		window.location = '${pageContext.request.contextPath}';

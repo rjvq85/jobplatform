@@ -79,6 +79,9 @@
 									<p:column headerText="Referência" sortBy="#{interv.reference}">
 										<h:outputText value="#{interv.reference}" />
 									</p:column>
+									<p:column headerText="Estado" sortBy="#{interv.interviewState.description}">
+										<h:outputText value="#{interv.interviewState.description}" />
+									</p:column>
 									<p:column headerText="Data da Entrevista"
 										sortBy="#{interv.date}">
 										<p:commandLink id="interviewdate"

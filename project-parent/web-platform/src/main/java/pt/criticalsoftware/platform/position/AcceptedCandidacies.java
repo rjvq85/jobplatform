@@ -61,6 +61,7 @@ public class AcceptedCandidacies implements Serializable {
 		Integer availableVacancies = vacancies - position.getAcceptedCandidacies().size();
 		if (availableVacancies >= acceptedCandidacies.size()) {
 			position.setAcceptedCandidacies(acceptedCandidacies);
+			bness.setFirstHiring(position);
 			bness.update(position);
 			setHiringDate(acceptedCandidacies);
 			candidacyBness.updateMultipleAccepted(acceptedCandidacies);

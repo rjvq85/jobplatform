@@ -39,8 +39,7 @@ public class CandidateInterviews implements Serializable {
 	}
 
 	public List<IInterview> getCandInterviews() {
-		candidate = candidateBness.getCandidateById(candidateId);
-		candInterviews = intervBness.getInterviewsByCandidate(candidate);
+		candInterviews = intervBness.getDoneByCandidate(candidateId);
 		return candInterviews;
 	}
 

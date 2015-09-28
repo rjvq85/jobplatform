@@ -25,14 +25,14 @@
 						<h:outputText value="#{i.interviewer}" />
 					</p:column>
 					<p:column headerText="Questões" styleClass="table-noheader">
-						<p:dataTable value="#{i.questions}" var="q">
+						<p:dataTable value="#{i.questions}" var="q" emptyMessage="Sem perguntas...">
 							<p:column>
 								<h:outputText value="#{q}" />
 							</p:column>
 						</p:dataTable>
 					</p:column>
 					<p:column headerText="Respostas">
-						<p:dataTable value="#{i.answers}" var="a" styleClass="table-noheader">
+						<p:dataTable value="#{i.answers}" var="a" styleClass="table-noheader" emptyMessage="Sem Respostas...">
 							<p:column>
 								<h:outputText value="#{a}" />
 							</p:column>

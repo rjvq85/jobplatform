@@ -5,6 +5,7 @@ import java.util.Collection;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -13,21 +14,16 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-
 @Entity
 @Table(name = "guioes")
 
-
-@NamedQueries({
-@NamedQuery(name="ScriptEntity.getAll", query="select p from ScriptEntity p "),
-@NamedQuery(name="ScriptEntity.findByReference", query="select p from ScriptEntity p where p.reference = :reference "),
-@NamedQuery(name="ScriptEntity.findByTitle", query="select p from ScriptEntity p where p.title = :title "),
-@NamedQuery(name="ScriptEntity.verifyTitle", query="select p from ScriptEntity p where p.title = :title "),
-@NamedQuery(name="ScriptEntity.getAllQuestionsById", query="select p from ScriptEntity p where p.id =:id "),
-@NamedQuery(name="ScriptEntity.getScriptById", query="select p from ScriptEntity p where p.id =:id "),
-@NamedQuery(name = "ScriptEntity.findById", query = "select p from ScriptEntity p where p.id = :param ") })
- 
-
+@NamedQueries({ @NamedQuery(name = "ScriptEntity.getAll", query = "select p from ScriptEntity p "),
+		@NamedQuery(name = "ScriptEntity.findByReference", query = "select p from ScriptEntity p where p.reference = :reference "),
+		@NamedQuery(name = "ScriptEntity.findByTitle", query = "select p from ScriptEntity p where p.title = :title "),
+		@NamedQuery(name = "ScriptEntity.verifyTitle", query = "select p from ScriptEntity p where p.title = :title "),
+		@NamedQuery(name = "ScriptEntity.getAllQuestionsById", query = "select p from ScriptEntity p where p.id =:id "),
+		@NamedQuery(name = "ScriptEntity.getScriptById", query = "select p from ScriptEntity p where p.id =:id "),
+		@NamedQuery(name = "ScriptEntity.findById", query = "select p from ScriptEntity p where p.id = :param ") })
 
 public class ScriptEntity {
 
@@ -40,14 +36,12 @@ public class ScriptEntity {
 
 	@Column(name = "referencia", nullable = false)
 	private String reference;
-	
-	@OneToMany(mappedBy="script",cascade=CascadeType.REMOVE)
-	private Collection<QuestionEntity> questions;
-	
-	@OneToMany(mappedBy="script")
-	private Collection<InterviewEntity> interviews;
-	
 
+	@OneToMany(mappedBy = "script", cascade = CascadeType.REMOVE)
+	private Collection<QuestionEntity> questions;
+
+	@OneToMany(mappedBy = "script", fetch = FetchType.EAGER)
+	private Collection<InterviewEntity> interviews;
 
 	public ScriptEntity() {
 

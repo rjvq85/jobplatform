@@ -9,6 +9,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import javax.resource.spi.IllegalStateException;
 
 import pt.criticalsoftware.domain.entities.InterviewEntity;
 import pt.criticalsoftware.domain.entities.ScriptEntity;
@@ -103,7 +104,7 @@ public class InterviewPersistenceService implements IInterviewPersistenceService
 	public IInterview create(IInterview entity) {
 		if (entity instanceof IEntityAware<?>) {
 			InterviewEntity ent = em.merge(((IEntityAware<InterviewEntity>) entity).getEntity());
-			ent.setInterviewRef(GenerateReferenceValue.genReference("I",ent.getId()));
+			ent.setInterviewRef(GenerateReferenceValue.genReference("I", ent.getId()));
 			return new InterviewProxy(em.merge(ent));
 		}
 		return null;
@@ -114,7 +115,8 @@ public class InterviewPersistenceService implements IInterviewPersistenceService
 	public IInterview update(IInterview selectedInterview) {
 		if (selectedInterview instanceof IEntityAware<?>) {
 			System.out.println("\n\n\n ENTROU PARA O UPDATE \n\n\n");
-			InterviewProxy ip = new InterviewProxy(em.merge(((IEntityAware<InterviewEntity>) selectedInterview).getEntity()));
+			InterviewProxy ip = new InterviewProxy(
+					em.merge(((IEntityAware<InterviewEntity>) selectedInterview).getEntity()));
 			em.flush();
 			return ip;
 		}
@@ -128,14 +130,14 @@ public class InterviewPersistenceService implements IInterviewPersistenceService
 			em.remove(em.merge(((IEntityAware<InterviewEntity>) selectedInterview).getEntity()));
 		}
 	}
-	
+
 	@Override
-	public List<IUser> getAvailableInterviewers(Integer id){
-		TypedQuery<UserEntity> query = em.createNamedQuery("Interview.availableInterviewers",UserEntity.class)
+	public List<IUser> getAvailableInterviewers(Integer id) {
+		TypedQuery<UserEntity> query = em.createNamedQuery("Interview.availableInterviewers", UserEntity.class)
 				.setParameter("param", id);
 		List<UserEntity> entities = query.getResultList();
 		List<IUser> users = new ArrayList<>();
-		for (UserEntity ue:entities) {
+		for (UserEntity ue : entities) {
 			users.add(new UserProxy(ue));
 		}
 		return users;
@@ -143,7 +145,7 @@ public class InterviewPersistenceService implements IInterviewPersistenceService
 
 	@Override
 	public List<IScript> getAvailableScripts(Integer id) {
-		TypedQuery<ScriptEntity> query = em.createNamedQuery("Interview.availableScripts",ScriptEntity.class)
+		TypedQuery<ScriptEntity> query = em.createNamedQuery("Interview.availableScripts", ScriptEntity.class)
 				.setParameter("param", id);
 		List<ScriptEntity> entities = query.getResultList();
 		List<IScript> scripts = new ArrayList<>();
@@ -155,7 +157,7 @@ public class InterviewPersistenceService implements IInterviewPersistenceService
 
 	@Override
 	public List<IInterview> getByCandidate(ICandidate candidate) {
-		TypedQuery<InterviewEntity> query = em.createNamedQuery("Interview.byCandidate",InterviewEntity.class)
+		TypedQuery<InterviewEntity> query = em.createNamedQuery("Interview.byCandidate", InterviewEntity.class)
 				.setParameter("param", candidate.getId());
 		List<InterviewEntity> entities = query.getResultList();
 		List<IInterview> intervs = new ArrayList<>();
@@ -165,11 +167,9 @@ public class InterviewPersistenceService implements IInterviewPersistenceService
 		return intervs;
 	}
 
-	public List<IInterview> getInterviewsByDatePeriod(LocalDate dateInit,
-			LocalDate dateFinal) {
+	public List<IInterview> getInterviewsByDatePeriod(LocalDate dateInit, LocalDate dateFinal) {
 		TypedQuery<InterviewEntity> query = em.createNamedQuery("Interview.searchByPeriodDate", InterviewEntity.class)
-				.setParameter("initDate", dateInit)
-				.setParameter("finalDate", dateFinal);
+				.setParameter("initDate", dateInit).setParameter("finalDate", dateFinal);
 		List<IInterview> interviews = new ArrayList<>();
 		List<InterviewEntity> entities = query.getResultList();
 		for (InterviewEntity ie : entities) {
@@ -181,5 +181,83 @@ public class InterviewPersistenceService implements IInterviewPersistenceService
 	@Override
 	public IInterview find(Integer id) {
 		return new InterviewProxy(em.find(InterviewEntity.class, id));
+	}
+
+	@Override
+	public List<IInterview> getScheduled() {
+		TypedQuery<InterviewEntity> query = em.createNamedQuery("Interview.allScheduled", InterviewEntity.class);
+		List<InterviewEntity> entities = query.getResultList();
+		if (entities.size() != 0) {
+			List<IInterview> interviews = new ArrayList<>();
+			entities.stream().forEach(entity -> interviews.add(new InterviewProxy(entity)));
+			return interviews;
+		}
+		return null;
+	}
+	
+	@Override
+	public Long getNumberWithScript(Integer id) {
+		TypedQuery<Long> query = em.createNamedQuery("Interview.getScheduledScript", Long.class)
+				.setParameter("param", id);
+		Long count = (Long) query.getSingleResult();
+		return count;
+	}
+	
+	@Override
+	public List<IInterview> findByScript(Integer id) {
+		TypedQuery<InterviewEntity> query = em.createNamedQuery("Interview.getByScript", InterviewEntity.class)
+				.setParameter("param", id);
+		List<InterviewEntity> entities = query.getResultList();
+		if (entities.size() > 0) {
+			List<IInterview> interviews = new ArrayList<>();
+			entities.stream().forEach(entity -> interviews.add(new InterviewProxy(entity)));
+			return interviews;
+		}
+		return null;
+	}
+
+	@Override
+	public void updateMultiple(List<IInterview> interviews) {
+		for (IInterview interview : interviews) {
+			try {
+				InterviewEntity entity = getEntity(interview);
+				em.merge(entity);
+			} catch (IllegalStateException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	private InterviewEntity getEntity(IInterview interview) throws IllegalStateException {
+		if (interview instanceof IEntityAware<?>) {
+			return ((IEntityAware<InterviewEntity>) interview).getEntity();
+		}
+		throw new IllegalStateException();
+	}
+	
+	@Override
+	public List<IInterview> getDone() {
+		TypedQuery<InterviewEntity> query = em.createNamedQuery("Interview.doneInterviews", InterviewEntity.class);
+		List<InterviewEntity> entities = query.getResultList();
+		if (entities.size() > 0) {
+			List<IInterview> interviews = new ArrayList<>();
+			entities.stream().forEach(entity -> interviews.add(new InterviewProxy(entity)));
+			return interviews;
+		}
+		return null;
+	}
+
+	@Override
+	public List<IInterview> getDoneInterviewsByCandidate(Integer candidateId) {
+		TypedQuery<InterviewEntity> query = em.createNamedQuery("Interview.doneInterviewsByCandidate", InterviewEntity.class)
+				.setParameter("param", candidateId);
+		List<InterviewEntity> entities = query.getResultList();
+		if (entities.size() > 0) {
+			List<IInterview> interviews = new ArrayList<>();
+			entities.stream().forEach(entity -> interviews.add(new InterviewProxy(entity)));
+			return interviews;
+		}
+		return null;
 	}
 }

@@ -6,17 +6,21 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
+import org.primefaces.context.RequestContext;
 import org.primefaces.event.ReorderEvent;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.UnselectEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import pt.criticalsoftware.service.business.IInterviewBusinessService;
 import pt.criticalsoftware.service.business.IQuestionBusinessService;
 import pt.criticalsoftware.service.business.IScriptBusinessService;
+import pt.criticalsoftware.service.model.IInterview;
 import pt.criticalsoftware.service.model.IQuestion;
 import pt.criticalsoftware.service.model.IScript;
 import pt.criticalsoftware.service.persistence.questions.AnswerType;
+import pt.criticalsoftware.service.persistence.states.InterviewState;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -33,6 +37,8 @@ public class EditScript implements Serializable {
 	private IScriptBusinessService scriptService;
 	@EJB
 	private IQuestionBusinessService questionService;
+	@EJB
+	private IInterviewBusinessService interviewBness;
 
 	private IScript editScript;
 	private IQuestion editQuestion;
@@ -162,10 +168,26 @@ public class EditScript implements Serializable {
 	}
 
 	public void deleteScript() {
-		editScript = scriptService.getScriptByID(editScript.getId());
-		scriptService.deleteScript(editScript);
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("O guião foi eliminado com sucesso"));
-		deleted();
+		Boolean safeToDelete = true;
+		if (interviewBness.countInterviewsPerScript(editScript.getId()) > 0)
+			safeToDelete = false;
+		if (safeToDelete) {
+			List<IInterview> interviews = interviewBness.getByScript(editScript.getId());
+			if (null != interviews) {
+				interviews.stream().forEach(interview -> interview.setScript(null));
+				interviewBness.updateMultiple(interviews);
+			}
+			editScript = scriptService.getScriptByID(editScript.getId());
+			scriptService.deleteScript(editScript);
+			FacesContext.getCurrentInstance().addMessage("delscriptgrowl", new FacesMessage("O guião foi eliminado com sucesso"));
+			RequestContext.getCurrentInstance().addCallbackParam("safe", true);
+			deleted();
+		} else {
+			RequestContext.getCurrentInstance().addCallbackParam("safe", false);
+			FacesContext.getCurrentInstance().addMessage("delscriptgrowl",
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro",
+							"Existem ainda entrevistas agendadas, associadas a este guião"));
+		}
 	}
 
 	// Question selected-------------------------

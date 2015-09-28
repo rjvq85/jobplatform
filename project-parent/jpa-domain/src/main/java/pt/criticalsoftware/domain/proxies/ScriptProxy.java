@@ -7,8 +7,10 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import pt.criticalsoftware.domain.entities.InterviewEntity;
 import pt.criticalsoftware.domain.entities.QuestionEntity;
 import pt.criticalsoftware.domain.entities.ScriptEntity;
+import pt.criticalsoftware.service.model.IInterview;
 import pt.criticalsoftware.service.model.IQuestion;
 import pt.criticalsoftware.service.model.IScript;
 
@@ -81,6 +83,25 @@ public class ScriptProxy implements IEntityAware<ScriptEntity>,IScript {
 	}
 	public void setTitle(String title) {
 		script.setTitle(title);
+	}
+	
+	@Override
+	public List<IInterview> getInterviews() {
+		List<IInterview> interviews = new ArrayList<>();
+		script.getInterviews().stream().forEach(entity -> interviews.add(new InterviewProxy(entity)));
+		return interviews;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public void setInterviews(List<IInterview> interviews) {
+		List<InterviewEntity> entities = new ArrayList<>();
+		for(IInterview interview:interviews) {
+			if (interview instanceof IEntityAware<?>) {
+				entities.add(((IEntityAware<InterviewEntity>) interview).getEntity());
+			}
+		}
+		script.setInterviews(entities);
 	}
 
 	@Override

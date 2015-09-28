@@ -184,6 +184,37 @@ public class MailSender implements IMailSender {
 			e.printStackTrace();
 		}
 	}
+	
+	@Override
+	public void sendAttachmentEmail(IUser user, String path) {
+		try {
+			// Attachment
+			EmailAttachment attachment = new EmailAttachment();
+			attachment.setPath(path);
+			attachment.setDescription("Relatórios em PDF");
+			attachment.setDisposition(EmailAttachment.ATTACHMENT);
+			attachment.setName(user.getFirstName() + " " +user.getLastName());
+			
+			// Email Settings
+			IEmail activeMail = business.getActive();
+			MultiPartEmail mpEmail = new MultiPartEmail();
+			mpEmail.setHostName(activeMail.getHostName());
+			mpEmail.setSmtpPort(activeMail.getSmtpPort());
+			mpEmail.setAuthentication(activeMail.getUsername(), activeMail.getPassword());
+			mpEmail.setSSLOnConnect(activeMail.getSllOnConnect());
+			mpEmail.setStartTLSEnabled(activeMail.getStartTLS());
+			mpEmail.addTo(user.getEmail());
+			mpEmail.setSubject("[Critical Jobs] Relatório PDF");
+			mpEmail.setMsg("Relatório em PDF como pedido.\n\nEsta mensagem foi gerada automaticamente.");
+			mpEmail.setFrom(activeMail.getUsername());
+			mpEmail.attach(attachment);
+			
+			mpEmail.send();
+		} catch (EmailException e) {
+			logger.error("Erro ao enviar PDF de relatório por e-mail");
+			e.printStackTrace();
+		}
+	}
 
 	private Email setDetails(String subject, String receiver, String msg) {
 		return mailProp.setSubject(subject).setReceiver(receiver).setMsg(msg).getEmail();

@@ -62,4 +62,24 @@ public interface ICandidate {
 
 	Integer getId();
 
+	void setLinkedInSummary(String linkedInSummary);
+
+	String getLinkedInSummary();
+
+	void setLinkedInUrl(String linkedInUrl);
+
+	String getLinkedInUrl();
+
+	void setLinkedInPicture(String linkedInPicture);
+
+	String getLinkedInPicture();
+
+	void setLinkedInHeadline(String linkedInHeadline);
+
+	String getLinkedInHeadline();
+
+	void setLinkedInConnections(Integer linkedInConnections);
+
+	Integer getLinkedInConnections();
+
 }

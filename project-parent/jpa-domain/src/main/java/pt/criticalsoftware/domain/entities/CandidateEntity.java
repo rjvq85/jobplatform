@@ -79,6 +79,21 @@ public class CandidateEntity {
 	@Column(name = "cv", unique = true)
 	private String cv;
 
+	@Column(name = "linkedin_connections")
+	private Integer linkedInConnections;
+
+	@Column(name = "linkedin_headline")
+	private String linkedInHeadline;
+
+	@Column(name = "linkedin_picture")
+	private String linkedInPicture;
+
+	@Column(name = "linkedin_url")
+	private String linkedInUrl;
+
+	@Column(name = "linkedin_summary")
+	private String linkedInSummary;
+
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "candidate")
 	private Collection<CandidacyEntity> candidacies;
 
@@ -233,6 +248,46 @@ public class CandidateEntity {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+
+	public Integer getLinkedInConnections() {
+		return linkedInConnections;
+	}
+
+	public void setLinkedInConnections(Integer linkedInConnections) {
+		this.linkedInConnections = linkedInConnections;
+	}
+
+	public String getLinkedInHeadline() {
+		return linkedInHeadline;
+	}
+
+	public void setLinkedInHeadline(String linkedInHeadline) {
+		this.linkedInHeadline = linkedInHeadline;
+	}
+
+	public String getLinkedInPicture() {
+		return linkedInPicture;
+	}
+
+	public void setLinkedInPicture(String linkedInPicture) {
+		this.linkedInPicture = linkedInPicture;
+	}
+
+	public String getLinkedInUrl() {
+		return linkedInUrl;
+	}
+
+	public void setLinkedInUrl(String linkedInUrl) {
+		this.linkedInUrl = linkedInUrl;
+	}
+
+	public String getLinkedInSummary() {
+		return linkedInSummary;
+	}
+
+	public void setLinkedInSummary(String linkedInSummary) {
+		this.linkedInSummary = linkedInSummary;
 	}
 
 }

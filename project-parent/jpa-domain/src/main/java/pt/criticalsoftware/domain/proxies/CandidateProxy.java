@@ -179,5 +179,55 @@ public class CandidateProxy implements ICandidate, IEntityAware<CandidateEntity>
 	public String toString() {
 		return candidate.getFirstName() + " " + candidate.getLastName();
 	}
+	
+	@Override
+	public Integer getLinkedInConnections() {
+		return candidate.getLinkedInConnections();
+	}
+
+	@Override
+	public void setLinkedInConnections(Integer linkedInConnections) {
+		candidate.setLinkedInConnections(linkedInConnections);
+	}
+
+	@Override
+	public String getLinkedInHeadline() {
+		return candidate.getLinkedInHeadline();
+	}
+
+	@Override
+	public void setLinkedInHeadline(String linkedInHeadline) {
+		candidate.setLinkedInHeadline(linkedInHeadline);
+	}
+
+	@Override
+	public String getLinkedInPicture() {
+		return candidate.getLinkedInPicture();
+	}
+
+	@Override
+	public void setLinkedInPicture(String linkedInPicture) {
+		candidate.setLinkedInPicture(linkedInPicture);
+	}
+
+	@Override
+	public String getLinkedInUrl() {
+		return candidate.getLinkedInUrl();
+	}
+
+	@Override
+	public void setLinkedInUrl(String linkedInUrl) {
+		candidate.setLinkedInUrl(linkedInUrl);
+	}
+
+	@Override
+	public String getLinkedInSummary() {
+		return candidate.getLinkedInSummary();
+	}
+
+	@Override
+	public void setLinkedInSummary(String linkedInSummary) {
+		candidate.setLinkedInSummary(linkedInSummary);
+	}
 
 }

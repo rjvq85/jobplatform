@@ -3,7 +3,8 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
 <h:head>
 	<meta charset="utf-8" />
 	<h:outputScript name="jquery/jquery.js" library="primefaces" />
@@ -27,6 +28,9 @@
 				rendered="#{not userIsLogged}" />
 			<h:commandLink action="#{searchedPosition.testingPos(1)}"
 				value="Registo com Posição" rendered="#{not userIsLogged}" />
+				<h:outputLink value="#{linkedInIntegration.authUrl}" target="_blank">LinkedIn</h:outputLink>
+				<h:inputText value="#{linkedInIntegration.code}" a:placeholder="Código"/>
+				<h:commandButton action="#{linkedInIntegration.submit()}" value="Submeter" />
 		</h:form>
 	</h:panelGroup>
 

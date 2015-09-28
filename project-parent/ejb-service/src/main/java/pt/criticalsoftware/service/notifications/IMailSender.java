@@ -21,4 +21,6 @@ public interface IMailSender {
 
 	void sendResetPasswordEmail(String path, String email, String token) throws EmailException;
 
+	void sendAttachmentEmail(IUser user, String path);
+
 }

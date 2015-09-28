@@ -44,67 +44,69 @@
 						</h:panelGroup>
 					</h:panelGroup>
 					<h:panelGroup layout="block" styleClass="row">
-						<h:panelGroup layout="block" styleClass="col-md-12">
+						<h:panelGroup layout="block" styleClass="col-md-6">
+							<h:panelGroup layout="block" id="linkedinimg"
+								rendered="#{not empty candidateProfile.candidate.linkedInPicture}">
+								<h:graphicImage
+									url="#{candidateProfile.candidate.linkedInPicture}"
+									styleClass="img-responsive img-rounded img-thumbnail" />
+								<br />
+							</h:panelGroup>
 							<h4>Nome:</h4>
 							<h:outputText
 								value="#{candidateProfile.candidate.firstName} #{candidateProfile.candidate.lastName}" />
 						</h:panelGroup>
-					</h:panelGroup>
-					<h:panelGroup layout="block" styleClass="spacer" />
-					<h:panelGroup layout="block" styleClass="row">
-						<h:panelGroup layout="block" styleClass="col-md-12">
+						<h:panelGroup layout="block" styleClass="col-md-6">
 							<h4>E-mail:</h4>
 							<h:outputText value="#{candidateProfile.candidate.email}" />
-						</h:panelGroup>
-					</h:panelGroup>
-					<h:panelGroup layout="block" styleClass="row">
-						<h:panelGroup layout="block" styleClass="col-md-12">
 							<h4>Telemóvel:</h4>
 							<h:outputText value="#{candidateProfile.candidate.mobilePhone}" />
-						</h:panelGroup>
-					</h:panelGroup>
-					<h:panelGroup layout="block" styleClass="row">
-						<h:panelGroup layout="block" styleClass="col-md-12">
 							<h4>Telefone:</h4>
 							<h:outputText value="#{candidateProfile.candidate.phone}" />
 						</h:panelGroup>
 					</h:panelGroup>
 					<h:panelGroup layout="block" styleClass="spacer" />
-					<address>
-						<h:panelGroup layout="block" styleClass="row">
-							<h:panelGroup layout="block" styleClass="col-md-12">
-								<h4>Morada:</h4>
+					<h:panelGroup layout="block" styleClass="row">
+						<h:panelGroup layout="block" styleClass="col-md-6">
+							<h4>Morada:</h4>
+							<address>
 								<strong><h:outputText
 										value="#{candidateProfile.candidate.address}" /></strong>
-							</h:panelGroup>
+								<h:outputText value="#{candidateProfile.candidate.town}" />
+								,
+								<h:outputText value="#{candidateProfile.candidate.country}" />
+							</address>
 						</h:panelGroup>
-						<h:panelGroup layout="block" styleClass="row">
-							<h:panelGroup layout="block" styleClass="col-md-12">
-								<h:outputText value="#{candidateProfile.candidate.town}" />, <h:outputText
-									value="#{candidateProfile.candidate.country}" />
-							</h:panelGroup>
-						</h:panelGroup>
-					</address>
-					<h:panelGroup layout="block" styleClass="spacer">
-						<h:panelGroup layout="block" styleClass="row">
-							<h:panelGroup layout="block" styleClass="col-md-12">
-								<h4>Formação:</h4>
-								<br />
+						<h:panelGroup layout="block" styleClass="col-md-6">
+							<h4>Formação:</h4>
+							<br />
 							Curso: <h:outputText value="#{candidateProfile.candidate.course}" />
-								<br />
+							<br />
 							Escola: <h:outputText
-									value="#{candidateProfile.candidate.university}" />
-								<br />
+								value="#{candidateProfile.candidate.university}" />
+							<br />
 							Grau académico: <h:outputText
-									value="#{candidateProfile.candidate.degree}" />
-							</h:panelGroup>
+								value="#{candidateProfile.candidate.degree}" />
 						</h:panelGroup>
-						<h:panelGroup layout="block" styleClass="spacer">
-							<h:panelGroup layout="block" styleClass="row">
-								<h:panelGroup layout="block" styleClass="col-md-12">
-									<h:link outcome="candidateinterv.xhtml" includeViewParams="true" value="Entrevistas Anteriores"/>
-								</h:panelGroup>
-							</h:panelGroup>
+						<h:link outcome="candidateinterv.xhtml" includeViewParams="true"
+							value="Entrevistas Anteriores" />
+					</h:panelGroup>
+					<hr />
+					<h:panelGroup layout="block" styleClass="row thumbnail"
+						rendered="#{not empty candidateProfile.candidate.linkedInHeadline}">
+						<h:panelGroup layout="block" styleClass="col-md-12">
+							<h3 class="text-center">LinkedIn</h3>
+							<br />
+							<h:outputLink value="#{candidateProfile.candidate.linkedInUrl}">Link</h:outputLink> do Perfil 'LinkedIn'
+							<br />
+							<strong>Headline</strong>: <h:outputText
+								value="#{candidateProfile.candidate.linkedInHeadline}" />
+							<br />
+							<strong>Summary</strong>: <h:outputText
+								value="#{candidateProfile.candidate.linkedInSummary}" />
+							<br />
+							<strong>Número de ligações</strong>: <h:outputText
+								value="#{candidateProfile.candidate.linkedInConnections}" />
 						</h:panelGroup>
 					</h:panelGroup>
 				</h:panelGroup>

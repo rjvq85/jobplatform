@@ -6,7 +6,7 @@
 	<display-name>web-public</display-name>
 	<module-name>pt.criticalsoftware.jobs.platform.web-public</module-name>
 	<welcome-file-list>
-		<welcome-file>/index.xhtml</welcome-file>
+		<welcome-file>/jobs.xhtml</welcome-file>
 	</welcome-file-list>
 	<session-config>
 		<session-timeout>30</session-timeout>

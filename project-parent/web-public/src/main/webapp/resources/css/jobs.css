@@ -12,7 +12,9 @@ h3 {
 .ui-widget-content a {
 	padding: 5px !important;
 }
-
+a{
+	text-decoration-line: none;
+}
 #searchPanel{
     align-content: center;
     width: 1000px;

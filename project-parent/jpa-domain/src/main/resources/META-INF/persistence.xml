@@ -15,6 +15,7 @@
 		<class>pt.criticalsoftware.domain.entities.NotificationEntity</class>
 		<class>pt.criticalsoftware.domain.entities.EmailEntity</class>
 		<class>pt.criticalsoftware.domain.entities.ThemesEntity</class>
+		<class>pt.criticalsoftware.domain.entities.TokenEntity</class>
 		<class>pt.criticalsoftware.service.persistence.utils.LocalDatePersistenceConverter.class</class>
 		<class>pt.criticalsoftware.domain.utils.InterviewReferenceGenerator.class</class>
 		<properties>

@@ -70,9 +70,6 @@ public class NewInterview {
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 			candInterview.addNewInterview(interview);
 			String path = getRequest().getScheme() + "://" + getRequest().getServerName() + ":" + getRequest().getServerPort() + getRequest().getContextPath();
-			logger.info(getRequest().getServerName());
-			logger.info(getRequest().getLocalAddr());
-			logger.info(getRequest().getRequestURL().toString());
 			mailSender.sendEmail(createdInterview, createdInterview.getInterviewers(), path);
 			clear();
 		} catch (Exception e) {

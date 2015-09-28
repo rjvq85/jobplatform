@@ -12,16 +12,29 @@
 </h:head>
 
 <h:body>
-	
+	<h:form id="hform">
 		<p:panel>
-			<p:chart type="line" model="#{reportNonAdmited.lineModel}"
-				style="width:550px;height:300px"  />
+			<p:chart type="line" model="#{reportNonAdmited.lineModel}" widgetVar="chart"
+				style="width:550px;height:300px" />
 
-			
+			<p:commandButton type="submit" value="Anexar ao relatório" icon="ui-icon-extlink"
+				onclick="exportChart();"
+				actionListener="#{reportNonAdmited.submittedBase64Str}" />
+
+			<h:inputHidden id="b64" value="#{reportNonAdmited.base64Str}" />
+
+			<script type="text/javascript">
+function exportChart() {
+	 // exportAsImage() will return a base64 png encoded string
+     img = PF('chart').exportAsImage();
+     document.getElementById('hform:b64').value = img.src;
+     console.log(img.getAttribute("src"));
+ 
+}
+</script>
 		</p:panel>
-		
-		
-	
+	</h:form>
+
 
 
 	<p:spacer height="30" />
@@ -74,8 +87,7 @@
 				<p:graphicImage name="/imgs/pdf_icon.gif" with="32" height="32" />
 				<pe:exporter type="pdf" target="tbl" encoding="UTF-8"
 					fileName="RelatorioCandidatosRejeitadosPorPosicai"
-					preProcessor="#{reportCandidaciesByTime.preProcessPDF}"
-					tableTitle="Resultados De Quantidade de Candidatos Rejeitados Por Posicao Por Intervalo De Tempo"
+					preProcessor="#{reportNonAdmited.preProcessPDF}"
 					orientation="Portrait " facetBackground="#A50D12"
 					facetFontSize="14" facetFontColor="#FFFFFF" facetFontStyle="BOLD"
 					cellFontColor="#303030" cellFontSize="12" cellFontStyle="NORMAL" />

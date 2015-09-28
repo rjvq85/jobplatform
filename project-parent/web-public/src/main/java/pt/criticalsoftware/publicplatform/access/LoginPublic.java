@@ -2,6 +2,7 @@ package pt.criticalsoftware.publicplatform.access;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
@@ -11,11 +12,13 @@ import org.primefaces.context.RequestContext;
 
 import pt.criticalsoftware.service.business.ICandidateBusinessService;
 import pt.criticalsoftware.service.model.ICandidate;
+import java.io.Serializable;
 
 @Named
-@RequestScoped
-public class LoginPublic {
+@SessionScoped
+public class LoginPublic implements Serializable {
 
+	private static final long serialVersionUID = 7755674776642047697L;
 	private String username;
 	private String password;
 

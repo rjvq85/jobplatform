@@ -136,5 +136,17 @@ public class UserPersistenceService implements IUserPersistenceService {
 		}
 	}
 
+	@Override
+	public void update(IUser user) {
+		UserEntity u;
+		try {
+			u = getEntity(user);
+			em.merge(u);
+		} catch (IllegalStateException e) {
+			logger.error("Erro ao actualizar utilizador com email: "+user.getEmail());
+			e.printStackTrace();
+		}
+	}
+
 
 }

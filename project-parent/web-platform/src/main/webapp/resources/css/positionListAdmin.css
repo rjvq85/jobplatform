@@ -30,7 +30,9 @@ body {
 	font-weight: normal;
 	text-align: center;
 }
-
+a{
+	text-decoration-line: none;
+}
 #outBox {
 	display: inline-block;
 	width: 1550px;

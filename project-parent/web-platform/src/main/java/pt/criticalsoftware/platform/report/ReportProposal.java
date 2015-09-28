@@ -1,6 +1,10 @@
 package pt.criticalsoftware.platform.report;
 
 
+import java.awt.image.RenderedImage;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -16,9 +20,20 @@ import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.imageio.ImageIO;
 import javax.inject.Named;
+import javax.servlet.ServletContext;
 
 import org.primefaces.model.chart.PieChartModel;
+
+import com.lowagie.text.BadElementException;
+import com.lowagie.text.Document;
+import com.lowagie.text.DocumentException;
+import com.lowagie.text.Font;
+import com.lowagie.text.Image;
+import com.lowagie.text.PageSize;
+import com.lowagie.text.Phrase;
+import com.lowagie.text.pdf.BaseFont;
 
 import pt.criticalsoftware.service.business.IPositionBusinessService;
 import pt.criticalsoftware.service.model.IInterview;
@@ -136,9 +151,9 @@ public class ReportProposal implements Serializable {
 					aux3++;
 				else if (c.getLocale().equals("Outra"))
 					aux4++;
-				
-			
-			
+
+
+
 		}
 		else{
 			aux1=10;aux2=20;
@@ -150,7 +165,7 @@ public class ReportProposal implements Serializable {
 		model.set("Outra", aux4);
 		return model;
 	}
-	
+
 
 	//	Chart
 	private PieChartModel lineModel;
@@ -186,8 +201,8 @@ public class ReportProposal implements Serializable {
 					aux5++;
 				else if (c.getTechnicalArea().equals("Integration"))
 					aux6++;
-			
-			
+
+
 		}
 		else{
 			aux1=10;aux2=20;
@@ -202,6 +217,87 @@ public class ReportProposal implements Serializable {
 		model.set("NET_DEVELOPMENT",aux2);
 
 		return model;
+	}
+
+	private String base64Str ;
+
+	public String getBase64Str() {
+		return base64Str;
+	}
+
+	public void setBase64Str(String base64Str) {
+		this.base64Str = base64Str;
+	}
+	private boolean file=false;
+
+	public void submittedBase64Str(){
+
+		if(base64Str.split(",").length > 1){
+			String encoded = base64Str.split(",")[1];
+
+			byte[] decoded = org.apache.commons.codec.binary.Base64.decodeBase64(encoded);
+			try {
+				RenderedImage renderedImage = ImageIO.read(new ByteArrayInputStream(decoded));
+				ImageIO.write(renderedImage, "png", new File("prop.png")); 
+				file=true;
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	private String base64Str1 ;
+
+	public String getBase64Str1() {
+		return base64Str1;
+	}
+
+	public void setBase64Str1(String base64Str1) {
+		this.base64Str1 = base64Str1;
+	}
+	private boolean file1=false;
+	public void submittedBase64Str1(){
+
+		if(base64Str1.split(",").length > 1){
+			String encoded = base64Str1.split(",")[1];
+
+			byte[] decoded = org.apache.commons.codec.binary.Base64.decodeBase64(encoded);
+			try {
+				RenderedImage renderedImage = ImageIO.read(new ByteArrayInputStream(decoded));
+				ImageIO.write(renderedImage, "png", new File("prop1.png")); 
+				file1=true;
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	public void preProcessPDF(Object document) throws IOException, BadElementException, DocumentException {
+
+		Document pdf = (Document) document;
+		pdf.open();
+		pdf.setPageSize(PageSize.A4);
+		BaseFont bf_helv = BaseFont.createFont(BaseFont.HELVETICA, "Cp1252", false);
+		Font headerFont = new Font(bf_helv, 12);
+
+		ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
+		String logo = servletContext.getRealPath("") + File.separator + "resources"
+				+ ""   + File.separator + "imgs" + File.separator + "criticalIcon.jpg";
+
+
+		pdf.add(Image.getInstance(logo));
+		Phrase phrase = new Phrase(12, "\n", headerFont);
+		phrase.add("\n Critical Software Relatórios \n \n");
+		pdf.add(phrase);
+		if (file){
+			String chart ="prop.png";
+			pdf.add(Image.getInstance(chart));
+			file=false;
+		}
+		if (file1){
+			String chart1="prop1.png";
+			pdf.add(Image.getInstance(chart1));
+			file1=false;
+		}
 	}
 }
 

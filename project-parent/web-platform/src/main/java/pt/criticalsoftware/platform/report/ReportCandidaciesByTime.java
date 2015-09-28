@@ -173,4 +173,12 @@ public class ReportCandidaciesByTime implements Serializable {
 		pdf.add(phrase);
 	}
 
+	public void proProcessPDF(Object document){
+		Document pdf = (Document) document;
+
+		if (pdf!=null)
+			logger.info("TEM O DOCUMENTO");
+		//SENDATTACHMENTEMAIL(UTILIZADOR, CAMINHO)
+
+	}
 }

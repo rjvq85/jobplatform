@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+<h:head>
+	<meta charset="utf-8" />
+	<h:outputScript name="jquery/jquery.js" library="primefaces" />
+	<h:outputScript library="js" name="bootstrap.js" />
+	<h:outputScript library="js" name="bootstrap-select.js" />
+	<h:outputScript library="js" name="tablepagination.js" />
+	<h:outputScript library="js" name="customscripts.js" />
+	<h:outputStylesheet library="css" name="mainstyle.css" />
+	<h:outputStylesheet library="css" name="bootstrap.css" />
+	<h:outputScript library="js" name="fileupload.js" />
+	<title>Plataforma de Emprego</title>
+</h:head>
+<h:body>
+	<ui:composition>
+		<p:growl id="growlmsgch" life="3000" globalOnly="true"
+			showDetail="true" showSummary="true" />
+		<p:dialog id="changeSettDialog" widgetVar="changeSettWidget"
+			header="Escolher Definições" modal="true" draggable="false"
+			resizable="false" hideEffect="puff">
+			<h:panelGroup id="ctnr" layout="block" styleClass="container-small">
+				<h:panelGroup layout="block" styleClass="row">
+					<h:panelGroup layout="block" styleClass="col-md-12 text-center">
+						<h:panelGroup layout="block"
+							rendered="#{not empty mailSettingsWeb.activeSettings}">
+							<label for="activesett">Definições actualmente activas: </label>
+							<h:outputText
+								value="#{mailSettingsWeb.activeSettings.hostName}, #{mailSettingsWeb.activeSettings.smtpPort}, #{mailSettingsWeb.activeSettings.username}" />
+						</h:panelGroup>
+						<h:panelGroup layout="block"
+							rendered="#{empty mailSettingsWeb.activeSettings}">
+							<h:outputText value="Não existem definições 'activas'" />
+						</h:panelGroup>
+					</h:panelGroup>
+				</h:panelGroup>
+				<br/>
+				<h:panelGroup layout="block" styleClass="row">
+					<h:panelGroup layout="block" styleClass="col-md-offset-2 col-md-4">
+						<h:outputText value="Definições existentes" />
+					</h:panelGroup>
+					<h:panelGroup layout="block" styleClass="col-md-4">
+						<h:selectOneMenu id="existingsett"
+							value="#{mailSettingsWeb.selectedEmailSettings}"
+							styleClass="form-control btn-info" required="true"
+							requiredMessage="" style="height:34px;"
+							converter="#{emailConverter}">
+							<f:selectItem itemLabel="Seleccione uma das opções" noSelectionOption="true" />
+							<f:selectItems value="#{mailSettingsWeb.existingSettings}"
+								var="s" itemValue="#{s}"
+								itemLabel="#{s.hostName}, #{s.smtpPort}, #{s.username}"></f:selectItems>
+						</h:selectOneMenu>
+					</h:panelGroup>
+				</h:panelGroup>
+				<hr/>
+				<br />
+				<h:panelGroup layout="block" styleClass="row">
+					<h:panelGroup layout="block" styleClass="col-md-12 text-center">
+						<h:commandButton action="#{mailSettingsWeb.chooseSettings()}"
+							styleClass="btn btn-primary"
+							style="border-radius:0 !important; margin-right: 5px !important;"
+							value="Escolher">
+							<p:ajax oncomplete="handleChoiceRequest(xhr, status, args)"
+								update="ctnr growlmsgch" process="changesettform" />
+						</h:commandButton>
+						<h:commandButton action="#{mailSettingsWeb.clear()}"
+							styleClass="btn btn-default"
+							style="border-radius:0 !important; margin-right: 5px !important;"
+							value="Cancelar">
+							<p:ajax oncomplete="PF('changeSettWidget').hide('slow');"
+								process="@this" />
+						</h:commandButton>
+					</h:panelGroup>
+				</h:panelGroup>
+			</h:panelGroup>
+		</p:dialog>
+		<script type="text/javascript">
+    		function handleChoiceRequest(xhr, status, args) {
+        		if(!args.chosen) {
+            		PF('changeSettWidget').jq.effect("shake", {times:5}, 100);
+        		} else {
+            		PF('changeSettWidget').hide("slow");
+        		}
+    		}
+			</script>
+	</ui:composition>
+</h:body>
+</html>

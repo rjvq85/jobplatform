@@ -1,5 +1,7 @@
 package pt.criticalsoftware.domain.service;
 
+import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -8,6 +10,7 @@ import javax.persistence.TypedQuery;
 import javax.resource.spi.IllegalStateException;
 
 import pt.criticalsoftware.domain.entities.CandidateEntity;
+import pt.criticalsoftware.domain.entities.PositionEntity;
 import pt.criticalsoftware.domain.proxies.CandidateProxy;
 import pt.criticalsoftware.domain.proxies.IEntityAware;
 import pt.criticalsoftware.service.model.ICandidate;
@@ -38,6 +41,17 @@ public class CandidatePersistenceService implements ICandidatePersistenceService
 	}
 
 	@Override
+	public ICandidate findByEmail(String email) {
+		TypedQuery<CandidateEntity> query = em.createNamedQuery("Candidate.findByEmail",CandidateEntity.class)
+				.setParameter("param", email);
+		List<CandidateEntity> candidates = query.getResultList();
+		if (candidates.size() == 1) {
+			return new CandidateProxy(candidates.get(0));
+		}
+		return null;
+	}
+
+	@Override
 	public ICandidate create(ICandidate candidate) {
 		try {
 			CandidateEntity entity = getEntity(candidate);
@@ -55,5 +69,57 @@ public class CandidatePersistenceService implements ICandidatePersistenceService
 		}
 		throw new IllegalStateException();
 	}
+
+	@Override
+	public void update(ICandidate candidate) {
+		CandidateEntity entity;
+		try {
+			entity = getEntity(candidate);
+			em.merge(entity);
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void updateEmail(String email, ICandidate candidate) {
+		CandidateEntity entity;
+		try {
+			entity = getEntity(candidate);
+			entity.setEmail(email);
+			em.merge(entity);
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void updateCV(String filePath, ICandidate candidate) {
+		CandidateEntity entity;
+		try {
+			entity = getEntity(candidate);
+			entity.setCv(filePath);;
+			em.merge(entity);
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		}
+	}
+	
+
+	@Override
+	public void deleteUser(ICandidate candidate) {
+		CandidateEntity entity;
+		try {
+			entity = getEntity(candidate);
+			CandidateEntity pos = em.find(CandidateEntity.class, entity.getId());
+			if (pos != null) {
+				em.remove(pos);
+			}
+			
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		}
+	}
+
 
 }

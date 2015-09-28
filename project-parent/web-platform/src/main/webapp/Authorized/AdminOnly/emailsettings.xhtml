@@ -21,11 +21,12 @@
 <h:body>
 	<ui:composition>
 		<h:form prependId="false" id="emailForm">
-		<p:growl id="growlmsg" life="3000" globalOnly="true" showDetail="true" showSummary="true"/>
+			<p:growl id="growlmsgadd" life="3000" globalOnly="true"
+				showDetail="true" showSummary="true" />
 			<p:dialog id="mailDialog" widgetVar="mailWidget"
 				header="Definições de E-mail (Notificações)" modal="true"
 				draggable="false" resizable="false" hideEffect="puff">
-				<h:panelGroup id="ctnr" layout="block" styleClass="container-small">
+				<h:panelGroup id="ctnradd" layout="block" styleClass="container-small">
 					<h:panelGroup layout="block" styleClass="row">
 						<h:panelGroup layout="block" styleClass="col-md-offset-2 col-md-4">
 							<label for="hostname">Hostname: <h:message for="hostname"
@@ -96,7 +97,7 @@
 								style="border-radius:0 !important; margin-right: 5px !important;"
 								value="Confirmar">
 								<p:ajax oncomplete="handleLoginRequest(xhr, status, args)"
-									update="ctnr growlmsg" process="emailForm" />
+									update="ctnradd growlmsgadd" process="emailForm" />
 							</h:commandButton>
 							<h:commandButton action="#{mailSettingsWeb.clear()}"
 								styleClass="btn btn-default"
@@ -105,12 +106,6 @@
 								<p:ajax oncomplete="PF('mailWidget').hide('slow');"
 									process="@this" />
 							</h:commandButton>
-						</h:panelGroup>
-					</h:panelGroup>
-					<h:panelGroup layout="block" styleClass="row">
-						<h:panelGroup id="testingresult" layout="block"
-							styleClass="col-md-12">
-
 						</h:panelGroup>
 					</h:panelGroup>
 				</h:panelGroup>

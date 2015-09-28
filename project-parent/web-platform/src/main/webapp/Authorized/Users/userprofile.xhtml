@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+<h:head>
+	<meta charset="utf-8" />
+	<h:outputScript library="js" name="jquery-2.1.4.min.js" />
+	<h:outputScript library="js" name="bootstrap.js" />
+	<h:outputScript library="js" name="tablepagination.js" />
+	<h:outputStylesheet library="css" name="mainstyle.css" />
+	<h:outputStylesheet library="css" name="bootstrap.css" />
+	<title>Plataforma de Emprego</title>
+</h:head>
+<h:body>
+	<ui:composition template="../Layout/layout.xhtml">
+		<ui:define name="content">
+			<f:metadata>
+				<f:viewParam name="u" value="#{userProfile.userid}"></f:viewParam>
+				<f:viewAction action="#{userProfile.init()}"></f:viewAction>
+			</f:metadata>
+			<h:panelGroup layout="block" class="container" id="container">
+				<h:panelGroup layout="block" class="row" style="margin-top:10%;">
+					<h:panelGroup layout="block" class="col-md-6">
+						<address>
+							<strong>#{userProfile.user.firstName}
+								#{userProfile.user.lastName}</strong><br /> Email:
+							#{userProfile.user.email}<br /> Username:
+							#{userProfile.user.username}<br /> Cargo: #{userProfile.userRole}
+						</address>
+					</h:panelGroup>
+				</h:panelGroup>
+			</h:panelGroup>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

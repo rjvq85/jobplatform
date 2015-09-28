@@ -11,28 +11,28 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </h:head>
 <h:body>
+	<h:form id="hform">
+		<p:panel>
+			<p:chart type="pie" model="#{reportInterviews.lineModel}"
+				widgetVar="chart" style="width:500px;height:300px" />
+			<p:commandButton type="submit" value="Anexar ao relatório"
+				icon="ui-icon-extlink" onclick="exportChart();"
+				actionListener="#{reportInterviews.submittedBase64Str}" />
 
-	<p:panel>
-		<p:chart type="pie" model="#{reportInterviews.lineModel}"
-			widgetVar="chart" style="width:500px;height:300px" />
-		<p:commandButton type="button" value="Export" icon="ui-icon-extlink"
-			onclick="exportChart()" />
+			<h:inputHidden id="b64" value="#{reportInterviews.base64Str}" />
 
-		<p:dialog widgetVar="dlg" showEffect="fade" modal="true"
-			header="Salvar Imagem" resizable="false">
-			<p:outputPanel id="output" layout="block"
-				style="width:500px;height:350px" />
-		</p:dialog>
-
-		<script type="text/javascript">
+			<script type="text/javascript">
 function exportChart() {
-    //export image
-    $('#printForm\\:output').empty().append(PF('chart').exportAsImage());
+	 // exportAsImage() will return a base64 png encoded string
+     img = PF('chart').exportAsImage();
+     document.getElementById('hform:b64').value = img.src;
+     console.log(img.getAttribute("src"));
  
 }
 </script>
-	</p:panel>
 
+		</p:panel>
+	</h:form>
 	<p:spacer height="10" />
 	<h:form>
 		<p:dataTable id="tbl" var="interview"
@@ -55,7 +55,7 @@ function exportChart() {
 				<h:outputText value="#{interview.date}" />
 			</p:column>
 
-			<p:column headerText="Área da posição">
+			<p:column headerText="Area da posicao">
 				<h:outputText value="#{interview.position.technicalArea}" />
 			</p:column>
 
@@ -83,11 +83,11 @@ function exportChart() {
 				<p:graphicImage name="/imgs/pdf_icon.gif" with="32" height="32" />
 				<pe:exporter type="pdf" target="tbl" encoding="UTF-8"
 					fileName="RelatorioEntrevistas"
-					preProcessor="#{reportCandidaciesByTime.preProcessPDF}"
-					tableTitle="Entrevistas Realizadas Por Intervalo De Tempo"
+					preProcessor="#{reportInterviews.preProcessPDF}"
 					orientation="Portrait " facetBackground="#A50D12"
 					facetFontSize="14" facetFontColor="#FFFFFF" facetFontStyle="BOLD"
-					cellFontColor="#303030" cellFontSize="12" cellFontStyle="NORMAL" />
+					cellFontColor="#303030" cellFontSize="12" cellFontStyle="NORMAL"
+					postProcessor="#{reportInterviews.proProcessPDF}" />
 
 			</h:commandLink>
 		</p:panel>

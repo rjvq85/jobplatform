@@ -2,6 +2,7 @@ package pt.criticalsoftware.domain.entities;
 
 import java.util.Collection;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -24,6 +25,7 @@ import javax.persistence.Table;
 		@NamedQuery(name = "Candidate.findByCountry", query = "select p from CandidateEntity p where p.country = :country"),
 		@NamedQuery(name = "Candidate.findById", query = "select p from CandidateEntity p where p.id = :candidateId "),
 		@NamedQuery(name = "Candidate.findByUsername", query = "SELECT c FROM CandidateEntity c WHERE c.username LIKE :param"),
+		@NamedQuery(name = "Candidate.findByEmail", query = "SELECT c FROM CandidateEntity c WHERE c.email LIKE :param"),
 		@NamedQuery(name = "Candidate.findDuplicateByUsername", query = "SELECT COUNT(p) FROM CandidateEntity p where UPPER(p.username) LIKE :param"),
 		@NamedQuery(name = "Candidate.findDuplicateByEmail", query = "SELECT COUNT(p) FROM CandidateEntity p where UPPER(p.email) LIKE :param") })
 public class CandidateEntity {
@@ -77,7 +79,7 @@ public class CandidateEntity {
 	@Column(name = "cv", unique = true)
 	private String cv;
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "candidate")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "candidate", cascade=CascadeType.REMOVE)
 	private Collection<CandidacyEntity> candidacies;
 
 	public CandidateEntity() {

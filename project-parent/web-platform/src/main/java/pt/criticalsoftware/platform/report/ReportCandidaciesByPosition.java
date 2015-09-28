@@ -125,4 +125,12 @@ public class ReportCandidaciesByPosition implements Serializable {
 		phrase.add("\n Critical Software Relatórios \n \n");
 		pdf.add(phrase);
 	}
+	public void proProcessPDF(Object document){
+		Document pdf = (Document) document;
+
+//		if (pdf!=null)
+//			logger.info("TEM O DOCUMENTO");
+		//SENDATTACHMENTEMAIL(UTILIZADOR, CAMINHO)
+
+	}
 }

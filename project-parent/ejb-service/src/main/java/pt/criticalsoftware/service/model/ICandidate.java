@@ -63,5 +63,7 @@ public interface ICandidate {
 	Integer getId();
 	
 	String  getDegreeString();	
+	
+//	Collection<ICandidacy> getCandidacies();
 
 }

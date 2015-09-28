@@ -41,7 +41,7 @@ public class ManageInterview {
 	public void updateInterview(IInterview interv) {
 		try {
 			business.updateInterview(interv);
-			String path = "localhost";
+			String path = getRequest().getScheme() + "://" + getRequest().getServerName() + ":" + getRequest().getServerPort() + getRequest().getContextPath();
 			mailSender.sendEmail(interv, interv.getInterviewers(), path);
 			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Entrevista actualizada com sucesso", "");
 			FacesContext.getCurrentInstance().addMessage(null, msg);

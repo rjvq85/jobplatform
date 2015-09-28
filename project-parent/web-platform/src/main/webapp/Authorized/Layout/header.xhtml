@@ -66,8 +66,17 @@
 										<span class="caret"></span>
 									</h:link>
 									<ul class="dropdown-menu">
-										<li><a href="#">Perfil</a></li>
-										<li><a href="#">Password</a></li>
+										<li><h:outputLink
+												value="#{request.contextPath}/Authorized/Users/userprofile.xhtml">
+												<f:param name="u" value="#{userID}"></f:param>
+												<h:outputText value="Perfil" />
+											</h:outputLink></li>
+										<li><p:commandLink action="#{newPosition.doNothing()}"
+												oncomplete="PF('changePwWidget').show();"
+												value="Alterar Password" update=":changepwform"
+												style="font-size:14px !important;">
+												<p:resetInput target=":changepwform"></p:resetInput>
+											</p:commandLink></li>
 										<li role="separator" class="divider"></li>
 										<li><a
 											href="#{request.contextPath}/Authorized/Interviews/myinterviews.xhtml">As
@@ -77,11 +86,8 @@
 											<li><a
 												href="#{request.contextPath}/Authorized/Users/users.xhtml">Gestão
 													Utilizadores</a></li>
-											<li><p:commandLink action="#{newPosition.doNothing()}"
-													oncomplete="PF('mailWidget').show();"
-													value="Notificações (Definições)" update=":emailForm" style="font-size:14px !important;">
-													<p:resetInput target=":emailForm"></p:resetInput>
-												</p:commandLink></li>
+											<li><a
+											href="#{request.contextPath}/Authorized/AdminOnly/notifications.xhtml">Notificações (Definições)</a></li>
 										</h:panelGroup>
 									</ul></li>
 								<li><h:commandLink action="#{login.logout()}"
@@ -94,8 +100,8 @@
 				</nav>
 			</h:panelGroup>
 		</h:form>
-		<ui:insert name="EmailSettings">
-			<ui:include src="../AdminOnly/emailsettings.xhtml" />
+		<ui:insert name="ChangePassword">
+			<ui:include src="../Users/changepassworddlg.xhtml" />
 		</ui:insert>
 	</ui:composition>
 </h:body>

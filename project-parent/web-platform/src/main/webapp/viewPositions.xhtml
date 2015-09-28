@@ -10,43 +10,44 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </h:head>
 <h:body>
-	<h:panelGrid columns="2" columnClasses="left,right" style="width:100%">
+	<h:form id="hform">
+		<p:panel>
+			<p:chart type="pie" model="#{reportProposal.lineModel2}"
+				widgetVar="chart" style="width:500px;height:250px" />
+			<h:inputHidden id="b64" value="#{reportProposal.base64Str}" />
+			<p:commandButton type="submit" value="Anexar ao relatório"
+				icon="ui-icon-extlink" onclick="exportChart();"
+				actionListener="#{reportProposal.submittedBase64Str}" />
 
-		<p:chart type="pie" model="#{reportProposal.lineModel}"
-			widgetVar="chart1" style="width:500px;height:250px" />
-		<p:commandButton type="button" value="Export" icon="ui-icon-extlink"
-			onclick="exportChart1()" />
-
-		<p:chart type="pie" model="#{reportProposal.lineModel2}"
-			widgetVar="chart" style="width:500px;height:250px" />
-
-		<p:commandButton type="button" value="Export" icon="ui-icon-extlink"
-			onclick="exportChart()" />
-
-		<p:dialog widgetVar="dlg" showEffect="fade" modal="true"
-			header="Salvar Gráfico" resizable="false">
-			<p:outputPanel id="output" layout="block"
-				style="width:500px;height:300px" />
-		</p:dialog>
-		<script type="text/javascript">
+			<script type="text/javascript">
 			function exportChart() {
-   			 //export image
-   			 $('#output').empty().append(PF('chart').exportAsImage());
- 
-    		//show the dialog
-    		PF('dlg').show();
+				 // exportAsImage() will return a base64 png encoded string
+			     img = PF('chart').exportAsImage();
+			     document.getElementById('hform:b64').value = img.src;
+			     console.log(img.getAttribute("src"));
 			}
+			</script>
+		</p:panel>
+	</h:form>
+	<h:form id="hform1">
+		<p:panel>
+			<p:chart type="pie" model="#{reportProposal.lineModel}"
+				widgetVar="chart1" style="width:500px;height:250px" />
+			<p:commandButton type="submit" value="Anexar ao relatório"
+				icon="ui-icon-extlink" onclick="exportChart1();"
+				actionListener="#{reportProposal.submittedBase64Str1}" />
+			<h:inputHidden id="b641" value="#{reportProposal.base64Str1}" />
+			<script type="text/javascript">
 			function exportChart1() {
-   			 //export image
-   			 $('#output').empty().append(PF('chart1').exportAsImage());
- 
-    		//show the dialog
-    		PF('dlg').show();
+				 // exportAsImage() will return a base64 png encoded string
+			     img = PF('chart1').exportAsImage();
+			     document.getElementById('hform1:b641').value = img.src;
+			     console.log(img.getAttribute("src"));
 			}
 			</script>
 
-	</h:panelGrid>
-
+		</p:panel>
+	</h:form>
 	<h:form>
 		<p:dataTable id="tbl" var="position"
 			value="#{reportProposal.positions}" paginator="true"
@@ -96,7 +97,7 @@
 
 				<pe:exporter type="pdf" target="tbl" encoding="UTF-8"
 					fileName="RelatorioPropostasApresentadas"
-					preProcessor="#{reportCandidaciesByTime.preProcessPDF}"
+					preProcessor="#{reportProposal.preProcessPDF}"
 					tableTitle="Propostas Apresentadas Por Intervalo De Tempo"
 					orientation="Portrait " facetBackground="#A50D12"
 					facetFontSize="14" facetFontColor="#FFFFFF" facetFontStyle="BOLD"

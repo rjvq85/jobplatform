@@ -1,5 +1,7 @@
 package pt.criticalsoftware.service.business;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,6 +11,8 @@ import javax.inject.Inject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.sun.syndication.io.impl.Base64;
 
 import pt.criticalsoftware.service.exceptions.DuplicateEmailException;
 import pt.criticalsoftware.service.exceptions.DuplicateUsernameException;
@@ -87,6 +91,27 @@ public class UserBusinessService implements IUserBusinessService {
 	@Override
 	public void delUser(IUser user) {
 		userpersistence.delete(user);
+	}
+	
+	@Override
+	public void changePassword(String newPassword, IUser user) {
+		user.setPassword(encryptPassword(newPassword));
+		userpersistence.update(user);
+	}
+	
+	private String encryptPassword(String password) {
+		try {
+			MessageDigest md = MessageDigest.getInstance("SHA-256");
+			md.update(password.getBytes());
+
+			byte byteData[] = md.digest();
+			byte[] data2 = Base64.encode(byteData);
+			String securedPassword = new String(data2);
+			return securedPassword;
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 }

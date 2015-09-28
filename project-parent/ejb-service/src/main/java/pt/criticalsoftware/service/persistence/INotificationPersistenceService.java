@@ -12,4 +12,6 @@ public interface INotificationPersistenceService {
 
 	void create(List<INotification> notif);
 
+	INotification findById(int id);
+
 }

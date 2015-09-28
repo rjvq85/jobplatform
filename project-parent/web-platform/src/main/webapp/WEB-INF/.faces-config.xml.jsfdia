@@ -101,4 +101,15 @@
     TITLE="goBack" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
  </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#Authorized#Users#userprofileerror.xhtml"
+  PATH="/Authorized/Users/userprofileerror.xhtml" SHAPE="80,561,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#Authorized#Users#userprofileerror.xhtml:0"
+   NAME="item" PATH="/Authorized/Users/userprofileerror.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="usererror::#Authorized#index.xhtml"
+    NAME="output" PATH="/Authorized/index.xhtml"
+    TARGET="rules:#Authorized#index.xhtml" TITLE="usererror" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#Authorized#index.xhtml"
+  PATH="/Authorized/index.xhtml" SHAPE="240,689,0,0" model-entity="JSFProcessGroup"/>
 </PROCESS>

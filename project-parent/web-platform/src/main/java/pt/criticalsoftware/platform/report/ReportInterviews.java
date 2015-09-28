@@ -5,7 +5,9 @@ import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.imageio.ImageIO;
 import javax.inject.Named;
+import javax.servlet.ServletContext;
 
 import org.primefaces.model.chart.Axis;
 import org.primefaces.model.chart.AxisType;
@@ -16,10 +18,24 @@ import org.primefaces.model.chart.PieChartModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.lowagie.text.BadElementException;
+import com.lowagie.text.Document;
+import com.lowagie.text.DocumentException;
+import com.lowagie.text.Font;
+import com.lowagie.text.Image;
+import com.lowagie.text.PageSize;
+import com.lowagie.text.Phrase;
+import com.lowagie.text.pdf.BaseFont;
+
 import pt.criticalsoftware.service.business.IInterviewBusinessService;
 import pt.criticalsoftware.service.model.ICandidacy;
 import pt.criticalsoftware.service.model.IInterview;
 
+import java.awt.event.ActionEvent;
+import java.awt.image.RenderedImage;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -55,7 +71,7 @@ public class ReportInterviews implements Serializable {
 		this.interviews = interviews;
 	}
 
-	
+
 	public Date getInitDate() {
 		if (initDate!=null){
 			LocalDate date = initDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();	
@@ -152,5 +168,64 @@ public class ReportInterviews implements Serializable {
 
 		return model;
 	}
+	String base64Str ;
+
+	public String getBase64Str() {
+		return base64Str;
+	}
+
+	public void setBase64Str(String base64Str) {
+		this.base64Str = base64Str;
+	}
+	private boolean file=false;
+	public void submittedBase64Str(){
+
+		if(base64Str.split(",").length > 1){
+			String encoded = base64Str.split(",")[1];
+			logger.info(encoded);
+			byte[] decoded = org.apache.commons.codec.binary.Base64.decodeBase64(encoded);
+			try {
+				RenderedImage renderedImage = ImageIO.read(new ByteArrayInputStream(decoded));
+				ImageIO.write(renderedImage, "png", new File("out.png")); 
+				file=true;
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	public void preProcessPDF(Object document) throws IOException, BadElementException, DocumentException {
+		
+
+		Document pdf = (Document) document;
+		pdf.open();
+		pdf.setPageSize(PageSize.A4);
+		BaseFont bf_helv = BaseFont.createFont(BaseFont.HELVETICA, "Cp1252", false);
+		Font headerFont = new Font(bf_helv, 12);
+
+		ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
+		String logo = servletContext.getRealPath("") + File.separator + "resources"
+				+ ""   + File.separator + "imgs" + File.separator + "criticalIcon.jpg";
+
+		pdf.add(Image.getInstance(logo));
+		Phrase phrase = new Phrase(12, "\n", headerFont);
+		phrase.add("\n Critical Software Relatórios \n \n");
+		pdf.add(phrase);
+		if (file){
+			String chart = "out.png";
+			pdf.add(Image.getInstance(chart));
+			file=false;
+		}
+
+	}
+
+	public void proProcessPDF(Object document){
+		Document pdf = (Document) document;
+
+		if (pdf!=null)
+			logger.info("TEM O DOCUMENTO");
+		//SENDATTACHMENTEMAIL(UTILIZADOR, CAMINHO)
+
+	}
+
 }
 

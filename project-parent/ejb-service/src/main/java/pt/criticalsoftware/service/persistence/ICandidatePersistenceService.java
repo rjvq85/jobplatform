@@ -10,4 +10,14 @@ public interface ICandidatePersistenceService {
 
 	ICandidate create(ICandidate candidate);
 
+	ICandidate findByEmail(String email);
+
+	void update(ICandidate candidate);
+	
+	void updateEmail(String email,ICandidate candidate);
+	
+	void updateCV(String filePath, ICandidate candidate);
+	
+	void deleteUser(ICandidate candidate);
+
 }

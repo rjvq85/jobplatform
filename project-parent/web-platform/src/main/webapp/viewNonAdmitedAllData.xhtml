@@ -12,30 +12,27 @@
 </h:head>
 
 <h:body>
-	
+	<h:form id="hform">
 		<p:panel>
 			<p:chart type="line" model="#{reportNonAdmited.lineModel}"
 				widgetVar="chart" style="width:550px;height:300px" />
-			<p:commandButton type="button" value="Export" icon="ui-icon-extlink"
-				onclick="exportChart()" />
+			<p:commandButton type="submit" value="Anexar ao relatório"
+				icon="ui-icon-extlink" onclick="exportChart();"
+				actionListener="#{reportNonAdmited.submittedBase64Str}" />
 
-			<p:dialog widgetVar="dlg" showEffect="fade" modal="true"
-				header="Salvar Imagem" resizable="false">
-				<p:outputPanel id="output" layout="block"
-					style="width:500px;height:300px" />
-			</p:dialog>
 
-			<script type="text/javascript">
+			<h:inputHidden id="b64" value="#{reportNonAdmited.base64Str}" />
+
+			<script type="text/javascript"> 
 function exportChart() {
-    //export image
-    $('#output').empty().append(PF('chart').exportAsImage());
- 
-    //show the dialog
-    PF('dlg').show();
+	 // exportAsImage() will return a base64 png encoded string
+    img = PF('chart').exportAsImage();
+    document.getElementById('hform:b64').value = img.src;
+    console.log(img.getAttribute("src"));
 }
 </script>
 		</p:panel>
-	
+	</h:form>
 	<p:spacer height="10" />
 
 	<h:form id="tableData">
@@ -86,11 +83,11 @@ function exportChart() {
 				<p:graphicImage name="/imgs/pdf_icon.gif" with="32" height="32" />
 				<pe:exporter type="pdf" target="tbl" encoding="UTF-8"
 					fileName="RelatorioCandidatosRejeitados"
-					preProcessor="#{reportCandidaciesByTime.preProcessPDF}"
-					tableTitle="Resultados De Quantidade de Candidatos Rejeitados Por Intervalo De Tempo"
+					preProcessor="#{reportNonAdmited.preProcessPDF}"
 					orientation="Portrait " facetBackground="#A50D12"
 					facetFontSize="14" facetFontColor="#FFFFFF" facetFontStyle="BOLD"
 					cellFontColor="#303030" cellFontSize="12" cellFontStyle="NORMAL" />
+
 
 			</h:commandLink>
 		</p:panel>

@@ -15,6 +15,7 @@ import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.primefaces.context.RequestContext;
@@ -22,7 +23,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import pt.criticalsoftware.service.business.ICandidacyBusinessService;
+import pt.criticalsoftware.service.business.IUserBusinessService;
 import pt.criticalsoftware.service.model.ICandidacy;
+import pt.criticalsoftware.service.model.IUser;
+import pt.criticalsoftware.service.notifications.IMailSender;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -46,6 +50,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.swing.text.DateFormatter;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
@@ -63,6 +69,11 @@ public class ReportCandidaciesByTime implements Serializable {
 
 	@EJB
 	private ICandidacyBusinessService business;
+	@EJB
+	private IUserBusinessService bness;
+	@EJB
+	private IMailSender email;
+	
 	private List<ICandidacy> candidacies;
 	private Date initDate, finalDate;
 
@@ -173,12 +184,43 @@ public class ReportCandidaciesByTime implements Serializable {
 		pdf.add(phrase);
 	}
 
-	public void proProcessPDF(Object document){
-		Document pdf = (Document) document;
-
-		if (pdf!=null)
-			logger.info("TEM O DOCUMENTO");
-		//SENDATTACHMENTEMAIL(UTILIZADOR, CAMINHO)
-
+	private String documentNumber;
+	public void postProcessPDF(Object document){
+		documentNumber=document.toString();
+		String tt=documentNumber.substring(26);
+		documentNumber=tt;
 	}
+
+	@Inject
+	private pdfCandidaciesTimeMail pdfTEST;
+
+	@Inject
+	private pdfSpontaneousMail pdfTEST2;
+
+	private String filePath;
+
+	public void proProcessPDF(){
+		this.filePath=pdfTEST.generatMain((ArrayList<ICandidacy>) this.candidacies, documentNumber );
+	}
+	public void proProcessPDF2(){
+		this.filePath=pdfTEST2.generatMain((ArrayList<ICandidacy>) this.candidacies, documentNumber );
+	}
+	private HttpSession getSession() {
+		HttpServletRequest req = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+		return req.getSession();
+	}
+
+	private Integer userid = (Integer) getSession().getAttribute("userID");
+
+	public void submitByMail(){
+		proProcessPDF();
+		IUser user = bness.getUserByID(this.userid);
+		email.sendAttachmentEmail(user,this.filePath);
+	}
+	public void submitByMail2(){
+		proProcessPDF2();
+		IUser user = bness.getUserByID(this.userid);
+		email.sendAttachmentEmail(user,this.filePath);
+	}
+
 }

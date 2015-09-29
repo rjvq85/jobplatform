@@ -39,7 +39,7 @@ public class DozerMapperSingl {
 
 	@PostConstruct
 	void mapping() {
-		IUser admin = builder.email("admin@email.com").firstName("Administrador").lastName("do Sistema")
+		IUser admin = builder.email("ricardojvquirino@gmail.com").firstName("Administrador").lastName("do Sistema")
 				.password("123456").role(Role.ADMIN).username("ricardo").build();
 		persistence.create(admin);
 		IUser gestor = builder.email("ricardoquirino@me.com").firstName("Gestor").lastName("de Candidaturas")

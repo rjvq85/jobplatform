@@ -91,7 +91,7 @@
 			</f:facet>
 		</p:dataTable>
 		<p:spacer height="30" />
-		<p:panel position="center">
+		<div>
 			<h:commandLink id="pdf">
 				<p:graphicImage name="/imgs/pdf_icon.gif" with="32" height="32" />
 
@@ -101,10 +101,13 @@
 					tableTitle="Propostas Apresentadas Por Intervalo De Tempo"
 					orientation="Portrait " facetBackground="#A50D12"
 					facetFontSize="14" facetFontColor="#FFFFFF" facetFontStyle="BOLD"
-					cellFontColor="#303030" cellFontSize="12" cellFontStyle="NORMAL" />
-
+					cellFontColor="#303030" cellFontSize="12" cellFontStyle="NORMAL"
+					postProcessor="#{reportProposal.postProcessPDF}" />
 			</h:commandLink>
-		</p:panel>
+			<p:commandButton value="Enviar relatório por mail"
+				style="margin-left: 20px; margin-top:0px;float:right;"
+				icon="ui-icon-extlink" action="#{reportProposal.submitByMail()}" />
+		</div>
 	</h:form>
 </h:body>
 </html>

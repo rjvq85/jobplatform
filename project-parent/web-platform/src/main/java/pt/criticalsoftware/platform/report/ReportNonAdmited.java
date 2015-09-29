@@ -18,8 +18,11 @@ import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.imageio.ImageIO;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.primefaces.model.chart.Axis;
 import org.primefaces.model.chart.AxisType;
@@ -40,8 +43,11 @@ import com.lowagie.text.pdf.BaseFont;
 
 import pt.criticalsoftware.service.business.ICandidacyBusinessService;
 import pt.criticalsoftware.service.business.IPositionBusinessService;
+import pt.criticalsoftware.service.business.IUserBusinessService;
 import pt.criticalsoftware.service.model.ICandidacy;
 import pt.criticalsoftware.service.model.IPosition;
+import pt.criticalsoftware.service.model.IUser;
+import pt.criticalsoftware.service.notifications.IMailSender;
 
 import java.awt.image.RenderedImage;
 import java.io.ByteArrayInputStream;
@@ -61,6 +67,10 @@ public class ReportNonAdmited implements Serializable {
 	private ICandidacyBusinessService business;
 	@EJB
 	private IPositionBusinessService businessPosition;
+	@EJB
+	private IUserBusinessService bness;
+	@EJB
+	private IMailSender email;
 
 	private List<ICandidacy> candidacies;
 	private Date initDate, finalDate;
@@ -85,11 +95,19 @@ public class ReportNonAdmited implements Serializable {
 
 	}
 	public void onChange(){
-		if (dataType.equals("position"))
+		if (dataType.equals("position")){
 			posSelect="true";
-		this.positions=businessPosition.getAllPositions();
-		for(IPosition p:positions)
-			positionsRef.add(p.getReference());
+			pos=true;
+			this.positions=businessPosition.getAllPositions();
+			for(IPosition p:positions)
+				positionsRef.add(p.getReference());
+		}else{
+			posSelect=null;
+			pos=false;
+			this.positions=new ArrayList<IPosition>();
+		}
+			
+		
 	}
 	public String getDataType() {
 		return dataType;
@@ -174,6 +192,7 @@ public class ReportNonAdmited implements Serializable {
 	public void setPositionsRef(List<String> positionsRef) {
 		this.positionsRef = positionsRef;
 	}
+	private boolean pos=false;;
 	public String create(){
 		LocalDate dateInit = this.initDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 		LocalDate dateFinal = this.finalDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
@@ -210,15 +229,14 @@ public class ReportNonAdmited implements Serializable {
 	private LineChartModel lineModel;
 
 	public LineChartModel getLineModel() {
-		logger.info("entrou no crate");
 		createLineModels();
 		return lineModel;
 	}
 
 	private void createLineModels() {
-
+		file=false;
 		lineModel = initLinearModel();
-
+		file=false;
 		if(dataType.equals("all"))
 			lineModel.setTitle("Todos os Candidatos Rejeitados");
 		else
@@ -247,6 +265,7 @@ public class ReportNonAdmited implements Serializable {
 	}
 
 	private LineChartModel initLinearModel() {
+		file=false;
 		LineChartModel model = new LineChartModel();
 		LineChartSeries series = new LineChartSeries();
 		int aux1=0,aux2=0,aux3=0,aux4=0;
@@ -287,13 +306,13 @@ public class ReportNonAdmited implements Serializable {
 
 		if(base64Str.split(",").length > 1){
 			String encoded = base64Str.split(",")[1];
-			logger.info("onfile é"+ file);
+
 			byte[] decoded = org.apache.commons.codec.binary.Base64.decodeBase64(encoded);
 			try {
 				RenderedImage renderedImage = ImageIO.read(new ByteArrayInputStream(decoded));
 				ImageIO.write(renderedImage, "png", new File("nonAdm.png")); 
 				file=true;
-				logger.info("onfile é"+ file);
+
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -319,8 +338,41 @@ public class ReportNonAdmited implements Serializable {
 		if (file){
 			String chart ="nonAdm.png";
 			pdf.add(Image.getInstance(chart));
-			logger.info("adicionou");
-			file=false;
+
 		}
 	}
+
+	@Inject
+	private pdfNonAdmitedMail pdfTEST;
+	private String documentNumber;
+	public void postProcessPDF(Object document){
+		documentNumber=document.toString();
+		String tt=documentNumber.substring(26);
+		documentNumber=tt;
+	}
+
+	private String filePath;
+
+	public void proProcessPDF(){
+		this.filePath=pdfTEST.generatMain((ArrayList<ICandidacy>) this.candidacies,file, documentNumber,pos );
+	}
+
+	private HttpSession getSession() {
+		HttpServletRequest req = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+		return req.getSession();
+	}
+
+	private Integer userid = (Integer) getSession().getAttribute("userID");
+
+	public void submitByMail(){
+		proProcessPDF();
+		IUser user = bness.getUserByID(this.userid);
+		email.sendAttachmentEmail(user,this.filePath);
+	}
+	public void submitByMail2(){
+		proProcessPDF();
+		IUser user = bness.getUserByID(this.userid);
+		email.sendAttachmentEmail(user,this.filePath);
+	}
+
 }

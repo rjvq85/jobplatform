@@ -52,20 +52,23 @@
 		</p:dataTable>
 
 		<p:spacer height="10" />
-		<p:panel position="center">
+		<div>
 			<h:commandLink id="pdf">
 				<p:graphicImage name="/imgs/pdf_icon.gif" with="32" height="32" />
 
 				<pe:exporter type="pdf" target="tbl" encoding="UTF-8"
 					fileName="RelatorioTempoMedioEntrevistas"
-					preProcessor="#{reportCandidaciesByTime.preProcessPDF}"
-					tableTitle="Propostas Apresentadas Por Intervalo De Tempo"
+					preProcessor="#{reportInterviewAverage.preProcessPDF}"
+					tableTitle="Relatorio Tempo Medio Primeira Entrevista"
 					orientation="Portrait " facetBackground="#A50D12"
 					facetFontSize="14" facetFontColor="#FFFFFF" facetFontStyle="BOLD"
-					cellFontColor="#303030" cellFontSize="12" cellFontStyle="NORMAL" />
-
+					cellFontColor="#303030" cellFontSize="12" cellFontStyle="NORMAL" 
+					postProcessor="#{reportInterviewAverage.postProcessPDF}" />
 			</h:commandLink>
-		</p:panel>
+			<p:commandButton value="Enviar relatório por mail"
+				style="margin-left: 20px; margin-top:0px;float:right;"
+				icon="ui-icon-extlink" action="#{reportInterviewAverage.submitByMail()}" />
+		</div>
 	</h:form>
 </h:body>
 </html>

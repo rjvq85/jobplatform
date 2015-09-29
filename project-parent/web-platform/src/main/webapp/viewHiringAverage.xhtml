@@ -40,30 +40,34 @@
 			</p:column>
 
 			<p:column headerText="Data da Contratação">
-				<h:outputText value="A fazer...." />
+				<h:outputText value="#{candidacie.hiringDate}" />
 			</p:column>
 
 			<f:facet name="footer">
 				<h:outputText value="O tempo médio para uma contratação é de: " />
-				<h:outputText value="FAZER::::" />
+				<h:outputText value="#{reportInterviewAverage.averageTime}" />
 				<h:outputText value=" dias." />
 			</f:facet>
 
 		</p:dataTable>
-
-		<p:spacer height="30" />
-		<p:panel position="center">
+		<p:spacer height="10" />
+		<div>
 			<h:commandLink id="pdf">
 				<p:graphicImage name="/imgs/pdf_icon.gif" with="32" height="32" />
 
 				<pe:exporter type="pdf" target="tbl" encoding="UTF-8"
-					fileName="Relatório das Entrevistas"
-					tableTitle="RelatórioEntrevistas" orientation="Portrait "
-					facetBackground="#F88017" facetFontSize="14"
-					facetFontColor="#0000ff" facetFontStyle="BOLD"
-					cellFontColor="#00ff00" cellFontSize="12" cellFontStyle="NORMAL" />
+					fileName="RelatorioTempoMedioContratacao"
+					preProcessor="#{reportInterviewAverage.preProcessPDF}"
+					tableTitle="Tempo Medio Primeira Contratacao"
+					orientation="Portrait " facetBackground="#A50D12"
+					facetFontSize="14" facetFontColor="#FFFFFF" facetFontStyle="BOLD"
+					cellFontColor="#303030" cellFontSize="12" cellFontStyle="NORMAL" 
+					postProcessor="#{reportInterviewAverage.postProcessPDF}" />
 			</h:commandLink>
-		</p:panel>
+			<p:commandButton value="Enviar relatório por mail"
+				style="margin-left: 20px; margin-top:0px;float:right;"
+				icon="ui-icon-extlink" action="#{reportInterviewAverage.submitByMail2()}" />
+		</div>
 	</h:form>
 </h:body>
 </html>

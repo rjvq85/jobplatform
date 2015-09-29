@@ -34,14 +34,16 @@
 		</p:panel>
 
 		<h4>Seleccionar o período de tempo</h4>
-		<h:outputLabel value="De" />
+		<h:outputLabel value="De   " />
 		<p:calendar value="#{reportNonAdmited.initDate}" locale="de"
 			navigator="true" pattern="dd-MMM-yyyy" />
-		<h:outputLabel value="a" />
+		<h:outputLabel value="   a   " />
 		<p:calendar value="#{reportNonAdmited.finalDate}" locale="de"
 			navigator="true" pattern="dd-MMM-yyyy" />
 		<br />
-
+		<br />
+		<br />
+		<br />
 		<p:commandButton value="Visualizar Dados" type="submit"
 			style="margin-left:10px;margin-top:15px;"
 			action="#{reportNonAdmited.create()}" icon="ui-icon-document" />

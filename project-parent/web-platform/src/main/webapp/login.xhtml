@@ -24,13 +24,13 @@
 					<h:inputText id="username" a:placeholder="username"
 						value="#{login.username}" required="true"
 						requiredMessage="Username: campo obrigatório"
-						styleClass="form-control inputbutton">
+						styleClass="form-control inputbutton login-fix">
 						<f:validator validatorId="pt.criticalsoftware.platform.validators.UsernameValidator" />
 					</h:inputText>
 					<h:inputSecret id="password" a:placeholder="password"
 						value="#{login.password}" required="true"
 						requiredMessage="Password: campo obrigatório"
-						styleClass="form-control inputbutton" a:minlength="6">
+						styleClass="form-control inputbutton login-fix" a:minlength="6">
 						<f:validator validatorId="pt.criticalsoftware.platform.validators.PasswordValidator" />
 					</h:inputSecret>
 					<h:commandButton id="submitdata"

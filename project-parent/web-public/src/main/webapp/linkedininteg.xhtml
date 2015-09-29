@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+
+<h:head>
+	<meta charset="utf-8" />
+	<h:outputStylesheet library="css" name="register.css" />
+	<h:outputStylesheet library="css" name="mainstyle.css" />
+	<h:outputStylesheet library="css" name="bootstrap.css" />
+	<h:outputStylesheet library="css" name="jobs.css" />
+</h:head>
+
+
+<h:body>
+	<ui:composition template="/Layout/layout.xhtml">
+		<ui:define name="content">
+			<p:growl for="linkedinintegration" showDetail="true"
+				showSummary="true" autoUpdate="true"></p:growl>
+			<h:panelGroup layout="block" styleClass="container" id="container">
+				<h:panelGroup layout="block" styleClass="jumbotron">
+					<h1 class="text-center">Integração com LinkedIn</h1>
+					<hr />
+					<p>A nossa plataforma permite a integração segura com o
+						LinkedIn, permitindo desta forma recolher mais informações sobre o
+						seu perfil profissional.</p>
+					<p>Apenas precisa de seguir os passos apresentados.</p>
+				</h:panelGroup>
+				<h:form prependId="false" id="linkedinform">
+					<h:panelGroup layout="block" styleClass="row">
+						<h:panelGroup layout="block" styleClass="col-md-4 text-center">
+							<h:panelGroup layout="block" styleClass="linkedin-box">
+								<h3>Primeiro passo</h3>
+								<p>Clicar no botão</p>
+								<h:outputLink value="#{linkedInIntegration.authUrl}"
+									target="popup"
+									onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"
+									styleClass="linkedin-btn"></h:outputLink>
+							</h:panelGroup>
+							<hr />
+							<p>Irá abrir uma nova janela. Garanta, por favor, que o seu
+								'browser' não está a bloquear novos pop-ups</p>
+						</h:panelGroup>
+						<h:panelGroup layout="block" styleClass="col-md-4 text-center">
+							<h:panelGroup layout="block" styleClass="linkedin-box">
+								<h3>Segundo passo</h3>
+								<p>Introduzir as suas credenciais do LinkedIn na nova página</p>
+							</h:panelGroup>
+							<hr />
+							<p>Se o fizer com sucesso, ser-lhe-á fornecido um número.
+								Guarde-o!</p>
+						</h:panelGroup>
+						<h:panelGroup layout="block" styleClass="col-md-4 text-center">
+							<h:panelGroup layout="block" styleClass="linkedin-box">
+								<h3>Terceiro passo</h3>
+								<p>Introduzir o número fornecido</p>
+								<h:inputText value="#{linkedInIntegration.code}"
+									a:placeholder="Introduza o código" styleClass="form-control"
+									style="width: 50%; margin-left: auto; margin-right: auto; border: 1px solid rgba(0, 0, 0, 0.2) !important;" />
+								<br />
+								<h:commandButton action="#{linkedInIntegration.submit()}"
+									value="Avançar" styleClass="btn btn-success"
+									style="width: 50%; border-radius: 0;" />
+							</h:panelGroup>
+							<hr />
+							<p>Iremos guardar alguns dados como a sua fotografia, ligação
+								para o seu perfil, etc...</p>
+						</h:panelGroup>
+					</h:panelGroup>
+				</h:form>
+			</h:panelGroup>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

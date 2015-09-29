@@ -5,6 +5,7 @@ import java.io.Serializable;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
@@ -61,28 +62,36 @@ public class LinkedInIntegration implements Serializable {
 	}
 
 	public String submit() {
-		verif = new Verifier(code);
-		accessToken = service.getAccessToken(requestToken, verif);
-		OAuthRequest request = new OAuthRequest(Verb.GET, PROFILE_URL);
-		service.signRequest(accessToken, request);
-		Response response = request.send();
-		String responseBody = response.getBody();
-		JSONObject responseJson = new JSONObject(responseBody);
-		String headline = responseJson.optString("headline", "Não existe");
-		String pictureUrl = responseJson.optString("pictureUrl", "Não existe");
-		String profileUrl = responseJson.optString("publicProfileUrl", "Não existe");
-		String summary = responseJson.optString("summary", "Não existe");
-		Integer numConnections = responseJson.optInt("numConnections", 0);
+		try {
+			verif = new Verifier(code);
+			accessToken = service.getAccessToken(requestToken, verif);
+			OAuthRequest request = new OAuthRequest(Verb.GET, PROFILE_URL);
+			service.signRequest(accessToken, request);
+			Response response = request.send();
+			String responseBody = response.getBody();
+			JSONObject responseJson = new JSONObject(responseBody);
+			String headline = responseJson.optString("headline", "Não existe");
+			String pictureUrl = responseJson.optString("pictureUrl", "Não existe");
+			String profileUrl = responseJson.optString("publicProfileUrl", "Não existe");
+			String summary = responseJson.optString("summary", "Não existe");
+			Integer numConnections = responseJson.optInt("numConnections", 0);
 
-		System.out.println("\nHeadline: " + headline + "\n\n" + "pictureUrl: " + pictureUrl + "\n\n");
-		ICandidate candidate = candidateBness.getCandidateById((Integer) getSession().getAttribute("userId"));
-		candidate.setLinkedInConnections(numConnections);
-		candidate.setLinkedInHeadline(headline);
-		candidate.setLinkedInPicture(pictureUrl);
-		candidate.setLinkedInSummary(summary);
-		candidate.setLinkedInUrl(profileUrl);
-		candidateBness.updateCandidate(candidate);
-		return null;
+			System.out.println("\nHeadline: " + headline + "\n\n" + "pictureUrl: " + pictureUrl + "\n\n");
+			ICandidate candidate = candidateBness.getCandidateById((Integer) getSession().getAttribute("userId"));
+			candidate.setLinkedInConnections(numConnections);
+			candidate.setLinkedInHeadline(headline);
+			candidate.setLinkedInPicture(pictureUrl);
+			candidate.setLinkedInSummary(summary);
+			candidate.setLinkedInUrl(profileUrl);
+			candidateBness.updateCandidate(candidate);
+			FacesContext.getCurrentInstance().addMessage("linkedinintegration",
+					new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "A operação foi realizada com sucesso"));
+			return "jobs";
+		} catch (Exception e) {
+			FacesContext.getCurrentInstance().addMessage("linkedinintegration",
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Ocorreu um erro"));
+			return null;
+		}
 	}
 
 	public String getCode() {

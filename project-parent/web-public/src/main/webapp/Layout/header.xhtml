@@ -77,6 +77,12 @@
 											oncomplete="PF('addInfoWidget').show()" process="@this">
 										</p:menuitem>
 
+										<p:menuitem value="LinkedIn" icon="fa fa-linkedin-square"
+											title="LinkedIn" oncomplete="PF('addInfoWidget').show()"
+											process="@this" rendered="#{linkedInStatus.hasLinkedIn()}"
+											outcome="linkedininteg.xhtml?faces-redirect=true">
+										</p:menuitem>
+
 										<p:menuitem value="Encerrar conta" icon="ui-icon-closethick"
 											onclick="PF('deleteAccountDialog').show(); return false;" />
 									</p:submenu>
@@ -186,7 +192,7 @@
 								widgetVar="deleteAccountDialog">
 								<p:commandButton value="Sim" action="#{jobs.deleteAccount()}"
 									oncomplete="PF('deleteAccountDialog').hide()">
-									<p:ajax update="header-bar :positionForm:gridPositions" />
+									<p:ajax update="@all" />
 								</p:commandButton>
 								<p:button value="Não"
 									onclick="PF('deleteAccountDialog').hide(); return false;" />

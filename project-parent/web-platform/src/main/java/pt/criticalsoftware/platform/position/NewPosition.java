@@ -240,9 +240,12 @@ public class NewPosition {
 	public void createPosition() {
 		try {
 			setOpenDate();
+
 			closeDate=currentDate(sla);
-			logger.info(closeDate.toString());
-			IPosition newPosition = positionService.createPosition(this.openDate, closeDate, this.title,
+			
+			
+			IPosition newPosition = positionService.createPosition(this.openDate, currentDate(this.sla), this.title,
+
 					this.locale, this.state, this.company, this.technicalArea, this.sla, this.vacancies,
 					this.responsable, this.description, this.adChannels);
 			mailSender.sendEmail(newPosition, newPosition.getResponsable());

@@ -112,4 +112,26 @@
  </PROCESS-ITEM>
  <PROCESS-ITEM NAME="rules:#Authorized#index.xhtml"
   PATH="/Authorized/index.xhtml" SHAPE="240,689,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#Authorized#Interviewer#Layout#header.xhtml"
+  PATH="/Authorized/Interviewer/Layout/header.xhtml" SHAPE="32,785,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#Authorized#Interviewer#Layout#header.xhtml:0"
+   NAME="item" PATH="/Authorized/Interviewer/Layout/header.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="myinterviews::#Authorized#Interviews#myinterviews.xhtml"
+    NAME="output" PATH="/Authorized/Interviews/myinterviews.xhtml"
+    TARGET="rules:#Authorized#Interviews#myinterviews.xhtml"
+    TITLE="myinterviews" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#Authorized#Interviewer#index.xhtml"
+  PATH="/Authorized/Interviewer/index.xhtml" SHAPE="80,161,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#Authorized#Interviewer#index.xhtml:0"
+   NAME="item" PATH="/Authorized/Interviewer/index.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="myinterviews::#Authorized#Interviews#myinterviews.xhtml"
+    NAME="output" PATH="/Authorized/Interviews/myinterviews.xhtml"
+    TARGET="rules:#Authorized#Interviews#myinterviews.xhtml"
+    TITLE="myinterviews" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
 </PROCESS>

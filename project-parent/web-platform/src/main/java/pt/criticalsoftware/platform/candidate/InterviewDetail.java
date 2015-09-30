@@ -40,7 +40,6 @@ public class InterviewDetail implements Serializable {
 
 	public void setInterview(IInterview interview) {
 		interviewers = new ArrayList<>();
-		System.out.println("\n\n DEFINIU A ENTREVISTA: " + interview.getReference() + "\n\n");
 		this.interview = interview;
 		feedback = (null != feedback) ? feedback : new HashMap<>();
 		try {
@@ -54,8 +53,8 @@ public class InterviewDetail implements Serializable {
 				for (Map.Entry<String, String> mEntry : fb.getValue().getQuestionsAndAnswers().entrySet()) {
 					set.getQuestions().add(mEntry.getKey());
 					set.getAnswers().add(mEntry.getValue());
-					set.setFinalComment(fb.getValue().getFinalComment());
 				}
+				set.setFinalComment(fb.getValue().getFinalComment());
 				interviewers.add(set);
 			}
 		} catch (Exception e) {

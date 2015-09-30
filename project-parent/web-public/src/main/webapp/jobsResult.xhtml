@@ -1,54 +1,69 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
 
 <h:head>
-    <meta charset="utf-8" />
-    <h:outputStylesheet library="css" name="register.css" />
-    <h:outputStylesheet library="css" name="mainstyle.css" />
-    <h:outputStylesheet library="css" name="bootstrap.css" />
-    <h:outputStylesheet library="css" name="jobs.css" />
+	<meta charset="utf-8" />
+	<h:outputStylesheet library="css" name="register.css" />
+	<h:outputStylesheet library="css" name="mainstyle.css" />
+	<h:outputStylesheet library="css" name="bootstrap.css" />
+	<h:outputStylesheet library="css" name="jobs.css" />
 </h:head>
 
 
 <h:body>
-    <ui:composition template="/Layout/layout.xhtml">
-        <ui:define name="content">
-            <h:panelGroup layout="block" styleClass="container" id="container">
-                <div id="outBox" style="margin-top: 5%;">
-                    <h2>
+	<ui:composition template="/Layout/layout.xhtml">
+		<ui:define name="content">
+			<h:panelGroup layout="block" styleClass="container" id="container">
+				<div id="outBox" style="margin-top: 5%;">
+					<h2>
 						<h:outputText id="resultSearch" value="#{jobs.searchParam}" />
 					</h2>
-                    <hr />
-                    <h:form prependId="false" id="publicsearchform">
-                        <h:panelGroup layout="block" styleClass="row">
-                            <h:panelGroup layout="block" styleClass="col-md-12">
-                                <!-- Search menu -->
-                                <p:selectOneMenu id="firstchoice" value="#{jobs.jobWord}" filter="true" filterMatchMode="startsWith" styleClass="btn-info" style="float:left;">
-                                    <f:selectItem itemLabel="Pesquisar por:" itemValue="" noSelectionOption="true" />
-                                    <f:selectItem itemLabel="Área Técnica" itemValue="Área Técnica" />
-                                    <f:selectItem itemLabel="Localização" itemValue="Localizacao" />
-                                    <p:ajax listener="#{jobs.onChange}" update="positionWord" />
-                                </p:selectOneMenu>
-                                </p:selectOneMenu>
-                                <p:selectOneMenu id="positionWord" value="#{jobs.searchWord}" style="float:left;margin-left: 10px;" filter="true" filterMatchMode="startsWith" styleClass="btn-info">
-                                    <f:selectItems value="#{jobs.items}" />
-                                </p:selectOneMenu>
-                                <p:commandButton type="submit" icon="ui-icon-search" action="#{jobs.searchToolbar()}" style="float:left;margin-left: 10px;" update=":positionForm:gridPositions" />
-                                <!-- End search menu -->
+					<hr />
+					<h:form prependId="false" id="publicsearchform">
+						<h:panelGroup layout="block" styleClass="row">
+							<h:panelGroup layout="block" styleClass="col-md-12">
+								<!-- Search menu -->
+								<p:selectOneMenu id="firstchoice" value="#{jobs.jobWord}"
+									filter="true" filterMatchMode="startsWith"
+									styleClass="btn-info" style="float:left;">
+									<f:selectItem itemLabel="Pesquisar por:" itemValue=""
+										noSelectionOption="true" />
+									<f:selectItem itemLabel="Área Técnica" itemValue="Área Técnica" />
+									<f:selectItem itemLabel="Localização" itemValue="Localizacao" />
+									<p:ajax listener="#{jobs.onChange}" update="positionWord" />
+								</p:selectOneMenu>
+								<p:selectOneMenu id="positionWord" value="#{jobs.searchWord}"
+									style="float:left;margin-left: 10px;" filter="true"
+									filterMatchMode="startsWith" styleClass="btn-info">
+									<f:selectItems value="#{jobs.items}" />
+								</p:selectOneMenu>
+								<p:commandButton type="submit" icon="ui-icon-search"
+									action="#{jobs.searchToolbar()}"
+									style="float:left;margin-left: 10px;"
+									update=":positionForm:gridPositions" />
+								<!-- End search menu -->
 
-                                <p:commandButton type="submit" icon="ui-icon-search" value="Mais Recentes" action="#{jobs.findByLast()}" style="float:right; margin-left: 10px;" update=":positionForm:gridPositions" />
-                            </h:panelGroup>
-                    </h:form>
-                    <br />
-                    <h:form id="positionForm">
-                        <ui:insert name="positionsList">
-                            <ui:include src="jobsList.xhtml" />
-                        </ui:insert>
-                    </h:form>
-                </div>
-                </h:panelGroup>
-        </ui:define>
-    </ui:composition>
+								<p:commandButton type="submit" icon="ui-icon-search"
+									value="Mais Recentes" action="#{jobs.findByLast()}"
+									style="float:right; margin-left: 10px;"
+									update=":positionForm:gridPositions" />
+							</h:panelGroup>
+						</h:panelGroup>
+					</h:form>
+					<br />
+					<h:form id="positionForm">
+						<ui:insert name="positionsList">
+							<ui:include src="jobsList.xhtml" />
+						</ui:insert>
+					</h:form>
+				</div>
+			</h:panelGroup>
+		</ui:define>
+	</ui:composition>
 </h:body>
 
 </html>

@@ -12,14 +12,20 @@
 	<h:form>
 		<p:messages id="messages" autoUpdate="true" closable="true" />
 
-		<p:outputLabel for="posit" value="Posição: " />
-		<p:selectOneMenu id="posit" value="#{reportCandidaciesByPosition.positionRef}">
+		<p:outputLabel for="posit" value="Posição:  " />
+		<p:selectOneMenu id="posit"
+			value="#{reportCandidaciesByPosition.positionRef}"
+			style="margin-left:10px;">
 			<f:selectItems value="#{reportCandidaciesByPosition.positionsRef}" />
 		</p:selectOneMenu>
-
+		<br />
+		<br />
+		<br />
+		<br />
 		<p:commandButton value="Criar Relatório" type="submit"
 			style="margin-left:10px;margin-top:15px;"
-			action="#{reportCandidaciesByPosition.create()}" icon="ui-icon-document" />
+			action="#{reportCandidaciesByPosition.create()}"
+			icon="ui-icon-document" />
 	</h:form>
 </h:body>
 </html>

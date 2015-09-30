@@ -114,7 +114,8 @@ public class NewPosition {
 	}
 
 	public void onChange(){
-		closeDate=currentDate(sla);
+		this.closeDate=currentDate(sla);
+		setCloseDate(this.closeDate);
 	}
 	public Date getCloseDate() {
 		return closeDate;
@@ -239,7 +240,12 @@ public class NewPosition {
 	public void createPosition() {
 		try {
 			setOpenDate();
+
+			closeDate=currentDate(sla);
+			
+			
 			IPosition newPosition = positionService.createPosition(this.openDate, currentDate(this.sla), this.title,
+
 					this.locale, this.state, this.company, this.technicalArea, this.sla, this.vacancies,
 					this.responsable, this.description, this.adChannels);
 			mailSender.sendEmail(newPosition, newPosition.getResponsable());

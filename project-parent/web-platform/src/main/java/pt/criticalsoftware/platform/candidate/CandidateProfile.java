@@ -4,6 +4,7 @@ import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,15 +14,15 @@ import pt.criticalsoftware.service.model.ICandidate;
 @Named
 @RequestScoped
 public class CandidateProfile {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(CandidateProfile.class);
-	
+
 	@EJB
 	private ICandidateBusinessService business;
-	
+
 	private Integer candidateId;
 	private ICandidate candidate;
-	
+
 	public void searchCandidate() {
 		if (null != candidateId) {
 			try {
@@ -31,7 +32,7 @@ public class CandidateProfile {
 			}
 		}
 	}
-	
+
 	public Integer getCandidateId() {
 		return candidateId;
 	}
@@ -44,5 +45,6 @@ public class CandidateProfile {
 	public void setCandidate(ICandidate candidate) {
 		this.candidate = candidate;
 	}
+
 
 }

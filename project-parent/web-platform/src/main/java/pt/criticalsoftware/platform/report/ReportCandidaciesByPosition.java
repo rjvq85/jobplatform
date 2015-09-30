@@ -5,8 +5,11 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import com.lowagie.text.BadElementException;
 import com.lowagie.text.Document;
@@ -19,8 +22,12 @@ import com.lowagie.text.pdf.BaseFont;
 
 import pt.criticalsoftware.service.business.ICandidacyBusinessService;
 import pt.criticalsoftware.service.business.IPositionBusinessService;
+import pt.criticalsoftware.service.business.IUserBusinessService;
 import pt.criticalsoftware.service.model.ICandidacy;
+import pt.criticalsoftware.service.model.IInterview;
 import pt.criticalsoftware.service.model.IPosition;
+import pt.criticalsoftware.service.model.IUser;
+import pt.criticalsoftware.service.notifications.IMailSender;
 
 import java.io.File;
 import java.io.IOException;
@@ -37,7 +44,12 @@ public class ReportCandidaciesByPosition implements Serializable {
 	@EJB
 	private IPositionBusinessService business;
 	@EJB
+	private IUserBusinessService bness;
+	@EJB
 	private ICandidacyBusinessService businessCandidacy;
+	@EJB
+	private IMailSender email;
+	
 	private List<ICandidacy> candidacies;
 	private List<IPosition> positions;
 	private IPosition position;
@@ -103,12 +115,12 @@ public class ReportCandidaciesByPosition implements Serializable {
 	public void setPositions(List<IPosition> positions) {
 		this.positions = positions;
 	}
-	
+
 	public String create(){
 		this.candidacies=businessCandidacy.getCandidaciesByPosition(this.positionID);
 		return "viewCandidaciesPositions.xhtml?faces-redirect=true";
 	}
-	
+
 	public void preProcessPDF(Object document) throws IOException, BadElementException, DocumentException {
 
 		Document pdf = (Document) document;
@@ -125,12 +137,34 @@ public class ReportCandidaciesByPosition implements Serializable {
 		phrase.add("\n Critical Software Relatórios \n \n");
 		pdf.add(phrase);
 	}
-	public void proProcessPDF(Object document){
-		Document pdf = (Document) document;
 
-//		if (pdf!=null)
-//			logger.info("TEM O DOCUMENTO");
-		//SENDATTACHMENTEMAIL(UTILIZADOR, CAMINHO)
-
+	private String documentNumber;
+	public void postProcessPDF(Object document){
+		documentNumber=document.toString();
+		String tt=documentNumber.substring(26);
+		documentNumber=tt;
 	}
+
+	@Inject
+	private pdfCandidaciesPositionMail pdfTEST;
+
+	private String filePath;
+
+	public void proProcessPDF(){
+		this.filePath=pdfTEST.generatMain((ArrayList<ICandidacy>) this.candidacies, documentNumber );
+	}
+	private HttpSession getSession() {
+		HttpServletRequest req = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+		return req.getSession();
+	}
+
+	private Integer userid = (Integer) getSession().getAttribute("userID");
+
+	public void submitByMail(){
+
+		proProcessPDF();
+		IUser user = bness.getUserByID(this.userid);
+		email.sendAttachmentEmail(user,this.filePath);
+	}
+
 }

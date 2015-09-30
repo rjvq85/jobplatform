@@ -46,7 +46,9 @@
 								<!-- Account edit -->
 								<li style="margin-top:2.5%;"><p:commandButton id="dropbutton"
 										value="#{jobs.countName}" type="button" icon="ui-icon-person"
-										style="color:white !important;background-color:firebrick !important; border-radius:0 !important;"
+
+										style="color:white !important;background-color:firebrick !important; border-radius:0 !important; margin-top:10%;"
+
 										rendered="#{userIsLogged}" /></li>
 								<p:menu overlay="true" trigger="dropbutton" my="right top"
 									at="right bottom">
@@ -89,7 +91,11 @@
 								</p:menu>
 								<li style="margin-top:2.5%;"><p:commandButton value="Logout" icon="ui-icon-power"
 										action="#{loginPublic.logout()}" ajax="false"
+<<<<<<< HEAD
+										style="color:white !important;background-color:firebrick !important; border-radius:0 !important; margin-top:10%; margin-left: 15%;"
+=======
 										style="color:white !important;background-color:firebrick !important; border-radius:0 !important;"
+>>>>>>> 228e9b89d10c1776431b3d8817035bf36f047aa6
 										rendered="#{userIsLogged}" /></li>
 								<li style="margin-top:2.5%;"><p:commandButton value="Login" icon="ui-icon-power"
 										action="#"

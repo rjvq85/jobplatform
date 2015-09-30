@@ -14,12 +14,15 @@
 	<h:form>
 		<p:messages id="messages" autoUpdate="true" closable="true" />
 		<h4>Seleccionar o período de tempo</h4>
-		<h:outputLabel value="De" />
+		<h:outputLabel value="De   " />
 		<p:calendar value="#{reportInterviewAverage.initDate}" locale="de"
 			navigator="true" pattern="yyyy-MMM-dd" />
-		<h:outputLabel value="a" />
+		<h:outputLabel value="   a   " />
 		<p:calendar value="#{reportInterviewAverage.finalDate}" locale="de"
 			navigator="true" pattern="yyyy-MMM-dd" />
+		<br />
+		<br />
+		<br />
 		<br />
 		<p:commandButton value="Criar Relatório" type="submit"
 			style="margin-left:10px;margin-top:15px;"

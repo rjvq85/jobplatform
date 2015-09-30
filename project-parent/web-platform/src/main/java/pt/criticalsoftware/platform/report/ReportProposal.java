@@ -21,8 +21,11 @@ import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.imageio.ImageIO;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.primefaces.model.chart.PieChartModel;
 
@@ -36,8 +39,12 @@ import com.lowagie.text.Phrase;
 import com.lowagie.text.pdf.BaseFont;
 
 import pt.criticalsoftware.service.business.IPositionBusinessService;
+import pt.criticalsoftware.service.business.IUserBusinessService;
+import pt.criticalsoftware.service.model.ICandidacy;
 import pt.criticalsoftware.service.model.IInterview;
 import pt.criticalsoftware.service.model.IPosition;
+import pt.criticalsoftware.service.model.IUser;
+import pt.criticalsoftware.service.notifications.IMailSender;
 
 @Named
 @SessionScoped
@@ -46,6 +53,11 @@ public class ReportProposal implements Serializable {
 	private static final long serialVersionUID = 1141634803535222664L;
 	@EJB
 	private IPositionBusinessService business;
+	@EJB
+	private IUserBusinessService bness;
+	@EJB
+	private IMailSender email;
+	
 	private List<IPosition> positions;
 	private Date initDate, finalDate;
 
@@ -130,6 +142,7 @@ public class ReportProposal implements Serializable {
 	}
 
 	private void createLineModels2() {
+		file=false;
 		lineModel2 = initLinearModel2();
 		lineModel2.setTitle("Propostas Apresentadas Por Localização ");
 		lineModel2.setLegendPosition("se");
@@ -176,6 +189,7 @@ public class ReportProposal implements Serializable {
 	}
 
 	private void createLineModels() {
+		file1=false;
 		lineModel = initLinearModel();
 		lineModel.setTitle("Propostas Apresentadas Por Área Técnica ");
 		lineModel.setLegendPosition("se");
@@ -299,5 +313,36 @@ public class ReportProposal implements Serializable {
 			file1=false;
 		}
 	}
+	
+
+	@Inject
+	private pdfProposalMail pdfTEST;
+	private String documentNumber;
+	public void postProcessPDF(Object document){
+		documentNumber=document.toString();
+		String tt=documentNumber.substring(26);
+		documentNumber=tt;
+	}
+
+	private String filePath;
+
+	public void proProcessPDF(){
+		this.filePath=pdfTEST.generatMain((ArrayList<IPosition>) this.positions,file, file1, documentNumber);
+	}
+
+	private HttpSession getSession() {
+		HttpServletRequest req = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+		return req.getSession();
+	}
+
+	private Integer userid = (Integer) getSession().getAttribute("userID");
+
+	public void submitByMail(){
+		proProcessPDF();
+		IUser user = bness.getUserByID(this.userid);
+		email.sendAttachmentEmail(user,this.filePath);
+	}
+	
+
 }
 

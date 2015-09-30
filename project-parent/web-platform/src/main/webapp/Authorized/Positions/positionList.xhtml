@@ -37,13 +37,13 @@
 			<p:outputLabel value="#{position.locale}"></p:outputLabel>
 		</p:column>
 		<p:column headerText="Estado">
-			<p:outputLabel value="#{position.state}"></p:outputLabel>
+			<p:outputLabel value="#{position.state.name}"></p:outputLabel>
 		</p:column>
 		<p:column headerText="Empresa">
 			<p:outputLabel value="#{position.company}"></p:outputLabel>
 		</p:column>
 		<p:column headerText="Área Técnica">
-			<p:outputLabel value="#{position.technicalArea}"></p:outputLabel>
+			<p:outputLabel value="#{position.technicalArea.name}"></p:outputLabel>
 		</p:column>
 		<p:column headerText="Detalhes">
 			<p:commandLink value="Ver"

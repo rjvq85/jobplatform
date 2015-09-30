@@ -1,6 +1,8 @@
 package pt.criticalsoftware.platform.report;
 
 
+import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -18,13 +20,30 @@ import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.lowagie.text.BadElementException;
+import com.lowagie.text.Document;
+import com.lowagie.text.DocumentException;
+import com.lowagie.text.Font;
+import com.lowagie.text.Image;
+import com.lowagie.text.PageSize;
+import com.lowagie.text.Phrase;
+import com.lowagie.text.pdf.BaseFont;
+
 import pt.criticalsoftware.service.business.ICandidacyBusinessService;
+import pt.criticalsoftware.service.business.IUserBusinessService;
 import pt.criticalsoftware.service.model.ICandidacy;
+import pt.criticalsoftware.service.model.IPosition;
+import pt.criticalsoftware.service.model.IUser;
+import pt.criticalsoftware.service.notifications.IMailSender;
 
 @Named
 @SessionScoped
@@ -35,6 +54,11 @@ public class ReportInterviewAverage implements Serializable{
 
 	@EJB
 	private ICandidacyBusinessService business;
+	@EJB
+	private IUserBusinessService bness;
+	@EJB
+	private IMailSender email;
+	
 	private List<ICandidacy> candidacies;
 	private Date initDate, finalDate;
 	private Integer averageTime;
@@ -213,7 +237,63 @@ public class ReportInterviewAverage implements Serializable{
 				this.averageTime=totalDays/this.candidacies.size();
 				else 
 					this.averageTime=0;
-			return "viewInterviewsAverage.xhtml?faces-redirect=true";
+			return "viewHiringAverage.xhtml?faces-redirect=true";
 		}
+	}
+	public void preProcessPDF(Object document) throws IOException, BadElementException, DocumentException {
+
+		Document pdf = (Document) document;
+		pdf.open();
+		pdf.setPageSize(PageSize.A4);
+		BaseFont bf_helv = BaseFont.createFont(BaseFont.HELVETICA, "Cp1252", false);
+		Font headerFont = new Font(bf_helv, 12);
+
+		ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
+		String logo = servletContext.getRealPath("") + File.separator + "resources"
+				+ ""   + File.separator + "imgs" + File.separator + "criticalIcon.jpg";
+
+
+		pdf.add(Image.getInstance(logo));
+		Phrase phrase = new Phrase(12, "\n", headerFont);
+		phrase.add("\n Critical Software Relatórios \n \n");
+		pdf.add(phrase);
+	}
+	
+	@Inject
+	private pdfInterviewAverageMail pdfTEST;
+	@Inject
+	private pdfHiringAverage pdfTEST2;
+	
+	private String documentNumber;
+	public void postProcessPDF(Object document){
+		documentNumber=document.toString();
+		String tt=documentNumber.substring(26);
+		documentNumber=tt;
+	}
+
+	private String filePath;
+
+	public void proProcessPDF(){
+		this.filePath=pdfTEST.generatMain((ArrayList<ICandidacy>) this.candidacies, documentNumber);
+	}
+	public void proProcessPDF2(){
+		this.filePath=pdfTEST2.generatMain((ArrayList<ICandidacy>) this.candidacies, documentNumber);
+	}
+	private HttpSession getSession() {
+		HttpServletRequest req = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+		return req.getSession();
+	}
+
+	private Integer userid = (Integer) getSession().getAttribute("userID");
+
+	public void submitByMail(){
+		proProcessPDF();
+		IUser user = bness.getUserByID(this.userid);
+		email.sendAttachmentEmail(user,this.filePath);
+	}
+	public void submitByMail2(){
+		proProcessPDF2();
+		IUser user = bness.getUserByID(this.userid);
+		email.sendAttachmentEmail(user,this.filePath);
 	}
 }

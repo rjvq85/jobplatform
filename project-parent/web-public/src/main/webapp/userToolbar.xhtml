@@ -38,7 +38,7 @@
 
 			<!-- Account Menu -->
 			<p:toolbarGroup align="right">
-				<!-- logoutButton -->
+
 
 				<!-- Account edit -->
 				<p:commandButton id="dropbutton" value="#{jobs.countName}"
@@ -67,7 +67,12 @@
 							title="Actualizar CV" oncomplete="PF('editCVDialog').show()"
 							process="@this">
 						</p:menuitem>
-
+						
+						<p:menuitem value="Candidatura Espontânea" icon="ui-icon-key"
+							title="Actualizar CV" oncomplete="PF('editCVDialog').show()"
+							process="@this">
+						</p:menuitem>
+						
 						<p:menuitem value="Encerrar conta" icon="ui-icon-closethick"
 							onclick="PF('deleteAccountDialog').show(); return false;" />
 					</p:submenu>
@@ -110,8 +115,9 @@
 	<!-- DIALOG Edit PASSWORD -->
 	<h:form id="frmEditPass">
 		<p:dialog header="Edit Password" widgetVar="editPassDialog"
-			showEffect="explode" hideEffect="explode" id="formEditPass" style="height: 200px; width: 400px;"
-			resizable="false" modal="true" closeOnEscape="true">
+			showEffect="explode" hideEffect="explode" id="formEditPass"
+			style="height: 200px; width: 400px;" resizable="false" modal="true"
+			closeOnEscape="true">
 			<h:panelGrid columns="2" id="painel-dialogEditPass">
 				<p:messages id="messages" showDetail="true" autoUpdate="true" />
 				<h:outputLabel for="pwd1" value="Nova Password" />
@@ -169,10 +175,11 @@
 			showEffect="explode" hideEffect="explode"
 			widgetVar="deleteAccountDialog">
 			<p:commandButton value="Sim" action="#{jobs.deleteAccount()}"
-				oncomplete="PF('deleteAccountDialog').hide()" >
-				<p:ajax update=":toolbarForm:toolbarUser :positionForm:gridPositions" />
-				</p:commandButton>
-			<p:button value="Não" 
+				oncomplete="PF('deleteAccountDialog').hide()">
+				<p:ajax
+					update=":toolbarForm:toolbarUser :positionForm:gridPositions" />
+			</p:commandButton>
+			<p:button value="Não"
 				onclick="PF('deleteAccountDialog').hide(); return false;" />
 		</p:confirmDialog>
 	</h:form>
@@ -181,8 +188,9 @@
 	<h:form id="formCV" enctype="multipart/form-data">
 		<p:dialog header="Atualizar CV" widgetVar="editCVDialog"
 			showEffect="explode" hideEffect="explode" id="formEditPass"
-			resizable="false" modal="true" closeOnEscape="true" style="height: 200px; width: 400px;" >
-			
+			resizable="false" modal="true" closeOnEscape="true"
+			style="height: 200px; width: 400px;">
+
 			<h:panelGroup layout="block" styleClass="row no-gutter"
 				style="padding-left:15px; margin-top: 0px; top: 15px;">
 				<h:panelGroup layout="block" styleClass="col-md-2">
@@ -212,12 +220,11 @@
 						style="border-radius: 0px; font-weight: 400; padding-left: 10px !important; padding-right: 10px !important; margin-left:40px;" />
 				</h:panelGroup>
 			</h:panelGroup>
-			
-			<p:commandButton value="Gravar" id="botao-editar" ajax="false" type="submit"
-				style=" margin-left:10px;margin-top:40px;"
-				action="#{jobs.newCV()}"
-				onclick="PF('editCVDialog').hide()" />
-				
+
+			<p:commandButton value="Gravar" id="botao-editar" ajax="false"
+				type="submit" style=" margin-left:10px;margin-top:40px;"
+				action="#{jobs.newCV()}" onclick="PF('editCVDialog').hide()" />
+
 		</p:dialog>
 	</h:form>
 

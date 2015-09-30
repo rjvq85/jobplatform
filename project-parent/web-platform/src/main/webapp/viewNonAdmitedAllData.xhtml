@@ -78,7 +78,7 @@ function exportChart() {
 			</p:dataTable>
 		</p:panel>
 		<p:spacer height="10" />
-		<p:panel position="center">
+		<div>
 			<h:commandLink id="pdf">
 				<p:graphicImage name="/imgs/pdf_icon.gif" with="32" height="32" />
 				<pe:exporter type="pdf" target="tbl" encoding="UTF-8"
@@ -86,11 +86,13 @@ function exportChart() {
 					preProcessor="#{reportNonAdmited.preProcessPDF}"
 					orientation="Portrait " facetBackground="#A50D12"
 					facetFontSize="14" facetFontColor="#FFFFFF" facetFontStyle="BOLD"
-					cellFontColor="#303030" cellFontSize="12" cellFontStyle="NORMAL" />
-
-
+					cellFontColor="#303030" cellFontSize="12" cellFontStyle="NORMAL"
+					postProcessor="#{reportNonAdmited.postProcessPDF}" />
 			</h:commandLink>
-		</p:panel>
+			<p:commandButton value="Enviar relatório por mail"
+				style="margin-left: 20px; margin-top:0px;float:right;"
+				icon="ui-icon-extlink" action="#{reportNonAdmited.submitByMail()}" />
+		</div>
 	</h:form>
 
 

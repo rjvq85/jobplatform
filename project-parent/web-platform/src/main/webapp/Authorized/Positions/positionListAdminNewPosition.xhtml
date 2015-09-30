@@ -7,7 +7,7 @@
 <ui:composition>
 	<p:dialog id="dialog-NewPosition" header="Adicionar Posição"
 		widgetVar="dialogNewPosition" modal="true" showEffect="blind"
-		resizable="false" height="500" style="overflow-y: scroll;">
+		resizable="true" height="650" >
 		<h:form id="formNewPosition">
 			<h:panelGroup layout="block" id="newPosDiv">
 				<h:panelGrid columns="2">
@@ -15,14 +15,13 @@
 					<p:outputLabel value="Título" for="positionTitle" />
 					<p:inputText id="positionTitle" required="true"
 						requiredMessage="título" size="30" value="#{newPosition.title}" />
-
-
 					<p:outputLabel value="Localização" for="positionLocale" />
-					<p:inputText id="positionLocale" required="true"
-						requiredMessage="localização" size="30"
-						value="#{newPosition.locale}" />
-
-
+					<p:selectOneMenu id="positionLocale" value="#{newPosition.locale}"
+					filter="true" filterMatchMode="startsWith" width="30">
+						<f:selectItem itemLabel="Porto" itemValue="Porto" />
+						<f:selectItem itemLabel="Coimbra" itemValue="Coimbra" />
+						<f:selectItem itemLabel="Lisboa" itemValue="Lisboa" />
+					</p:selectOneMenu>
 					<p:outputLabel value="Estado" for="positionState" />
 					<p:selectOneMenu id="positionState" value="#{newPosition.stateStr}"
 						filter="true" filterMatchMode="startsWith" width="30">

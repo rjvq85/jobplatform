@@ -42,15 +42,20 @@
 		<p:spacer height="30" />
 		<p:panel position="center">
 			<h:commandLink id="pdf">
-				<p:graphicImage name="/imgs/pdf_icon.gif" with="32" height="32" />
+				<p:graphicImage name="/imgs/pdf_icon.gif" with="32" height="32" 
+				style="margin-left: 40px;"/>
 				<pe:exporter type="pdf" target="tbl" encoding="UTF-8"
 					fileName="RelatorioporPosicao"
 					preProcessor="#{reportCandidaciesByPosition.preProcessPDF}"
 					tableTitle="Resultados De Quantidade de Candidatos Por Posicao"
 					orientation="Portrait " facetBackground="#A50D12"
 					facetFontSize="14" facetFontColor="#FFFFFF" facetFontStyle="BOLD"
-					cellFontColor="#303030" cellFontSize="12" cellFontStyle="NORMAL" />
+					cellFontColor="#303030" cellFontSize="12" cellFontStyle="NORMAL"
+					postProcessor="#{reportCandidaciesByPosition.postProcessPDF}" />
 			</h:commandLink>
+			<p:commandButton  value="Enviar relatório por mail"  style="margin-left: 20px; margin-top:0px;float:right;"
+				icon="ui-icon-extlink"
+				action="#{reportCandidaciesByPosition.submitByMail()}" />
 		</p:panel>
 	</h:form>
 </h:body>

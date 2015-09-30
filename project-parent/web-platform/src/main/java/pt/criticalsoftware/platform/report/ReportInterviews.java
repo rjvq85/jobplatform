@@ -1,19 +1,15 @@
 package pt.criticalsoftware.platform.report;
-
-
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.imageio.ImageIO;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
-import org.primefaces.model.chart.Axis;
-import org.primefaces.model.chart.AxisType;
-import org.primefaces.model.chart.CategoryAxis;
-import org.primefaces.model.chart.LineChartModel;
-import org.primefaces.model.chart.LineChartSeries;
 import org.primefaces.model.chart.PieChartModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,10 +24,12 @@ import com.lowagie.text.Phrase;
 import com.lowagie.text.pdf.BaseFont;
 
 import pt.criticalsoftware.service.business.IInterviewBusinessService;
+import pt.criticalsoftware.service.business.IUserBusinessService;
 import pt.criticalsoftware.service.model.ICandidacy;
 import pt.criticalsoftware.service.model.IInterview;
+import pt.criticalsoftware.service.model.IUser;
+import pt.criticalsoftware.service.notifications.IMailSender;
 
-import java.awt.event.ActionEvent;
 import java.awt.image.RenderedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -56,6 +54,10 @@ public class ReportInterviews implements Serializable {
 
 	@EJB
 	private IInterviewBusinessService business;
+	@EJB
+	private IUserBusinessService bness;
+	@EJB
+	private IMailSender email;
 	private List<IInterview> interviews;
 	private Date initDate, finalDate;
 
@@ -133,6 +135,7 @@ public class ReportInterviews implements Serializable {
 	private PieChartModel lineModel;
 
 	public PieChartModel getLineModel() {
+		file=false;
 		createLineModels();
 		return lineModel;
 	}
@@ -193,15 +196,14 @@ public class ReportInterviews implements Serializable {
 			}
 		}
 	}
-	public void preProcessPDF(Object document) throws IOException, BadElementException, DocumentException {
-		
 
-		Document pdf = (Document) document;
+	public void preProcessPDF(Object document) throws IOException, BadElementException, DocumentException {
+		Document pdf;
+		pdf = (Document) document;
 		pdf.open();
 		pdf.setPageSize(PageSize.A4);
 		BaseFont bf_helv = BaseFont.createFont(BaseFont.HELVETICA, "Cp1252", false);
 		Font headerFont = new Font(bf_helv, 12);
-
 		ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
 		String logo = servletContext.getRealPath("") + File.separator + "resources"
 				+ ""   + File.separator + "imgs" + File.separator + "criticalIcon.jpg";
@@ -213,19 +215,37 @@ public class ReportInterviews implements Serializable {
 		if (file){
 			String chart = "out.png";
 			pdf.add(Image.getInstance(chart));
-			file=false;
 		}
-
+	}
+	private String documentNumber;
+	public void postProcessPDF(Object document){
+		documentNumber=document.toString();
+		String tt=documentNumber.substring(26);
+		documentNumber=tt;
 	}
 
-	public void proProcessPDF(Object document){
-		Document pdf = (Document) document;
+	@Inject
+	private pdfInterviewsMail pdfTEST;
+	
+	private String filePath;
 
-		if (pdf!=null)
-			logger.info("TEM O DOCUMENTO");
-		//SENDATTACHMENTEMAIL(UTILIZADOR, CAMINHO)
-
+	public void proProcessPDF(){
+		this.filePath=pdfTEST.generatMain((ArrayList<IInterview>) this.interviews,file, documentNumber );
 	}
+	private HttpSession getSession() {
+		HttpServletRequest req = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+		return req.getSession();
+	}
+
+	private Integer userid = (Integer) getSession().getAttribute("userID");
+
+	public void submitByMail(){
+
+				proProcessPDF();
+				IUser user = bness.getUserByID(userid);
+				email.sendAttachmentEmail(user,this.filePath);
+	}
+
 
 }
 

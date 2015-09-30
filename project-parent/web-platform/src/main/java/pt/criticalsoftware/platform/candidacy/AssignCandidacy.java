@@ -60,8 +60,6 @@ public class AssignCandidacy implements Serializable {
 				.build();
 		try {
 			ICandidacy assignedCandidacy = business.assignCandidacy(candidacy);
-			
-			// Notifications
 			mailSender.sendEmail(assignedCandidacy, assignedCandidacy.getPositionCandidacy().getResponsable(), 1);
 			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Candidatura submetida com sucesso!",
 					"");

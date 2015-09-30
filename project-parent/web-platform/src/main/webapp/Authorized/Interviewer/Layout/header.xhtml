@@ -34,7 +34,7 @@
 									class="icon-bar"></span>
 							</button>
 							<a
-								href="#{request.contextPath}/Authorized/Interviewer/myinterviews.xhtml"
+								href="#{request.contextPath}/Authorized/Interviewer/index.xhtml"
 								class="navbar-brand">Início</a>
 						</div>
 						<!-- Collect the nav links, forms, and other content for toggling -->
@@ -54,6 +54,8 @@
 									<ul class="dropdown-menu">
 										<li><a href="#">Perfil</a></li>
 										<li><a href="#">Password</a></li>
+										<li role="separator" class="divider"></li>
+										<li><h:link value="As minhas Entrevistas" outcome="myinterviews"/></li>
 									</ul></li>
 								<li><h:commandLink action="#{login.logout()}"
 										value="Logout" /></li>

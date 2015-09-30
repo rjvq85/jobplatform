@@ -23,38 +23,41 @@
 				class="ui-icon ui-icon-grip-dotted-vertical" /> </span>
 		</p:toolbarGroup>
 		<!-- search menu -->
-			<p:toolbarGroup align="right">
-				<!-- Search menu -->
-				<h:selectOneMenu id="positionWord"
-					value="#{positionListView.positionWord}" filter="true"
-					filterMatchMode="startsWith" width="5"  style="height:30px;">
-					<f:selectItem itemLabel="Pesquisar por:" itemValue="" noSelectionOption="true"/>
-					<f:selectItem itemLabel="Código" itemValue="Código" />
-					<f:selectItem itemLabel="Título" itemValue="Título" />
-					<f:selectItem itemLabel="Data Fecho" itemValue="Data fecho" />
-					<f:selectItem itemLabel="Data Abertura" itemValue="Data abertura" />
-					<f:selectItem itemLabel="Estado" itemValue="Estado" />
-					<f:selectItem itemLabel="Empresa" itemValue="Empresa" />
-					<f:selectItem itemLabel="Área Técnica" itemValue="Área Técnica" />
-					<f:selectItem itemLabel="Localização" itemValue="Localizacao" />
-					<f:selectItem itemLabel="Pesquisa livre" itemValue="Pesquisa livre" />
-					<p:ajax listener="#{positionListView.onChange}" update="toolbarPosition"  />
-				</h:selectOneMenu>
-				<span class="ui-separator"><span /> </span>
-				<p:inputText id="positionsSearch" required="true" size="50"
-					value="#{positionListView.searchCode}" />
-				<p:watermark id="placeHolder" for="positionsSearch" value="#{positionListView.placeholder}" />
-				
-				<span class="ui-separator"><span /> </span>
-				<p:commandButton type="submit" icon="ui-icon-search"
-					action="#{positionListView.search}"
-					update=":positionForm:gridPositions :toolbarForm:toolbarPosition" />
-				<span class="ui-separator"><span
-					class="ui-icon ui-icon-grip-dotted-vertical" /> </span>
-				<p:commandButton type="submit" value="Todas"
-					action="#{positionListView.searchAll()}"
-					update=":positionForm:gridPositions :toolbarForm:toolbarPosition" />
-				<!-- End search menu -->
+		<p:toolbarGroup align="right">
+			<!-- Search menu -->
+			<h:selectOneMenu id="positionWord"
+				value="#{positionListView.positionWord}" filter="true"
+				filterMatchMode="startsWith" width="5" styleClass="btn-info" style="height:30px;">
+				<f:selectItem itemLabel="Pesquisar por:" itemValue=""
+					noSelectionOption="true" />
+				<f:selectItem itemLabel="Código" itemValue="Código" />
+				<f:selectItem itemLabel="Título" itemValue="Título" />
+				<f:selectItem itemLabel="Data Fecho" itemValue="Data fecho" />
+				<f:selectItem itemLabel="Data Abertura" itemValue="Data abertura" />
+				<f:selectItem itemLabel="Estado" itemValue="Estado" />
+				<f:selectItem itemLabel="Empresa" itemValue="Empresa" />
+				<f:selectItem itemLabel="Área Técnica" itemValue="Área Técnica" />
+				<f:selectItem itemLabel="Localização" itemValue="Localizacao" />
+				<f:selectItem itemLabel="Pesquisa livre" itemValue="Pesquisa livre" />
+				<p:ajax listener="#{positionListView.onChange}"
+					update="toolbarPosition" />
+			</h:selectOneMenu>
+			<span class="ui-separator"><span /> </span>
+			<p:inputText id="positionsSearch" required="true" size="50"
+				value="#{positionListView.searchCode}" styleClass="form-contro" />
+			<p:watermark id="placeHolder" for="positionsSearch"
+				value="#{positionListView.placeholder}" />
+
+			<span class="ui-separator"><span /> </span>
+			<p:commandButton type="submit" icon="ui-icon-search"
+				action="#{positionListView.search}"
+				update=":positionForm:gridPositions :toolbarForm:toolbarPosition" />
+			<span class="ui-separator"><span
+				class="ui-icon ui-icon-grip-dotted-vertical" /> </span>
+			<p:commandButton type="submit" value="Todas"
+				action="#{positionListView.searchAll()}"
+				update=":positionForm:gridPositions :toolbarForm:toolbarPosition" />
+			<!-- End search menu -->
 		</p:toolbarGroup>
 	</p:toolbar>
 	<p />

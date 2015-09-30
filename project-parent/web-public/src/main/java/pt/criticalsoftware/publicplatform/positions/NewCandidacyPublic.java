@@ -25,9 +25,9 @@ import pt.criticalsoftware.service.sources.CandidacySource;
 
 @Named
 @RequestScoped
-public class NewCandidacy {
+public class NewCandidacyPublic {
 	
-	private static final Logger logger = LoggerFactory.getLogger(NewCandidacy.class);
+	private static final Logger logger = LoggerFactory.getLogger(NewCandidacyPublic.class);
 
 	@Inject
 	private SearchedPosition search;

@@ -30,7 +30,7 @@
 						<h:message for="motivLetter"
 							styleClass="glyphicon glyphicon-exclamation-sign" />
 						<h:panelGroup layout="block" styleClass="form-group">
-							<h:inputTextarea id="motivLetter" value="#{newCandidacy.letter}"
+							<h:inputTextarea id="motivLetter" value="#{newCandidacyPublic.letter}"
 								a:placeholder="Carta de motivação..." styleClass="form-control"
 								a:rows="10" />
 						</h:panelGroup>
@@ -40,7 +40,7 @@
 				<h:panelGroup layout="block" class="row">
 					<h:panelGroup layout="block" class="col-md-12">
 						<h:panelGroup layout="block" class="col-md-offset-3 col-md-6">
-							<h:commandButton action="#{newCandidacy.create()}"
+							<h:commandButton action="#{newCandidacyPublic.create()}"
 								value="Candidatar-se" styleClass="btn btn-info"
 								style="width: 45%; border-radius: 0;">
 								<p:ajax

@@ -14,9 +14,9 @@ import javax.inject.Named;
 
 import pt.criticalsoftware.service.business.IStyleBusinessService;
 
-@Named("styleBean")
+@Named("styleBeanPublic")
 @SessionScoped
-public class StyleBean implements Serializable {
+public class StyleBeanPublic implements Serializable {
 
 	private static final long serialVersionUID = -6536114841871506611L;
 
@@ -27,7 +27,7 @@ public class StyleBean implements Serializable {
 
 	private Map<String, String> themeMap;
 
-	public StyleBean() {
+	public StyleBeanPublic() {
 		
 		themeMap = new LinkedHashMap<String, String>();
 		themeMap.put("Default", "jobs.css");
@@ -44,9 +44,9 @@ public class StyleBean implements Serializable {
 	}
 
 	@Produces
-	@Named("themes")
+	@Named("themesPublic")
 	@ApplicationScoped
-	public List<String> getThemes() {
+	public List<String> getThemesPublic() {
 		return new ArrayList<String>(themeMap.keySet());
 	}
 

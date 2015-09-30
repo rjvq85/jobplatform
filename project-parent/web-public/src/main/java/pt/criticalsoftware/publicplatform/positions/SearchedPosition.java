@@ -74,7 +74,7 @@ public class SearchedPosition implements Serializable {
 
 	public String goOn() {
 		if (null == positionId)
-			return "index?faces-redirect=true";
+			return "jobs?faces-redirect=true";
 		else
 			return "searchedPosition?faces-redirect=true&ref=" + positionId;
 	}

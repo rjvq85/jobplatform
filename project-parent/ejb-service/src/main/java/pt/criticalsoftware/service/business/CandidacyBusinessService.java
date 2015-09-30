@@ -10,6 +10,7 @@ import javax.persistence.NoResultException;
 import pt.criticalsoftware.service.exceptions.DuplicateCandidateException;
 import pt.criticalsoftware.service.exceptions.UniqueConstraintException;
 import pt.criticalsoftware.service.model.ICandidacy;
+import pt.criticalsoftware.service.model.ICandidate;
 import pt.criticalsoftware.service.model.IInterview;
 import pt.criticalsoftware.service.notifications.IMailSender;
 import pt.criticalsoftware.service.persistence.ICandidacyPersistenceService;
@@ -128,6 +129,16 @@ public class CandidacyBusinessService implements ICandidacyBusinessService {
 	public List<ICandidacy> getNonAdmitedCandidaciesByDatePeriod(
 			LocalDate dateInit, LocalDate dateFinal) {
 		return persistence.getNonAdmitedCandidaciesByDatePeriod(dateInit,dateFinal);
+	}
+	
+	@Override
+	public Long getSpontaneousCandidacyByCandidate(Integer id) {
+		return persistence.getSpontaneousByCandidate(id);
+	}
+
+	@Override
+	public ICandidacy createSpontaneousCandidacy(ICandidacy icandidacy) {
+		return persistence.newSpontaneousCandidacy(icandidacy);
 	}
 
 }

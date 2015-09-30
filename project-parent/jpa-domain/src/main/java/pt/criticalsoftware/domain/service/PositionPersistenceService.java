@@ -127,9 +127,17 @@ public class PositionPersistenceService implements IPositionPersistenceService {
 		else if (positionWord.equals("Título"))
 			query = em.createNamedQuery("Position.getPositionsByTitle", PositionEntity.class).setParameter("title",
 					searchCode);
-		else if (positionWord.equals("Localizacao"))
+		else if (positionWord.equals("Localizacao")){
+			String locale="";
+			if (searchCode.equalsIgnoreCase("Porto"))
+				locale = "Porto";
+			else if (searchCode.equalsIgnoreCase("Coimbra"))
+				locale = "Coimbra";
+			else if (searchCode.equalsIgnoreCase("Lisboa"))
+				locale = "Lisboa";
 			query = em.createNamedQuery("Position.getPositionsByLocale", PositionEntity.class).setParameter("locale",
-					searchCode);
+					locale);
+	}
 		else if (positionWord.equals("Estado")) {
 			PositionState state = null;
 			if (searchCode.equalsIgnoreCase("aberta"))
@@ -145,17 +153,17 @@ public class PositionPersistenceService implements IPositionPersistenceService {
 					searchCode);
 		else if (positionWord.equals("Área Técnica")) {
 			TechnicalAreaType area = null;
-			if (positionWord.equals("SSPA"))
+			if (searchCode.equalsIgnoreCase("SSPA"))
 				area = TechnicalAreaType.SSPA;
-			else if (positionWord.equalsIgnoreCase(".Net Development"))
+			else if (searchCode.equalsIgnoreCase(".Net Development"))
 				area = TechnicalAreaType.NET_DEVELOPMENT;
-			else if (positionWord.equalsIgnoreCase("Java Development"))
+			else if (searchCode.equalsIgnoreCase("Java Development"))
 				area = TechnicalAreaType.JAVA_DEVELOPMENT;
-			else if (positionWord.equalsIgnoreCase("Safety Critical"))
+			else if (searchCode.equalsIgnoreCase("Safety Critical"))
 				area = TechnicalAreaType.SAFETY_CRITICAL;
-			else if (positionWord.equalsIgnoreCase("Project Management"))
+			else if (searchCode.equalsIgnoreCase("Project Management"))
 				area = TechnicalAreaType.PROJECT_MANAGEMENT;
-			else if (positionWord.equalsIgnoreCase("Integration"))
+			else if (searchCode.equalsIgnoreCase("Integration"))
 				area = TechnicalAreaType.INTEGRATION;
 			query = em.createNamedQuery("Position.getPositionsByTechnicalArea", PositionEntity.class)
 					.setParameter("technicalArea", area);

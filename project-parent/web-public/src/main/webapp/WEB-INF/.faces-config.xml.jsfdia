@@ -61,4 +61,12 @@
  </PROCESS-ITEM>
  <PROCESS-ITEM NAME="rules:#enteremail.xhtml" PATH="/enteremail.xhtml"
   SHAPE="240,289,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#linkedininteg.xhtml"
+  PATH="/linkedininteg.xhtml" SHAPE="256,433,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#linkedininteg.xhtml:0" NAME="item"
+   PATH="/linkedininteg.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="jobs::#jobs.xhtml" NAME="output"
+    PATH="/jobs.xhtml" TARGET="rules:#jobs.xhtml" TITLE="jobs" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
 </PROCESS>

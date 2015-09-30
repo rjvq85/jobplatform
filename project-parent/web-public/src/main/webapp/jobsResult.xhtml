@@ -15,20 +15,53 @@
 
 
 <h:body>
-	<div id="outBox">
-		<h:outputText id="resultSearch" value="#{jobs.searchParam}" />
-		<p></p>
-		<p:separator />
-	
-			<ui:insert name="toolbar">
-				<ui:include src="userToolbar.xhtml" />
-			</ui:insert>
-	
-		<h:form id="positionForm">
-			<ui:insert name="positionsList">
-				<ui:include src="jobsList.xhtml" />
-			</ui:insert>
-		</h:form>
-	</div>
+	<ui:composition template="/Layout/layout.xhtml">
+		<ui:define name="content">
+			<h:panelGroup layout="block" styleClass="container" id="container">
+				<div id="outBox" style="margin-top: 5%;">
+					<h2>
+						<h:outputText id="resultSearch" value="#{jobs.searchParam}" />
+					</h2>
+					<hr />
+					<h:panelGroup layout="block" styleClass="row">
+						<h:panelGroup layout="block" styleClass="col-md-12">
+							<!-- Search menu -->
+							<p:selectOneMenu value="#{jobs.jobWord}" filter="true"
+								filterMatchMode="startsWith" styleClass="btn-info"
+								style="float:left;">
+								<f:selectItem itemLabel="Pesquisar por:" itemValue=""
+									noSelectionOption="true" />
+								<f:selectItem itemLabel="Área Técnica" itemValue="Área Técnica" />
+								<f:selectItem itemLabel="Localização" itemValue="Localizacao" />
+								<p:ajax listener="#{jobs.onChange}"
+									update=":positionForm:gridPositions" />
+							</p:selectOneMenu>
+							<p:selectOneMenu id="positionWord" value="#{jobs.searchWord}"
+								style="float:left;margin-left: 10px;" filter="true"
+								filterMatchMode="startsWith" styleClass="btn-info">
+								<f:selectItems value="#{jobs.items}" />
+							</p:selectOneMenu>
+							<p:commandButton type="submit" icon="ui-icon-search"
+								action="#{jobs.searchToolbar()}"
+								style="float:left;margin-left: 10px;"
+								update=":positionForm:gridPositions" />
+							<!-- End search menu -->
+
+							<p:commandButton type="submit" icon="ui-icon-search"
+								value="Mais Recentes" action="#{jobs.findByLast()}"
+								style="float:right; margin-left: 10px;"
+								update=":positionForm:gridPositions" />
+						</h:panelGroup>
+					</h:panelGroup>
+					<br />
+					<h:form id="positionForm">
+						<ui:insert name="positionsList">
+							<ui:include src="jobsList.xhtml" />
+						</ui:insert>
+					</h:form>
+				</div>
+			</h:panelGroup>
+		</ui:define>
+	</ui:composition>
 </h:body>
 </html>

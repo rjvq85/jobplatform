@@ -18,6 +18,7 @@ import pt.criticalsoftware.domain.utils.GenerateReferenceValue;
 import pt.criticalsoftware.service.exceptions.DuplicateCandidateException;
 import pt.criticalsoftware.service.exceptions.UniqueConstraintException;
 import pt.criticalsoftware.service.model.ICandidacy;
+import pt.criticalsoftware.service.model.ICandidate;
 import pt.criticalsoftware.service.model.IInterview;
 import pt.criticalsoftware.service.persistence.ICandidacyPersistenceService;
 import pt.criticalsoftware.service.persistence.states.CandidacyState;
@@ -57,6 +58,13 @@ public class CandidacyPersistenceService implements ICandidacyPersistenceService
 		} catch (IllegalStateException ise) {
 			return null;
 		}
+	}
+	
+	@Override
+	public ICandidacy newSpontaneousCandidacy(ICandidacy candidacy) {
+		CandidacyEntity entity = getEntity(candidacy);
+		em.persist(entity);
+		return new CandidacyProxy(em.merge(entity));
 	}
 
 	@SuppressWarnings("unchecked")
@@ -263,6 +271,13 @@ public class CandidacyPersistenceService implements ICandidacyPersistenceService
 				candidacies.add(new CandidacyProxy(c));
 		}
 		return candidacies;
+	}
+
+	@Override
+	public Long getSpontaneousByCandidate(Integer id) {
+		TypedQuery<Long> query = em.createNamedQuery("Candidacy.spontaneousByCandidate", Long.class)
+		.setParameter("param", id);
+		return query.getSingleResult();
 	}
 
 }

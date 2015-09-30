@@ -6,6 +6,7 @@ import java.util.List;
 import pt.criticalsoftware.service.exceptions.DuplicateCandidateException;
 import pt.criticalsoftware.service.exceptions.UniqueConstraintException;
 import pt.criticalsoftware.service.model.ICandidacy;
+import pt.criticalsoftware.service.model.ICandidate;
 import pt.criticalsoftware.service.model.IInterview;
 
 public interface ICandidacyBusinessService {
@@ -46,4 +47,8 @@ public interface ICandidacyBusinessService {
 	void updateMultipleRejected(List<ICandidacy> rejectedCandidacies);
 
 	void updateMultipleAccepted(List<ICandidacy> acceptedCandidacies);
+
+	Long getSpontaneousCandidacyByCandidate(Integer id);
+
+	ICandidacy createSpontaneousCandidacy(ICandidacy icandidacy);
 }

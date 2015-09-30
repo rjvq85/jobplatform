@@ -91,8 +91,8 @@ public class RegisterPublic implements Serializable {
 			reset();
 			return "confirmregister?faces-redirect=true";
 		} catch (DuplicateCandidateException e) {
-			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), "");
-			FacesContext.getCurrentInstance().addMessage(null, message);
+			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Username / E-mail já existente", "");
+			FacesContext.getCurrentInstance().addMessage("username", message);
 			reset();
 			e.printStackTrace();
 			logger.error(e.getMessage());

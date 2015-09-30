@@ -37,11 +37,11 @@ public class NewUser {
 		try {
 			business.createUser(user);
 			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,"Utilizador criado com sucesso.",null);
-			FacesContext.getCurrentInstance().addMessage(null, msg);
+			FacesContext.getCurrentInstance().addMessage("usermanagement", msg);
 			RequestContext.getCurrentInstance().addCallbackParam("created", true);
 		} catch (DuplicateEmailException | DuplicateUsernameException e) {
 			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR,"Utilizador / E-mail já existente.",null);
-			FacesContext.getCurrentInstance().addMessage(null, msg);
+			FacesContext.getCurrentInstance().addMessage("usermanagement", msg);
 			RequestContext.getCurrentInstance().addCallbackParam("created", false);
 			e.printStackTrace();
 		}

@@ -111,7 +111,7 @@
 									<p:column headerText="Editar" rendered="#{userROLE eq 'ADMIN'}">
 										<p:commandLink icon="ui-icon-circle-plus"
 											id="editinterviewbutton"
-											action="#{interviewListView.editInterview(interv)}">
+											action="#{interviewListView.editInterview(interv)}" rendered="#{interv.interviewState ne 'DONE'}">
 											<span class="glyphicon glyphicon-record"></span>
 										</p:commandLink>
 									</p:column>

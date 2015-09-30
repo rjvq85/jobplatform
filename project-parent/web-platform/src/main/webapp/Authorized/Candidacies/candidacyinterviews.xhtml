@@ -91,7 +91,7 @@
 											update="lista"
 											onclick="if (!confirm('Tem a certeza?')) return false;"
 											oncomplete="window.location.replace(window.location.href);"
-											process="@this">
+											process="@this" rendered="#{interv.interviewState ne 'DONE'}">
 											<i class="glyphicon glyphicon-remove-circle"></i>
 										</p:commandLink>
 									</p:column>

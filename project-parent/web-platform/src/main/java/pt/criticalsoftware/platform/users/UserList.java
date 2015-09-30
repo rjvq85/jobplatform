@@ -38,13 +38,13 @@ public class UserList {
 		try {
 			business.delUser(user);
 			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Utilizador removido com sucesso.", null);
-			FacesContext.getCurrentInstance().addMessage(null, msg);
+			FacesContext.getCurrentInstance().addMessage("usermanagement", msg);
 			allUsers = business.getAllUsers();
 		} catch (Exception e) {
 			e.printStackTrace();
 			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-					"Erro ao remover o utilizador " + user.getUsername(), null);
-			FacesContext.getCurrentInstance().addMessage(null, msg);
+					"O utilizador " + user.getUsername() + " não pode ser removido.", null);
+			FacesContext.getCurrentInstance().addMessage("usermanagement", msg);
 		}
 	}
 

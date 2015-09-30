@@ -80,8 +80,12 @@
 									</p:column>
 									<p:column headerText="Candidato"
 										sortBy="#{i.candidacy.candidate.firstName}">
-										<h:outputText
-											value="#{i.candidacy.candidate.firstName} #{i.candidacy.candidate.lastName}" />
+										<h:outputLink
+											value="#{request.contextPath}/Authorized/Candidates/candidateprofile.xhtml">
+											<f:param name="candidato" value="#{i.candidacy.candidate.id}" />
+											<h:outputText
+												value="#{i.candidacy.candidate.firstName} #{i.candidacy.candidate.lastName}" />
+										</h:outputLink>
 									</p:column>
 									<p:column headerText="Posição" sortBy="#{i.position}">
 										<h:outputText value="#{i.position.reference}" />

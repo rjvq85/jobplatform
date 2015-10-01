@@ -36,6 +36,9 @@ public class DozerMapperSingl {
 	private IUserBuilder builder;
 
 	@EJB
+	IStyleBusinessService businessStyle;
+	
+	@EJB
 	private ICandidacyBusinessService business;
 	
 	@EJB
@@ -43,6 +46,9 @@ public class DozerMapperSingl {
 
 	@PostConstruct
 	void mapping() {
+
+		
+
 		try {
 			Thread.sleep(500);
 		} catch (InterruptedException e) {
@@ -56,6 +62,7 @@ public class DozerMapperSingl {
 //				.password("123456").role(Role.GESTOR).username("quirino").build();
 //		persistence.create(gestor);
 		
+
 		 dozermapping.add("META-INF/dtomapping.xml");
 	}
 

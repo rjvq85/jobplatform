@@ -94,10 +94,11 @@
 									value="Entrevistas Anteriores" />
 							</h:panelGroup>
 						</h:panelGroup>
+						<br/>
 						<h:panelGroup layout="block" styleClass="row">
 							<h:panelGroup layout="block" styleClass="col-md-6">
 								<h:form>
-									<p:commandButton value="Download CV"
+									<p:commandButton styleClass="btn btn-info" style="border-radius:0;" value="Download CV"
 										onclick="PrimeFaces.monitorDownload(start, stop);"
 										icon="ui-icon-arrowthick-1-s" process="@this" update="@none">
 										<p:fileDownload value="#{candidateProfile.file}" />

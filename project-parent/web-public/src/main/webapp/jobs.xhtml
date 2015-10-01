@@ -1,132 +1,135 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/template.xhtml">
+	<ui:define name="content">
 
-<h:head>
-	<meta charset="utf-8" />
-	<h:outputStylesheet library="css" name="jobs.css" />
-</h:head>
+		<div id="outBox">
+			<h:graphicImage styleClass="media-object media-maxheight fade-box"
+				library="imgs" name="#{textBeanPublic.logoName}" />
+			<p:panel>
+				<h:outputText value="#{textBeanPublic.selectedText}" />
+			</p:panel>
 
-<h:body>
-	<div id="outBox">
-		<p:panel id="searchJobs">
-			<h:form id="searchAreaAndLocale">
-				<p:panel id="searchPanel">
-					<h3	style=" text-transform: uppercase; text-align: left;">Pesquisar
-						Ofertas</h3>
-					<p:selectOneMenu id="jobTechnicalArea" required="true"
-						value="#{jobs.technicalAreaStr}" filter="true" width="1000px"
-						style="float:center; height:22px; margin-top:19px;margin-left: 10px;"
-						filterMatchMode="startsWith">
-						<f:selectItem itemLabel="SSPA" itemValue="SSPA" />
-						<f:selectItem itemLabel=".Net Development"
-							itemValue=".Net Development" />
-						<f:selectItem itemLabel="Java Development"
-							itemValue="Java Development" />
-						<f:selectItem itemLabel="Safety Critical"
-							itemValue="Safety Critical" />
-						<f:selectItem itemLabel="Project Management"
-							itemValue="Project Management" />
-						<f:selectItem itemLabel="Integration" itemValue="Integration" />
-					</p:selectOneMenu>
-					<p:selectOneMenu id="jobLocale" required="true"
-						value="#{jobs.locale}" filter="true" width="1000px"
-						style="float:center; height:22px; margin-top:19px;margin-left: 10px;"
-						filterMatchMode="startsWith">
-						<f:selectItem itemLabel="Porto" itemValue="Porto" />
-						<f:selectItem itemLabel="Coimbra" itemValue="Coimbra" />
-						<f:selectItem itemLabel="Lisboa" itemValue="Lisboa" />
-					</p:selectOneMenu>
+			<p:panelGrid id="searchJobs" columns="2">
+				<h:form id="searchAreaAndLocale">
+					<div id="searchPanel">
+						<h3 style="text-transform: uppercase; text-align: left;">Pesquisar
+							Ofertas</h3>
+						<p:selectOneMenu id="jobTechnicalArea" required="true"
+							value="#{jobs.technicalAreaStr}" filter="true" width="1000px"
+							style="float:center; height:22px; margin-top:19px;margin-left: 10px;"
+							filterMatchMode="startsWith">
+							<f:selectItem itemLabel="SSPA" itemValue="SSPA" />
+							<f:selectItem itemLabel=".Net Development"
+								itemValue=".Net Development" />
+							<f:selectItem itemLabel="Java Development"
+								itemValue="Java Development" />
+							<f:selectItem itemLabel="Safety Critical"
+								itemValue="Safety Critical" />
+							<f:selectItem itemLabel="Project Management"
+								itemValue="Project Management" />
+							<f:selectItem itemLabel="Integration" itemValue="Integration" />
+						</p:selectOneMenu>
+						<p:selectOneMenu id="jobLocale" required="true"
+							value="#{jobs.locale}" filter="true" width="1000px"
+							style="float:center; height:22px; margin-top:19px;margin-left: 10px;"
+							filterMatchMode="startsWith">
+							<f:selectItem itemLabel="Porto" itemValue="Porto" />
+							<f:selectItem itemLabel="Coimbra" itemValue="Coimbra" />
+							<f:selectItem itemLabel="Lisboa" itemValue="Lisboa" />
+						</p:selectOneMenu>
 
-					<p:commandButton type="submit" icon="ui-icon-search"
-					style="float:center; margin-top:24px;margin-left: 10px;"
-						action="#{jobs.search()}" />
-				</p:panel>
-			</h:form>
+						<p:commandButton type="submit" icon="ui-icon-search"
+							style="float:center; margin-top:24px;margin-left: 10px;"
+							action="#{jobs.search()}" />
+					</div>
+				</h:form>
+				<h:form id="candidady">
+					<div id="candidacyPanel">
+						<h3 style="text-transform: uppercase; text-align: left;">Candidaturas
+							Espontâneas</h3>
+						<br></br> <a class="bigbutton"
+							style="text-align: left; display: block;" href="showJobs.html">
+							<p>Na Critical acreditamos que as pessoas são o alicerce do
+								nosso sucesso pelo que pretendemos captar, reter e desenvolver
+								profissionais de excelência. A nossa Política de Gestão de RH
+								baseia-se no respeito pela dignidade, pela diversidade e
+								direitos de cada pessoa, tratando cada colaborador com justiça e
+								potenciando as oportunidades de desenvolvimento pessoal e
+								profissional, respeitando o equilíbrio entre a vida profissional
+								e a vida pessoal.</p>
+							<p>Se partilhas o nosso entusiasmo pelas novas tecnologias
+								junta-te a nós.</p>
+						</a>
+					</div>
+				</h:form>
+			</p:panelGrid>
+			<br />
 			<h:form id="searchByRecentJobs">
 				<h:commandLink action="#{jobs.findByLast()}" value="Mais Recentes" />
 			</h:form>
-			<h:form id="candidady">
-				<p:panel id="candidacyPanel">
-					<h3	style=" text-transform: uppercase; text-align: left;">Candidaturas
-						Espontâneas</h3>
-					<br></br>
-					<a class="bigbutton" style="text-align: left; display: block;"
-						href="showJobs.html">
-						<p>Na Critical acreditamos que as pessoas são o alicerce do
-							nosso sucesso pelo que pretendemos captar, reter e desenvolver
-							profissionais de excelência. A nossa Política de Gestão de RH
-							baseia-se no respeito pela dignidade, pela diversidade e direitos
-							de cada pessoa, tratando cada colaborador com justiça e
-							potenciando as oportunidades de desenvolvimento pessoal e
-							profissional, respeitando o equilíbrio entre a vida profissional
-							e a vida pessoal.</p>
-						<p>Se partilhas o nosso entusiasmo pelas novas tecnologias
-							junta-te a nós.</p>
-					</a>
-				</p:panel>
+			<br />
+			<p:panelGrid id="panelSearch" columns="2">
+				<h:form id="searchByLocale">
+					<p:panel id="searchLocalePanel">
+						<h3 style="text-transform: uppercase; text-align: left;">Por
+							Região</h3>
+						<br> </br>
+						<h:commandLink action="#{jobs.findByLocalePorto()}" value="Porto" />
+						<h:commandLink action="#{jobs.findByLocaleLisboa()}"
+							value="Lisboa" />
+						<h:commandLink action="#{jobs.findByLocaleCoimbra()}"
+							value="Coimbra" />
+					</p:panel>
+				</h:form>
+
+				<h:form id="searchByArea">
+					<p:panel id="searchAreaPanel">
+						<h3 style="text-transform: uppercase; text-align: left;">Por
+							Área</h3>
+						<br> </br>
+						<h:commandLink
+							action="#{jobs.findByTechnicalAreaNetDevelopment()}"
+							value=".Net Development" />
+						<h:commandLink action="#{jobs.findByTechnicalAreaSSPA()}"
+							value="SSPA" />
+						<h:commandLink
+							action="#{jobs.findByTechnicalAreaJavaDevelopment()}"
+							value="Java Development" />
+						<h:commandLink
+							action="#{jobs.findByTechnicalAreaSafetyCritical()}"
+							value="Safety Critical" />
+						<h:commandLink
+							action="#{jobs.findByTechnicalAreaProjectManagement()}"
+							value="Project Management" />
+						<p:commandLink action="#{jobs.findByTechnicalAreaIntegration()}"
+							value="Integration" />
+					</p:panel>
+				</h:form>
+
+			</p:panelGrid>
+
+			<h:form id="loginRequiredForm">
+				<p:dialog id="dialog-loginRequired" widgetVar="dialogloginRequired"
+					modal="true" resizable="false">
+					<h:panelGrid columns="1">
+						<h4>Necessário efectuar registo para se candidatar!</h4>
+						<p:outputLabel value="Registar?" />
+					</h:panelGrid>
+					<p:button value="Não" type="button"
+						style="width:100px; margin-right:10px; margin-top:15px;"
+						onclick="PF('dialogloginRequired').hide(); return false; "></p:button>
+					<p:commandButton value="Sim" type="submit"
+						style="width:100px; margin-right:auto; margin-left:10px; margin-top:15px;"
+						action="#{jobs.registar()}"
+						onclick="if (!args.validationFailed)PF('dialogloginRequired').hide();"></p:commandButton>
+				</p:dialog>
 			</h:form>
-		</p:panel>
 
-		<p:panelGrid id="panelSearch" columns="2">
-			<h:form id="searchByLocale">
-				<p:panel id="searchLocalePanel">
-					<h3
-						style=" text-transform: uppercase; text-align: left;">Por
-						Região</h3>
-					<br> </br>
-					<h:commandLink action="#{jobs.findByLocalePorto()}" value="Porto" />
-					<h:commandLink action="#{jobs.findByLocaleLisboa()}" value="Lisboa" />
-					<h:commandLink action="#{jobs.findByLocaleCoimbra()}"
-						value="Coimbra" />
-				</p:panel>
-			</h:form>
-
-			<h:form id="searchByArea">
-				<p:panel id="searchAreaPanel">
-					<h3
-						style=" text-transform: uppercase; text-align: left;">Por
-						Área</h3>
-					<br> </br>
-					<h:commandLink action="#{jobs.findByTechnicalAreaNetDevelopment()}"
-						value=".Net Development" />
-					<h:commandLink action="#{jobs.findByTechnicalAreaSSPA()}"
-						value="SSPA" />
-					<h:commandLink
-						action="#{jobs.findByTechnicalAreaJavaDevelopment()}"
-						value="Java Development" />
-					<h:commandLink action="#{jobs.findByTechnicalAreaSafetyCritical()}"
-						value="Safety Critical" />
-					<h:commandLink
-						action="#{jobs.findByTechnicalAreaProjectManagement()}"
-						value="Project Management" />
-					<p:commandLink action="#{jobs.findByTechnicalAreaIntegration()}"
-						value="Integration" />
-				</p:panel>
-			</h:form>
-
-		</p:panelGrid>
-
-		<h:form id="loginRequiredForm">
-			<p:dialog id="dialog-loginRequired" widgetVar="dialogloginRequired"
-				modal="true" resizable="false">
-				<h:panelGrid columns="1">
-					<h4>Necessário efectuar registo para se candidatar!</h4>
-					<p:outputLabel value="Registar?" />
-				</h:panelGrid>
-				<p:button value="Não" type="button"
-					style="width:100px; margin-right:10px; margin-top:15px;"
-					onclick="PF('dialogloginRequired').hide(); return false; "></p:button>
-				<p:commandButton value="Sim" type="submit"
-					style="width:100px; margin-right:auto; margin-left:10px; margin-top:15px;"
-					action="#{jobs.registar()}"
-					onclick="if (!args.validationFailed)PF('dialogloginRequired').hide();"></p:commandButton>
-			</p:dialog>
-		</h:form>
-
-	</div>
-</h:body>
-</html>
+		</div>
+	</ui:define>
+</ui:composition>

@@ -69,13 +69,13 @@
 								<h:form prependId="false" id="spontForm">
 									<h:selectBooleanCheckbox
 										value="#{candidacyListView.spontaneous}"
-										style="margin-right: 10px;"/> Apenas candidaturas espontâneas
+										style="margin-right: 10px;" /> Apenas candidaturas espontâneas
 									<h:commandButton
-											action="#{candidacyListView.candidacyFilter()}" value="OK"
-											styleClass="btn btn-info"
-											style="font-size: 9px;margin-left: 5px;border-radius: 100px;padding: 4px;">
-											<f:ajax render=":lista" execute="spontForm" />
-										</h:commandButton>
+										action="#{candidacyListView.candidacyFilter()}" value="OK"
+										styleClass="btn btn-info"
+										style="font-size: 9px;margin-left: 5px;border-radius: 100px;padding: 4px;">
+										<f:ajax render=":lista" execute="spontForm" />
+									</h:commandButton>
 								</h:form>
 							</h:panelGroup>
 						</h:panelGroup>
@@ -124,7 +124,11 @@
 										<h:commandLink
 											action="#{assignCandidacy.newAssignment(cand.candidate.username)}"
 											value="Espontânea"
-											rendered="#{cand.positionCandidacy == 'Espontânea'}" />
+											rendered="#{cand.positionCandidacy == 'Espontânea'}">
+											<f:setPropertyActionListener
+												value="#{cand.candidate.username}"
+												target="#{assignCandidacy.username}"></f:setPropertyActionListener>
+										</h:commandLink>
 									</p:column>
 									<p:column headerText="Entrevistas"
 										rendered="#{userROLE eq 'ADMIN'}">

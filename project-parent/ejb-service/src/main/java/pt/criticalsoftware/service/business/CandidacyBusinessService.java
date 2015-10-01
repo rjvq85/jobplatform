@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
+import javax.ejb.Stateless;
 import javax.persistence.NoResultException;
 
 import pt.criticalsoftware.service.exceptions.DuplicateCandidateException;
@@ -15,7 +16,7 @@ import pt.criticalsoftware.service.model.IInterview;
 import pt.criticalsoftware.service.notifications.IMailSender;
 import pt.criticalsoftware.service.persistence.ICandidacyPersistenceService;
 
-@Stateful
+@Stateless
 public class CandidacyBusinessService implements ICandidacyBusinessService {
 
 	@EJB

@@ -140,4 +140,9 @@ public class PositionBusinessService implements IPositionBusinessService {
 		if (null == position.getFirstHire())
 			position.setFirstHire(LocalDate.now());
 	}
+
+	@Override
+	public List<IPosition> getNotAssignedPositions(Integer candidateId) {
+		return positionPersistence.getUnassignedPositionsToCandidate(candidateId);
+	}
 }

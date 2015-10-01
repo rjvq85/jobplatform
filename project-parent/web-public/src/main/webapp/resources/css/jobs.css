@@ -22,7 +22,7 @@ a{
     margin-left: auto;
     margin-right: auto;
     background-image: url("/public/javax.faces.resource/imgs/job.jpg.xhtml")!important;
-    background-size: contain;
+    background-size: cover;
     background-repeat: no-repeat;
 		
 }
@@ -52,7 +52,8 @@ a{
 	text-align: left;
 }
 
-
+#searchPanel img{
+ }
 
 #searchAreaPanel, #searchLocalePanel {
 	display: inline-block;

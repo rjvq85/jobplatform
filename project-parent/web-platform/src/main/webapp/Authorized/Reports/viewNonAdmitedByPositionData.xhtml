@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Candidatos Não admitidos Por Posição</title>
+
+</h:head>
+
+<h:body>
+	<h:form id="hform">
+		<p:panel>
+			<p:chart type="line" model="#{reportNonAdmited.lineModel}"
+				widgetVar="chart" style="width:550px;height:300px" />
+
+			<p:commandButton type="submit" value="Anexar ao relatório"
+				icon="ui-icon-extlink" onclick="exportChart();"
+				actionListener="#{reportNonAdmited.submittedBase64Str}" />
+
+			<h:inputHidden id="b64" value="#{reportNonAdmited.base64Str}" />
+
+			<script type="text/javascript">
+function exportChart() {
+	 // exportAsImage() will return a base64 png encoded string
+     img = PF('chart').exportAsImage();
+     document.getElementById('hform:b64').value = img.src;
+     console.log(img.getAttribute("src"));
+ 
+}
+</script>
+		</p:panel>
+	</h:form>
+
+	<p:spacer height="10" />
+
+	<h:form id="tableData">
+		<p:panel>
+			<p:dataTable id="tbl" var="candidacie"
+				value="#{reportNonAdmited.candidacies}" paginator="true"
+				paginatorPosition="bottom" rows="12" style="margin-bottom:20px">
+
+				<f:facet name="header">
+					<h:outputText value="Candidaturas rejeitadas para a posicao  " />
+					<h:outputText value="#{reportNonAdmited.positionRef}" />
+					<h:outputText value=" de" />
+					<h:outputText value="#{reportNonAdmited.initDate}">
+						<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+					</h:outputText>
+					<h:outputText value=" a " />
+					<h:outputText value="#{reportNonAdmited.finalDate}">
+						<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+					</h:outputText>
+				</f:facet>
+				<p:column headerText="Data Candidatura">
+					<h:outputText value="#{candidacie.date}" />
+				</p:column>
+
+				<p:column headerText="Nome Candidato">
+					<h:outputText
+						value="#{candidacie.candidate.firstName} + #{candidacie.candidate.lastName} " />
+				</p:column>
+
+				<p:column headerText="Habilitacoes">
+					<h:outputText value="#{candidacie.candidate.degreeString}" />
+				</p:column>
+
+				<p:column headerText="Motivo">
+					<h:outputText value="#{candidacie.rejectionReason.toString()}" />
+				</p:column>
+
+				<f:facet name="footer">
+					<h:outputText value="No total foram rejeitadas " />
+					<h:outputText value="#{reportNonAdmited.candidacies.size()}" />
+					<h:outputText value=" candidaturas." />
+				</f:facet>
+			</p:dataTable>
+		</p:panel>
+		<p:spacer height="10" />
+		<div>
+			<h:commandLink id="pdf">
+				<p:graphicImage name="/imgs/pdf_icon.gif" with="32" height="32" />
+				<pe:exporter type="pdf" target="tbl" encoding="UTF-8"
+					fileName="RelatorioCandidatosRejeitadosPorPosicai"
+					preProcessor="#{reportNonAdmited.preProcessPDF}"
+					orientation="Portrait " facetBackground="#A50D12"
+					facetFontSize="14" facetFontColor="#FFFFFF" facetFontStyle="BOLD"
+					cellFontColor="#303030" cellFontSize="12" cellFontStyle="NORMAL"
+					postProcessor="#{reportNonAdmited.postProcessPDF}" />
+			</h:commandLink>
+			<p:commandButton value="Enviar relatório por mail"
+				style="margin-left: 20px; margin-top:0px;float:right;"
+				icon="ui-icon-extlink" action="#{reportNonAdmited.submitByMail()}" />
+		</div>
+	</h:form>
+
+
+
+</h:body>
+</html>

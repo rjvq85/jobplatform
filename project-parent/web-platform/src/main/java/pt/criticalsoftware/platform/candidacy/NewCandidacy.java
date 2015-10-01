@@ -26,6 +26,7 @@ import pt.criticalsoftware.service.model.ICandidate;
 import pt.criticalsoftware.service.model.ICandidateBuilder;
 import pt.criticalsoftware.service.model.IPosition;
 import pt.criticalsoftware.service.notifications.IMailSender;
+import pt.criticalsoftware.service.persistence.roles.Role;
 import pt.criticalsoftware.service.persistence.states.CandidacyState;
 
 @Named
@@ -82,7 +83,8 @@ public class NewCandidacy {
 			ICandidacy icandidacy = candidacy.state(CandidacyState.SUBMETIDA).candidate(icandidate).position(position)
 					.build();
 			business.createCandidacy(icandidacy);
-			if (null != icandidacy.getPositionCandidacy().getId()) mailSender.sendEmail(icandidacy, icandidacy.getPositionCandidacy().getResponsable(), 1);
+			if (null != icandidacy.getPositionCandidacy().getId())
+				mailSender.sendEmail(icandidacy, icandidacy.getPositionCandidacy().getResponsable(), 1);
 			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Candidatura submetida com sucesso!",
 					"");
 			FacesContext.getCurrentInstance().addMessage(null, message);
@@ -272,8 +274,12 @@ public class NewCandidacy {
 
 	public List<IPosition> getAvailablePositions() {
 		if (null == availablePositions) {
-			availablePositions = positionBusiness.getAllPositions();
-			return availablePositions;
+			if (isAdmin()) {
+				availablePositions = positionBusiness.getAllPositions();
+				return availablePositions;
+			} else {
+				return getAvailableManagerPositions();
+			}
 		}
 		return null;
 	}
@@ -319,6 +325,10 @@ public class NewCandidacy {
 		FacesContext context = FacesContext.getCurrentInstance();
 		HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
 		return request.getSession();
+	}
+
+	private Boolean isAdmin() {
+		return (Boolean) getSession().getAttribute("userROLE").equals(Role.ADMIN);
 	}
 
 }

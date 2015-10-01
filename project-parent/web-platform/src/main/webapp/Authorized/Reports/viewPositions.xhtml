@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</h:head>
+<h:body>
+	<h:form id="hform">
+		<p:panel>
+			<p:chart type="pie" model="#{reportProposal.lineModel2}"
+				widgetVar="chart" style="width:500px;height:250px" />
+			<h:inputHidden id="b64" value="#{reportProposal.base64Str}" />
+			<p:commandButton type="submit" value="Anexar ao relatório"
+				icon="ui-icon-extlink" onclick="exportChart();"
+				actionListener="#{reportProposal.submittedBase64Str}" />
+
+			<script type="text/javascript">
+			function exportChart() {
+				 // exportAsImage() will return a base64 png encoded string
+			     img = PF('chart').exportAsImage();
+			     document.getElementById('hform:b64').value = img.src;
+			     console.log(img.getAttribute("src"));
+			}
+			</script>
+		</p:panel>
+	</h:form>
+	<h:form id="hform1">
+		<p:panel>
+			<p:chart type="pie" model="#{reportProposal.lineModel}"
+				widgetVar="chart1" style="width:500px;height:250px" />
+			<p:commandButton type="submit" value="Anexar ao relatório"
+				icon="ui-icon-extlink" onclick="exportChart1();"
+				actionListener="#{reportProposal.submittedBase64Str1}" />
+			<h:inputHidden id="b641" value="#{reportProposal.base64Str1}" />
+			<script type="text/javascript">
+			function exportChart1() {
+				 // exportAsImage() will return a base64 png encoded string
+			     img = PF('chart1').exportAsImage();
+			     document.getElementById('hform1:b641').value = img.src;
+			     console.log(img.getAttribute("src"));
+			}
+			</script>
+
+		</p:panel>
+	</h:form>
+	<h:form>
+		<p:dataTable id="tbl" var="position"
+			value="#{reportProposal.positions}" paginator="true"
+			paginatorPosition="bottom" rows="12" style="margin-bottom:20px">
+
+			<f:facet name="header">
+				<h:outputText value="Propostas apresentadas" />
+
+				<h:outputText value=" de " />
+				<h:outputText value="#{reportProposal.initDate}">
+					<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+				</h:outputText>
+				<h:outputText value=" a " />
+				<h:outputText value="#{reportProposal.finalDate}">
+					<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+				</h:outputText>
+			</f:facet>
+
+			<p:column headerText="Data abertura">
+				<h:outputText value="#{position.openDate}" />
+			</p:column>
+
+			<p:column headerText="Empresa">
+				<h:outputText value="#{position.company} " />
+			</p:column>
+
+			<p:column headerText="Area Tecnica">
+				<h:outputText value="#{position.technicalArea.name}" />
+			</p:column>
+			<p:column headerText="Localizacao">
+				<h:outputText value="#{position.locale} " />
+			</p:column>
+			<p:column headerText="Numero de vagas">
+				<h:outputText value="#{position.vacancies}" />
+			</p:column>
+
+			<f:facet name="footer">
+				<h:outputText value="No total foram apresentadas: " />
+				<h:outputText value="#{reportProposal.positions.size()}" />
+				<h:outputText value=" propostas." />
+			</f:facet>
+		</p:dataTable>
+		<p:spacer height="30" />
+		<div>
+			<h:commandLink id="pdf">
+				<p:graphicImage name="/imgs/pdf_icon.gif" with="32" height="32" />
+
+				<pe:exporter type="pdf" target="tbl" encoding="UTF-8"
+					fileName="RelatorioPropostasApresentadas"
+					preProcessor="#{reportProposal.preProcessPDF}"
+					tableTitle="Propostas Apresentadas Por Intervalo De Tempo"
+					orientation="Portrait " facetBackground="#A50D12"
+					facetFontSize="14" facetFontColor="#FFFFFF" facetFontStyle="BOLD"
+					cellFontColor="#303030" cellFontSize="12" cellFontStyle="NORMAL"
+					postProcessor="#{reportProposal.postProcessPDF}" />
+			</h:commandLink>
+			<p:commandButton value="Enviar relatório por mail"
+				style="margin-left: 20px; margin-top:0px;float:right;"
+				icon="ui-icon-extlink" action="#{reportProposal.submitByMail()}" />
+		</div>
+	</h:form>
+</h:body>
+</html>

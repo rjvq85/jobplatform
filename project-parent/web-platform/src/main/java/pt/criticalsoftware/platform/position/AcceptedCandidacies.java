@@ -69,22 +69,25 @@ public class AcceptedCandidacies implements Serializable {
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 		} else {
 			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-					"Tentou seleccionar " + acceptedCandidacies.size() + " candidatos mas só há " + availableVacancies + " vagas disponíveis.",
+					"Tentou seleccionar " + acceptedCandidacies.size() + " candidatos mas só há " + availableVacancies
+							+ " vagas disponíveis.",
 					null);
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 		}
 	}
-	
+
 	public String saveReasons() {
 		try {
 			candidacyBness.updateMultipleRejected(rejectedCandidacies);
-			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Candidaturas actualizadas com sucesso.", null);
+			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Candidaturas actualizadas com sucesso.",
+					null);
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 			return "savedreasons";
 		} catch (Exception e) {
 			logger.error("Erro ao guardar motivos de rejeição para a posição: " + position.getReference());
 			e.printStackTrace();
-			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Erro ao actualizar candidaturas (motivos de rejeição)", null);
+			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
+					"Erro ao actualizar candidaturas (motivos de rejeição)", null);
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 			return null;
 		}
@@ -106,14 +109,16 @@ public class AcceptedCandidacies implements Serializable {
 	}
 
 	public Boolean stillAvailable() {
-		if (null != position.getAcceptedCandidacies() && position.getAcceptedCandidacies().size() >= position.getVacancies()) {
+		if (null != position.getAcceptedCandidacies()
+				&& position.getAcceptedCandidacies().size() >= position.getVacancies()) {
 			return false;
 		}
 		return true;
 	}
-	
+
 	public Boolean noMoreCandidacies() {
-		if (null != position.getAcceptedCandidacies() && position.getAcceptedCandidacies().size() == position.getCandidacies().size()) {
+		if (null != position.getAcceptedCandidacies()
+				&& position.getAcceptedCandidacies().size() == position.getCandidacies().size()) {
 			return true;
 		}
 		return false;
@@ -123,14 +128,25 @@ public class AcceptedCandidacies implements Serializable {
 		try {
 			position.setState(PositionState.FECHADA);
 			bness.update(position);
-			rejectedCandidacies = position.getCandidacies();
-			rejectedCandidacies.removeAll(acceptedCandidacies);
-			return "positionclosed";
+			if (position.getCandidacies().size() > 0) {
+				if (position.getCandidacies().size() > position.getAcceptedCandidacies().size()) {
+					rejectedCandidacies = position.getCandidacies();
+					rejectedCandidacies.removeAll(acceptedCandidacies);
+				} else {
+					rejectedCandidacies = null;
+				}
+				if (null == rejectedCandidacies || rejectedCandidacies.size() < 1)
+					return "positionclosedwoutcandidacies";
+				return "positionclosed";
+			} else {
+				return "positionclosedwoutcandidacies";
+			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			return null;
 		}
 	}
-	
+
 	public String viewPosition(IPosition position) {
 		this.position = position;
 		return "viewposition";
@@ -143,11 +159,11 @@ public class AcceptedCandidacies implements Serializable {
 	public void setRejectedCandidacies(List<ICandidacy> rejectedCandidacies) {
 		this.rejectedCandidacies = rejectedCandidacies;
 	}
-	
+
 	public Reason[] getReasons() {
 		return Reason.values();
 	}
-	
+
 	private void setHiringDate(List<ICandidacy> candidacies) {
 		candidacies.stream().forEach(candidacy -> candidacy.setHiringDate(LocalDate.now()));
 	}

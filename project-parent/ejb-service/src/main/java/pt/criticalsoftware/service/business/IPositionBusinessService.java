@@ -53,4 +53,6 @@ public interface IPositionBusinessService {
 
 	void setFirstHiring(IPosition position);
 
+	List<IPosition> getNotAssignedPositions(Integer candidateId);
+
 }

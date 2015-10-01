@@ -75,3 +75,15 @@ $(document).ready(function() {
 		}, 3000);
 	}
 });
+
+$(".report-row").hover(function() {
+	$(this).addClass("active");
+}, function() {
+	$(this).removeClass("active");
+});
+$(".list-group-item").hover(function() {
+	$(this).addClass("active");
+}, function() {
+	$(this).removeClass("active");
+});
+

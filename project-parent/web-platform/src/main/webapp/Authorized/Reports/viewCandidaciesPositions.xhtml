@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Candidaturas por Posição</title>
+</h:head>
+<h:body>
+	<h:form>
+		<p:dataTable id="tbl" var="candidacie"
+			value="#{reportCandidaciesByPosition.candidacies}" paginator="true"
+			paginatorPosition="bottom" rows="12" style="margin-bottom:20px">
+
+			<f:facet name="header">
+				<h:outputText value="Candidaturas para a posicao " />
+				<h:outputText value="#{reportCandidaciesByPosition.positionRef}" />
+			</f:facet>
+			<p:column headerText="Data Candidatura">
+				<h:outputText value="#{candidacie.date}" />
+			</p:column>
+
+			<p:column headerText="Nome Candidato">
+				<h:outputText
+					value="#{candidacie.candidate.firstName} + #{candidacie.candidate.lastName} " />
+			</p:column>
+
+			<p:column headerText="Habilitacoes">
+				<h:outputText value="#{candidacie.candidate.degreeString}" />
+			</p:column>
+			<f:facet name="footer">
+				<h:outputText value="No total foram efectuadas: " />
+				<h:outputText
+					value="#{reportCandidaciesByPosition.candidacies.size()}" />
+				<h:outputText value=" candidaturas." />
+			</f:facet>
+		</p:dataTable>
+		<p:spacer height="30" />
+		<p:panel position="center">
+			<h:commandLink id="pdf">
+				<p:graphicImage name="/imgs/pdf_icon.gif" with="32" height="32" 
+				style="margin-left: 40px;"/>
+				<pe:exporter type="pdf" target="tbl" encoding="UTF-8"
+					fileName="RelatorioporPosicao"
+					preProcessor="#{reportCandidaciesByPosition.preProcessPDF}"
+					tableTitle="Resultados De Quantidade de Candidatos Por Posicao"
+					orientation="Portrait " facetBackground="#A50D12"
+					facetFontSize="14" facetFontColor="#FFFFFF" facetFontStyle="BOLD"
+					cellFontColor="#303030" cellFontSize="12" cellFontStyle="NORMAL"
+					postProcessor="#{reportCandidaciesByPosition.postProcessPDF}" />
+			</h:commandLink>
+			<p:commandButton  value="Enviar relatório por mail"  style="margin-left: 20px; margin-top:0px;float:right;"
+				icon="ui-icon-extlink"
+				action="#{reportCandidaciesByPosition.submitByMail()}" />
+		</p:panel>
+	</h:form>
+</h:body>
+</html>

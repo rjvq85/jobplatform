@@ -20,6 +20,7 @@ import pt.criticalsoftware.service.model.ICandidacy;
 import pt.criticalsoftware.service.model.ICandidacyBuilder;
 import pt.criticalsoftware.service.model.ICandidate;
 import pt.criticalsoftware.service.model.IPosition;
+import pt.criticalsoftware.service.notifications.IMailSender;
 import pt.criticalsoftware.service.persistence.states.CandidacyState;
 import pt.criticalsoftware.service.sources.CandidacySource;
 
@@ -37,6 +38,8 @@ public class NewCandidacyPublic {
 	private ICandidacyBusinessService candidacyBness;
 	@EJB
 	private ICandidacyBuilder builder;
+	@EJB
+	private IMailSender mailSender;
 
 	private String letter;
 
@@ -58,6 +61,7 @@ public class NewCandidacyPublic {
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 			FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
 			RequestContext.getCurrentInstance().addCallbackParam("submited", true);
+			mailSender.sendEmail(candidacy, position.getResponsable(), 2);
 		} catch (Exception e) {
 			logger.error("Ocorreu um erro.");
 			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR,"Erro ao submeter candidatura",null);

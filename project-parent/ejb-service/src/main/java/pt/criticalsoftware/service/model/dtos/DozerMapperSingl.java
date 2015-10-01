@@ -30,13 +30,13 @@ public class DozerMapperSingl {
 
 	private static List<String> dozermapping = new ArrayList<>();
 	public static Mapper dozerMapper;
+	
+
+	
 	@EJB
 	private IUserPersistenceService persistence;
 	@EJB
 	private IUserBuilder builder;
-
-	@EJB
-	IStyleBusinessService businessStyle;
 	
 	@EJB
 	private ICandidacyBusinessService business;
@@ -61,8 +61,6 @@ public class DozerMapperSingl {
 		IUser gestor = builder.email("ricardoquirino@me.com").firstName("Gestor").lastName("de Candidaturas")
 				.password("123456").role(Role.GESTOR).username("quirino").build();
 		persistence.create(gestor);
-		
-
 		 dozermapping.add("META-INF/dtomapping.xml");
 	}
 

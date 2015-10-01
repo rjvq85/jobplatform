@@ -1,59 +1,83 @@
 h3 {
-	font-size: 20px;
+	font-size: 35px;
 	font-family: Arial, Helvetica, sans-serif;
 	font-weight: normal;
-	padding: 0px;
-	color: #808080;
+	padding: 35px;
+	color: #BD1111;;
 	margin: 0px;
-	margin-bottom: 10px;
+	margin-top: 10px;
 	text-align: right;
 }
 
 .ui-widget-content a {
 	padding: 5px !important;
 }
-a{
+
+a {
 	text-decoration-line: none;
 }
-#searchPanel{
-    align-content: center;
-    width: 1550px;
-    height: 500px;
-    margin-left: auto;
-    margin-right: auto;
-    background-image: url("/public/javax.faces.resource/imgs/job.jpg.xhtml")!important;
-    background-size: cover;
-    background-repeat: no-repeat;
-		
+
+#searchPanel {
+	align-content: center;
+	width: 1550px;
+	height: 600px;
+	margin-left: auto;
+	margin-right: auto;
+	background-image: url("/public/javax.faces.resource/imgs/job.jpg.xhtml")
+		!important;
+	background-size: cover;
+	background-repeat: no-repeat;
 }
-#candidacyPanel{
+
+#candidacyPanel {
 	margin-left: auto;
 	margin-right: auto;
 	margin-top: 60px;
 }
-#resultSearch, {
-	font-size: 30px;
-	font-family: Arial, Helvetica, sans-serif;
-	font-weight: normal;
-	padding: 0px;
-	color: #808080;
-	margin: 0px;
-	margin-bottom: 10px;
-	text-align: left;
+
+#resultSearch,{
+font-size
+:
+30px;
+font-family
+:
+Arial
+,
+Helvetica
+,
+sans-serif;
+font-weight
+:
+normal;
+padding
+:
+0px;
+color
+:
+#808080;
+margin
+:
+0px;
+margin-bottom
+:
+10px;
+text-align
+:
+left;
 }
- #ttPanel{
-	font-size: 30px;
+#ttPanel {
+	font-size: 20px;
 	font-family: Arial, Helvetica, sans-serif;
 	font-weight: normal;
 	padding: 0px;
-	background-color:#FAF5EF;
+	background-color: #FAF5EF;
 	margin: 0px;
 	margin-bottom: 10px;
 	text-align: left;
+	color: #BD1111;
 }
 
-#searchPanel img{
- }
+
 
 #searchAreaPanel, #searchLocalePanel {
 	display: inline-block;
@@ -61,16 +85,22 @@ a{
 	margin-left: auto;
 	margin-right: auto;
 	margin-top: 60px;
-	/*background-size: cover; isto é para fundos, para ocuparem a largura*/
+	text-align: left;
 }
 
-.ui-widget-content {
-	border: 1px solid #DDD;
+.ui-widget-content a{
+	border: 0px solid #ffffff;
+	color: #BD1111;
 }
-.ui-panel .ui-panel-content .ui-widget-content {
-	
 
-	}
+.ui-panelgrid .ui-panelgrid-cell {
+	border-width: 0px !important;
+	border-style: none !important;
+	border-color: white !important;
+	padding: 0px 0px !important;
+	border: none !important;
+}
+
 #searchForm {
 	color: #8B9398;
 	width: 100%;
@@ -81,6 +111,7 @@ a{
 
 #panelSearch {
 	width: 100%;
+	height: 100px;
 }
 
 @charset "utf-8";
@@ -105,6 +136,7 @@ body {
 	background-color: #ffffff;
 	font-weight: normal;
 	text-align: center;
+	color: #BD1111;
 }
 
 #outBox {
@@ -112,10 +144,8 @@ body {
 	width: 1550px;
 	margin-left: auto;
 	margin-right: auto;
-	margin-top: 60px;
+	margin-top: 20px;
 }
-
-
 
 #toolbarPosition {
 	margin-top: 5px;
@@ -125,9 +155,7 @@ body {
 	margin-top: 30px;
 }
 
-.ui-selectonemenu {
-	width: 240px !important;
-}
+
 
 .ui-spinner {
 	width: 240px;
@@ -136,13 +164,17 @@ body {
 .ui-spinner-input {
 	width: 210px;
 }
-.ui-panelgrid-cell {
-    border-width: 0px;
-    border-style: solid;
-    border-color: inherit;
-    padding: 0px 0px;
+a {
+    color: #BD1111;
 }
-.ui-selectonemenu
-.ui-selectonemenu-label {
-	width: 220px !important;
+
+a:-webkit-any-link {
+    color: #BD1111;
+    text-decoration: none;
+    cursor: auto;
 }
+/*PARA APAGAR*/
+.searchFormContainer{
+	margin:0px auto 0px auto;
+	width:400px;
+	}

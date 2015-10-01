@@ -144,4 +144,29 @@
     TITLE="myinterviews" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
  </PROCESS-ITEM>
+ <PROCESS-ITEM
+  NAME="rules:#Authorized#Positions#positionListManagerMain.xhtml"
+  PATH="/Authorized/Positions/positionListManagerMain.xhtml"
+  SHAPE="80,1041,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM
+   ID="rules:#Authorized#Positions#positionListManagerMain.xhtml:0"
+   NAME="item"
+   PATH="/Authorized/Positions/positionListManagerMain.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="viewposition::#Authorized#Positions#acceptedcandidacies.xhtml"
+    NAME="output" PATH="/Authorized/Positions/acceptedcandidacies.xhtml"
+    TARGET="rules:#Authorized#Positions#acceptedcandidacies.xhtml"
+    TITLE="viewposition" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+  <PROCESS-ITEM
+   ID="rules:#Authorized#Positions#positionListManagerMain.xhtml:1"
+   NAME="item1"
+   PATH="/Authorized/Positions/positionListManagerMain.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="viewclosedposition::#Authorized#Positions#closedposition.xhtml"
+    NAME="output" PATH="/Authorized/Positions/closedposition.xhtml"
+    TARGET="rules:#Authorized#Positions#closedposition.xhtml"
+    TITLE="viewclosedposition" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
 </PROCESS>

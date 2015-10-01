@@ -52,4 +52,6 @@ public interface ICandidacyPersistenceService {
 
 	ICandidacy newSpontaneousCandidacy(ICandidacy candidacy);
 
+	List<ICandidacy> getCandidaciesByCandidate(Integer candidateId);
+
 }

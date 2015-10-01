@@ -162,8 +162,8 @@ public class ReportInterviews implements Serializable {
 					auxI++;
 		}
 		else{
-			auxP=10;auxN=20;
-			auxI=70;
+			auxP=0;auxN=0;
+			auxI=0;
 		}
 		model.set("Positivo",auxP);
 		model.set("Sem disponibilidade",auxN);

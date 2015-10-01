@@ -28,6 +28,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.primefaces.model.chart.PieChartModel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.lowagie.text.BadElementException;
 import com.lowagie.text.Document;
@@ -51,6 +53,8 @@ import pt.criticalsoftware.service.notifications.IMailSender;
 public class ReportProposal implements Serializable {
 
 	private static final long serialVersionUID = 1141634803535222664L;
+	
+	private final Logger logger = LoggerFactory.getLogger(ReportProposal.class);
 	@EJB
 	private IPositionBusinessService business;
 	@EJB
@@ -164,13 +168,10 @@ public class ReportProposal implements Serializable {
 					aux3++;
 				else if (c.getLocale().equals("Outra"))
 					aux4++;
-
-
-
 		}
 		else{
-			aux1=10;aux2=20;
-			aux3=70;aux4=10;
+			aux1=0;aux2=0;
+			aux3=0;aux4=0;
 		}
 		model.set("Porto",aux1);
 		model.set("Coimbra",aux2);
@@ -202,31 +203,32 @@ public class ReportProposal implements Serializable {
 		PieChartModel model = new PieChartModel();
 		int aux1=0,aux2=0,aux3=0, aux4=0,aux5=0,aux6=0;
 		if (this.positions.size()>=1){
-			for(IPosition c:this.positions)
-				if (c.getTechnicalArea().equals("SSPA"))
+			for(IPosition c:this.positions){
+				if (c.getTechnicalArea().toString().equals("SSPA"))
 					aux1++;
-				else if (c.getTechnicalArea().equals("NET_DEVELOPMENT"))
+				else if (c.getTechnicalArea().toString().equals("Net Development"))
 					aux2++;
-				else if (c.getTechnicalArea().equals("JAVA_DEVELOPMENT"))
+				else if (c.getTechnicalArea().toString().equals("Java Development"))
 					aux3++;
-				else if (c.getTechnicalArea().equals("SAFETY_CRITICAL"))
+				else if (c.getTechnicalArea().toString().equals("Safety Critical"))
 					aux4++;
-				else if (c.getTechnicalArea().equals("PROJECT_MANAGEMENT"))
+				else if (c.getTechnicalArea().toString().equals("Project Management"))
 					aux5++;
-				else if (c.getTechnicalArea().equals("Integration"))
+				else if (c.getTechnicalArea().toString().equals("Integration"))
 					aux6++;
-
+				logger.info("area tecnica" +c.getTechnicalArea()+ " au3" +aux3);
+			}
 
 		}
 		else{
-			aux1=10;aux2=20;
-			aux3=70;aux4=10;aux5=20;
-			aux6=70;
+			aux1=0;aux2=0;
+			aux3=0;aux4=0;aux5=0;
+			aux6=0;
 		}
 		model.set("SSPA",aux1);
 		model.set("Integration",aux6);
-		model.set("PROJECT_MANAGEMENT",aux5);
-		model.set("SAFETY_CRITICAL", aux4);
+		model.set("Project Management",aux5);
+		model.set("Safety Critica", aux4);
 		model.set("JAVA_DEVELOPMENT", aux3);
 		model.set("NET_DEVELOPMENT",aux2);
 

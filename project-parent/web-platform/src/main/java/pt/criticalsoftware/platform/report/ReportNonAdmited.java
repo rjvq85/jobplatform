@@ -271,18 +271,18 @@ public class ReportNonAdmited implements Serializable {
 		int aux1=0,aux2=0,aux3=0,aux4=0;
 		if (this.candidacies.size()>=1){
 			for(ICandidacy c:this.candidacies)
-				if(c.getRejectionReason().equals("PROFILE"))
+				if(c.getRejectionReason().toString().equals("PROFILE"))
 					aux1++;
-				else if(c.getRejectionReason().equals("UNAVAILABILITY"))
+				else if(c.getRejectionReason().toString().equals("UNAVAILABILITY"))
 					aux2++;
-				else if(c.getRejectionReason().equals("INTERVIEW"))
+				else if(c.getRejectionReason().toString().equals("INTERVIEW"))
 					aux3++;
-				else if(c.getRejectionReason().equals("OTHER"))
+				else if(c.getRejectionReason().toString().equals("OTHER"))
 					aux4++;
 		}
 		else{
-			aux1=30;aux2=20;
-			aux3=70;aux4=40;
+			aux1=0;aux2=0;
+			aux3=0;aux4=0;
 		}
 		series.set("Não se enquadra",aux1);
 		series.set("Sem disponibilidade",aux2);

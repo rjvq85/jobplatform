@@ -44,7 +44,7 @@
 										<p:resetInput target=":spontform"></p:resetInput>
 									</h:commandLink></li>
 								<!-- Account edit -->
-								<li style="margin-top: 2.5%;"><p:commandButton
+								<li style="margin-top: 5%;"><p:commandButton
 										id="dropbutton" value="#{jobs.countName}" type="button"
 										icon="ui-icon-person"
 										style="color:white !important;background-color:firebrick !important; border-radius:0 !important;"
@@ -89,12 +89,12 @@
 									</p:submenu>
 								</p:menu>
 
-								<li style="margin-top: 2.5%;"><p:commandButton
+								<li style="margin-top: 5%;"><p:commandButton
 										value="Logout" icon="ui-icon-power"
 										action="#{loginPublic.logout()}" ajax="false"
 										style="color:white !important;background-color:firebrick !important; border-radius:0 !important;"
 										rendered="#{userIsLogged}" /></li>
-								<li style="margin-top: 2.5%;"><p:commandButton
+								<li style="margin-top: 5%;"><p:commandButton
 										value="Login" icon="ui-icon-power" action="#"
 										style="color:white !important;background-color:firebrick !important; border-radius:0 !important;"
 										rendered="#{not userIsLogged}"
@@ -164,11 +164,13 @@
 								<p:dialog header="As Minhas Candidaturas"
 									widgetVar="viewCandidacies" showEffect="explode"
 									hideEffect="explode" id="formEditPass" resizable="false"
-									modal="true" closeOnEscape="true">
+									modal="true" closeOnEscape="true" styleClass="left:inherit;width:80%;">
 									<p:dataTable id="tbl" var="candidacie"
 										value="#{jobs.candidacies}" paginator="true"
 										paginatorPosition="bottom" rows="12"
-										style="margin-bottom:20px">
+										style="margin-bottom:20px;"
+										styleClass="text-center"
+										tableStyleClass="table-condensed newlabeled">
 
 										<p:column headerText="Data Candidatura">
 											<h:outputText value="#{candidacie.date}" />

@@ -47,6 +47,16 @@
    ID="rules:#Authorized#Positions#acceptedcandidacies.xhtml:1"
    NAME="item1" PATH="/Authorized/Positions/acceptedcandidacies.xhtml" model-entity="JSFProcessItem">
    <PROCESS-ITEM-OUTPUT
+    ID="positionclosedwoutcandidacies::#Authorized#Positions#positionListAdminMain.xhtml"
+    NAME="output"
+    PATH="/Authorized/Positions/positionListAdminMain.xhtml"
+    TARGET="rules:#Authorized#Positions#positionListAdminMain.xhtml"
+    TITLE="positionclosedwoutcandidacies" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+  <PROCESS-ITEM
+   ID="rules:#Authorized#Positions#acceptedcandidacies.xhtml:2"
+   NAME="item2" PATH="/Authorized/Positions/acceptedcandidacies.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
     ID="cancel::#Authorized#Positions#positionListAdminMain.xhtml"
     NAME="output"
     PATH="/Authorized/Positions/positionListAdminMain.xhtml"

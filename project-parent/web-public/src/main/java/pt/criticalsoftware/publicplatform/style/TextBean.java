@@ -11,7 +11,7 @@ import java.util.List;
 
 @Named
 @SessionScoped
-public class TextBeanPublic implements Serializable  {
+public class TextBean implements Serializable  {
 
 	private static final long serialVersionUID = 2898167443420554892L;
 
@@ -24,7 +24,7 @@ public class TextBeanPublic implements Serializable  {
 	private String logoName;
 
 
-	public TextBeanPublic() {
+	public TextBean() {
 		texts=new ArrayList <String>();
 		textsComplete=new ArrayList <String>();
 		//		textsComplete=business.getTextsComplete();

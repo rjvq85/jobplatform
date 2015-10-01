@@ -47,7 +47,7 @@
 								<li style="margin-top: 2.5%;"><p:commandButton
 										id="dropbutton" value="#{jobs.countName}" type="button"
 										icon="ui-icon-person"
-										style="color:white !important;background-color:firebrick !important; border-radius:0 !important; margin-top:10%;"
+										style="color:white !important;background-color:firebrick !important; border-radius:0 !important;"
 										rendered="#{userIsLogged}" /></li>
 								<p:menu overlay="true" trigger="dropbutton" my="right top"
 									at="right bottom">
@@ -91,7 +91,7 @@
 
 								<li style="margin-top:2.5%;"><p:commandButton value="Logout" icon="ui-icon-power"
 										action="#{loginPublic.logout()}" ajax="false" 
-										style="color:white !important;background-color:firebrick !important; border-radius:0 !important; margin-top:10%; margin-left: 15%;"
+										style="color:white !important;background-color:firebrick !important; border-radius:0 !important;"
 										rendered="#{userIsLogged}" /></li>
 								<li style="margin-top: 2.5%;"><p:commandButton
 										value="Login" icon="ui-icon-power" action="#"

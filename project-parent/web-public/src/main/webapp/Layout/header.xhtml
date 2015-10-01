@@ -44,7 +44,7 @@
 										<p:resetInput target=":spontform"></p:resetInput>
 									</h:commandLink></li>
 								<!-- Account edit -->
-								<li style="margin-top: 2.5%;"><p:commandButton
+								<li style="margin-top: 5%;"><p:commandButton
 										id="dropbutton" value="#{jobs.countName}" type="button"
 										icon="ui-icon-person"
 										style="color:white !important;background-color:firebrick !important; border-radius:0 !important;"
@@ -89,11 +89,12 @@
 									</p:submenu>
 								</p:menu>
 
-								<li style="margin-top:2.5%;"><p:commandButton value="Logout" icon="ui-icon-power"
-										action="#{loginPublic.logout()}" ajax="false" 
+								<li style="margin-top: 5%;"><p:commandButton
+										value="Logout" icon="ui-icon-power"
+										action="#{loginPublic.logout()}" ajax="false"
 										style="color:white !important;background-color:firebrick !important; border-radius:0 !important;"
 										rendered="#{userIsLogged}" /></li>
-								<li style="margin-top: 2.5%;"><p:commandButton
+								<li style="margin-top: 5%;"><p:commandButton
 										value="Login" icon="ui-icon-power" action="#"
 										style="color:white !important;background-color:firebrick !important; border-radius:0 !important;"
 										rendered="#{not userIsLogged}"
@@ -159,32 +160,49 @@
 						</h:form>
 						<!--Candidacies List -->
 						<h:form id="for-cand">
-							<p:dialog header="As Minhas Candidaturas"
-								widgetVar="viewCandidacies" showEffect="explode"
-								hideEffect="explode" id="formEditPass" resizable="false"
-								modal="true" closeOnEscape="true">
-								<p:dataTable id="tbl" var="candidacie"
-									value="#{jobs.candidacies}" paginator="true"
-									paginatorPosition="bottom" rows="12" style="margin-bottom:20px">
+							<h:panelGroup layout="block" styleClass="container">
+								<p:dialog header="As Minhas Candidaturas"
+									widgetVar="viewCandidacies" showEffect="explode"
+									hideEffect="explode" id="formEditPass" resizable="false"
+									modal="true" closeOnEscape="true" styleClass="left:inherit;width:80%;">
+									<p:dataTable id="tbl" var="candidacie"
+										value="#{jobs.candidacies}" paginator="true"
+										paginatorPosition="bottom" rows="12"
+										style="margin-bottom:20px;"
+										styleClass="text-center"
+										tableStyleClass="table-condensed newlabeled">
 
-									<p:column headerText="Data Candidatura">
-										<h:outputText value="#{candidacie.date}" />
-									</p:column>
-									<p:column headerText="Área da Posição">
-										<h:outputText
-											value="#{candidacie.positionCandidacy.technicalArea.toString()}" />
-									</p:column>
-									<p:column headerText="Local">
-										<h:outputText value="#{candidacie.positionCandidacy.locale}" />
-									</p:column>
-									<p:column headerText="Estado da Candidatura">
-										<h:outputText value="#{candidacie.state}" />
-									</p:column>
-								</p:dataTable>
-								<p:button value="Sair"
-									onclick="PF('viewCandidacies').hide(); return false;" />
-
-							</p:dialog>
+										<p:column headerText="Data Candidatura">
+											<h:outputText value="#{candidacie.date}" />
+										</p:column>
+										<p:column headerText="Posição">
+											<h:outputText
+												value="#{candidacie.positionCandidacy.reference}"
+												rendered="#{not empty candidacie.positionCandidacy.reference}" />
+											<h:outputText value="Candidatura Espontânea"
+												rendered="#{empty candidacie.positionCandidacy.reference}" />
+										</p:column>
+										<p:column headerText="Área da Posição">
+											<h:outputText
+												value="#{candidacie.positionCandidacy.technicalArea.toString()}"
+												rendered="#{not empty candidacie.positionCandidacy.reference}" />
+											<h:outputText value="N/A"
+												rendered="#{empty candidacie.positionCandidacy.reference}" />
+										</p:column>
+										<p:column headerText="Local">
+											<h:outputText value="#{candidacie.positionCandidacy.locale}"
+												rendered="#{not empty candidacie.positionCandidacy.reference}" />
+											<h:outputText value="N/A"
+												rendered="#{empty candidacie.positionCandidacy.reference}" />
+										</p:column>
+										<p:column headerText="Estado da Candidatura">
+											<h:outputText value="#{candidacie.state}" />
+										</p:column>
+									</p:dataTable>
+									<p:button value="Sair"
+										onclick="PF('viewCandidacies').hide(); return false;" />
+								</p:dialog>
+							</h:panelGroup>
 						</h:form>
 						<!-- Delete account -->
 						<h:form id="form-delete">

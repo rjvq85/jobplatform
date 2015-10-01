@@ -39,7 +39,8 @@ import pt.criticalsoftware.service.persistence.utils.LocalDatePersistenceConvert
 		@NamedQuery(name = "Candidacy.searchNonAdmitedCandidaciesByDatePeriod", query = "SELECT c FROM CandidacyEntity c WHERE c.date >= :initDate AND c.date <= :finalDate"),
 		@NamedQuery(name = "Candidacy.manager", query = "SELECT c FROM CandidacyEntity c WHERE c.positionCandidacy.responsable.id = :param"),
 		@NamedQuery(name = "Candidacy.interviews", query = "SELECT elements(c.interviews) FROM CandidacyEntity as c WHERE c.id = :param"),
-		@NamedQuery(name = "Candidacy.spontaneousByCandidate", query = "SELECT COUNT(c) FROM CandidacyEntity c WHERE c.positionCandidacy = NULL AND c.candidate.id = :param") })
+		@NamedQuery(name = "Candidacy.spontaneousByCandidate", query = "SELECT COUNT(c) FROM CandidacyEntity c WHERE c.positionCandidacy = NULL AND c.candidate.id = :param"),
+		@NamedQuery(name = "Candidacy.byCandidate", query = "SELECT c FROM CandidacyEntity c WHERE c.candidate.id = :param")})
 
 public class CandidacyEntity {
 

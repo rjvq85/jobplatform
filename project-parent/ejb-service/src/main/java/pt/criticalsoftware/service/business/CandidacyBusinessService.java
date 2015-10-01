@@ -142,4 +142,9 @@ public class CandidacyBusinessService implements ICandidacyBusinessService {
 		return persistence.newSpontaneousCandidacy(icandidacy);
 	}
 
+	@Override
+	public List<ICandidacy> getCandidaciesByCandidate(Integer candidateId) {
+		return persistence.getCandidaciesByCandidate(candidateId);
+	}
+
 }

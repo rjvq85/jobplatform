@@ -280,4 +280,17 @@ public class CandidacyPersistenceService implements ICandidacyPersistenceService
 		return query.getSingleResult();
 	}
 
+	@Override
+	public List<ICandidacy> getCandidaciesByCandidate(Integer candidateId) {
+		TypedQuery<CandidacyEntity> query = em.createNamedQuery("Candidacy.byCandidate", CandidacyEntity.class)
+				.setParameter("param", candidateId);
+		List<CandidacyEntity> entities = query.getResultList();
+		if (entities.size() > 0) {
+			List<ICandidacy> candidacies = new ArrayList<>();
+			entities.stream().forEach(entity -> candidacies.add(new CandidacyProxy(entity)));
+			return candidacies;
+		}
+		return null;
+	}
+
 }

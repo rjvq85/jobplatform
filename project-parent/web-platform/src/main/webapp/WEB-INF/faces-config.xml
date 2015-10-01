@@ -68,6 +68,14 @@
 		</navigation-case>
 	</navigation-rule>
 	<navigation-rule>
+		<from-view-id>/Authorized/Positions/positionListManagerMain.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>viewposition</from-outcome>
+			<to-view-id>/Authorized/Positions/acceptedcandidacies.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
 		<from-view-id>/Authorized/Positions/rejectedreasons.xhtml</from-view-id>
 		<navigation-case>
 			<from-outcome>savedreasons</from-outcome>
@@ -77,6 +85,14 @@
 	</navigation-rule>
 	<navigation-rule>
 		<from-view-id>/Authorized/Positions/positionListAdminMain.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>viewclosedposition</from-outcome>
+			<to-view-id>/Authorized/Positions/closedposition.xhtml</to-view-id>
+			<redirect/>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/Authorized/Positions/positionListManagerMain.xhtml</from-view-id>
 		<navigation-case>
 			<from-outcome>viewclosedposition</from-outcome>
 			<to-view-id>/Authorized/Positions/closedposition.xhtml</to-view-id>

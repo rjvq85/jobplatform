@@ -51,4 +51,6 @@ public interface ICandidacyBusinessService {
 	Long getSpontaneousCandidacyByCandidate(Integer id);
 
 	ICandidacy createSpontaneousCandidacy(ICandidacy icandidacy);
+
+	List<ICandidacy> getCandidaciesByCandidate(Integer candidateId);
 }

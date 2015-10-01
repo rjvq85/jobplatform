@@ -24,9 +24,7 @@ import pt.criticalsoftware.service.sources.CandidacySource;
 @Named
 @SessionScoped
 public class AssignCandidacy implements Serializable {
-	
-	
-	
+
 	/**
 	 * 
 	 */
@@ -37,7 +35,7 @@ public class AssignCandidacy implements Serializable {
 	private String letter;
 	private CandidacySource source;
 	private String selectedPosition;
-	
+
 	@EJB
 	private ICandidacyBuilder candBuilder;
 	@EJB
@@ -48,16 +46,11 @@ public class AssignCandidacy implements Serializable {
 	private IPositionBusinessService posBness;
 	@EJB
 	private IMailSender mailSender;
-	
+
 	public String assignCandidacy() {
 		defineCandidate(username);
-		ICandidacy candidacy = candBuilder
-				.candidate(candidate)
-				.motivationalLetter(letter)
-				.position(position)
-				.source(source.getDescription())
-				.state(CandidacyState.SUBMETIDA)
-				.build();
+		ICandidacy candidacy = candBuilder.candidate(candidate).motivationalLetter(letter).position(position)
+				.source(source.getDescription()).state(CandidacyState.SUBMETIDA).build();
 		try {
 			ICandidacy assignedCandidacy = business.assignCandidacy(candidacy);
 			mailSender.sendEmail(assignedCandidacy, assignedCandidacy.getPositionCandidacy().getResponsable(), 1);
@@ -67,13 +60,12 @@ public class AssignCandidacy implements Serializable {
 			clear();
 		} catch (UniqueConstraintException e) {
 			// log
-			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(),
-					"");
+			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), "");
 			FacesContext.getCurrentInstance().addMessage(null, message);
 		}
 		return null;
 	}
-	
+
 	private void clear() {
 		position = null;
 		candidate = null;
@@ -82,7 +74,7 @@ public class AssignCandidacy implements Serializable {
 		source = null;
 		selectedPosition = null;
 	}
-	
+
 	private void defineCandidate(String username) {
 		candidate = candidateBness.getCandidateByUsername(username);
 	}
@@ -118,11 +110,11 @@ public class AssignCandidacy implements Serializable {
 	public void setSource(CandidacySource source) {
 		this.source = source;
 	}
-	
+
 	public CandidacySource[] getAllSources() {
 		return CandidacySource.values();
 	}
-	
+
 	private void setPosition(String position) {
 		List<IPosition> availablePositions = posBness.getAllPositions();
 		if (position.equals("none"))
@@ -135,7 +127,6 @@ public class AssignCandidacy implements Serializable {
 			}
 		}
 	}
-	
 
 	public void setSelectedPosition(String selectedPosition) {
 		this.selectedPosition = selectedPosition;
@@ -145,10 +136,18 @@ public class AssignCandidacy implements Serializable {
 	public String getSelectedPosition() {
 		return selectedPosition;
 	}
-	
+
 	public String newAssignment(String username) {
 		this.username = username;
 		return "assigncandidacy?face-redirect=true";
 	}
-	
+
+	public List<IPosition> getAvailablePositions() {
+		if (null != username) {
+			Integer candidateId = candidateBness.getCandidateByUsername(username).getId();
+			return posBness.getNotAssignedPositions(candidateId);
+		}
+		return null;
+	}
+
 }

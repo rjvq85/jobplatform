@@ -43,7 +43,8 @@ import pt.criticalsoftware.service.persistence.utils.LocalDatePersistenceConvert
 		@NamedQuery(name = "Position.excludingCandidacy", query = "SELECT p FROM PositionEntity p JOIN p.candidacy c WHERE c.candidate.username NOT like :param"),
 		@NamedQuery(name = "Position.getPositionByManager", query = "SELECT p FROM PositionEntity p WHERE p.responsable.id = :param"),
 		@NamedQuery(name = "Position.getLastPositions", query = "SELECT u FROM PositionEntity u ORDER BY u.openDate DESC"),
-		@NamedQuery(name = "Position.getAllOpen", query = "SELECT p FROM PositionEntity p WHERE state LIKE 'ABERTA'")})
+		@NamedQuery(name = "Position.getAllOpen", query = "SELECT p FROM PositionEntity p WHERE state LIKE 'ABERTA'"),
+		@NamedQuery(name = "Position.getUnassigned", query = "SELECT p FROM PositionEntity p WHERE p NOT IN(SELECT c.positionCandidacy FROM CandidacyEntity c WHERE c.candidate.id = :param)") })
 public class PositionEntity {
 
 	@Id
@@ -99,10 +100,10 @@ public class PositionEntity {
 
 	@OneToMany(mappedBy = "positionCandidacy", fetch = FetchType.EAGER)
 	private Collection<CandidacyEntity> candidacy;
-	
+
 	@OneToMany(fetch = FetchType.EAGER)
 	private Collection<CandidacyEntity> acceptedCandidacies;
-	
+
 	@Convert(converter = LocalDatePersistenceConverter.class)
 	@Column(name = "data_contratacao")
 	private LocalDate firstHire;
@@ -274,7 +275,5 @@ public class PositionEntity {
 			return false;
 		return true;
 	}
-
-
 
 }

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Candidatos Não admitidos</title>
+
+</h:head>
+
+<h:body>
+
+	<h:form>
+		<p:messages id="messages" autoUpdate="true" closable="true" />
+
+		<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+
+			<p:outputLabel for="data" value="Visualizar dados:" />
+			<p:selectOneRadio id="data" value="#{reportNonAdmited.dataType}">
+				<f:selectItem itemLabel="Por Posição" itemValue="position" />
+				<f:selectItem itemLabel="Todos" itemValue="all" />
+				<p:ajax listener="#{reportNonAdmited.onChange}" update="posPanel" />
+			</p:selectOneRadio>
+		</h:panelGrid>
+		<p:panel id="posPanel">
+			<p:outputLabel for="posit" value="Posição: " />
+			<p:selectOneMenu id="posit"
+				disabled="#{reportNonAdmited.posSelect==null}"
+				value="#{reportNonAdmited.positionRef}">
+				<f:selectItems value="#{reportNonAdmited.positionsRef}" />
+			</p:selectOneMenu>
+		</p:panel>
+
+		<h4>Seleccionar o período de tempo</h4>
+		<h:outputLabel value="De   " />
+		<p:calendar value="#{reportNonAdmited.initDate}" locale="de"
+			navigator="true" pattern="dd-MMM-yyyy" />
+		<h:outputLabel value="   a   " />
+		<p:calendar value="#{reportNonAdmited.finalDate}" locale="de"
+			navigator="true" pattern="dd-MMM-yyyy" />
+		<br />
+		<br />
+		<br />
+		<br />
+		<p:commandButton value="Visualizar Dados" type="submit"
+			style="margin-left:10px;margin-top:15px;"
+			action="#{reportNonAdmited.create()}" icon="ui-icon-document" />
+	</h:form>
+</h:body>
+</html>

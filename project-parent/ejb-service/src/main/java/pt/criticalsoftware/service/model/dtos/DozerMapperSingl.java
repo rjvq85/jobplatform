@@ -39,6 +39,12 @@ public class DozerMapperSingl {
 
 	@PostConstruct
 	void mapping() {
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		IUser admin = builder.email("ricardojvquirino@gmail.com").firstName("Administrador").lastName("do Sistema")
 				.password("123456").role(Role.ADMIN).username("ricardo").build();
 		persistence.create(admin);

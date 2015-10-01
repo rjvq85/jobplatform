@@ -43,4 +43,6 @@ public interface IPositionPersistenceService {
 
 	List<IPosition> getAllOpenPositions();
 
+	List<IPosition> getUnassignedPositionsToCandidate(Integer candidateId);
+
 }

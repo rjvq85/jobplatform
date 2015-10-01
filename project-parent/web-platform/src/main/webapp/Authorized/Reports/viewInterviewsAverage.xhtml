@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</h:head>
+<h:body>
+	<h:form>
+
+		<p:dataTable id="tbl" var="candidacie"
+			value="#{reportInterviewAverage.candidacies}" paginator="true"
+			paginatorPosition="bottom" rows="12" style="margin-bottom:20px">
+
+			<f:facet name="header">
+				<h:outputText value="Candidaturas efectuadas " />
+				<h:outputText value="de " />
+				<h:outputText value="#{reportInterviewAverage.initDate}">
+					<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+				</h:outputText>
+				<h:outputText value=" a " />
+				<h:outputText value="#{reportInterviewAverage.finalDate}">
+					<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+				</h:outputText>
+			</f:facet>
+
+			<p:column headerText="Referência">
+				<h:outputText value="#{candidacie.reference}" />
+			</p:column>
+			<p:column headerText="Área técnica">
+				<h:outputText value="#{candidacie.positionCandidacy.technicalArea}" />
+			</p:column>
+			<p:column headerText="Data da Candidatura">
+				<h:outputText value="#{candidacie.date}" />
+			</p:column>
+
+			<p:column headerText="Data da Primeira Entrevista">
+				<h:outputText value="#{candidacie.interviews.get(0).date}" />
+			</p:column>
+
+			<f:facet name="footer">
+				<h:outputText
+					value="O tempo médio para a primeira entrevista é de: " />
+				<h:outputText value="#{reportInterviewAverage.averageTime}" />
+				<h:outputText value=" dias." />
+			</f:facet>
+
+		</p:dataTable>
+
+		<p:spacer height="10" />
+		<div>
+			<h:commandLink id="pdf">
+				<p:graphicImage name="/imgs/pdf_icon.gif" with="32" height="32" />
+
+				<pe:exporter type="pdf" target="tbl" encoding="UTF-8"
+					fileName="RelatorioTempoMedioEntrevistas"
+					preProcessor="#{reportInterviewAverage.preProcessPDF}"
+					tableTitle="Relatorio Tempo Medio Primeira Entrevista"
+					orientation="Portrait " facetBackground="#A50D12"
+					facetFontSize="14" facetFontColor="#FFFFFF" facetFontStyle="BOLD"
+					cellFontColor="#303030" cellFontSize="12" cellFontStyle="NORMAL" 
+					postProcessor="#{reportInterviewAverage.postProcessPDF}" />
+			</h:commandLink>
+			<p:commandButton value="Enviar relatório por mail"
+				style="margin-left: 20px; margin-top:0px;float:right;"
+				icon="ui-icon-extlink" action="#{reportInterviewAverage.submitByMail()}" />
+		</div>
+	</h:form>
+</h:body>
+</html>

@@ -372,3 +372,7 @@ td > label {
 	margin-right: auto !important;
 	top: 100px !important;
 }
+
+body#bodyreport .ui-dialog {
+	margin-top: 75px !important;
+}

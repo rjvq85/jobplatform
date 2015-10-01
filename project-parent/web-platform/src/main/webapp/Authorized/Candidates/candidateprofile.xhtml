@@ -71,7 +71,7 @@
 							<h4>Morada:</h4>
 							<address>
 								<strong><h:outputText
-										value="#{candidateProfile.candidate.address}" /></strong>
+										value="#{candidateProfile.candidate.address}" /></strong><br />
 								<h:outputText value="#{candidateProfile.candidate.town}" />
 								,
 								<h:outputText value="#{candidateProfile.candidate.country}" />
@@ -90,26 +90,27 @@
 						</h:panelGroup>
 						<h:link outcome="candidateinterv.xhtml" includeViewParams="true"
 							value="Entrevistas Anteriores" />
-						
-						
+
+
 					</h:panelGroup>
 
 					<hr />
-					<h:panelGroup layout="block" styleClass="row thumbnail"
+					<h:panelGroup layout="block" styleClass="row"
 						rendered="#{not empty candidateProfile.candidate.linkedInHeadline}">
-						<h:panelGroup layout="block" styleClass="col-md-12">
-							<h3 class="text-center">LinkedIn</h3>
-							<br />
-							<h:outputLink value="#{candidateProfile.candidate.linkedInUrl}">Link</h:outputLink> do Perfil 'LinkedIn'
-							<br />
-							<strong>Headline</strong>: <h:outputText
-								value="#{candidateProfile.candidate.linkedInHeadline}" />
-							<br />
-							<strong>Summary</strong>: <h:outputText
-								value="#{candidateProfile.candidate.linkedInSummary}" />
-							<br />
-							<strong>Número de ligações</strong>: <h:outputText
-								value="#{candidateProfile.candidate.linkedInConnections}" />
+						<h:panelGroup layout="block" styleClass="col-md-4">
+							<h:panelGroup layout="block" styleClass="list-group">
+								<li class="list-group-item active"><h3 class="list-group-item-heading text-center">LinkedIn</h3></li>
+								<li class="list-group-item"><h:outputLink
+										value="#{candidateProfile.candidate.linkedInUrl}">Link</h:outputLink>
+									do Perfil 'LinkedIn'</li>
+								<li class="list-group-item"><strong>Headline</strong>: <h:outputText
+										value="#{candidateProfile.candidate.linkedInHeadline}" /></li>
+								<li class="list-group-item"><strong>Summary</strong>: <h:outputText
+										value="#{candidateProfile.candidate.linkedInSummary}" /></li>
+								<li class="list-group-item"><strong>Número de
+										ligações</strong>: <h:outputText
+										value="#{candidateProfile.candidate.linkedInConnections}" /></li>
+							</h:panelGroup>
 						</h:panelGroup>
 					</h:panelGroup>
 				</h:panelGroup>

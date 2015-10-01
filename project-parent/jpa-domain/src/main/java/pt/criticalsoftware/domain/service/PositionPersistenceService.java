@@ -127,8 +127,8 @@ public class PositionPersistenceService implements IPositionPersistenceService {
 		else if (positionWord.equals("Título"))
 			query = em.createNamedQuery("Position.getPositionsByTitle", PositionEntity.class).setParameter("title",
 					searchCode);
-		else if (positionWord.equals("Localizacao")){
-			String locale="";
+		else if (positionWord.equals("Localizacao")) {
+			String locale = "";
 			if (searchCode.equalsIgnoreCase("Porto"))
 				locale = "Porto";
 			else if (searchCode.equalsIgnoreCase("Coimbra"))
@@ -137,8 +137,7 @@ public class PositionPersistenceService implements IPositionPersistenceService {
 				locale = "Lisboa";
 			query = em.createNamedQuery("Position.getPositionsByLocale", PositionEntity.class).setParameter("locale",
 					locale);
-	}
-		else if (positionWord.equals("Estado")) {
+		} else if (positionWord.equals("Estado")) {
 			PositionState state = null;
 			if (searchCode.equalsIgnoreCase("aberta"))
 				state = PositionState.ABERTA;
@@ -332,12 +331,11 @@ public class PositionPersistenceService implements IPositionPersistenceService {
 		return proxies;
 
 	}
-	
-	public List<IPosition> getPositionsByOpenDateByPeriod(LocalDate dateInit,LocalDate dateFinal) {
+
+	public List<IPosition> getPositionsByOpenDateByPeriod(LocalDate dateInit, LocalDate dateFinal) {
 		TypedQuery<PositionEntity> query = null;
 		query = em.createNamedQuery("Position.getPositionsByOpenDateByPeriod", PositionEntity.class)
-				.setParameter("dateInit",dateInit)
-				.setParameter("dateFinal",dateFinal);
+				.setParameter("dateInit", dateInit).setParameter("dateFinal", dateFinal);
 
 		List<PositionEntity> entities = query.getResultList();
 		List<IPosition> proxies = new ArrayList<>();
@@ -459,10 +457,23 @@ public class PositionPersistenceService implements IPositionPersistenceService {
 
 	@Override
 	public List<IPosition> getAllOpenPositions() {
-		TypedQuery<PositionEntity> query = em.createNamedQuery("Position.getAllOpen",PositionEntity.class);
+		TypedQuery<PositionEntity> query = em.createNamedQuery("Position.getAllOpen", PositionEntity.class);
 		List<PositionEntity> entities = query.getResultList();
 		List<IPosition> positions = new ArrayList<>();
 		entities.stream().forEach(entity -> positions.add(new PositionProxy(entity)));
 		return positions;
+	}
+
+	@Override
+	public List<IPosition> getUnassignedPositionsToCandidate(Integer candidateId) {
+		TypedQuery<PositionEntity> query = em.createNamedQuery("Position.getUnassigned", PositionEntity.class)
+				.setParameter("param", candidateId);
+		List<PositionEntity> entities = query.getResultList();
+		if (entities.size() > 0) {
+			List<IPosition> positions = new ArrayList<>();
+			entities.stream().forEach(entity -> positions.add(new PositionProxy(entity)));
+			return positions;
+		}
+		return null;
 	}
 }

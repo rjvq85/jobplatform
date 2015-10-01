@@ -88,10 +88,23 @@
 							Grau académico: <h:outputText
 								value="#{candidateProfile.candidate.degree}" />
 						</h:panelGroup>
-						<h:link outcome="candidateinterv.xhtml" includeViewParams="true"
-							value="Entrevistas Anteriores" />
-
-
+						<h:panelGroup layout="block" styleClass="row">
+							<h:panelGroup layout="block" styleClass="col-md-6">
+								<h:link outcome="candidateinterv.xhtml" includeViewParams="true"
+									value="Entrevistas Anteriores" />
+							</h:panelGroup>
+						</h:panelGroup>
+						<h:panelGroup layout="block" styleClass="row">
+							<h:panelGroup layout="block" styleClass="col-md-6">
+								<h:form>
+									<p:commandButton value="Download CV"
+										onclick="PrimeFaces.monitorDownload(start, stop);"
+										icon="ui-icon-arrowthick-1-s" process="@this" update="@none">
+										<p:fileDownload value="#{candidateProfile.file}" />
+									</p:commandButton>
+								</h:form>
+							</h:panelGroup>
+						</h:panelGroup>
 					</h:panelGroup>
 
 					<hr />
@@ -99,7 +112,8 @@
 						rendered="#{not empty candidateProfile.candidate.linkedInHeadline}">
 						<h:panelGroup layout="block" styleClass="col-md-4">
 							<h:panelGroup layout="block" styleClass="list-group">
-								<li class="list-group-item active"><h3 class="list-group-item-heading text-center">LinkedIn</h3></li>
+								<li class="list-group-item active"><h3
+										class="list-group-item-heading text-center">LinkedIn</h3></li>
 								<li class="list-group-item"><h:outputLink
 										value="#{candidateProfile.candidate.linkedInUrl}">Link</h:outputLink>
 									do Perfil 'LinkedIn'</li>
@@ -123,6 +137,15 @@
 					</h:panelGroup>
 				</h:panelGroup>
 			</h:panelGroup>
+			<script type="text/javascript">
+function start() {
+    PF('statusDialog').show();
+}
+ 
+function stop() {
+    PF('statusDialog').hide();
+}
+</script>
 		</ui:define>
 	</ui:composition>
 </h:body>

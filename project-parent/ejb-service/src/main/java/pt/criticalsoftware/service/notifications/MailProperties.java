@@ -98,5 +98,15 @@ public class MailProperties {
 		return this;
 	}
 	
+	public String getPassword(String password) {
+		String decryptedPassword = "";
+		try {
+			decryptedPassword = new PasswordSecurity().decrypt(password);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return decryptedPassword;
+	}
+	
 	
 }

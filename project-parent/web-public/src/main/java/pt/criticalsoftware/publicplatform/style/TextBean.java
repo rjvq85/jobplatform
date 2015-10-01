@@ -14,7 +14,7 @@ import java.util.List;
 public class TextBean implements Serializable  {
 
 	private static final long serialVersionUID = 2898167443420554892L;
-	
+
 	@EJB
 	IStyleBusinessService business;
 
@@ -22,28 +22,31 @@ public class TextBean implements Serializable  {
 	private List<String> texts;
 	private List<String> textsComplete;
 	private String logoName;
-	
+
 
 	public TextBean() {
 		texts=new ArrayList <String>();
 		textsComplete=new ArrayList <String>();
-//		textsComplete=business.getTextsComplete();
-//		texts=business.getTexts();
-//	
+		//		textsComplete=business.getTextsComplete();
+		//		texts=business.getTexts();
+		//	
 	}
-	
+
 	public String getSelectedText() {
-//		String tt=business.getSelectedText();
-//		int ind=0;
-//		int i;
-//		for(i=0; i<this.texts.size(); i++ )
-//			if (this.texts.get(i).equals(tt))
-//				ind=i;
-//		this.selectedText=this.textsComplete.get(ind);
-//		return	this.selectedText;
-		return business.getSelectedText();
+		String tt=business.getSelectedText();
+		if (tt==null)
+			tt="Fundada em 1998, A CRITICAL Software é especializada no desenvolvimento de soluções de "
+					+ "software e serviços de engenharia de informação, para o suporte de sistemas críticos orientados à "
+					+ "segurança, missão e ao negócio de empresas. Ajudamos os nossos clientes a assegurar que os seus processos críticos "
+					+ "de negócio são realizados de acordo com os mais exigentes padrões de qualidade no que respeita à segurança do "
+					+ "software, ao desempenho e à fiabilidade. "
+					+ "Os nossos produtos e serviços também fornecem aos clientes a informação necessária para a gestão eficiente e "
+					+ "segura dos seus ativos importantes, ajudando-os a alcançar um melhor desempenho nos negócios.";
+
+		return tt;
+		
 	}
-	
+
 	public void setSelectedText(String selectedText) {
 		this.selectedText = selectedText;
 	}
@@ -51,7 +54,7 @@ public class TextBean implements Serializable  {
 		logoName=business.getSelecteLogo();
 		if (logoName==null)
 			logoName="logocritical.png";
-		
+
 		return logoName;
 	}
 

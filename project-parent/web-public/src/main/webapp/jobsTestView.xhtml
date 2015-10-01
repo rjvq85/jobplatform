@@ -8,13 +8,15 @@
 	<ui:define name="content">
 
 		<div id="outBox">
-			<h:graphicImage styleClass="media-object media-maxheight fade-box"
+			
+			<p:panel id="ttPanel">
+		
+				<h:graphicImage styleClass="media-object media-maxheight fade-box"
 				library="imgs" name="#{textBeanPublic.logoName}" />
-			<p:panel>
 				<h:outputText value="#{textBeanPublic.selectedText}" />
 			</p:panel>
 
-			<p:panelGrid id="searchJobs" columns="2">
+			<p:panelGrid id="searchJobs" columns="1">
 				<h:form id="searchAreaAndLocale">
 					<div id="searchPanel">
 						<h3 style="text-transform: uppercase; text-align: left;">Pesquisar
@@ -48,25 +50,7 @@
 							action="#{jobs.search()}" />
 					</div>
 				</h:form>
-				<h:form id="candidady">
-					<div id="candidacyPanel">
-						<h3 style="text-transform: uppercase; text-align: left;">Candidaturas
-							Espontâneas</h3>
-						<br></br> <a class="bigbutton"
-							style="text-align: left; display: block;" href="showJobs.html">
-							<p>Na Critical acreditamos que as pessoas são o alicerce do
-								nosso sucesso pelo que pretendemos captar, reter e desenvolver
-								profissionais de excelência. A nossa Política de Gestão de RH
-								baseia-se no respeito pela dignidade, pela diversidade e
-								direitos de cada pessoa, tratando cada colaborador com justiça e
-								potenciando as oportunidades de desenvolvimento pessoal e
-								profissional, respeitando o equilíbrio entre a vida profissional
-								e a vida pessoal.</p>
-							<p>Se partilhas o nosso entusiasmo pelas novas tecnologias
-								junta-te a nós.</p>
-						</a>
-					</div>
-				</h:form>
+			
 			</p:panelGrid>
 			<br />
 			<h:form id="searchByRecentJobs">

@@ -9,6 +9,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import pt.criticalsoftware.domain.entities.CandidacyEntity;
 import pt.criticalsoftware.domain.entities.InterviewEntity;
 import pt.criticalsoftware.domain.proxies.CandidacyProxy;
@@ -25,6 +28,7 @@ import pt.criticalsoftware.service.persistence.states.CandidacyState;
 
 @Stateless
 public class CandidacyPersistenceService implements ICandidacyPersistenceService {
+	private final Logger logger = LoggerFactory.getLogger(CandidacyPersistenceService.class);
 
 	@PersistenceContext(unitName = "Jobs")
 	private EntityManager em;
@@ -206,12 +210,13 @@ public class CandidacyPersistenceService implements ICandidacyPersistenceService
 		List<ICandidacy> candidacies = new ArrayList<>();
 		TypedQuery<CandidacyEntity> query = em.createNamedQuery("Candidacy.searchBySpontaneousPeriodDate", CandidacyEntity.class)
 				.setParameter("initDate", initDate)
-				.setParameter("finalDate", finalDate).setParameter("null", null);
+				.setParameter("finalDate", finalDate);
 
 		List<CandidacyEntity> entities = query.getResultList();
 		for (CandidacyEntity c : entities) {
 			candidacies.add(new CandidacyProxy(c));
 		}
+		logger.info("Tamanho da lista" + candidacies.size());
 		return candidacies;
 	}
 

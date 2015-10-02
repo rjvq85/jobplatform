@@ -23,7 +23,7 @@ import javax.persistence.Table;
 		@NamedQuery(name = "ScriptEntity.verifyTitle", query = "select p from ScriptEntity p where p.title = :title "),
 		@NamedQuery(name = "ScriptEntity.getAllQuestionsById", query = "select p from ScriptEntity p where p.id =:id "),
 		@NamedQuery(name = "ScriptEntity.getScriptById", query = "select p from ScriptEntity p where p.id =:id "),
-		@NamedQuery(name = "ScriptEntity.findById", query = "select p from ScriptEntity p where p.id = :param ") })
+		@NamedQuery(name = "ScriptEntity.findById", query = "select p from ScriptEntity p where p.id = :param ")})
 
 public class ScriptEntity {
 

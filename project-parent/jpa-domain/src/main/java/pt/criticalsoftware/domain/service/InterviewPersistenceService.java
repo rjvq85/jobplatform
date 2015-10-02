@@ -221,6 +221,7 @@ public class InterviewPersistenceService implements IInterviewPersistenceService
 		for (IInterview interview : interviews) {
 			try {
 				InterviewEntity entity = getEntity(interview);
+				entity.setScript(null);
 				em.merge(entity);
 			} catch (IllegalStateException e) {
 				e.printStackTrace();

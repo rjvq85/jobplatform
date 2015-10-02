@@ -61,7 +61,7 @@ public class InterviewEntity {
 					@JoinColumn(name = "interview_id") }, inverseJoinColumns = { @JoinColumn(name = "interviewer_id") })
 	private List<UserEntity> interviewers;
 
-	@ManyToOne
+	@ManyToOne(optional = true)
 	private ScriptEntity script;
 
 	@ManyToOne(optional = false)

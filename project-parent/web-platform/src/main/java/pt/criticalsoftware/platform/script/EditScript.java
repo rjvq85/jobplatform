@@ -168,16 +168,24 @@ public class EditScript implements Serializable {
 	}
 
 	public void deleteScript() {
-		Boolean safeToDelete = true;
-		if (interviewBness.countInterviewsPerScript(editScript.getId()) > 0)
-			// Se estiver alguma entrevista em aberto NÃO pode eliminar, caso
-			// estejam todas realizadas, pode ser eliminado
-			safeToDelete = false;
+		Boolean safeToDelete = null;
+		List<IInterview> scriptInterviews = interviewBness.getByScript(editScript.getId());
+		if (scriptInterviews.size() > 0) {
+			for (IInterview intrv : scriptInterviews) {
+				if (intrv.getInterviewState().equals(InterviewState.SCHEDULED)) {
+					safeToDelete = false;
+					break;
+				}
+			}
+			if (null == safeToDelete)
+				safeToDelete = true;
+		} else
+			safeToDelete = true;
+		System.out.println("\n\n\nAPAGAR GUIAO: " + safeToDelete + "\n\n\n");
 		if (safeToDelete) {
-			List<IInterview> interviews = interviewBness.getByScript(editScript.getId());
-			if (null != interviews) {
-				interviews.stream().forEach(interview -> interview.setScript(null));
-				interviewBness.updateMultiple(interviews);
+			if (null != scriptInterviews) {
+				scriptInterviews.stream().forEach(interview -> interview.setScript(null));
+				interviewBness.updateMultiple(scriptInterviews);
 			}
 			editScript = scriptService.getScriptByID(editScript.getId());
 			scriptService.deleteScript(editScript);

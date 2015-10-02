@@ -65,8 +65,12 @@
 							<h:message for="email"
 								style="color: red !important; font-weight: 200 !important;" />
 							<h:inputText styleClass="form-control" id="email"
+								validatorMessage="Formato de email inválido"
 								value="#{newUser.email}" a:placeholder="E-mail" required="true"
-								requiredMessage="Campo obrigatório" />
+								requiredMessage="Campo obrigatório">
+								<f:validateRegex
+									pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+							</h:inputText>
 						</h:panelGroup>
 						<h:panelGroup layout="block" styleClass="col-md-4">
 							<h:message for="role"
@@ -106,7 +110,7 @@
 							<h:panelGroup layout="block" styleClass="col-md-12">
 								<h:messages id="editglobalmsgs" globalOnly="true"
 									warnClass="alert alert-danger" errorClass="alert alert-danger"
-									fatalClass="alert alert-danger" style="list-style-type: none;"/>
+									fatalClass="alert alert-danger" style="list-style-type: none;" />
 							</h:panelGroup>
 						</h:panelGroup>
 					</h:panelGroup>

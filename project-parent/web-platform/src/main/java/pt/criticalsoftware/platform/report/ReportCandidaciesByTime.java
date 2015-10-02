@@ -142,14 +142,12 @@ public class ReportCandidaciesByTime implements Serializable {
 		}
 		else {
 			this.candidacies=business.getCandidaciesByDatePeriod(dateInit,dateFinal);
-			logger.info("A tabela foi criada com tamanho" + candidacies.size());
-
 			return "viewCandidacies.xhtml?faces-redirect=true";
 		}
 	}
 
 	public String createSpontaneous(){
-		logger.info("data final no createSpont" + this.finalDate);
+	
 		LocalDate dateInit = this.initDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 		LocalDate dateFinal = this.finalDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 		logger.info("datas trabalhadas" +dateInit + dateFinal );

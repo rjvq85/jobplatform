@@ -33,7 +33,7 @@ import pt.criticalsoftware.service.persistence.utils.LocalDatePersistenceConvert
 		@NamedQuery(name = "Candidacy.uniqueConstraintViolation", query = "SELECT COUNT(c) FROM CandidacyEntity c WHERE c.candidate.id = :candidateId AND c.positionCandidacy.id = :positionId"),
 		@NamedQuery(name = "Candidacy.searchDate", query = "SELECT c FROM CandidacyEntity c WHERE c.date = :param"),
 		@NamedQuery(name = "Candidacy.searchByPeriodDate", query = "SELECT c FROM CandidacyEntity c WHERE c.date >= :initDate AND c.date <= :finalDate"),
-		@NamedQuery(name = "Candidacy.searchBySpontaneousPeriodDate", query = "SELECT c FROM CandidacyEntity c WHERE c.date >= :initDate AND c.date <= :finalDate AND c.positionCandidacy = :null"),
+		@NamedQuery(name = "Candidacy.searchBySpontaneousPeriodDate", query = "SELECT c FROM CandidacyEntity c WHERE c.date >= :initDate AND c.date <= :finalDate AND c.positionCandidacy = NULL"),
 		@NamedQuery(name = "Candidacy.searchByPosition", query = "SELECT c FROM CandidacyEntity c WHERE c.positionCandidacy.id = :positionID"),
 		@NamedQuery(name = "Candidacy.searchNonAdmitedCandidaciesByDatePeriodAndPosition", query = "SELECT c FROM CandidacyEntity c WHERE c.positionCandidacy.id = :positionID AND c.date >= :initDate AND c.date <= :finalDate"),
 		@NamedQuery(name = "Candidacy.searchNonAdmitedCandidaciesByDatePeriod", query = "SELECT c FROM CandidacyEntity c WHERE c.date >= :initDate AND c.date <= :finalDate"),

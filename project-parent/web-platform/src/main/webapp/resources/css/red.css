@@ -1,4 +1,8 @@
 .choose-theme {
-	background-color: #F7AD3B !important;
+	background-color: #770004 !important;
+}
+
+.choose-theme h2, .choose-theme h3, .choose-theme label {
+	color: white !important;
 }
 

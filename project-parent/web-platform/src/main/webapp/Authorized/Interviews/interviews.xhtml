@@ -36,7 +36,8 @@
 						</h:panelGroup>
 						<h:panelGroup layout="block" styleClass="col-md-12 text-center">
 							<h:messages id="globalmsgs" globalOnly="true"
-								infoClass="alert alert-info" errorClass="alert alert-danger" warnClass="alert alert-danger" style="list-style-type: none;" />
+								infoClass="alert alert-info" errorClass="alert alert-danger"
+								warnClass="alert alert-danger" style="list-style-type: none;" />
 						</h:panelGroup>
 						<h:panelGroup layout="block" class="row">
 							<h:panelGroup layout="block" class="col-md-12">
@@ -70,8 +71,9 @@
 						<h:panelGroup layout="block" class="row spacer"></h:panelGroup>
 						<h:form prependId="false" id="listform">
 							<h:panelGroup layout="block" styleClass="table-responsive">
-								<p:dataTable id="lista" tableStyleClass="table-condensed newlabeled"
-									var="interv" value="#{interviewListView.interviews}"
+								<p:dataTable id="lista"
+									tableStyleClass="table-condensed newlabeled" var="interv"
+									value="#{interviewListView.interviews}"
 									emptyMessage="Sem resultados..." styleClass="text-center"
 									paginator="true" paginatorPosition="bottom"
 									paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
@@ -79,7 +81,8 @@
 									<p:column headerText="Referência" sortBy="#{interv.reference}">
 										<h:outputText value="#{interv.reference}" />
 									</p:column>
-									<p:column headerText="Estado" sortBy="#{interv.interviewState.description}">
+									<p:column headerText="Estado"
+										sortBy="#{interv.interviewState.description}">
 										<h:outputText value="#{interv.interviewState.description}" />
 									</p:column>
 									<p:column headerText="Data da Entrevista"
@@ -88,7 +91,10 @@
 											action="#{interviewListView.setSelectedInterview(interv)}"
 											value="#{interviewListView.getInterviewDate(interv)}"
 											oncomplete="PF('dateWidget').show();"
-											rendered="#{userROLE eq 'ADMIN'}" />
+											rendered="#{userROLE eq 'ADMIN' and interv.interviewState ne 'DONE'}" />
+										<h:outputText
+											value="#{interviewListView.getInterviewDate(interv)}"
+											rendered="#{userROLE eq 'ADMIN' and interv.interviewState eq 'DONE'}" />
 										<h:panelGroup layout="block" id="focusblock"
 											rendered="#{userROLE eq 'ADMIN'}">
 											<p:tooltip id="toolTipFade" for="interviewdate"
@@ -111,7 +117,8 @@
 									<p:column headerText="Editar" rendered="#{userROLE eq 'ADMIN'}">
 										<p:commandLink icon="ui-icon-circle-plus"
 											id="editinterviewbutton"
-											action="#{interviewListView.editInterview(interv)}" rendered="#{interv.interviewState ne 'DONE'}">
+											action="#{interviewListView.editInterview(interv)}"
+											rendered="#{interv.interviewState ne 'DONE'}">
 											<span class="glyphicon glyphicon-record"></span>
 										</p:commandLink>
 									</p:column>

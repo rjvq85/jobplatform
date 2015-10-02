@@ -170,6 +170,8 @@ public class EditScript implements Serializable {
 	public void deleteScript() {
 		Boolean safeToDelete = true;
 		if (interviewBness.countInterviewsPerScript(editScript.getId()) > 0)
+			// Se estiver alguma entrevista em aberto NÃO pode eliminar, caso
+			// estejam todas realizadas, pode ser eliminado
 			safeToDelete = false;
 		if (safeToDelete) {
 			List<IInterview> interviews = interviewBness.getByScript(editScript.getId());
@@ -179,14 +181,14 @@ public class EditScript implements Serializable {
 			}
 			editScript = scriptService.getScriptByID(editScript.getId());
 			scriptService.deleteScript(editScript);
-			FacesContext.getCurrentInstance().addMessage("delscriptgrowl", new FacesMessage("O guião foi eliminado com sucesso"));
+			FacesContext.getCurrentInstance().addMessage("delscriptgrowl",
+					new FacesMessage("O guião foi eliminado com sucesso"));
 			RequestContext.getCurrentInstance().addCallbackParam("safe", true);
 			deleted();
 		} else {
 			RequestContext.getCurrentInstance().addCallbackParam("safe", false);
-			FacesContext.getCurrentInstance().addMessage("delscriptgrowl",
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro",
-							"Existem ainda entrevistas agendadas, associadas a este guião"));
+			FacesContext.getCurrentInstance().addMessage("delscriptgrowl", new FacesMessage(FacesMessage.SEVERITY_ERROR,
+					"Erro", "Existem ainda entrevistas agendadas, associadas a este guião"));
 		}
 	}
 

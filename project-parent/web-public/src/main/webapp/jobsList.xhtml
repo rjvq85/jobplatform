@@ -7,15 +7,14 @@
 
 <ui:composition>
 	<!-- Positions list -->
-	<p:dataTable id="gridPositions" var="job" emptyMessage="Sem resultados..." value="#{jobs.jobs}"
+	<p:dataTable id="gridPositions" var="job"
+		emptyMessage="Sem resultados..." value="#{jobs.jobs}"
 		selectionMode="single" selection="#{jobs.selectedJob}"
 		widgetVar="jobsList" rowKey="#{job.id}" paginator="true"
 		paginatorPosition="bottom" rows="15"
-		styleClass="table-condensed newlabeled">
-		<p:ajax event="rowSelect" listener="#{jobs.onRowSelect}"
-			 />
-		<p:ajax event="rowUnselect" listener="#{jobs.onRowUnselect}"
-			 />
+		tableStyleClass="table-condensed newlabeled" styleClass="text-center">
+		<p:ajax event="rowSelect" listener="#{jobs.onRowSelect}" />
+		<p:ajax event="rowUnselect" listener="#{jobs.onRowUnselect}" />
 		<p:column headerText="Data Abertura">
 			<p:outputLabel value="#{job.openDate}"></p:outputLabel>
 		</p:column>
@@ -32,7 +31,7 @@
 			<p:outputLabel value="#{job.company}"></p:outputLabel>
 		</p:column>
 		<p:column headerText="Área Técnica">
-			<p:outputLabel value="#{job.technicalArea}"></p:outputLabel>
+			<p:outputLabel value="#{job.technicalArea.name}"></p:outputLabel>
 		</p:column>
 		<p:column headerText="Detalhes">
 			<p:link value="Ver" outcome="positiondetail">

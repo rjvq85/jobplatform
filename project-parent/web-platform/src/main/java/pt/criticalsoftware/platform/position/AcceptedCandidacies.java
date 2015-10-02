@@ -131,7 +131,8 @@ public class AcceptedCandidacies implements Serializable {
 			if (position.getCandidacies().size() > 0) {
 				if (position.getCandidacies().size() > position.getAcceptedCandidacies().size()) {
 					rejectedCandidacies = position.getCandidacies();
-					rejectedCandidacies.removeAll(acceptedCandidacies);
+					if (null != acceptedCandidacies)
+						rejectedCandidacies.removeAll(acceptedCandidacies);
 				} else {
 					rejectedCandidacies = null;
 				}

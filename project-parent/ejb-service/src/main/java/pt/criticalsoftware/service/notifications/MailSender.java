@@ -200,7 +200,7 @@ public class MailSender implements IMailSender {
 			MultiPartEmail mpEmail = new MultiPartEmail();
 			mpEmail.setHostName(activeMail.getHostName());
 			mpEmail.setSmtpPort(activeMail.getSmtpPort());
-			mpEmail.setAuthentication(activeMail.getUsername(), activeMail.getPassword());
+			mpEmail.setAuthentication(activeMail.getUsername(), mailProp.getPassword(activeMail.getPassword()));
 			mpEmail.setSSLOnConnect(activeMail.getSllOnConnect());
 			mpEmail.setStartTLSEnabled(activeMail.getStartTLS());
 			mpEmail.addTo(user.getEmail());

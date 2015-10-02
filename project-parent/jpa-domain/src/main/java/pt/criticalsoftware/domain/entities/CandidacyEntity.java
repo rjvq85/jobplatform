@@ -40,7 +40,7 @@ import pt.criticalsoftware.service.persistence.utils.LocalDatePersistenceConvert
 		@NamedQuery(name = "Candidacy.manager", query = "SELECT c FROM CandidacyEntity c WHERE c.positionCandidacy.responsable.id = :param"),
 		@NamedQuery(name = "Candidacy.interviews", query = "SELECT elements(c.interviews) FROM CandidacyEntity as c WHERE c.id = :param"),
 		@NamedQuery(name = "Candidacy.spontaneousByCandidate", query = "SELECT COUNT(c) FROM CandidacyEntity c WHERE c.positionCandidacy = NULL AND c.candidate.id = :param"),
-		@NamedQuery(name = "Candidacy.byCandidate", query = "SELECT c FROM CandidacyEntity c WHERE c.candidate.id = :param")})
+		@NamedQuery(name = "Candidacy.byCandidate", query = "SELECT c FROM CandidacyEntity c WHERE c.candidate.id = :param") })
 
 public class CandidacyEntity {
 
@@ -48,7 +48,7 @@ public class CandidacyEntity {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 
-	@Column(name = "referencia")
+	@Column(name = "referencia", unique = true)
 	private String reference;
 
 	@Column(name = "carta_motivacao")

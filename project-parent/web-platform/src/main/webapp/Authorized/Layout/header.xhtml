@@ -37,13 +37,13 @@
 								<!-- Botões como Candidaturas, Posições, Entrevistas, etc... -->
 								<li><h:link value="Posições"
 										outcome="/Authorized/Positions/positionListAdminMain?faces-redirect=true"
-										disabled="false" rendered="#{userROLE eq 'ADMIN'}"/>
-										<h:link value="Posições"
+										disabled="false" rendered="#{userROLE eq 'ADMIN'}" /> <h:link
+										value="Posições"
 										outcome="/Authorized/Positions/positionListManagerMain?faces-redirect=true"
-										disabled="false" rendered="#{userROLE eq 'GESTOR'}"/></li>
+										disabled="false" rendered="#{userROLE eq 'GESTOR'}" /></li>
 								<li><h:link value="Candidaturas"
 										outcome="/Authorized/Candidacies/candidacies?faces-redirect=true"
-										disabled="false" rendered="#{userROLE ne 'ENTREVISTADOR'}"/></li>
+										disabled="false" rendered="#{userROLE ne 'ENTREVISTADOR'}" /></li>
 								<h:panelGroup layout="block" rendered="#{userROLE eq 'ADMIN'}">
 									<li><h:link value="Entrevistas"
 											outcome="/Authorized/Interviews/interviews?faces-redirect=true"
@@ -87,10 +87,14 @@
 										<h:panelGroup layout="block" rendered="#{userROLE eq 'ADMIN'}">
 											<li role="separator" class="divider"></li>
 											<li><a
+												href="#{request.contextPath}/Authorized/AdminOnly/chooseThemes.xhtml">Escolher
+													Tema</a></li>
+											<li><a
 												href="#{request.contextPath}/Authorized/Users/users.xhtml">Gestão
 													Utilizadores</a></li>
 											<li><a
-											href="#{request.contextPath}/Authorized/AdminOnly/notifications.xhtml">Notificações (Definições)</a></li>
+												href="#{request.contextPath}/Authorized/AdminOnly/notifications.xhtml">Notificações
+													(Definições)</a></li>
 										</h:panelGroup>
 									</ul></li>
 								<li><h:commandLink action="#{login.logout()}"

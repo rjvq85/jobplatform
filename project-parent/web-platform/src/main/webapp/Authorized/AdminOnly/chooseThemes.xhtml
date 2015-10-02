@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/template.xhtml">
+	<ui:define name="content">
+		<p:growl id="growlmsg" for="chooseThemeMsg" autoUpdate="true"></p:growl>
+		<h:panelGroup layout="block" styleClass="container choose-theme">
+			<div id="chooseThemeBox" style="margin-top: 75px;">
+				<h:form id="chooseText">
+					<h:panelGroup layout="block" styleClass="row">
+						<h:panelGroup layout="block" styleClass="col-md-12">
+							<h2>Texto de Apresentação da Empresa</h2>
+						</h:panelGroup>
+					</h:panelGroup>
+					<h:panelGroup layout="block" styleClass="row">
+						<h:panelGroup layout="block" styleClass="col-md-6">
+							<p:outputLabel for="textChoose" value="Texto:" />
+							<p:selectOneMenu id="textChoose" value="#{textBean.selectedText}"
+								onchange="submit()" valueChangeListener="#{textBean.onChange}"
+								update="preview"
+								style="border-radius:0; width:20%;display:inline-flex;margin-left:15px;">
+								<f:selectItems value="#{textBean.texts}" />
+							</p:selectOneMenu>
+						</h:panelGroup>
+					</h:panelGroup>
+					<h:panelGroup layout="block" styleClass="row">
+						<h:panelGroup layout="block" styleClass="col-md-12">
+							<h3>Visualizar texto</h3>
+						</h:panelGroup>
+					</h:panelGroup>
+					<h:panelGroup layout="block" styleClass="row">
+						<h:panelGroup layout="block" styleClass="col-md-12">
+							<h:panelGroup layout="block" styleClass="well">
+								<h:outputText id="textView" value="#{textBean.optionText}" />
+							</h:panelGroup>
+						</h:panelGroup>
+					</h:panelGroup>
+				</h:form>
+				<h:form id="new">
+					<h:panelGroup layout="block" styleClass="row">
+						<h:panelGroup layout="block" styleClass="col-md-12">
+							<p:outputLabel for="newText"
+								value="Introduzir Novo Texto de Apresentação da Empresa:" />
+						</h:panelGroup>
+					</h:panelGroup>
+					<h:panelGroup layout="block" styleClass="row"
+						style="margin-bottom:10px;">
+						<h:panelGroup layout="block" styleClass="col-md-12">
+							<p:inputTextarea id="newText" rows="5" cols="100"
+								value="#{textBean.newText}" style="width:100%;"
+								styleClass="form-control" />
+						</h:panelGroup>
+					</h:panelGroup>
+					<h:panelGroup layout="block" styleClass="row">
+						<h:panelGroup layout="block" styleClass="col-md-12 text-center">
+							<h:commandButton value="Ver" styleClass="btn btn-danger"
+								style="width:10%;border-radius:0;float:right;" />
+						</h:panelGroup>
+					</h:panelGroup>
+				</h:form>
+				<br />
+				<h:panelGroup layout="block" styleClass="row">
+					<h:panelGroup layout="block" styleClass="col-md-6">
+						<h:form>
+							<h:panelGroup layout="block" styleClass="row">
+								<h:panelGroup layout="block" styleClass="col-md-12">
+									<h2>Logotipo da Empresa</h2>
+								</h:panelGroup>
+							</h:panelGroup>
+							<h:panelGroup layout="block" styleClass="row">
+								<h:panelGroup layout="block" styleClass="col-md-12">
+									<p:outputLabel for="logoChoose" value="Logotipo:" />
+									<p:selectOneMenu id="logoChoose"
+										value="#{styleBean.selectedLogo}" onchange="submit()"
+										valueChangeListener="#{textBean.onChange}" update="preview"
+										style="border-radius:0; width:20%;display:inline-flex;margin-left:15px;">
+										<f:selectItem itemLabel="Logo Cor" itemValue="logocritical" />
+										<f:selectItem itemLabel="Logo Preto/Branco"
+											itemValue="logocriticalbw" />
+
+										<p:ajax listener="#{styleBean.onChange}" update="logoId" />
+									</p:selectOneMenu>
+								</h:panelGroup>
+							</h:panelGroup>
+							<h:panelGroup layout="block" styleClass="row">
+								<h:panelGroup layout="block" styleClass="col-md-12">
+									<h:graphicImage id="logoId"
+										styleClass="media-object media-maxheight fade-box"
+										library="imgs" name="#{styleBean.logoName}"
+										style="margin-top:15px;" />
+								</h:panelGroup>
+							</h:panelGroup>
+						</h:form>
+					</h:panelGroup>
+					<h:panelGroup layout="block" styleClass="col-md-6">
+						<h:form>
+							<h:panelGroup layout="block" styleClass="row">
+								<h:panelGroup layout="block" styleClass="col-md-12">
+									<h2>Cores de Fundo</h2>
+								</h:panelGroup>
+							</h:panelGroup>
+							<h:panelGroup layout="block" styleClass="row">
+								<h:panelGroup layout="block" styleClass="col-md-12">
+									<p:outputLabel for="themeChoose" value="Tema:" />
+									<p:selectOneMenu id="themeChoose" value="#{styleBean.theme}"
+										style="border-radius:0; width:20%;display:inline-flex;margin-left:15px; margin-right:15px;vertical-align:middle;">
+										<f:selectItems value="#{styleBean.themes}" />
+									</p:selectOneMenu>
+									<h:commandButton value="Visualizar" styleClass="btn btn-danger"
+										style="border-radius:0;display:inline-flex;padding-bottom:4px;padding-top:4px;vertical-align:middle;" />
+								</h:panelGroup>
+							</h:panelGroup>
+							<h:panelGroup layout="block" styleClass="row">
+								<h:panelGroup layout="block" styleClass="col-md-12">
+									<p:commandButton value="Guardar Alterações" type="submit"
+										styleClass="btn btn-danger"
+										style="top: 20000%;width: 40%;border-radius:0;position: absolute;left: -30%;"
+										action="#{styleBean.persistThemes()}" icon="ui-icon-check"
+										update=":growlmsg" oncomplete="window.scrollTo(0,0);">
+									</p:commandButton>
+								</h:panelGroup>
+							</h:panelGroup>
+						</h:form>
+					</h:panelGroup>
+				</h:panelGroup>
+			</div>
+		</h:panelGroup>
+	</ui:define>
+</ui:composition>

@@ -13,6 +13,7 @@ import pt.criticalsoftware.domain.entities.CandidateEntity;
 import pt.criticalsoftware.domain.entities.PositionEntity;
 import pt.criticalsoftware.domain.proxies.CandidateProxy;
 import pt.criticalsoftware.domain.proxies.IEntityAware;
+import pt.criticalsoftware.service.exceptions.DuplicateCandidateException;
 import pt.criticalsoftware.service.model.ICandidate;
 import pt.criticalsoftware.service.persistence.ICandidatePersistenceService;
 
@@ -52,7 +53,11 @@ public class CandidatePersistenceService implements ICandidatePersistenceService
 	}
 
 	@Override
-	public ICandidate create(ICandidate candidate) {
+	public ICandidate create(ICandidate candidate) throws DuplicateCandidateException {
+		if ((Long) em.createNamedQuery("Candidate.findDuplicateByUsername").setParameter("param", candidate.getUsername()).getSingleResult() > 0 || 
+				(Long) em.createNamedQuery("Candidate.findDuplicateByEmail").setParameter("param", candidate.getEmail()).getSingleResult() > 0) {
+			throw new DuplicateCandidateException("E-mail ou Username já existente");
+		}
 		try {
 			CandidateEntity entity = getEntity(candidate);
 			return new CandidateProxy(em.merge(entity));

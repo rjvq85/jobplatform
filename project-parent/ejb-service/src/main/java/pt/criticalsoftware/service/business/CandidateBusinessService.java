@@ -6,17 +6,23 @@ import java.security.NoSuchAlgorithmException;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.sun.syndication.io.impl.Base64;
 
+import pt.criticalsoftware.service.exceptions.DuplicateCandidateException;
 import pt.criticalsoftware.service.model.ICandidate;
 import pt.criticalsoftware.service.persistence.ICandidatePersistenceService;
 
 @Stateless
 public class CandidateBusinessService implements ICandidateBusinessService {
-	
+
+	private static final Logger logger = LoggerFactory.getLogger(CandidateBusinessService.class);
+
 	@EJB
 	private ICandidatePersistenceService persistence;
-	
+
 	@Override
 	public ICandidate getCandidateByUsername(String username) {
 		return persistence.findByUsername(username);
@@ -26,10 +32,17 @@ public class CandidateBusinessService implements ICandidateBusinessService {
 	public ICandidate getCandidateById(Integer id) {
 		return persistence.findById(id);
 	}
-	
+
 	@Override
 	public ICandidate addCandidate(ICandidate candidate) {
-		return persistence.create(candidate);
+		try {
+			return persistence.create(candidate);
+		} catch (DuplicateCandidateException e) {
+			logger.error("Username / E-mail já existente na criação do candidato: " + candidate.getUsername() + " / "
+					+ candidate.getEmail());
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	@Override
@@ -41,7 +54,7 @@ public class CandidateBusinessService implements ICandidateBusinessService {
 	public void updateCandidate(ICandidate candidate) {
 		persistence.update(candidate);
 	}
-	
+
 	@Override
 	public void updatePassword(String password, ICandidate candidate) {
 		try {
@@ -61,19 +74,19 @@ public class CandidateBusinessService implements ICandidateBusinessService {
 	@Override
 	public void updateEmail(String email, ICandidate candidate) {
 		persistence.updateEmail(email, candidate);
-		
+
 	}
 
 	@Override
 	public void updateCV(String filePath, ICandidate candidate) {
 		persistence.updateCV(filePath, candidate);
-		
+
 	}
 
 	@Override
 	public void deleteUser(ICandidate candidate) {
 		persistence.deleteUser(candidate);
-		
+
 	}
 
 }

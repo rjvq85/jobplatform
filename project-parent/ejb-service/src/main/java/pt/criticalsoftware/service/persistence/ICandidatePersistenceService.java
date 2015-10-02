@@ -1,5 +1,6 @@
 package pt.criticalsoftware.service.persistence;
 
+import pt.criticalsoftware.service.exceptions.DuplicateCandidateException;
 import pt.criticalsoftware.service.model.ICandidate;
 
 public interface ICandidatePersistenceService {
@@ -8,7 +9,7 @@ public interface ICandidatePersistenceService {
 
 	ICandidate findById(Integer id);
 
-	ICandidate create(ICandidate candidate);
+	ICandidate create(ICandidate candidate) throws DuplicateCandidateException;
 
 	ICandidate findByEmail(String email);
 

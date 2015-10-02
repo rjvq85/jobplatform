@@ -10,9 +10,8 @@ import javax.ejb.EJB;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.enterprise.inject.Produces;
-
-
-
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -46,7 +45,7 @@ public class StyleBean implements Serializable{
 
 	public StyleBean() {
 		themeMap = new LinkedHashMap<String, String>();
-		themeMap.put("Default", "positionListAdmin.css");
+		themeMap.put("Default", "default.css");
 		themeMap.put("Blue", "blue.css");
 		themeMap.put("Red", "red.css");
 		texts=new ArrayList <String>();
@@ -123,7 +122,7 @@ public class StyleBean implements Serializable{
 
 		business.saveTheme(this.selectedTT, this.theme, this.logoName);
 //		business.saveTheme(this.selectedTT, this.theme);
-
+		FacesContext.getCurrentInstance().addMessage("chooseThemeMsg", new FacesMessage(FacesMessage.SEVERITY_INFO,"Tema alterado com sucesso",null));
 	}
 }
 

@@ -75,12 +75,14 @@ a {
 	display: inline-block;
 	text-align: left;
 	float:left;
+	width: 120%;	
 }
 
 #searchLocalePanel {
 	display: inline-block;
 	text-align: left;
 	float:left;
+	width: 100%;	
 }
 
 .ui-widget-content a {

@@ -137,20 +137,22 @@ public class ReportInterviewAverage implements Serializable{
 			this.candidacies=business.getCandidaciesByDatePeriod(dateInit,dateFinal);	
 			int totalDays=0;
 			//remove candidacies with no interviews
+			List<ICandidacy> cadTemp = new ArrayList<ICandidacy>();
 			for (ICandidacy c:this.candidacies)
-				if(c.getInterviews().size()<1)
-					this.candidacies.remove(c);
-				else{
+				if(c.getInterviews().size()>=1)
+					cadTemp.add(c);
+			this.candidacies=cadTemp;
+			int number=0;
+			for(ICandidacy c:this.candidacies)
+				{
+					number++;
 					//date1 is the date of the candidacy
 					LocalDate date1=c.getDate();
 					//date2 is the date of the first interview
 					LocalDate date2=c.getInterviews().get(0).getDate();
 					Period betweenDates = Period.between(date1, date2);
-					int diffInDays = betweenDates.getDays();
-					int diffInMonths = betweenDates.getMonths();
-					int diffInYears = betweenDates.getYears();
-					int numdI=dateInit.getDayOfYear();
-					int numdF=dateFinal.getDayOfYear();
+					int numdI=date1.getDayOfYear();
+					int numdF=date2.getDayOfYear();
 					int dif;
 					//both of dates belongs to the same year
 					if (date1.getYear()==date2.getYear())
@@ -161,7 +163,7 @@ public class ReportInterviewAverage implements Serializable{
 						dif=(numdF)+(year1-numdI);
 						//the difference between the dates is more then one year
 					}else {
-						//						calcular todos os dias no intervalo entre os anos que estao entre eles
+						//calcular todos os dias no intervalo entre os anos que estao entre eles
 						int year1=dateInit.lengthOfYear();
 						dif=(numdF)+(year1-numdI);
 
@@ -173,8 +175,8 @@ public class ReportInterviewAverage implements Serializable{
 					}
 					totalDays+=dif;
 				}
-			if (this.candidacies.size()>=1)
-			this.averageTime=totalDays/this.candidacies.size();
+			if (number>=1)
+			this.averageTime=totalDays/number;
 			else 
 				this.averageTime=0;
 			return "viewInterviewsAverage.xhtml?faces-redirect=true";
@@ -194,28 +196,31 @@ public class ReportInterviewAverage implements Serializable{
 		else {
 			this.candidacies=business.getCandidaciesByDatePeriod(dateInit,dateFinal);	
 			int totalDays=0;
-			//remove candidacies with no interviews
+			
+			List<ICandidacy> cadTemp = new ArrayList<ICandidacy>();
 			for (ICandidacy c:this.candidacies)
-				if(!c.getState().name().equals("FECHADA"))
-					this.candidacies.remove(c);
-				else{
+				if(c.getState().name().equals("FECHADA"))
+					cadTemp.add(c);
+			this.candidacies=cadTemp;
+			for (ICandidacy c:this.candidacies)
+				{
 					//date1 is the date of the candidacy
 					LocalDate date1=c.getDate();
+					logger.info("data de candidatura" + date1.toString()+"  " +date1.getDayOfYear());
 					//date2 is the hiring date  
-					
-					//---------------------ALTERAR AQUI A DATA DE CONTRATAÇÃO QUE É A SEGUNDA DATA------------------------
 					LocalDate date2=c.getHiringDate();
+					logger.info("data de contratação" + date2.toString()+"  " +date2.getDayOfYear());
 					Period betweenDates = Period.between(date1, date2);
-					int diffInDays = betweenDates.getDays();
-					int diffInMonths = betweenDates.getMonths();
-					int diffInYears = betweenDates.getYears();
-					int numdI=dateInit.getDayOfYear();
-					int numdF=dateFinal.getDayOfYear();
+					logger.info("periodo entre datas" +betweenDates.getDays() );
+					int numdI=date1.getDayOfYear();
+					int numdF=date2.getDayOfYear();
 					int dif;
 					//both of dates belongs to the same year
-					if (date1.getYear()==date2.getYear())
+					if (date1.getYear()==date2.getYear()){
 						dif=numdF-numdI;
+						logger.info("o numero de dias é em diferença " + dif);
 					//the difference between the dates is one year
+					}
 					else if (-date1.getYear()+date2.getYear()==1){
 						int year1=dateInit.lengthOfYear();
 						dif=(numdF)+(year1-numdI);
@@ -233,10 +238,14 @@ public class ReportInterviewAverage implements Serializable{
 					}
 					totalDays+=dif;
 				}
-			if (this.candidacies.size()>=1)
+			if (this.candidacies.size()>=1){
 				this.averageTime=totalDays/this.candidacies.size();
-				else 
+				totalDays=0;
+			}
+				else {
 					this.averageTime=0;
+					totalDays=0;
+				}
 			return "viewHiringAverage.xhtml?faces-redirect=true";
 		}
 	}

@@ -127,7 +127,6 @@ public class PositionTest {
 		try {
 			manager = userBusiness.createUser(manager);
 		} catch (DuplicateEmailException | DuplicateUsernameException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		GregorianCalendar calendar = new GregorianCalendar();

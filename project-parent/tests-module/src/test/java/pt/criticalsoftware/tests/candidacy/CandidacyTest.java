@@ -79,7 +79,7 @@ public class CandidacyTest {
 	public static Archive<?> createDeployment() {
 		File[] libs = Maven.resolver().loadPomFromFile("pom.xml").importDependencies(ScopeType.PROVIDED).resolve()
 				.withoutTransitivity().asFile();
-		
+
 		WebArchive res = ShrinkWrap.create(WebArchive.class, "test.war");
 		for (File file : libs) {
 			res.addAsLibrary(file);
@@ -127,7 +127,7 @@ public class CandidacyTest {
 	}
 
 	@Test
-	public void positionTest() {
+	public void candidacyTest() {
 		IUser manager = userBuilder.email("manager@jobs.com").firstName("Ricardo").lastName("Quirino")
 				.password("managerpassword").role(Role.GESTOR).username("themanager").build();
 		try {
@@ -136,34 +136,17 @@ public class CandidacyTest {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		ICandidate candidate = candidateBuilder.address("Address")
-				.country("Portugal")
-				.course("Curso")
-				.cv("/location/of/cv")
-				.degree("Grau")
-				.email("user@mail.com")
-				.firstName("The")
-				.lastName("Candidate")
-				.mobile(919191919)
-				.password("thepassword")
-				.phone(212121212)
-				.town("Porto")
-				.school("Escola")
-				.username("thecandidate")
-				.build();
+		ICandidate candidate = candidateBuilder.address("Address").country("Portugal").course("Curso")
+				.cv("/location/of/cv").degree("Grau").email("user@mail.com").firstName("The").lastName("Candidate")
+				.mobile(919191919).password("thepassword").phone(212121212).town("Porto").school("Escola")
+				.username("thecandidate").build();
 		candidateBusiness.addCandidate(candidate);
 		GregorianCalendar calendar = new GregorianCalendar();
 		calendar.set(2015, 11, 1);
-		IPosition position = positionBuilder.adChannels(new ArrayList<String>()).closeDate(calendar.getTime()).company("Critical").description("Position's Description")
-				.locale("Porto")
-				.openDate(LocalDate.now())
-				.responsable(manager)
-				.sla(2)
-				.state(PositionState.ABERTA)
-				.technicalArea(TechnicalAreaType.INTEGRATION)
-				.title("Position's Title")
-				.vacancies(2)
-				.build();
+		IPosition position = positionBuilder.adChannels(new ArrayList<String>()).closeDate(calendar.getTime())
+				.company("Critical").description("Position's Description").locale("Porto").openDate(LocalDate.now())
+				.responsable(manager).sla(2).state(PositionState.ABERTA).technicalArea(TechnicalAreaType.INTEGRATION)
+				.title("Position's Title").vacancies(2).build();
 		try {
 			positionBusiness.createPosition(position);
 		} catch (DuplicateReferenceException e) {
@@ -175,10 +158,10 @@ public class CandidacyTest {
 		assign.setSource(CandidacySource.GOOGLE);
 		assign.setUsername("thecandidate");
 		assign.assignCandidacy();
-		
+
 		List<ICandidacy> candidacies = candidacyBusiness.getAllCandidacies();
 		ICandidacy candidacy = candidacies.get(0);
-		assertEquals("thecandidate",candidacy.getCandidate().getUsername());
+		assertEquals("thecandidate", candidacy.getCandidate().getUsername());
 	}
 
 }

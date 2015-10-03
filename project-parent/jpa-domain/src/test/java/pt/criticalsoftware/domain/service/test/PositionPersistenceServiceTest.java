@@ -60,16 +60,6 @@ public class PositionPersistenceServiceTest {
 		Date closeDate = Date.from(openDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
 		System.out.println(closeDate);
 		List<IPosition> entities=new ArrayList<IPosition>();
-		
-//		when(((Query) query).getResultList()).thenReturn(new ArrayList<PositionEntity>());
-//		
-//		when(em.createNamedQuery(namedQuery)).thenReturn((Query)query);
-//		
-//		entities=positionService.getPositionsByDate("closeDate", closeDate);
-//		
-//		verify((Query) query).setParameter("closeDate", closeDate);
-//		verify(query).getResultList();
-//		verify(em).createNamedQuery(namedQuery);
 	}
 
 }

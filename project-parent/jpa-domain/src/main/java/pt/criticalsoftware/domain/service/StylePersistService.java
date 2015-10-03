@@ -1,7 +1,5 @@
 package pt.criticalsoftware.domain.service;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -16,32 +14,25 @@ import pt.criticalsoftware.domain.entities.ThemesEntity;
 import pt.criticalsoftware.service.persistence.IStylePersistenceService;
 
 @Stateless
-public class StylePersistService implements IStylePersistenceService{
+public class StylePersistService implements IStylePersistenceService {
 
 	private final Logger logger = LoggerFactory.getLogger(StylePersistService.class);
 	@PersistenceContext(unitName = "Jobs")
 	private EntityManager em;
-
-	//	@Override
-	//	public void saveTheme(List<String> texts, List<String> textsComplete,
-	//			String selectedTT, String selectedTheme) {
-	//
-	//		ThemesEntity themes = new ThemesEntity(texts, textsComplete, selectedTT, selectedTheme); 
-	//		em.persist(themes);
-	//	}
 
 	@Override
 	public void saveTheme(String selectedTT, String selectedTheme, String logoName) {
 
 		TypedQuery<ThemesEntity> query = em.createNamedQuery("ThemesEntity.getTheme", ThemesEntity.class);
 		List<ThemesEntity> result = query.getResultList();
-		if (result!=null)
-			for(ThemesEntity t:result)
+		if (result != null)
+			for (ThemesEntity t : result)
 				em.remove(t);
-		
-		ThemesEntity themes = new ThemesEntity(selectedTT, selectedTheme, logoName); 
+
+		ThemesEntity themes = new ThemesEntity(selectedTT, selectedTheme, logoName);
 		em.persist(themes);
 	}
+
 	@Override
 	public String getSelectedText() {
 		logger.info("Entrou no get do persitence");
@@ -58,14 +49,13 @@ public class StylePersistService implements IStylePersistenceService{
 		TypedQuery<ThemesEntity> query = em.createNamedQuery("ThemesEntity.getTheme", ThemesEntity.class);
 		ThemesEntity result = query.getResultList().get(0);
 
-		return result.getSelectedTheme() ;
+		return result.getSelectedTheme();
 	}
 
 	@Override
 	public List<String> getTexts() {
 		TypedQuery<ThemesEntity> query = em.createNamedQuery("ThemesEntity.getTheme", ThemesEntity.class);
 		ThemesEntity result = query.getResultList().get(0);
-		//return result.getTexts();
 		return null;
 	}
 
@@ -73,15 +63,14 @@ public class StylePersistService implements IStylePersistenceService{
 	public List<String> getTextsComplete() {
 		TypedQuery<ThemesEntity> query = em.createNamedQuery("ThemesEntity.getTheme", ThemesEntity.class);
 		ThemesEntity result = query.getResultList().get(0);
-		//		return result.getTextsComplete();
 		return null;
 
 	}
+
 	@Override
 	public void saveTheme(String selectedTT, String selectedTheme) {
-		// TODO Auto-generated method stub
-
 	}
+
 	@Override
 	public String getSelectedLogo() {
 		TypedQuery<ThemesEntity> query = em.createNamedQuery("ThemesEntity.getTheme", ThemesEntity.class);

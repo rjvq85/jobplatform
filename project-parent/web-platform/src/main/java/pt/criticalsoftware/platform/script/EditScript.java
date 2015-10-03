@@ -181,7 +181,6 @@ public class EditScript implements Serializable {
 				safeToDelete = true;
 		} else
 			safeToDelete = true;
-		System.out.println("\n\n\nAPAGAR GUIAO: " + safeToDelete + "\n\n\n");
 		if (safeToDelete) {
 			if (null != scriptInterviews) {
 				scriptInterviews.stream().forEach(interview -> interview.setScript(null));

@@ -36,8 +36,10 @@ public class MyInterviews {
 
 	public boolean isToday(IInterview interview) {
 		if (LocalDate.now().isEqual(interview.getDate())) {
-			if (!doneInterview(interview)) return true;
-			else return false;
+			if (!doneInterview(interview))
+				return true;
+			else
+				return false;
 		}
 		return false;
 	}
@@ -54,9 +56,8 @@ public class MyInterviews {
 		}
 		return false;
 	}
-	
-	// private methods
 
+	// private methods
 
 	private HttpServletRequest getRequest() {
 		FacesContext faces = FacesContext.getCurrentInstance();
@@ -77,9 +78,6 @@ public class MyInterviews {
 	}
 
 	public String goToInterview() {
-		System.out.println(
-				"\n\n\n ****** " + FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath()
-						+ "/Admin/Scripts/scriptInterview.xhtml?faces-redirect=true\n\n\n");
 		return (FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath()
 				+ "/Authorized/Scripts/scriptInterview.xhtml?faces-redirect=true");
 	}

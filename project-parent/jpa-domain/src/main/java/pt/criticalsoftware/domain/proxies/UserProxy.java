@@ -107,24 +107,6 @@ public class UserProxy implements IEntityAware<UserEntity>, IUser {
 		user.setPositions(entities);
 	}
 
-	// public List<INotification> getNotifications() {
-	// List<INotification> notifications = new ArrayList<>();
-	// for (NotificationEntity ne : user.getNotifications()) {
-	// notifications.add(new NotificationProxy(ne));
-	// }
-	// return notifications;
-	// }
-	//
-	// public void setNotifications(List<INotification> notifications) {
-	// List<NotificationEntity> entities = new ArrayList<>();
-	// for (INotification in : notifications) {
-	// if (in instanceof IEntityAware<?>) {
-	// entities.add(((IEntityAware<NotificationEntity>) in).getEntity());
-	// }
-	// }
-	// user.setNotifications(entities);
-	// }
-
 	@Override
 	public Integer getId() {
 		return user.getId();

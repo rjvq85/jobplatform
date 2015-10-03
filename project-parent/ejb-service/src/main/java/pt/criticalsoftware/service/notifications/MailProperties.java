@@ -3,13 +3,15 @@ package pt.criticalsoftware.service.notifications;
 
 import org.apache.commons.mail.Email;
 import org.apache.commons.mail.EmailException;
-import org.apache.commons.mail.HtmlEmail;
 import org.apache.commons.mail.SimpleEmail;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import pt.criticalsoftware.service.model.IUser;
 import pt.criticalsoftware.service.persistence.utils.PasswordSecurity;
 
 public class MailProperties {
+	
+	private static final Logger logger = LoggerFactory.getLogger(MailProperties.class);
 
 	private Email email;
 	
@@ -22,7 +24,7 @@ public class MailProperties {
 	}
 
 	public MailProperties hostname(String hostname) {
-		System.out.println(hostname);
+		logger.debug(hostname);
 		email.setHostName(hostname);
 		return this;
 	}

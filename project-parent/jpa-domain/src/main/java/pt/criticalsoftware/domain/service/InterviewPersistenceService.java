@@ -11,6 +11,9 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.resource.spi.IllegalStateException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import pt.criticalsoftware.domain.entities.InterviewEntity;
 import pt.criticalsoftware.domain.entities.ScriptEntity;
 import pt.criticalsoftware.domain.entities.UserEntity;
@@ -27,6 +30,8 @@ import pt.criticalsoftware.service.persistence.IInterviewPersistenceService;
 
 @Stateless
 public class InterviewPersistenceService implements IInterviewPersistenceService {
+	
+	private static final Logger logger = LoggerFactory.getLogger(InterviewPersistenceService.class);
 
 	@PersistenceContext(unitName = "Jobs")
 	private EntityManager em;
@@ -56,13 +61,11 @@ public class InterviewPersistenceService implements IInterviewPersistenceService
 
 	@Override
 	public List<IInterview> getByReference() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public List<IInterview> getByPosition() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -114,7 +117,7 @@ public class InterviewPersistenceService implements IInterviewPersistenceService
 	@Override
 	public IInterview update(IInterview selectedInterview) {
 		if (selectedInterview instanceof IEntityAware<?>) {
-			System.out.println("\n\n\n ENTROU PARA O UPDATE \n\n\n");
+			logger.debug("Actualizar entrevista");
 			InterviewProxy ip = new InterviewProxy(
 					em.merge(((IEntityAware<InterviewEntity>) selectedInterview).getEntity()));
 			em.flush();

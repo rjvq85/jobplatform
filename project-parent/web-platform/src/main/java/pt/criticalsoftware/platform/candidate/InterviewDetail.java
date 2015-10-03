@@ -10,6 +10,10 @@ import java.util.Set;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import pt.criticalsoftware.service.business.IUserBusinessService;
 import pt.criticalsoftware.service.model.IInterview;
 import pt.criticalsoftware.service.model.IUser;
@@ -20,6 +24,8 @@ import pt.criticalsoftware.service.scriptxml.XMLParser;
 @Named
 @SessionScoped
 public class InterviewDetail implements Serializable {
+	
+	private static final Logger logger = LoggerFactory.getLogger(InterviewDetail.class);
 
 	/**
 	 * 
@@ -59,7 +65,7 @@ public class InterviewDetail implements Serializable {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("Erro ao passar feedback");
+			logger.error("Erro ao passar feedback");
 		}
 	}
 

@@ -3,7 +3,6 @@ package pt.criticalsoftware.publicplatform.social;
 import java.io.Serializable;
 
 import javax.ejb.EJB;
-import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -11,7 +10,6 @@ import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 import org.scribe.builder.ServiceBuilder;
 import org.scribe.builder.api.LinkedInApi;
@@ -21,6 +19,8 @@ import org.scribe.model.Token;
 import org.scribe.model.Verb;
 import org.scribe.model.Verifier;
 import org.scribe.oauth.OAuthService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.criticalsoftware.service.business.ICandidateBusinessService;
 import pt.criticalsoftware.service.model.ICandidate;
@@ -30,6 +30,8 @@ import pt.criticalsoftware.service.model.ILinkedInBuilder;
 @SessionScoped
 public class LinkedInIntegration implements Serializable {
 	private static final long serialVersionUID = 1L;
+	
+	private static final Logger logger = LoggerFactory.getLogger(LinkedInIntegration.class);
 
 	@EJB
 	private ILinkedInBuilder linkedIn;
@@ -76,7 +78,7 @@ public class LinkedInIntegration implements Serializable {
 			String summary = responseJson.optString("summary", "Não existe");
 			Integer numConnections = responseJson.optInt("numConnections", 0);
 
-			System.out.println("\nHeadline: " + headline + "\n\n" + "pictureUrl: " + pictureUrl + "\n\n");
+			logger.debug("\nHeadline: " + headline + "\n\n" + "pictureUrl: " + pictureUrl + "\n\n");
 			ICandidate candidate = candidateBness.getCandidateById((Integer) getSession().getAttribute("userId"));
 			candidate.setLinkedInConnections(numConnections);
 			candidate.setLinkedInHeadline(headline);

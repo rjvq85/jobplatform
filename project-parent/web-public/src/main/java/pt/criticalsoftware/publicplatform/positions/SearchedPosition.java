@@ -5,8 +5,6 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -36,7 +34,7 @@ public class SearchedPosition implements Serializable {
 	private IPosition selectedPosition;
 
 	public void getPosition() {
-		System.out.println("\n\n\n ### ID da posição: " + positionId + "\n\n\n");
+		logger.debug("\n\n\n ### ID da posição: " + positionId + "\n\n\n");
 		try {
 			selectedPosition = positionBness.getPositionById(positionId);
 		} catch (Exception e) {

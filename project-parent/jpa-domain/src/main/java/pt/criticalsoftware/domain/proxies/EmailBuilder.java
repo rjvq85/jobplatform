@@ -3,12 +3,17 @@ package pt.criticalsoftware.domain.proxies;
 
 import javax.ejb.Stateless;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import pt.criticalsoftware.service.model.IEmail;
 import pt.criticalsoftware.service.model.IEmailBuilder;
 import pt.criticalsoftware.service.persistence.utils.PasswordSecurity;
 
 @Stateless
 public class EmailBuilder implements IEmailBuilder {
+	
+	private static final Logger logger = LoggerFactory.getLogger(EmailBuilder.class);
 
 	private EmailProxy email;
 	
@@ -42,7 +47,7 @@ public class EmailBuilder implements IEmailBuilder {
 			String encryptedPassword = ps.encrypt(password);
 			email.setPassword(encryptedPassword);
 		} catch (Exception e) {
-			System.out.println("Erro ao encriptar password!");
+			logger.error("Erro ao encriptar password");
 			e.printStackTrace();
 		}
 		return this;
